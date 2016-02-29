@@ -9,5 +9,4 @@
 *.pdb
 #Nuget
 !/packages/*/lib/*.dll
-
-
+project.lock.json
