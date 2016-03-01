@@ -98,6 +98,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Flashcard.cs" />
+    <Compile Include="Model\FlashcardSet.cs" />
+    <Compile Include="Services\DeserializeJsonService.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\MainPage.xaml.cs">
@@ -136,7 +139,6 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Messages\" />
-    <Folder Include="Model\" />
     <Folder Include="Navigation\" />
     <Folder Include="Utils\" />
   </ItemGroup>
