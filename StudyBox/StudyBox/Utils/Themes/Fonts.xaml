@@ -3,11 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StudyBox.Utils.Themes">
 
-    <FontFamily x:Key="LatoBoldFontFamily">Utils/Themes/Fonts/Lato-Bold.ttf#Lato</FontFamily>
-    <FontFamily x:Key="LatoLightFontFamily">Utils/Themes/Fonts/Lato-Light.ttf#Lato Light</FontFamily>
+    <FontFamily x:Key="LatoBlackFontFamily">Utils/Themes/Fonts/Lato-Black.ttf#Lato Black</FontFamily>
     <FontFamily x:Key="LatoRegularFontFamily">Utils/Themes/Fonts/Lato-Regular.ttf#Lato</FontFamily>
-    <FontFamily x:Key="LatoHairlineFontFamily">Utils/Themes/Fonts/Lato-Hairline.ttf#Lato Hairline</FontFamily>
-    <FontFamily x:Key="LatoItalicFontFamily">Utils/Themes/Fonts/Lato-Italic.ttf#Lato</FontFamily>
-    <FontFamily x:Key="LatoLightItalicFontFamily">Utils/Themes/Fonts/Lato-LightItalic.ttf#Lato</FontFamily>
 
 </ResourceDictionary>

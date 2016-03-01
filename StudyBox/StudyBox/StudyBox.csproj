@@ -93,18 +93,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="project.json" />
-    <Content Include="Utils\Themes\Fonts\Lato-Bold.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Utils\Themes\Fonts\Lato-Light.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Utils\Themes\Fonts\Lato-Regular.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Utils\Themes\Fonts\Lato-Hairline.ttf" />
-    <Content Include="Utils\Themes\Fonts\Lato-Italic.ttf" />
-    <Content Include="Utils\Themes\Fonts\Lato-LightItalic.ttf" />
+    <Content Include="Utils\Themes\Fonts\Lato-Black.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
