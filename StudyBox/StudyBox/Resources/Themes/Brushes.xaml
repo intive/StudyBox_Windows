@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:StudyBox.Utils.Themes">
+    xmlns:local="using:StudyBox.Resources.Themes">
 
     <SolidColorBrush x:Key="Raspberry" Color="#EA0061" />
     <SolidColorBrush x:Key="DarkBlue" Color="#0068B4" />
