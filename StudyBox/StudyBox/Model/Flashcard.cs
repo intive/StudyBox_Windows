@@ -11,13 +11,15 @@ namespace StudyBox.Model
         public string Id { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
+        public string Hint { get; set; }
 
         public Flashcard() { }
-        public Flashcard(string id, string question, string answer)
+        public Flashcard(string id, string question, string answer, string hint)
         {
             Id = id;
             Question = question;
             Answer = answer;
+            Hint = hint;
         }
     }
 }
