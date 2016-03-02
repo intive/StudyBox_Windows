@@ -102,7 +102,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DeckModel.cs" />
+    <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

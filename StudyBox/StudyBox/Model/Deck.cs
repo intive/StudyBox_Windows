@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace StudyBox.Model
 {
-    public class DeckModel
+    public class Deck
     {
         public string ID { get; private set; }
         public string Name { get; private set; }
 
-        public DeckModel() { }
+        public Deck() { }
 
-        public DeckModel(string id)
+        public Deck(string id)
         {
             this.ID = id;
         }
 
-        public DeckModel(string id, string name)
+        public Deck(string id, string name)
         {
             this.ID = id;
             this.Name = name;
