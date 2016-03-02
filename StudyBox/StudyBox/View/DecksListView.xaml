@@ -57,7 +57,7 @@
 
         <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="1" Grid.Column="0" Margin="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
-                <GridView x:Name="GridView" ItemsSource="{Binding}" 
+                <GridView x:Name="GridView" ItemsSource="{Binding FunnyIntsCollection}" 
                           IsItemClickEnabled="False"
                           Margin="0"
                           >
@@ -110,8 +110,8 @@
                         <AdaptiveTrigger MinWindowWidth="800"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TileManagment.Width" Value="200"/>
-                        <Setter Target="TileManagment.Height" Value="200"/>
+                        <Setter Target="TileManagment.Width" Value="240"/>
+                        <Setter Target="TileManagment.Height" Value="240"/>
                     </VisualState.Setters>
                 </VisualState>
 

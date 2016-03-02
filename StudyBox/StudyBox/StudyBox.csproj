@@ -104,6 +104,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -161,7 +162,6 @@
     <Folder Include="Converters\" />
     <Folder Include="Messages\" />
     <Folder Include="Model\" />
-    <Folder Include="Navigation\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

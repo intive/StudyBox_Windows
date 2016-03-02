@@ -17,6 +17,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="Temporary button to navigate" Command="{Binding GoToDecksListCommand}" />
+        </StackPanel>
         
     </Grid>
 </Page>
