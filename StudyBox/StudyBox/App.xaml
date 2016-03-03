@@ -10,6 +10,7 @@
         <ResourceDictionary>
             <viewModel:ViewModelLocator x:Key="Locator"/>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Config.xaml" />
                 <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
                 <ResourceDictionary Source="Resources/Themes/Fonts.xaml"/>
             </ResourceDictionary.MergedDictionaries>

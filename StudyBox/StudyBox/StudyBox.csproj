@@ -109,6 +109,7 @@
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
     <Compile Include="Services\DeserializeJsonService.cs" />
+    <Compile Include="Services\RestService.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\DecksListView.xaml.cs">
@@ -142,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Resources\Config.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Themes\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
