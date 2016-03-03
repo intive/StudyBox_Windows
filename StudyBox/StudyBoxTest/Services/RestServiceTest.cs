@@ -7,8 +7,9 @@ namespace StudyBoxTest
     public class RestServiceTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestRestServiceMethods()
         {
+
         }
     }
 }
