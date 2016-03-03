@@ -14,7 +14,7 @@ namespace StudyBox.ViewModel
 
         private ObservableCollection<Deck> _decksCollection;
 
-        public ObservableCollection<Deck> decksCollection
+        public ObservableCollection<Deck> DecksCollection
         {
             get { return _decksCollection; }
             set
@@ -32,13 +32,13 @@ namespace StudyBox.ViewModel
             int countOfDecks = 20;
             for (int i = 0; i < countOfDecks; i++)
             {
-                decksCollection.Add(new Deck(Convert.ToString(i), Convert.ToString("TestTile " + i)));
+                DecksCollection.Add(new Deck(Convert.ToString(i), Convert.ToString("TestTile " + i)));
             }
         }
 
         public DecksListViewModel()
         {
-            decksCollection = new ObservableCollection<Deck>();
+            DecksCollection = new ObservableCollection<Deck>();
             InitializeTestsCollection();
         }
 
