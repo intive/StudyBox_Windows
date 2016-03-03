@@ -3,7 +3,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StudyBox.Resources">
 
-    <x:String x:Key="FlashcardsGetUrl">http://private-anon-f54359049-studybox.apiary-mock.com/entities</x:String>
-    <x:String x:Key="FlashcardSetsGetUrl">http://private-anon-f54359049-studybox.apiary-mock.com/entities</x:String>
+    <x:String x:Key="FlashcardCreateUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/flashcards</x:String>
+    <x:String x:Key="FlashcardGetByIdUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/flashcards/{1}</x:String>
+    <x:String x:Key="FlashcardGetAllUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/flashcards</x:String>
+    <x:String x:Key="FlashcardUpdateUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/flashcards/{1}</x:String>
+    <x:String x:Key="FlashcardRemoveUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/flashcards/{1}</x:String>
+
+    <x:String x:Key="DeckCreateUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks</x:String>
+    <x:String x:Key="DeckGetByIdUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}</x:String>
+    <x:String x:Key="DeckGetAllUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks</x:String>
+    <x:String x:Key="DeckGetAllByNameUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks?name={0}</x:String>
+    <x:String x:Key="DeckUpdateUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}</x:String>
+    <x:String x:Key="DeckRemoveUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}</x:String>
     
 </ResourceDictionary>
