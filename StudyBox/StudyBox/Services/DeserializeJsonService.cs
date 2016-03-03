@@ -20,20 +20,10 @@ namespace StudyBox.Services
                     Flashcard flashCardObject = JsonConvert.DeserializeObject<Flashcard>(jsonToDeserialize);
                     return flashCardObject;
                 }
-                catch(JsonSerializationException ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine("JsonSerializationException - " + ex.Message);
+                    return null;
                 }
-                catch(JsonException ex)
-                {
-                    Debug.WriteLine("JsonException - " + ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Other Exception - " + ex.Message);
-                }
-                return null;
-                
             }
             else
                 return null;
@@ -48,48 +38,46 @@ namespace StudyBox.Services
                     List<Flashcard> flashCardObject = JsonConvert.DeserializeObject<List<Flashcard>>(jsonToDeserialize);
                     return flashCardObject;
                 }
-                catch (JsonSerializationException ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine("JsonSerializationException - " + ex.Message);
+                    return null;
                 }
-                catch (JsonException ex)
-                {
-                    Debug.WriteLine("JsonException - " + ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Other Exception - " + ex.Message);
-                }
-                return null;
-
             }
             else
                 return null;
         }
 
-        public static List<FlashcardSet> GetFlashCardSetFromJson(string jsonToDeserialize)
+        public static Deck GetDeckFromJson(string jsonToDeserialize)
         {
             if (jsonToDeserialize != null && jsonToDeserialize != "")
             {
                 try
                 {
-                    List<FlashcardSet> flashCardSetObject = JsonConvert.DeserializeObject<List<FlashcardSet>>(jsonToDeserialize);
-                    return flashCardSetObject;
+                    Deck deckObject = JsonConvert.DeserializeObject<Deck>(jsonToDeserialize);
+                    return deckObject;
                 }
-                catch (JsonSerializationException ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine("JsonSerializationException - " + ex.Message);
+                    return null;
                 }
-                catch (JsonException ex)
-                {
-                    Debug.WriteLine("JsonException - " + ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Other Exception - " + ex.Message);
-                }
+            }
+            else
                 return null;
+        }
 
+        public static List<Deck> GetDecksFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    List<Deck> decksObject = JsonConvert.DeserializeObject<List<Deck>>(jsonToDeserialize);
+                    return decksObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
             else
                 return null;
