@@ -18,7 +18,6 @@ namespace StudyBox.ViewModel
         public ExamViewModel()
         {
             Messenger.Default.Register<DataMessageToExam>(this, x=> HandleDataMessage(x.DeckInstance));
-           
         }
 
         public string TestTextBlock
@@ -39,8 +38,11 @@ namespace StudyBox.ViewModel
 
         private void HandleDataMessage(Deck deckInstance)
         {
-            _deckInstance = deckInstance;
-            TestTextBlock = _deckInstance.Name;
+            if (deckInstance != null)
+            {
+                _deckInstance = deckInstance;
+                TestTextBlock = _deckInstance.Name;
+            }
         }
     }
 }

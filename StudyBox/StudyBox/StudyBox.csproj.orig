@@ -104,17 +104,24 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-<<<<<<< HEAD
+    <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
-=======
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
->>>>>>> 96b2684f24bedac5cf5174406b02b1fbd34c2179
+    <Compile Include="Services\DeserializeJsonService.cs" />
+<<<<<<< HEAD
+    <Compile Include="ViewModel\ExamViewModel.cs" />
+=======
+    <Compile Include="Services\RestService.cs" />
+>>>>>>> d9c8783fa3988aca1f877cedb4641726162aa70b
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\DecksListView.xaml.cs">
       <DependentUpon>DecksListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExamView.xaml.cs">
+      <DependentUpon>ExamView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -144,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Resources\Config.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Themes\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ExamView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -165,12 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="Messages\" />
-<<<<<<< HEAD
-    <Folder Include="Model\" />
-=======
-    <Folder Include="Navigation\" />
->>>>>>> 96b2684f24bedac5cf5174406b02b1fbd34c2179
     <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
