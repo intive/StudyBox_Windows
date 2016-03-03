@@ -4,11 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StudyBox"
     RequestedTheme="Light"
-    xmlns:viewModel="using:StudyBox.ViewModel"
-    >
+    xmlns:viewModel="using:StudyBox.ViewModel">
 
     <Application.Resources>
-        <viewModel:ViewModelLocator x:Key="Locator"/>
+        <ResourceDictionary>
+            <viewModel:ViewModelLocator x:Key="Locator"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
+                <ResourceDictionary Source="Resources/Themes/Fonts.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
     
 </Application>
