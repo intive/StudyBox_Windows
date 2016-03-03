@@ -106,6 +106,8 @@
     </Compile>
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
+    <Compile Include="Model\Deck.cs" />
+    <Compile Include="Model\Flashcard.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\DecksListView.xaml.cs">
@@ -161,7 +163,6 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Messages\" />
-    <Folder Include="Model\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
