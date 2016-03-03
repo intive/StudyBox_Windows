@@ -5,38 +5,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using StudyBox.Model;
 
 namespace StudyBox.ViewModel
 {
     public class DecksListViewModel : ViewModelBase
     {
-        //Collection TO TESTS!
-        private ObservableCollection<int> _funnyIntsCollection = new ObservableCollection<int>();
 
-        public DecksListViewModel()
+        private ObservableCollection<Deck> _decksCollection;
+
+        public ObservableCollection<Deck> decksCollection
         {
-            FunnyIntsCollection=new ObservableCollection<int>();
-            for (int i = 0; i < 20; i++)
-            {
-                FunnyIntsCollection.Add(i);
-            }
-        }
-
-
-        public ObservableCollection<int> FunnyIntsCollection
-        {
-            get
-            {
-                return _funnyIntsCollection;
-            }
+            get { return _decksCollection; }
             set
             {
-                if (_funnyIntsCollection != value)
+                if (_decksCollection != value)
                 {
-                    _funnyIntsCollection = value;
+                    _decksCollection = value;
                     RaisePropertyChanged();
                 }
             }
         }
+
+        private void InitializeTestsCollection()
+        {
+            int countOfDecks = 20;
+            for (int i = 0; i < countOfDecks; i++)
+            {
+                decksCollection.Add(new Deck(Convert.ToString(i), Convert.ToString("TestTile " + i)));
+            }
+        }
+
+        public DecksListViewModel()
+        {
+            decksCollection = new ObservableCollection<Deck>();
+            InitializeTestsCollection();
+        }
+
+
+
+
     }
 }
