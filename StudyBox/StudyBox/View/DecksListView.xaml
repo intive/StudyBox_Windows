@@ -67,6 +67,8 @@
                             <StackPanel x:Name="FirstPanel" Orientation="Horizontal" Margin="0">
                                 <StackPanel x:Name="SecondPanel" Margin="0" Padding="0">
                                     <Button x:Name="Tile"
+                                        CommandParameter="{Binding ID}"
+                                        Command="{Binding ElementName=GridView, Path=DataContext.TapTileCommand}"
                                         Background="{StaticResource Graphite}"
                                         Padding="0"
                                         Width="{Binding ElementName=TileManagment, Path=Width}"

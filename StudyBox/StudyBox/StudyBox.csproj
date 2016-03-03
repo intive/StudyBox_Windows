@@ -104,15 +104,20 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
     <Compile Include="Services\DeserializeJsonService.cs" />
+    <Compile Include="ViewModel\ExamViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\DecksListView.xaml.cs">
       <DependentUpon>DecksListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExamView.xaml.cs">
+      <DependentUpon>ExamView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -156,6 +161,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ExamView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,7 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="Messages\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

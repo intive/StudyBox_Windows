@@ -19,6 +19,7 @@ namespace StudyBox.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<DecksListViewModel>();
+            SimpleIoc.Default.Register<ExamViewModel>();
         }
 
 
@@ -38,6 +39,13 @@ namespace StudyBox.ViewModel
             }
         }
 
+        public ExamViewModel ExamsViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ExamViewModel>();
+            }
+        }
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
