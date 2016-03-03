@@ -11,14 +11,14 @@ namespace StudyBox.Services
 {
     public static class DeserializeJsonService
     {
-        public static Flashcard GetFlashCardFromJson(string jsonToDeserialize)
+        public static Flashcard GetFlashcardFromJson(string jsonToDeserialize)
         {
             if (jsonToDeserialize != null && jsonToDeserialize != "")
             {
                 try
                 {
-                    Flashcard flashCardObject = JsonConvert.DeserializeObject<Flashcard>(jsonToDeserialize);
-                    return flashCardObject;
+                    Flashcard flashcardObject = JsonConvert.DeserializeObject<Flashcard>(jsonToDeserialize);
+                    return flashcardObject;
                 }
                 catch (Exception)
                 {
@@ -29,14 +29,14 @@ namespace StudyBox.Services
                 return null;
         }
 
-        public static List<Flashcard> GetFlashCardsFromJson(string jsonToDeserialize)
+        public static List<Flashcard> GetFlashcardsFromJson(string jsonToDeserialize)
         {
             if (jsonToDeserialize != null && jsonToDeserialize != "")
             {
                 try
                 {
-                    List<Flashcard> flashCardObject = JsonConvert.DeserializeObject<List<Flashcard>>(jsonToDeserialize);
-                    return flashCardObject;
+                    List<Flashcard> flashcardObject = JsonConvert.DeserializeObject<List<Flashcard>>(jsonToDeserialize);
+                    return flashcardObject;
                 }
                 catch (Exception)
                 {
