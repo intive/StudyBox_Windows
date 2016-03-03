@@ -104,11 +104,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
+=======
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
-    <Compile Include="Services\DeserializeJsonService.cs" />
+>>>>>>> 96b2684f24bedac5cf5174406b02b1fbd34c2179
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\DecksListView.xaml.cs">
@@ -164,6 +166,11 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Messages\" />
+<<<<<<< HEAD
+    <Folder Include="Model\" />
+=======
+    <Folder Include="Navigation\" />
+>>>>>>> 96b2684f24bedac5cf5174406b02b1fbd34c2179
     <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

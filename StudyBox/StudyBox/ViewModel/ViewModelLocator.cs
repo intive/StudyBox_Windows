@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using StudyBox.View;
 
 namespace StudyBox.ViewModel
 {
@@ -17,6 +18,7 @@ namespace StudyBox.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MainPageViewModel>();
+            SimpleIoc.Default.Register<DecksListViewModel>();
         }
 
 
@@ -28,7 +30,13 @@ namespace StudyBox.ViewModel
             }
         }
 
-
+        public DecksListViewModel DecksViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DecksListViewModel>();
+            }
+        }
 
         public static void Cleanup()
         {
