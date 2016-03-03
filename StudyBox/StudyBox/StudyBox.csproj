@@ -108,6 +108,7 @@
     <Compile Include="ViewModel\DecksListViewModel.cs" />
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
+    <Compile Include="Services\DeserializeJsonService.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\DecksListView.xaml.cs">

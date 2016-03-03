@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,10 @@ namespace StudyBox.Model
 {
     public class Deck
     {
+        [JsonProperty(PropertyName = "id")]
         public string ID { get; private set; }
+
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         public Deck() { }
