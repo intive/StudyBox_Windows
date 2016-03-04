@@ -16,7 +16,12 @@ namespace StudyBox.Services
     public class RestService: IRestService
     {
         private ResourceDictionary _resources = App.Current.Resources;
+        private readonly IDeserializeJsonService _deserializeJsonService;
 
+        public RestService(IDeserializeJsonService deserializeJsonService)
+        {
+            _deserializeJsonService = deserializeJsonService;
+        }
 
         #region public methods
 
@@ -27,7 +32,7 @@ namespace StudyBox.Services
                 string url = String.Format(_resources["FlashcardGetAllUrl"].ToString(), deckId);
                 string webPageSource = await GetWebPageSource(url, null);
 
-                return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetFlashcardsFromJson(webPageSource);
+                return _deserializeJsonService.GetFlashcardsFromJson(webPageSource);
             }
             catch
             {
@@ -42,7 +47,7 @@ namespace StudyBox.Services
                 string url = String.Format(_resources["FlashcardGetAllUrl"].ToString(), deckId);
                 string webPageSource = await GetWebPageSource(url, cts);
 
-                return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetFlashcardsFromJson(webPageSource);
+                return _deserializeJsonService.GetFlashcardsFromJson(webPageSource);
             }
             catch (TaskCanceledException ex)
             {
@@ -62,7 +67,7 @@ namespace StudyBox.Services
                 string url = String.Format(_resources["FlashcardGetByIdUrl"].ToString(), deckId, flashcardId);
                 string webPageSource = await GetWebPageSource(url, null);
 
-                return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetFlashcardFromJson(webPageSource);
+                return _deserializeJsonService.GetFlashcardFromJson(webPageSource);
             }
             catch
             {
@@ -77,7 +82,7 @@ namespace StudyBox.Services
                 string url = String.Format(_resources["FlashcardGetByIdUrl"].ToString(), deckId, flashcardId);
                 string webPageSource = await GetWebPageSource(url, cts);
 
-                return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetFlashcardFromJson(webPageSource);
+                return _deserializeJsonService.GetFlashcardFromJson(webPageSource);
             }
             catch (TaskCanceledException ex)
             {
@@ -139,7 +144,7 @@ namespace StudyBox.Services
             string url = _resources["DeckGetAllUrl"].ToString();
             string webPageSource = await GetWebPageSource(url, null);
 
-            return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetDecksFromJson(webPageSource);
+            return _deserializeJsonService.GetDecksFromJson(webPageSource);
         }
 
         public async Task<List<Deck>> GetDecks(CancellationTokenSource cts)
@@ -147,7 +152,7 @@ namespace StudyBox.Services
             string url = _resources["DeckGetAllUrl"].ToString();
             string webPageSource = await GetWebPageSource(url, cts);
 
-            return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetDecksFromJson(webPageSource);
+            return _deserializeJsonService.GetDecksFromJson(webPageSource);
         }
 
 
@@ -157,7 +162,7 @@ namespace StudyBox.Services
             string url = String.Format(_resources["DeckGetByIdUrl"].ToString(), deckId);
             string webPageSource = await GetWebPageSource(url, null);
 
-            return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetDeckFromJson(webPageSource);
+            return _deserializeJsonService.GetDeckFromJson(webPageSource);
         }
 
         public async Task<Deck> GetDeckById(string deckId, CancellationTokenSource cts)
@@ -165,7 +170,7 @@ namespace StudyBox.Services
             string url = String.Format(_resources["DeckGetByIdUrl"].ToString(), deckId);
             string webPageSource = await GetWebPageSource(url, cts);
 
-            return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetDeckFromJson(webPageSource);
+            return _deserializeJsonService.GetDeckFromJson(webPageSource);
         }
 
 
@@ -174,7 +179,7 @@ namespace StudyBox.Services
             string url = String.Format(_resources["DeckGetAllByNameUrl"].ToString(), name);
             string webPageSource = await GetWebPageSource(url, null);
 
-            return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetDecksFromJson(webPageSource);
+            return _deserializeJsonService.GetDecksFromJson(webPageSource);
         }
 
         public async Task<List<Deck>> GetDecksByName(string name, CancellationTokenSource cts)
@@ -182,7 +187,7 @@ namespace StudyBox.Services
             string url = String.Format(_resources["DeckGetAllByNameUrl"].ToString(), name);
             string webPageSource = await GetWebPageSource(url, cts);
 
-            return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetDecksFromJson(webPageSource);
+            return _deserializeJsonService.GetDecksFromJson(webPageSource);
         }
 
 
@@ -300,7 +305,7 @@ namespace StudyBox.Services
                     }
 
                     string json = await DecodeResponseContent(response);
-                    return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetFlashcardFromJson(json);
+                    return _deserializeJsonService.GetFlashcardFromJson(json);
                 }
             }
             catch (TaskCanceledException ex)
@@ -341,7 +346,7 @@ namespace StudyBox.Services
                     }
 
                     string json = await DecodeResponseContent(response);
-                    return SimpleIoc.Default.GetInstance<IDeserializeJsonService>().GetDeckFromJson(json);
+                    return _deserializeJsonService.GetDeckFromJson(json);
                 }
             }
             catch (TaskCanceledException ex)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StudyBox.Interfaces
 {
-    interface IDeserializeJsonService
+    public interface IDeserializeJsonService
     {
         Flashcard GetFlashcardFromJson(string jsonToDeserialize);
         List<Flashcard> GetFlashcardsFromJson(string jsonToDeserialize);

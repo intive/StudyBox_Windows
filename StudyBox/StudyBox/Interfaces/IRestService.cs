@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudyBox.Interfaces
 {
-    interface IRestService
+    public interface IRestService
     {
         Task<List<Flashcard>> GetFlashcards(string deckId);
         Task<List<Flashcard>> GetFlashcards(string deckId, CancellationTokenSource cts);
