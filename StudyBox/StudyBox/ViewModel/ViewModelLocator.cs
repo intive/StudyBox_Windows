@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using StudyBox.View;
+using GalaSoft.MvvmLight;
+using StudyBox.Interfaces;
+using StudyBox.Services;
 
 namespace StudyBox.ViewModel
 {
@@ -20,6 +23,17 @@ namespace StudyBox.ViewModel
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<DecksListViewModel>();
             SimpleIoc.Default.Register<ExamViewModel>();
+
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
+                SimpleIoc.Default.Register<IRestService, RestService>();
+            }
+            else
+            {
+                SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
+                SimpleIoc.Default.Register<IRestService, RestService>();
+            }
         }
 
 

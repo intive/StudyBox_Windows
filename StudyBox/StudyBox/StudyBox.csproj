@@ -104,6 +104,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IDeserializeJsonService.cs" />
+    <Compile Include="Interfaces\IRestService.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
