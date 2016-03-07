@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using StudyBox.Model;
 using System.Diagnostics;
+using StudyBox.Interfaces;
 
 namespace StudyBox.Services
 {
-    public static class DeserializeJsonService
+    public class DeserializeJsonService: IDeserializeJsonService
     {
-        public static Flashcard GetFlashcardFromJson(string jsonToDeserialize)
+        public Flashcard GetFlashcardFromJson(string jsonToDeserialize)
         {
             if (jsonToDeserialize != null && jsonToDeserialize != "")
             {
@@ -29,7 +30,7 @@ namespace StudyBox.Services
                 return null;
         }
 
-        public static List<Flashcard> GetFlashcardsFromJson(string jsonToDeserialize)
+        public List<Flashcard> GetFlashcardsFromJson(string jsonToDeserialize)
         {
             if (jsonToDeserialize != null && jsonToDeserialize != "")
             {
@@ -47,7 +48,7 @@ namespace StudyBox.Services
                 return null;
         }
 
-        public static Deck GetDeckFromJson(string jsonToDeserialize)
+        public Deck GetDeckFromJson(string jsonToDeserialize)
         {
             if (jsonToDeserialize != null && jsonToDeserialize != "")
             {
@@ -65,7 +66,7 @@ namespace StudyBox.Services
                 return null;
         }
 
-        public static List<Deck> GetDecksFromJson(string jsonToDeserialize)
+        public List<Deck> GetDecksFromJson(string jsonToDeserialize)
         {
             if (jsonToDeserialize != null && jsonToDeserialize != "")
             {
