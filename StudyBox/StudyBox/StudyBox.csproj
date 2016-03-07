@@ -107,7 +107,6 @@
     <Compile Include="Interfaces\IDeserializeJsonService.cs" />
     <Compile Include="Interfaces\IRestService.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
-    <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
@@ -179,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
+    <Folder Include="Navigation\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
