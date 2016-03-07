@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using StudyBox.Messages;
 using StudyBox.Model;
 
@@ -12,11 +13,14 @@ namespace StudyBox.ViewModel
 {
     public class ExamViewModel : ViewModelBase
     {
+        private INavigationService _navigationService;
         private Deck _deckInstance;
         private string _testTextBlock;
 
-        public ExamViewModel()
+        public ExamViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
+
             Messenger.Default.Register<DataMessageToExam>(this, x=> HandleDataMessage(x.DeckInstance));
         }
 
