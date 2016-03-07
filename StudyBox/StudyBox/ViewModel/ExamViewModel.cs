@@ -12,16 +12,17 @@ using StudyBox.Services;
 using GalaSoft.MvvmLight.Command;
 using System.Resources;
 using Windows.ApplicationModel.Resources;
+using StudyBox.Interfaces;
 
 namespace StudyBox.ViewModel
 {
     public class ExamViewModel : ViewModelBase
     {
         private INavigationService _navigationService;
+        private IRestService _restService;
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
         private string _nameOfDeck;
-        private string _hintText;
         private bool _isDataLoading;
         private bool _isHintAlreadyShown = false;
         private bool _isQuestionVisible = true;
@@ -33,9 +34,10 @@ namespace StudyBox.ViewModel
         private RelayCommand _countBadAnswer;
         private ResourceLoader _stringResources;
 
-        public ExamViewModel(INavigationService navigationService)
+        public ExamViewModel(INavigationService navigationService, IRestService restService)
         {
             _navigationService = navigationService;
+            _restService = restService;
 
             Messenger.Default.Register<DataMessageToExam>(this, x=> HandleDataMessage(x.DeckInstance));
             _stringResources = new ResourceLoader();
@@ -69,7 +71,7 @@ namespace StudyBox.ViewModel
         {
             get
             {
-                return _showHint ?? (_showHint = new RelayCommand(ShowAvailableHint));
+                return _showHint ?? (_showHint = new RelayCommand(ShowAvailableHint, () => IsHintAvailable));
             }
         }
 
@@ -149,7 +151,7 @@ namespace StudyBox.ViewModel
         {
             get
             {
-                return _flashcards == null ? string.Empty : (!_isHintAlreadyShown && IsHintAvailable ? _stringResources.GetString("HintRectangle") : _flashcards[_numberOfCurrentFlashcard].Hint);
+                return _flashcards == null ? string.Empty : (!_isHintAlreadyShown ? _stringResources.GetString("HintRectangle") : _flashcards[_numberOfCurrentFlashcard].Hint);
             }
         }
 
@@ -177,13 +179,16 @@ namespace StudyBox.ViewModel
                 NameOfDeck = _deckInstance.Name;
 
                 IsDataLoading = true;
-                //_flashcards = await RestService.GetFlashcards(_deckInstance.ID);
+                //_flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+
+                //MOCK-UP:
                 _flashcards = new List<Flashcard>()
                 {
                     new Flashcard("1", new Deck(), "Question?", "Answer?", "Hint"),
                     new Flashcard("2", new Deck(), "Question2?", "Answer2?", "Hint2"),
                     new Flashcard("3", new Deck(), "Question3?", "Answer3?", "Hint3")
                 };
+
                 RaiseAllPropertiesChanged();
                 IsDataLoading = false;
             }
@@ -223,7 +228,7 @@ namespace StudyBox.ViewModel
             }
             else
             {
-                //navigate to result
+                //TODO: navigate to result
             }
         }
 

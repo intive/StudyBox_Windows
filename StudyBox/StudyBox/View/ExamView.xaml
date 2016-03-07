@@ -66,28 +66,36 @@
                         <ColumnDefinition  Width="5*"/>
                         <ColumnDefinition  Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Padding="0" FontSize="12"
-                                Foreground="{StaticResource Grey}" Background="{StaticResource DarkBlue}"
-                                Margin="10,0,0,0"
-                                MaxWidth="32" MaxHeight="32">
+                    <Button Grid.Column="0" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center"
+                            Padding="0" FontSize="12"
+                            Foreground="{StaticResource Grey}" 
+                            Background="{StaticResource DarkBlue}"
+                            Margin="10,0,0,0"
+                            MaxWidth="32" 
+                            MaxHeight="32">
                         <Button.Content>
                             <Image Source="ms-appx:///Assets/Menu-64.png" Stretch="Fill" Margin="0"/>
                         </Button.Content>
                     </Button>
                     <TextBlock
-                                Grid.Column="1" x:Uid="DecksListTitleText"
-                                VerticalAlignment="Center" 
-                                HorizontalAlignment="Center" 
-                                FontSize="18" 
-                                FontStretch="UltraExpanded" 
-                                Foreground="{StaticResource Grey}" 
-                                FontFamily="{StaticResource LatoBlackFontFamily}"/>
-                    <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Grid.Column="1" x:Uid="DecksListTitleText"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center" 
+                            FontSize="18" 
+                            FontStretch="UltraExpanded" 
+                            Foreground="{StaticResource Grey}" 
+                            FontFamily="{StaticResource LatoBlackFontFamily}"/>
+                    <Button Grid.Column="2" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center"
                             Padding="5" FontSize="12"
-                            Foreground="{StaticResource Grey}" Background="{StaticResource DarkBlue}"
+                            Foreground="{StaticResource Grey}" 
+                            Background="{StaticResource DarkBlue}"
                             Margin="0,0,10,0"
-                            MaxWidth="32" MaxHeight="32">
+                            MaxWidth="32" 
+                            MaxHeight="32">
                         <Button.Content>
                             <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0"/>
                         </Button.Content>
@@ -114,7 +122,7 @@
                     Grid.Column="1" 
                     Grid.Row="2" 
                     Background="{StaticResource DarkBlue}" 
-                  BorderBrush="Transparent">
+                    BorderBrush="Transparent">
                 <TextBlock Text="{Binding Question}" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
@@ -137,10 +145,10 @@
                     </core:EventTriggerBehavior>
                 </i:Interaction.Behaviors>
                 <TextBlock Text="{Binding Hint}"
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            FontFamily="{StaticResource LatoRegularFontFamily}" 
-                            Foreground="{StaticResource Grey}" />
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Foreground="{StaticResource Grey}" />
             </Button>
 
             <Grid Visibility="{Binding IsQuestionVisible, Converter={StaticResource NegativeBooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="4" >
