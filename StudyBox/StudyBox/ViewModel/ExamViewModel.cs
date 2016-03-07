@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using StudyBox.Messages;
 using StudyBox.Model;
 using StudyBox.Services;
@@ -16,6 +17,7 @@ namespace StudyBox.ViewModel
 {
     public class ExamViewModel : ViewModelBase
     {
+        private INavigationService _navigationService;
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
         private string _nameOfDeck;
@@ -31,8 +33,10 @@ namespace StudyBox.ViewModel
         private RelayCommand _countBadAnswer;
         private ResourceLoader _stringResources;
 
-        public ExamViewModel()
+        public ExamViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
+
             Messenger.Default.Register<DataMessageToExam>(this, x=> HandleDataMessage(x.DeckInstance));
             _stringResources = new ResourceLoader();
         }

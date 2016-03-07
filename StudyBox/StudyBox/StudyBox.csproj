@@ -108,9 +108,10 @@
     </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
+    <Compile Include="Interfaces\IDeserializeJsonService.cs" />
+    <Compile Include="Interfaces\IRestService.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Messages\StartStoryboardMessage.cs" />
-    <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
@@ -181,6 +182,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Navigation\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
