@@ -158,7 +158,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}" Padding="20">
+                <Button x:Name="CancelButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
                     <Button.Content>
                         <Image Source="ms-appx:///Assets/cancel.png" Margin="0"/>
                     </Button.Content>
@@ -168,7 +168,7 @@
                         </core:EventTriggerBehavior>
                     </i:Interaction.Behaviors>
                 </Button>
-                <Button Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}" Padding="22">
+                <Button x:Name="ApproveButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
                     <Button.Content>
                         <Image Source="ms-appx:///Assets/approve.png" Margin="0"/>
                     </Button.Content>
@@ -190,6 +190,49 @@
 
         </Grid>
 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Phone">
+                <VisualState x:Name="NarrowPhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CancelButton.Padding" Value="10"/>
+                        <Setter Target="ApproveButton.Padding" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
 
+                <VisualState x:Name="WidePhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="450"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CancelButton.Padding" Value="10"/>
+                        <Setter Target="ApproveButton.Padding" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideTabletState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CancelButton.Padding" Value="20"/>
+                        <Setter Target="ApproveButton.Padding" Value="22"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CancelButton.Padding" Value="20"/>
+                        <Setter Target="ApproveButton.Padding" Value="22"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
