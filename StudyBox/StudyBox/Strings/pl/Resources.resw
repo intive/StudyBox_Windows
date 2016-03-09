@@ -141,7 +141,7 @@
   <data name="TryAgain" xml:space="preserve">
     <value>Próbuj dalej...</value>
   </data>
-  <data name="YourScroe.Text" xml:space="preserve">
+  <data name="YourScore.Text" xml:space="preserve">
     <value>Twój wynik</value>
   </data>
 </root>
