@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using StudyBox.Messages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -25,6 +28,16 @@ namespace StudyBox.View
         public ExamView()
         {
             this.InitializeComponent();
+            Messenger.Default.Register<StartStoryboardMessage>(this, x => StartStoryboard(x.StoryboardName));
+        }
+
+        private void StartStoryboard(string storyboardName)
+        {
+            var storyboard = FindName(storyboardName) as Storyboard;
+            if (storyboard != null)
+            {
+                storyboard.Begin();
+            }
         }
     }
 }

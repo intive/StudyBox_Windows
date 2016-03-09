@@ -93,6 +93,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="project.json" />
+    <Content Include="Assets\approve.png" />
+    <Content Include="Assets\cancel.png" />
     <Content Include="Assets\Menu-64.png" />
     <Content Include="Assets\Search-64.png" />
     <Content Include="Resources\Themes\Fonts\Lato-Regular.ttf">
@@ -104,9 +106,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
     <Compile Include="Interfaces\IDeserializeJsonService.cs" />
     <Compile Include="Interfaces\IRestService.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
+    <Compile Include="Messages\StartStoryboardMessage.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Flashcard.cs" />
@@ -177,9 +182,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Navigation\" />
     <Folder Include="Utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
