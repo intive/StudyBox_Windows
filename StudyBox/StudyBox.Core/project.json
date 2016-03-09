@@ -1,6 +1,9 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0"
+    "Microsoft.AspNet.WebApi.Client": "5.2.3",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "MvvmLight": "5.2.0",
+    "Newtonsoft.Json": "8.0.2"
   },
   "frameworks": {
     "uap10.0": {}
