@@ -1,4 +1,6 @@
-﻿using StudyBox.Model;
+﻿using GalaSoft.MvvmLight.Ioc;
+using StudyBox.Interfaces;
+using StudyBox.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +13,26 @@ using Windows.UI.Xaml;
 
 namespace StudyBox.Services
 {
-    public static class RestService
+    public class RestService: IRestService
     {
-        private static ResourceDictionary _resources = App.Current.Resources;
+        private ResourceDictionary _resources = App.Current.Resources;
+        private readonly IDeserializeJsonService _deserializeJsonService;
 
+        public RestService(IDeserializeJsonService deserializeJsonService)
+        {
+            _deserializeJsonService = deserializeJsonService;
+        }
 
         #region public methods
 
-        public static async Task<List<Flashcard>> GetFlashcards(string deckId)
+        public async Task<List<Flashcard>> GetFlashcards(string deckId)
         {
             try
             {
                 string url = String.Format(_resources["FlashcardGetAllUrl"].ToString(), deckId);
                 string webPageSource = await GetWebPageSource(url, null);
 
-                return DeserializeJsonService.GetFlashcardsFromJson(webPageSource);
+                return _deserializeJsonService.GetFlashcardsFromJson(webPageSource);
             }
             catch
             {
@@ -33,14 +40,14 @@ namespace StudyBox.Services
             }
         }
 
-        public static async Task<List<Flashcard>> GetFlashcards(string deckId, CancellationTokenSource cts)
+        public async Task<List<Flashcard>> GetFlashcards(string deckId, CancellationTokenSource cts)
         {
             try
             {
                 string url = String.Format(_resources["FlashcardGetAllUrl"].ToString(), deckId);
                 string webPageSource = await GetWebPageSource(url, cts);
 
-                return DeserializeJsonService.GetFlashcardsFromJson(webPageSource);
+                return _deserializeJsonService.GetFlashcardsFromJson(webPageSource);
             }
             catch (TaskCanceledException ex)
             {
@@ -53,14 +60,14 @@ namespace StudyBox.Services
         }
 
 
-        public static async Task<Flashcard> GetFlashcardById(string deckId, string flashcardId)
+        public async Task<Flashcard> GetFlashcardById(string deckId, string flashcardId)
         {
             try
             {
                 string url = String.Format(_resources["FlashcardGetByIdUrl"].ToString(), deckId, flashcardId);
                 string webPageSource = await GetWebPageSource(url, null);
 
-                return DeserializeJsonService.GetFlashcardFromJson(webPageSource);
+                return _deserializeJsonService.GetFlashcardFromJson(webPageSource);
             }
             catch
             {
@@ -68,14 +75,14 @@ namespace StudyBox.Services
             }
         }
 
-        public static async Task<Flashcard> GetFlashcardById(string deckId, string flashcardId, CancellationTokenSource cts)
+        public async Task<Flashcard> GetFlashcardById(string deckId, string flashcardId, CancellationTokenSource cts)
         {
             try
             {
                 string url = String.Format(_resources["FlashcardGetByIdUrl"].ToString(), deckId, flashcardId);
                 string webPageSource = await GetWebPageSource(url, cts);
 
-                return DeserializeJsonService.GetFlashcardFromJson(webPageSource);
+                return _deserializeJsonService.GetFlashcardFromJson(webPageSource);
             }
             catch (TaskCanceledException ex)
             {
@@ -88,18 +95,18 @@ namespace StudyBox.Services
         }
 
 
-        public static async Task<Flashcard> CreateFlashcard(Flashcard flashcard, string deckId, CancellationTokenSource cts)
+        public async Task<Flashcard> CreateFlashcard(Flashcard flashcard, string deckId, CancellationTokenSource cts)
         {
             return await CreateFlashcardHelper(flashcard, deckId, cts);
         }
 
-        public static async Task<Flashcard> CreateFlashcard(Flashcard flashcard, string deckId)
+        public async Task<Flashcard> CreateFlashcard(Flashcard flashcard, string deckId)
         {
             return await CreateFlashcardHelper(flashcard, deckId, null);
         }
 
 
-        public static async Task<bool> UpdateFlashcard(Flashcard flashcard, string deckId)
+        public async Task<bool> UpdateFlashcard(Flashcard flashcard, string deckId)
         {
             string url = String.Format(_resources["FlashcardUpdateUrl"].ToString(), deckId, flashcard.Id);
 
@@ -108,7 +115,7 @@ namespace StudyBox.Services
                 null);
         }
 
-        public static async Task<bool> UpdateFlashcard(Flashcard flashcard, string deckId, CancellationTokenSource cts)
+        public async Task<bool> UpdateFlashcard(Flashcard flashcard, string deckId, CancellationTokenSource cts)
         {
             string url = String.Format(_resources["FlashcardUpdateUrl"].ToString(), deckId, flashcard.Id);
 
@@ -118,13 +125,13 @@ namespace StudyBox.Services
         }
 
 
-        public static async Task<bool> RemoveFlashcard(string deckId, string flashcardId)
+        public async Task<bool> RemoveFlashcard(string deckId, string flashcardId)
         {
             string url = String.Format(_resources["FlashcardRemoveUrl"].ToString(), deckId, flashcardId);
             return await RemoveHelper(url, HttpStatusCode.OK, null);
         }
 
-        public static async Task<bool> RemoveFlashcard(string deckId, string flashcardId, CancellationTokenSource cts)
+        public async Task<bool> RemoveFlashcard(string deckId, string flashcardId, CancellationTokenSource cts)
         {
             string url = String.Format(_resources["FlashcardRemoveUrl"].ToString(), deckId, flashcardId);
             return await RemoveHelper(url, HttpStatusCode.OK, cts);
@@ -132,70 +139,70 @@ namespace StudyBox.Services
 
 
 
-        public static async Task<List<Deck>> GetDecks()
+        public async Task<List<Deck>> GetDecks()
         {
             string url = _resources["DeckGetAllUrl"].ToString();
             string webPageSource = await GetWebPageSource(url, null);
 
-            return DeserializeJsonService.GetDecksFromJson(webPageSource);
+            return _deserializeJsonService.GetDecksFromJson(webPageSource);
         }
 
-        public static async Task<List<Deck>> GetDecks(CancellationTokenSource cts)
+        public async Task<List<Deck>> GetDecks(CancellationTokenSource cts)
         {
             string url = _resources["DeckGetAllUrl"].ToString();
             string webPageSource = await GetWebPageSource(url, cts);
 
-            return DeserializeJsonService.GetDecksFromJson(webPageSource);
+            return _deserializeJsonService.GetDecksFromJson(webPageSource);
         }
 
 
 
-        public static async Task<Deck> GetDeckById(string deckId)
+        public async Task<Deck> GetDeckById(string deckId)
         {
             string url = String.Format(_resources["DeckGetByIdUrl"].ToString(), deckId);
             string webPageSource = await GetWebPageSource(url, null);
 
-            return DeserializeJsonService.GetDeckFromJson(webPageSource);
+            return _deserializeJsonService.GetDeckFromJson(webPageSource);
         }
 
-        public static async Task<Deck> GetDeckById(string deckId, CancellationTokenSource cts)
+        public async Task<Deck> GetDeckById(string deckId, CancellationTokenSource cts)
         {
             string url = String.Format(_resources["DeckGetByIdUrl"].ToString(), deckId);
             string webPageSource = await GetWebPageSource(url, cts);
 
-            return DeserializeJsonService.GetDeckFromJson(webPageSource);
+            return _deserializeJsonService.GetDeckFromJson(webPageSource);
         }
 
 
-        public static async Task<List<Deck>> GetDecksByName(string name)
+        public async Task<List<Deck>> GetDecksByName(string name)
         {
             string url = String.Format(_resources["DeckGetAllByNameUrl"].ToString(), name);
             string webPageSource = await GetWebPageSource(url, null);
 
-            return DeserializeJsonService.GetDecksFromJson(webPageSource);
+            return _deserializeJsonService.GetDecksFromJson(webPageSource);
         }
 
-        public static async Task<List<Deck>> GetDecksByName(string name, CancellationTokenSource cts)
+        public async Task<List<Deck>> GetDecksByName(string name, CancellationTokenSource cts)
         {
             string url = String.Format(_resources["DeckGetAllByNameUrl"].ToString(), name);
             string webPageSource = await GetWebPageSource(url, cts);
 
-            return DeserializeJsonService.GetDecksFromJson(webPageSource);
+            return _deserializeJsonService.GetDecksFromJson(webPageSource);
         }
 
 
-        public static async Task<Deck> CreateDeck(Deck deck)
+        public async Task<Deck> CreateDeck(Deck deck)
         {
             return await CreateDeckHelper(deck, null);
         }
 
-        public static async Task<Deck> CreateDeck(Deck deck, CancellationTokenSource cts)
+        public async Task<Deck> CreateDeck(Deck deck, CancellationTokenSource cts)
         {
             return await CreateDeckHelper(deck, cts);
         }
 
 
-        public static async Task<bool> UpdateDeck(Deck deck)
+        public async Task<bool> UpdateDeck(Deck deck)
         {
             string url = String.Format(_resources["DeckUpdateUrl"].ToString(), deck.ID);
             return await UpdateHelper(url,
@@ -203,7 +210,7 @@ namespace StudyBox.Services
                 null);
         }
 
-        public static async Task<bool> UpdateDeck(Deck deck, CancellationTokenSource cts)
+        public async Task<bool> UpdateDeck(Deck deck, CancellationTokenSource cts)
         {
             string url = String.Format(_resources["DeckUpdateUrl"].ToString(), deck.ID);
             return await UpdateHelper(url,
@@ -212,13 +219,13 @@ namespace StudyBox.Services
         }
 
 
-        public static async Task<bool> RemoveDeck(string deckId)
+        public async Task<bool> RemoveDeck(string deckId)
         {
             string url = String.Format(_resources["DeckRemoveUrl"].ToString(), deckId);
             return await RemoveHelper(url, HttpStatusCode.NoContent, null);
         }
 
-        public static async Task<bool> RemoveDeck(string deckId, CancellationTokenSource cts)
+        public async Task<bool> RemoveDeck(string deckId, CancellationTokenSource cts)
         {
             string url = String.Format(_resources["DeckRemoveUrl"].ToString(), deckId);
             return await RemoveHelper(url, HttpStatusCode.NoContent, cts);
@@ -229,7 +236,7 @@ namespace StudyBox.Services
 
         #region private methods
 
-        private static async Task<string> DecodeResponseContent(HttpResponseMessage response)
+        private async Task<string> DecodeResponseContent(HttpResponseMessage response)
         {
             string jsonString = "";
             byte[] byteContent = await response.Content.ReadAsByteArrayAsync();
@@ -246,7 +253,7 @@ namespace StudyBox.Services
             return jsonString;
         }
 
-        private static async Task<string> GetWebPageSource(string url, CancellationTokenSource cts)
+        private async Task<string> GetWebPageSource(string url, CancellationTokenSource cts)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -269,7 +276,7 @@ namespace StudyBox.Services
             }
         }
 
-        private static async Task<Flashcard> CreateFlashcardHelper(Flashcard flashcard, string deckId, CancellationTokenSource cts)
+        private async Task<Flashcard> CreateFlashcardHelper(Flashcard flashcard, string deckId, CancellationTokenSource cts)
         {
             string url = String.Format(_resources["FlashcardCreateUrl"].ToString(), deckId);
             try
@@ -298,7 +305,7 @@ namespace StudyBox.Services
                     }
 
                     string json = await DecodeResponseContent(response);
-                    return DeserializeJsonService.GetFlashcardFromJson(json);
+                    return _deserializeJsonService.GetFlashcardFromJson(json);
                 }
             }
             catch (TaskCanceledException ex)
@@ -311,7 +318,7 @@ namespace StudyBox.Services
             }
         }
 
-        private static async Task<Deck> CreateDeckHelper(Deck deck, CancellationTokenSource cts)
+        private async Task<Deck> CreateDeckHelper(Deck deck, CancellationTokenSource cts)
         {
             string url = _resources["DeckCreateUrl"].ToString();
             try
@@ -339,7 +346,7 @@ namespace StudyBox.Services
                     }
 
                     string json = await DecodeResponseContent(response);
-                    return DeserializeJsonService.GetDeckFromJson(json);
+                    return _deserializeJsonService.GetDeckFromJson(json);
                 }
             }
             catch (TaskCanceledException ex)
@@ -353,7 +360,7 @@ namespace StudyBox.Services
         }
 
 
-        private static async Task<bool> UpdateHelper(string url, object apiUpdateObject, CancellationTokenSource cts)
+        private async Task<bool> UpdateHelper(string url, object apiUpdateObject, CancellationTokenSource cts)
         {
             try
             {
@@ -389,7 +396,7 @@ namespace StudyBox.Services
         }
 
 
-        private static async Task<bool> RemoveHelper(string url, HttpStatusCode expectedStatusCode, CancellationTokenSource cts)
+        private async Task<bool> RemoveHelper(string url, HttpStatusCode expectedStatusCode, CancellationTokenSource cts)
         {
             try
             {

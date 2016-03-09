@@ -5,21 +5,234 @@
     xmlns:local="using:StudyBox.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converters="using:StudyBox.Converters"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=ExamsViewModel}"
     >
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter" />
+        <Storyboard x:Name="TurnFlashcardToShowAnswer">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="QuestionCard">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="-90"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="AnswerCard">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="90"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="TurnFlashcardToShowQuestion">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="QuestionCard">
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="-90"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="AnswerCard">
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="90"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="90"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="{Binding TestTextBlock}" HorizontalAlignment="Center"/>
+    <Grid Background="White">
+
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="6" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ProgressBar IsIndeterminate="True" />
+            <TextBlock x:Uid="LoadingFlashcards" Margin="0,10,0,0" />
         </StackPanel>
+
+        <Grid Visibility="{Binding IsDataLoading, Converter={StaticResource NegativeBooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10*" MaxWidth="500"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" MinHeight="50" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3.5*"/>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="0.9*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{StaticResource DarkBlue}" Padding="0,0" MinHeight="50">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  Width="*"/>
+                        <ColumnDefinition  Width="5*"/>
+                        <ColumnDefinition  Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center"
+                            Padding="0" FontSize="12"
+                            Foreground="{StaticResource Grey}" 
+                            Background="{StaticResource DarkBlue}"
+                            Margin="10,0,0,0"
+                            MaxWidth="32" 
+                            MaxHeight="32">
+                        <Button.Content>
+                            <Image Source="ms-appx:///Assets/Menu-64.png" Stretch="Fill" Margin="0"/>
+                        </Button.Content>
+                    </Button>
+                    <TextBlock
+                            Grid.Column="1" x:Uid="DecksListTitleText"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center" 
+                            FontSize="18" 
+                            FontStretch="UltraExpanded" 
+                            Foreground="{StaticResource Grey}" 
+                            FontFamily="{StaticResource LatoBlackFontFamily}"/>
+                    <Button Grid.Column="2" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center"
+                            Padding="5" FontSize="12"
+                            Foreground="{StaticResource Grey}" 
+                            Background="{StaticResource DarkBlue}"
+                            Margin="0,0,10,0"
+                            MaxWidth="32" 
+                            MaxHeight="32">
+                        <Button.Content>
+                            <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0"/>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1">
+                <TextBlock Text="{Binding NameOfDeck}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding NumberOfFlashcard}" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <Border x:Name="AnswerCard" UseLayoutRounding="True" BorderBrush="Transparent" Grid.Column="1" Grid.Row="2" Background="{StaticResource DarkBlue}">
+                <TextBlock Text="{Binding Answer}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            FontFamily="{StaticResource LatoRegularFontFamily}" 
+                            Foreground="{StaticResource Grey}"/>
+                <Border.Projection>
+                    <PlaneProjection RotationY="90" />
+                </Border.Projection>
+            </Border>
+            <Border x:Name="QuestionCard" 
+                    Grid.Column="1" 
+                    Grid.Row="2" 
+                    Background="{StaticResource DarkBlue}" 
+                    BorderBrush="Transparent">
+                <TextBlock Text="{Binding Question}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            FontFamily="{StaticResource LatoRegularFontFamily}" 
+                            Foreground="{StaticResource Grey}"/>
+                <Border.Projection>
+                    <PlaneProjection/>
+                </Border.Projection>
+                <i:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding ShowAnswer}" />
+                    </core:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+            </Border>
+
+            <Button Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding IsHintAvailable}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}">
+                <i:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding ShowHint}" />
+                    </core:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+                <TextBlock Text="{Binding Hint}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Foreground="{StaticResource Grey}" />
+            </Button>
+
+            <Grid Visibility="{Binding IsQuestionVisible, Converter={StaticResource NegativeBooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="4" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.1*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="CancelButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
+                    <Button.Content>
+                        <Image Source="ms-appx:///Assets/cancel.png" Margin="0"/>
+                    </Button.Content>
+                    <i:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding CountBadAnswer}" />
+                        </core:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </Button>
+                <Button x:Name="ApproveButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
+                    <Button.Content>
+                        <Image Source="ms-appx:///Assets/approve.png" Margin="0"/>
+                    </Button.Content>
+                    <i:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding CountGoodAnswer}" />
+                        </core:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </Button>
+            </Grid>
+
+            <TextBlock Text="{Binding CurrentResult}"
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Foreground="{StaticResource Graphite}" 
+                        Grid.Column="1" 
+                        Grid.Row="5" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"/>
+
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Phone">
+                <VisualState x:Name="NarrowPhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CancelButton.Padding" Value="10"/>
+                        <Setter Target="ApproveButton.Padding" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WidePhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="450"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CancelButton.Padding" Value="10"/>
+                        <Setter Target="ApproveButton.Padding" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideTabletState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CancelButton.Padding" Value="20"/>
+                        <Setter Target="ApproveButton.Padding" Value="22"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CancelButton.Padding" Value="20"/>
+                        <Setter Target="ApproveButton.Padding" Value="22"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

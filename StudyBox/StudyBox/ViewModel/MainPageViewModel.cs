@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using StudyBox.Navigation;
+using GalaSoft.MvvmLight.Views;
+using StudyBox.View;
 
 namespace StudyBox.ViewModel
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private Navigation.NavigationService _nav = new Navigation.NavigationService();
+        private INavigationService _navigationService;
 
-        public MainPageViewModel()
+        public MainPageViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             GoToDecksListCommand = new RelayCommand(GoToDecksList);
         }
 
@@ -25,7 +27,7 @@ namespace StudyBox.ViewModel
 
         private void GoToDecksList()
         {
-            _nav.Navigate(typeof (View.DecksListView));
+            _navigationService.NavigateTo("DecksListView");
         }
 
 

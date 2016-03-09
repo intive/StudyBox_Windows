@@ -8,6 +8,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using StudyBox.Messages;
 using StudyBox.Model;
 
@@ -17,7 +18,7 @@ namespace StudyBox.ViewModel
     {
     
         private ObservableCollection<Deck> _decksCollection;
-        private Navigation.NavigationService _nav = new Navigation.NavigationService();
+        private INavigationService _navigationService;
 
         public ObservableCollection<Deck> DecksCollection
         {
@@ -41,8 +42,9 @@ namespace StudyBox.ViewModel
             }
         }
 
-        public DecksListViewModel()
+        public DecksListViewModel(INavigationService navigationService)
         {
+            this._navigationService = navigationService;
             DecksCollection = new ObservableCollection<Deck>();
             InitializeTestsCollection();
 
@@ -55,7 +57,7 @@ namespace StudyBox.ViewModel
 
         private void TapTile(string id)
         {
-            _nav.Navigate(typeof(View.ExamView));
+            _navigationService.NavigateTo("ExamView");
             Deck deck = DecksCollection.Where(x => x.ID == id).FirstOrDefault();
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
             
