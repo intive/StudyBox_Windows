@@ -117,13 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Congrats" xml:space="preserve">
+    <value>Gratulacje!</value>
+  </data>
   <data name="DecksListTitleText.Text" xml:space="preserve">
     <value>StudyBox</value>
   </data>
   <data name="HintRectangle" xml:space="preserve">
     <value>Pokaż podpowiedź!</value>
   </data>
+  <data name="ImproveResults.Text" xml:space="preserve">
+    <value>POPRAW WYNIK</value>
+  </data>
   <data name="LoadingFlashcards.Text" xml:space="preserve">
     <value>Fiszki ładują się...</value>
+  </data>
+  <data name="MyDecks.Text" xml:space="preserve">
+    <value>MOJE TALIE</value>
+  </data>
+  <data name="NotBad" xml:space="preserve">
+    <value>Nieźle!</value>
+  </data>
+  <data name="TryAgain" xml:space="preserve">
+    <value>Próbuj dalej...</value>
+  </data>
+  <data name="YourScroe.Text" xml:space="preserve">
+    <value>Twój wynik</value>
   </data>
 </root>

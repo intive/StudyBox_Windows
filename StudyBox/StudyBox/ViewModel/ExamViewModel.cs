@@ -175,6 +175,9 @@ namespace StudyBox.ViewModel
         {
             if (deckInstance != null)
             {
+                _numberOfCurrentFlashcard = 0;
+                _numberOfCorrectAnswers = 0;
+
                 _deckInstance = deckInstance;
                 NameOfDeck = _deckInstance.Name;
 
@@ -228,7 +231,9 @@ namespace StudyBox.ViewModel
             }
             else
             {
-                //TODO: navigate to result
+                _navigationService.NavigateTo("SummaryView");
+                Messenger.Default.Send<DataMessageToSummary>(new DataMessageToSummary(new Exam { CorrectAnswers = _numberOfCorrectAnswers, Questions = _flashcards.Count }));
+                Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
             }
         }
 
