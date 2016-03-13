@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using StudyBox.Core.Models;
 
-namespace StudyBox.Messages
+namespace StudyBox.Core.Messages
 {
     public class DataMessageToExam : MessageBase
     {

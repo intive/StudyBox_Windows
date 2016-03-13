@@ -1,6 +1,6 @@
 ﻿using StudyBox.Core.Models;
 
-namespace StudyBox.Messages
+namespace StudyBox.Core.Messages
 {
     public class DataMessageToSummary
     {
