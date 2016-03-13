@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox", "StudyBox\StudyB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox.Core", "StudyBox.Core\StudyBox.Core.csproj", "{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7A0A7740-187F-4CD7-B4DB-C3E71AE7757C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox.Core.Tests", "StudyBox.Core.Tests\StudyBox.Core.Tests.csproj", "{C35A0D85-63A9-49EC-916F-C2B300FEBA55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,8 +59,31 @@ Global
 		{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}.Release|x64.Build.0 = Release|x64
 		{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}.Release|x86.ActiveCfg = Release|x86
 		{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}.Release|x86.Build.0 = Release|x86
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|ARM.Build.0 = Debug|ARM
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|ARM.Deploy.0 = Debug|ARM
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|x64.ActiveCfg = Debug|x64
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|x64.Build.0 = Debug|x64
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|x64.Deploy.0 = Debug|x64
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|x86.ActiveCfg = Debug|x86
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|x86.Build.0 = Debug|x86
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Debug|x86.Deploy.0 = Debug|x86
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|Any CPU.ActiveCfg = Release|x86
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|ARM.ActiveCfg = Release|ARM
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|ARM.Build.0 = Release|ARM
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|ARM.Deploy.0 = Release|ARM
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|x64.ActiveCfg = Release|x64
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|x64.Build.0 = Release|x64
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|x64.Deploy.0 = Release|x64
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|x86.ActiveCfg = Release|x86
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|x86.Build.0 = Release|x86
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C35A0D85-63A9-49EC-916F-C2B300FEBA55} = {7A0A7740-187F-4CD7-B4DB-C3E71AE7757C}
 	EndGlobalSection
 EndGlobal
