@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using StudyBox.View;
 using Windows.ApplicationModel.Resources;
 using GalaSoft.MvvmLight.Messaging;
 using StudyBox.Messages;
-using StudyBox.Model;
+using StudyBox.Core.Models;
 
 namespace StudyBox.ViewModel
 {
