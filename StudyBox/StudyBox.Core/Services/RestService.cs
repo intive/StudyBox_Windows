@@ -1,5 +1,5 @@
 ﻿using StudyBox.Core.Models;
-using StudyBox.Interfaces;
+using StudyBox.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -9,11 +9,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace StudyBox.Services
+namespace StudyBox.Core.Services
 {
-    public class RestService: IRestService
+    public class RestService : IRestService
     {
-        private ResourceDictionary _resources = App.Current.Resources;
+        private ResourceDictionary _resources = Application.Current.Resources;
         private readonly IDeserializeJsonService _deserializeJsonService;
 
         public RestService(IDeserializeJsonService deserializeJsonService)

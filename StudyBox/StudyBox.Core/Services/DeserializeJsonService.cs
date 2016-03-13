@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using StudyBox.Interfaces;
+using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
 
-namespace StudyBox.Services
+namespace StudyBox.Core.Services
 {
-    public class DeserializeJsonService: IDeserializeJsonService
+    public class DeserializeJsonService : IDeserializeJsonService
     {
         public Flashcard GetFlashcardFromJson(string jsonToDeserialize)
         {
