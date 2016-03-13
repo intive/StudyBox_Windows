@@ -122,6 +122,12 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StudyBox.Core\StudyBox.Core.csproj">
+      <Project>{5cb8a73e-8520-4d20-bdb0-90aa135d1a9e}</Project>
+      <Name>StudyBox.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
