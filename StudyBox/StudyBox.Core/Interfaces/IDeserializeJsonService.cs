@@ -1,11 +1,7 @@
-﻿using StudyBox.Model;
-using System;
+﻿using StudyBox.Core.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StudyBox.Interfaces
+namespace StudyBox.Core.Interfaces
 {
     public interface IDeserializeJsonService
     {

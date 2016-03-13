@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StudyBox.Model;
+﻿using StudyBox.Core.Models;
 
-namespace StudyBox.Messages
+namespace StudyBox.Core.Messages
 {
     public class DataMessageToSummary
     {

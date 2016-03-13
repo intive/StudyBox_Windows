@@ -1,4 +1,4 @@
-﻿namespace StudyBox.Messages
+﻿namespace StudyBox.Core.Messages
 {
     public class StartStoryboardMessage
     {
