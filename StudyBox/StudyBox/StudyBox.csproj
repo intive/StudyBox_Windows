@@ -197,6 +197,12 @@
       <Name>Behaviors SDK %28XAML%29</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StudyBox.Core\StudyBox.Core.csproj">
+      <Project>{5cb8a73e-8520-4d20-bdb0-90aa135d1a9e}</Project>
+      <Name>StudyBox.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
