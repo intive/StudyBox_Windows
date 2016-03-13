@@ -4,10 +4,10 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Windows.ApplicationModel.Resources;
 using GalaSoft.MvvmLight.Messaging;
-using StudyBox.Messages;
+using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 
-namespace StudyBox.ViewModel
+namespace StudyBox.Core.ViewModels
 {
     public class SummaryViewModel : ViewModelBase
     {
@@ -81,6 +81,5 @@ namespace StudyBox.ViewModel
             else
                 return _stringResources.GetString("NotBad");
         }
-
     }
 }

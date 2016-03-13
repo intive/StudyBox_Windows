@@ -6,14 +6,14 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using StudyBox.Messages;
+using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 
-namespace StudyBox.ViewModel
+namespace StudyBox.Core.ViewModels
 {
     public class DecksListViewModel : ViewModelBase
     {
-    
+
         private ObservableCollection<Deck> _decksCollection;
         private INavigationService _navigationService;
 
@@ -57,7 +57,6 @@ namespace StudyBox.ViewModel
             _navigationService.NavigateTo("ExamView");
             Deck deck = DecksCollection.Where(x => x.ID == id).FirstOrDefault();
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            
         }
 
         #endregion

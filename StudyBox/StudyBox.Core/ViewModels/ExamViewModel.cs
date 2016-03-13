@@ -2,13 +2,13 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using StudyBox.Messages;
+using StudyBox.Core.Messages;
 using GalaSoft.MvvmLight.Command;
 using Windows.ApplicationModel.Resources;
-using StudyBox.Interfaces;
+using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
 
-namespace StudyBox.ViewModel
+namespace StudyBox.Core.ViewModels
 {
     public class ExamViewModel : ViewModelBase
     {
@@ -33,7 +33,7 @@ namespace StudyBox.ViewModel
             _navigationService = navigationService;
             _restService = restService;
 
-            Messenger.Default.Register<DataMessageToExam>(this, x=> HandleDataMessage(x.DeckInstance));
+            Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance));
             _stringResources = new ResourceLoader();
         }
 
@@ -52,7 +52,7 @@ namespace StudyBox.ViewModel
                 return _countGoodAnswer ?? (_countGoodAnswer = new RelayCommand(CountGoodAnswerAndShowNextFlashcard));
             }
         }
-        
+
         public RelayCommand ShowAnswer
         {
             get
