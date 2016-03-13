@@ -1,7 +1,7 @@
 ﻿using StudyBox.Core.Models;
 using System.Collections.Generic;
 
-namespace StudyBox.Interfaces
+namespace StudyBox.Core.Interfaces
 {
     public interface IDeserializeJsonService
     {
