@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Ioc;
+﻿using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using StudyBox.View;
 using GalaSoft.MvvmLight;
-using StudyBox.Interfaces;
-using StudyBox.Services;
+using StudyBox.Core.Interfaces;
+using StudyBox.Core.Services;
+using StudyBox.Core.ViewModels;
+using StudyBox.View;
 
-namespace StudyBox.ViewModel
+namespace StudyBox.ViewModels
 {
     public class ViewModelLocator
     {
-         /// <summary>
-         /// Initializes a new instance of the ViewModelLocator class.
-         /// </summary>
+        /// <summary>
+        /// Initializes a new instance of the ViewModelLocator class.
+        /// </summary>
         public ViewModelLocator()
-         {
-             var navigationService = CreateNavigationService();
-            SimpleIoc.Default.Register<INavigationService>(()=>navigationService);
+        {
+            var navigationService = CreateNavigationService();
+            SimpleIoc.Default.Register(() => navigationService);
 
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MainPageViewModel>();
@@ -44,9 +40,9 @@ namespace StudyBox.ViewModel
         private INavigationService CreateNavigationService()
         {
             var navigationService = new NavigationService();
-            navigationService.Configure("DecksListView",typeof(DecksListView));
-            navigationService.Configure("ExamView",typeof(ExamView));
-            navigationService.Configure("MainPage",typeof(MainPage));
+            navigationService.Configure("DecksListView", typeof(DecksListView));
+            navigationService.Configure("ExamView", typeof(ExamView));
+            navigationService.Configure("MainPage", typeof(MainPage));
             navigationService.Configure("SummaryView", typeof(SummaryView));
 
             return navigationService;
@@ -83,12 +79,10 @@ namespace StudyBox.ViewModel
                 return ServiceLocator.Current.GetInstance<SummaryViewModel>();
             }
         }
+
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            // TODO: Clear the ViewModels
         }
-
-      
     }
-
 }
