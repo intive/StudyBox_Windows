@@ -113,10 +113,7 @@
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\StartStoryboardMessage.cs" />
-    <Compile Include="Model\Exam.cs" />
     <Compile Include="ViewModel\DecksListViewModel.cs" />
-    <Compile Include="Model\Deck.cs" />
-    <Compile Include="Model\Flashcard.cs" />
     <Compile Include="Services\DeserializeJsonService.cs" />
     <Compile Include="ViewModel\ExamViewModel.cs" />
     <Compile Include="Services\RestService.cs" />
