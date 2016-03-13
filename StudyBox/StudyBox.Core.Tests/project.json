@@ -1,7 +1,8 @@
 ﻿{
   "dependencies": {
     "FakeItEasy": "1.25.3",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "NUnit": "3.2.0"
   },
   "frameworks": {
     "uap10.0": {}
