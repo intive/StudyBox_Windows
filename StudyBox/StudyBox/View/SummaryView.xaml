@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=SummaryViewModel}"
     >
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="80"/>
@@ -87,7 +87,7 @@
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
-            
+
             <TextBlock x:Name="YourScore" 
                        x:Uid="YourScore" 
                        Foreground="{StaticResource Graphite}" 
@@ -115,7 +115,7 @@
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
-            
+
             <TextBlock x:Name="Score" 
                        Text="{Binding Score}" 
                        Foreground="{StaticResource Graphite}" 
@@ -143,7 +143,7 @@
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
-            
+
             <Button x:Name="GoToDecks" 
                     Command="{Binding GoToDecks}" 
                     Background="{StaticResource Raspberry}" 
@@ -175,7 +175,7 @@
                     </EventTrigger>
                 </Button.Triggers>
             </Button>
-            
+
             <Button x:Name="ImproveResults" 
                     Command="{Binding ImproveResults}" 
                     Background="{StaticResource DarkBlue}" 
