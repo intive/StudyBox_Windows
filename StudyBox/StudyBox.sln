@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox", "StudyBox\StudyB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox.Core", "StudyBox.Core\StudyBox.Core.csproj", "{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{89AB6AC9-B17D-4A3A-85EC-4D2550977EF9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox.Core.Tests", "StudyBox.Core.Tests\StudyBox.Core.Tests.csproj", "{55A3812A-013E-445D-9189-DD9F151F596A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,27 +55,8 @@ Global
 		{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}.Release|x64.Build.0 = Release|x64
 		{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}.Release|x86.ActiveCfg = Release|x86
 		{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}.Release|x86.Build.0 = Release|x86
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Debug|ARM.Build.0 = Debug|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Debug|x64.Build.0 = Debug|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Debug|x86.Build.0 = Debug|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Release|ARM.ActiveCfg = Release|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Release|ARM.Build.0 = Release|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Release|x64.ActiveCfg = Release|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Release|x64.Build.0 = Release|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Release|x86.ActiveCfg = Release|Any CPU
-		{55A3812A-013E-445D-9189-DD9F151F596A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{55A3812A-013E-445D-9189-DD9F151F596A} = {89AB6AC9-B17D-4A3A-85EC-4D2550977EF9}
 	EndGlobalSection
 EndGlobal
