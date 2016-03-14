@@ -35,8 +35,6 @@ namespace StudyBox.Core.ViewModels
 
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance));
             _stringResources = new ResourceLoader();
-
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
         }
 
         public RelayCommand CountBadAnswer
@@ -230,6 +228,7 @@ namespace StudyBox.Core.ViewModels
                 _navigationService.NavigateTo("SummaryView");
                 Messenger.Default.Send<DataMessageToSummary>(new DataMessageToSummary(new Exam { CorrectAnswers = _numberOfCorrectAnswers, Questions = _flashcards.Count }));
                 Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
             }
         }
 

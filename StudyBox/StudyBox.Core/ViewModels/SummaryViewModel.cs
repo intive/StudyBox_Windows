@@ -26,7 +26,7 @@ namespace StudyBox.Core.ViewModels
             _stringResources = new ResourceLoader();
             Messenger.Default.Register<DataMessageToSummary>(this, x => { _exam = x.ExamInstance; });
             Messenger.Default.Register<DataMessageToExam>(this, x => { _deckInstance = x.DeckInstance; });
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
+
         }
 
         public RelayCommand GoToDecks
@@ -71,6 +71,7 @@ namespace StudyBox.Core.ViewModels
         {
             _navigationService.NavigateTo("ExamView");
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
         }
 
         private string ConcludeResult(Exam exam)

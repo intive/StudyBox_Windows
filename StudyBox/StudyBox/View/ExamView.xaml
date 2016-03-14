@@ -59,52 +59,9 @@
                 <RowDefinition Height="1.2*"/>
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
-            
-            
-            <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"/>
-           <!-- <Border Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{StaticResource DarkBlue}" Padding="0,0" MinHeight="50">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition  Width="*"/>
-                        <ColumnDefinition  Width="5*"/>
-                        <ColumnDefinition  Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" 
-                            HorizontalAlignment="Left" 
-                            VerticalAlignment="Center"
-                            Padding="0" FontSize="12"
-                            Foreground="{StaticResource Grey}" 
-                            Background="{StaticResource DarkBlue}"
-                            Margin="10,0,0,0"
-                            MaxWidth="32" 
-                            MaxHeight="32">
-                        <Button.Content>
-                            <Image Source="ms-appx:///Assets/Menu-64.png" Stretch="Fill" Margin="0"/>
-                        </Button.Content>
-                    </Button>
-                    <TextBlock
-                            Grid.Column="1" x:Uid="DecksListTitleText"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center" 
-                            FontSize="18" 
-                            FontStretch="UltraExpanded" 
-                            Foreground="{StaticResource Grey}" 
-                            FontFamily="{StaticResource LatoBlackFontFamily}"/>
-                    <Button Grid.Column="2" 
-                            HorizontalAlignment="Right" 
-                            VerticalAlignment="Center"
-                            Padding="5" FontSize="12"
-                            Foreground="{StaticResource Grey}" 
-                            Background="{StaticResource DarkBlue}"
-                            Margin="0,0,10,0"
-                            MaxWidth="32" 
-                            MaxHeight="32">
-                        <Button.Content>
-                            <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0"/>
-                        </Button.Content>
-                    </Button>
-                </Grid>
-            </Border>-->
+
+
+            <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" Canvas.ZIndex="2"/>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1">
                 <TextBlock Text="{Binding NameOfDeck}" HorizontalAlignment="Center"/>

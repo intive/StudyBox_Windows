@@ -104,20 +104,20 @@
                 </Grid>
             </Border>
             <SplitView x:Name="MenuBar" Grid.Column="0"
-                           DisplayMode="CompactOverlay" 
+                           DisplayMode="CompactInline" 
                            IsPaneOpen="{Binding Path=IsPaneOpen, UpdateSourceTrigger=PropertyChanged}"
                            CompactPaneLength="0"
                            OpenPaneLength="200"
                            MinHeight="250"
                            >
                 <SplitView.Pane>
-                    <StackPanel Background="{StaticResource Graphite}" Opacity="0.5">
-                        <StackPanel Orientation="Vertical">
-                            <Button Content="Menu button 1" Foreground="{StaticResource Grey}" Background="Transparent"/>
-                            <Button Content="Menu button 2" Foreground="{StaticResource Grey}" Background="Transparent"/>
-                            <Button Content="Menu button 3" Foreground="{StaticResource Grey}" Background="Transparent"/>
-                            <Button Content="Menu button 4" Foreground="{StaticResource Grey}" Background="Transparent"/>
-                            <Button Content="Menu button 5" Foreground="{StaticResource Grey}" Background="Transparent"/>
+                    <StackPanel Background="{StaticResource Graphite}" Opacity="0.8">
+                        <StackPanel Orientation="Vertical" Opacity="0.8" HorizontalAlignment="Stretch" >
+                            <Button Content="Menu button 1" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"/>
+                            <Button Content="Menu button 2" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"/>
+                            <Button Content="Menu button 3" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"/>
+                            <Button Content="Menu button 4" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"/>
+                            <Button Content="Menu button 5" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"/>
                         </StackPanel>
                     </StackPanel>
                 </SplitView.Pane>
