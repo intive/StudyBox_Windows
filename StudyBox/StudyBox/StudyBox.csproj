@@ -95,6 +95,7 @@
     <None Include="project.json" />
     <Content Include="Assets\approve.png" />
     <Content Include="Assets\cancel.png" />
+    <Content Include="Assets\Delete-64.png" />
     <Content Include="Assets\Menu-64.png" />
     <Content Include="Assets\Search-64.png" />
     <Content Include="Resources\Themes\Fonts\Lato-Regular.ttf">
@@ -108,6 +109,9 @@
     </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
+    <Compile Include="UserControls\MenuControlView.xaml.cs">
+      <DependentUpon>MenuControlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="View\DecksListView.xaml.cs">
       <DependentUpon>DecksListView.xaml</DependentUpon>
@@ -159,6 +163,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UserControls\MenuControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DecksListView.xaml">
       <SubType>Designer</SubType>

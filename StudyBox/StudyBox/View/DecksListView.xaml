@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StudyBox.View"
+    xmlns:userControls="using:StudyBox.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -20,41 +21,9 @@
         </Grid.RowDefinitions>
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
 
-        <Border Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{StaticResource DarkBlue}" Padding="0,0" MinHeight="50">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition  Width="*"/>
-                    <ColumnDefinition  Width="5*"/>
-                    <ColumnDefinition  Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                            Padding="0" FontSize="12"
-                            Foreground="{StaticResource Grey}" Background="{StaticResource DarkBlue}"
-                            Margin="10,0,0,0"
-                            MaxWidth="32" MaxHeight="32">
-                    <Button.Content>
-                        <Image Source="ms-appx:///Assets/Menu-64.png" Stretch="Fill" Margin="0"/>
-                    </Button.Content>
-                </Button>
-                <TextBlock Grid.Column="1" x:Uid="DecksListTitleText"
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Center" 
-                           FontSize="18" 
-                           FontStretch="UltraExpanded" 
-                           Foreground="{StaticResource Grey}" 
-                           FontFamily="{StaticResource LatoBlackFontFamily}"
-                           />
-                <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"
-                            Padding="5" FontSize="12"
-                            Foreground="{StaticResource Grey}" Background="{StaticResource DarkBlue}"
-                            Margin="0,0,10,0"
-                            MaxWidth="32" MaxHeight="32">
-                    <Button.Content>
-                        <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0"/>
-                    </Button.Content>
-                </Button>
-            </Grid>
-        </Border>
+        <StackPanel Grid.Row="0" Grid.RowSpan="3" Canvas.ZIndex="2">        
+            <userControls:MenuControlView/>
+        </StackPanel>
 
         <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="1" Grid.Column="0" Margin="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >

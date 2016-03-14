@@ -132,6 +132,12 @@
   <data name="LoadingFlashcards.Text" xml:space="preserve">
     <value>Flashcards are loading...</value>
   </data>
+  <data name="MenuEditButton.Content" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MenuSaveButton.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="MyDecks.Text" xml:space="preserve">
     <value>MY DECKS</value>
   </data>

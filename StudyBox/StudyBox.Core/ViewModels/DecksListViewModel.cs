@@ -46,6 +46,7 @@ namespace StudyBox.Core.ViewModels
             InitializeTestsCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, false));
         }
 
         #region Buttons
@@ -57,6 +58,7 @@ namespace StudyBox.Core.ViewModels
             _navigationService.NavigateTo("ExamView");
             Deck deck = DecksCollection.Where(x => x.ID == id).FirstOrDefault();
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
         }
 
         #endregion

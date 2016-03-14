@@ -5,6 +5,7 @@
     xmlns:local="using:StudyBox"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="using:StudyBox.UserControls"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
     >
@@ -16,16 +17,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Temporary button to navigate"
-                    Command="{Binding GoToDecksListCommand}" 
-                    Background="{StaticResource DarkBlue}" 
-                    Foreground="{StaticResource Grey}"
-                    MinHeight="50"
-                    FontFamily="{StaticResource LatoBlackFontFamily}"
-                    />
-        </StackPanel>
+        <!--<userControls:MenuControlView Grid.Row="0"/>-->
+        
 
     </Grid>
 </Page>
