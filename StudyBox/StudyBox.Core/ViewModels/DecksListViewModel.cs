@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Linq;
+using Windows.ApplicationModel.Resources;
+using Windows.Networking.Connectivity;
+using Windows.System;
+using Windows.UI.Popups;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -21,6 +27,7 @@ namespace StudyBox.Core.ViewModels
         private INavigationService _navigationService;
         private IRestService _restService;
         private bool _isDataLoading=false;
+        private ResourceLoader _stringResources;
         #endregion
 
         #region Constructors
@@ -29,6 +36,8 @@ namespace StudyBox.Core.ViewModels
             this._navigationService = navigationService;
             this._restService = restService;
             DecksCollection = new ObservableCollection<Deck>();
+            _stringResources=new ResourceLoader();
+
             InitializeDecksCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
@@ -72,12 +81,26 @@ namespace StudyBox.Core.ViewModels
 
         #region Methods
         private async void InitializeDecksCollection()
-        {         
-            List<Deck> _deckLists = new List<Deck>();
-            IsDataLoading = true;
-            _deckLists = await _restService.GetDecks();
-            _deckLists.ForEach(x=> DecksCollection.Add(x));
-            IsDataLoading = false;
+        {
+            if (!(await Task.Run(() => NetworkInterface.GetIsNetworkAvailable())))
+            {
+                MessageDialog msg = new MessageDialog(_stringResources.GetString("NoInternetConnection"));
+                await msg.ShowAsync();
+            }
+            else if (!(NetworkInformation.GetInternetConnectionProfile().GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess))
+            {
+                MessageDialog msg = new MessageDialog(_stringResources.GetString("AccessDenied"));
+                await msg.ShowAsync();
+            }
+            else
+            {
+                List<Deck> _deckLists = new List<Deck>();
+                IsDataLoading = true;
+                _deckLists = await _restService.GetDecks();
+                _deckLists.ForEach(x => DecksCollection.Add(x));
+                IsDataLoading = false;
+            }
+
         }
         #endregion
 
