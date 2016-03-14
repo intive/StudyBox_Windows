@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Xml.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 
@@ -13,13 +16,33 @@ namespace StudyBox.Core.ViewModels
 {
     public class DecksListViewModel : ViewModelBase
     {
-
+        #region fields
         private ObservableCollection<Deck> _decksCollection;
         private INavigationService _navigationService;
+        private IRestService _restService;
+        private bool _isDataLoading;
+        #endregion
 
+        #region Constructors
+        public DecksListViewModel(INavigationService navigationService, IRestService restService)
+        {
+            this._navigationService = navigationService;
+            this._restService = restService;
+            DecksCollection = new ObservableCollection<Deck>();
+            InitializeDecksCollection();
+
+            TapTileCommand = new RelayCommand<string>(TapTile);
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, false));
+        }
+        #endregion
+
+        #region Getters/Setters
         public ObservableCollection<Deck> DecksCollection
         {
-            get { return _decksCollection; }
+            get
+            {
+                return _decksCollection;
+            }
             set
             {
                 if (_decksCollection != value)
@@ -30,29 +53,36 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        private void InitializeTestsCollection()
+        public bool IsDataLoading
         {
-            int countOfDecks = 20;
-            for (int i = 0; i < countOfDecks; i++)
+            get
             {
-                DecksCollection.Add(new Deck(Convert.ToString(i), Convert.ToString("TestTile " + i)));
+                return _isDataLoading;
+            }
+            set
+            {
+                if (_isDataLoading != value)
+                {
+                    _isDataLoading = value;
+                    RaisePropertyChanged();
+                }
             }
         }
+        #endregion
 
-        public DecksListViewModel(INavigationService navigationService)
-        {
-            this._navigationService = navigationService;
-            DecksCollection = new ObservableCollection<Deck>();
-            InitializeTestsCollection();
-
-            TapTileCommand = new RelayCommand<string>(TapTile);
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, false));
+        #region Methods
+        private async void InitializeDecksCollection()
+        {         
+            List<Deck> _deckLists = new List<Deck>();
+            _deckLists = await _restService.GetDecks();
+            _deckLists.ForEach(x=> DecksCollection.Add(x));
         }
+        #endregion
+
 
         #region Buttons
 
         public ICommand TapTileCommand { get; set; }
-
         private void TapTile(string id)
         {
             _navigationService.NavigateTo("ExamView");
