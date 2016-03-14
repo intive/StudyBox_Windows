@@ -1,7 +1,9 @@
 ﻿using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using StudyBox.Core.Messages;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -12,14 +14,9 @@ namespace StudyBox.Core.ViewModels
         public MainPageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            GoToDecksListCommand = new RelayCommand(GoToDecksList);
+
         }
 
-        public ICommand GoToDecksListCommand { get; set; }
 
-        private void GoToDecksList()
-        {
-            _navigationService.NavigateTo("DecksListView");
-        }
     }
 }

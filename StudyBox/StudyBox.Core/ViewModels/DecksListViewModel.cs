@@ -46,6 +46,7 @@ namespace StudyBox.Core.ViewModels
             InitializeTestsCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, false));
         }
 
         #region Buttons

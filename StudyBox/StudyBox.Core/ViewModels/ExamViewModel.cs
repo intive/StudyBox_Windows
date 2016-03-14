@@ -35,6 +35,8 @@ namespace StudyBox.Core.ViewModels
 
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance));
             _stringResources = new ResourceLoader();
+
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
         }
 
         public RelayCommand CountBadAnswer

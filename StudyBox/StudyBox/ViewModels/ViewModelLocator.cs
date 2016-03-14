@@ -20,10 +20,12 @@ namespace StudyBox.ViewModels
             SimpleIoc.Default.Register(() => navigationService);
 
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            SimpleIoc.Default.Register<MenuControlViewModel>();
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<DecksListViewModel>();
             SimpleIoc.Default.Register<ExamViewModel>();
             SimpleIoc.Default.Register<SummaryViewModel>();
+
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -80,6 +82,13 @@ namespace StudyBox.ViewModels
             }
         }
 
+        public MenuControlViewModel MenuViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MenuControlViewModel>();               
+            }
+        }
         public static void Cleanup()
         {
             // TODO: Clear the ViewModels

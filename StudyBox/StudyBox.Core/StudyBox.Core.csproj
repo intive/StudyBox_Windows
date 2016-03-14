@@ -111,6 +111,7 @@
     <Compile Include="Interfaces\IRestService.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
+    <Compile Include="Messages\MessageToMenuControl.cs" />
     <Compile Include="Messages\StartStoryboardMessage.cs" />
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Exam.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="ViewModels\DecksListViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\MenuControlViewModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />
     <EmbeddedResource Include="Properties\StudyBox.Core.rd.xml" />
   </ItemGroup>

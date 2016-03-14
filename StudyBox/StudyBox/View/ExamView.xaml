@@ -8,6 +8,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:converters="using:StudyBox.Converters"
+    xmlns:userControls="using:StudyBox.UserControls"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=ExamsViewModel}"
     >
@@ -58,8 +59,10 @@
                 <RowDefinition Height="1.2*"/>
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
-
-            <Border Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{StaticResource DarkBlue}" Padding="0,0" MinHeight="50">
+            
+            
+            <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"/>
+           <!-- <Border Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{StaticResource DarkBlue}" Padding="0,0" MinHeight="50">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition  Width="*"/>
@@ -101,7 +104,7 @@
                         </Button.Content>
                     </Button>
                 </Grid>
-            </Border>
+            </Border>-->
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1">
                 <TextBlock Text="{Binding NameOfDeck}" HorizontalAlignment="Center"/>
