@@ -20,7 +20,7 @@ namespace StudyBox.Core.ViewModels
         private ObservableCollection<Deck> _decksCollection;
         private INavigationService _navigationService;
         private IRestService _restService;
-        private bool _isDataLoading;
+        private bool _isDataLoading=false;
         #endregion
 
         #region Constructors
@@ -74,8 +74,10 @@ namespace StudyBox.Core.ViewModels
         private async void InitializeDecksCollection()
         {         
             List<Deck> _deckLists = new List<Deck>();
+            IsDataLoading = true;
             _deckLists = await _restService.GetDecks();
             _deckLists.ForEach(x=> DecksCollection.Add(x));
+            IsDataLoading = false;
         }
         #endregion
 

@@ -6,10 +6,14 @@
     xmlns:userControls="using:StudyBox.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:StudyBox.Converters"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=DecksViewModel}"
     >
-
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="80"/>
@@ -54,6 +58,18 @@
                 </GridView>
             </StackPanel>
         </ScrollViewer>
+
+        <ProgressRing x:Name="InitializeProgressRing"
+                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                      Width="80"
+                      Height="80"
+                      Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      IsActive="{Binding IsDataLoading}"
+                      Foreground="{StaticResource DarkBlue}"
+                      FontWeight="Bold"
+                      />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">
