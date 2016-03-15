@@ -120,11 +120,20 @@
   <data name="AccessDenied" xml:space="preserve">
     <value>Brak uprawnień internetu.</value>
   </data>
+  <data name="Cancel.Content" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
   <data name="Congrats" xml:space="preserve">
     <value>Gratulacje!</value>
   </data>
   <data name="DecksListTitleText.Text" xml:space="preserve">
     <value>StudyBox</value>
+  </data>
+  <data name="Email.PlaceholderText" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="EmailError.Text" xml:space="preserve">
+    <value>E-mail jest nieprawidłowy</value>
   </data>
   <data name="HintRectangle" xml:space="preserve">
     <value>Pokaż podpowiedź!</value>
@@ -149,6 +158,21 @@
   </data>
   <data name="NotBad" xml:space="preserve">
     <value>Nieźle!</value>
+  </data>
+  <data name="Password.PlaceholderText" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="PasswordError.Text" xml:space="preserve">
+    <value>Hasło jest nieprawidłowe</value>
+  </data>
+  <data name="Register.Content" xml:space="preserve">
+    <value>Zarejestruj</value>
+  </data>
+  <data name="RepeatPassword.PlaceholderText" xml:space="preserve">
+    <value>Powtórz hasło</value>
+  </data>
+  <data name="RepeatPasswordError.Text" xml:space="preserve">
+    <value>Hasła muszą się zgadzać</value>
   </data>
   <data name="TryAgain" xml:space="preserve">
     <value>Próbuj dalej...</value>
