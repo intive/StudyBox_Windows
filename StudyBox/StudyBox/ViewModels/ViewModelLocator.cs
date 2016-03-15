@@ -25,7 +25,7 @@ namespace StudyBox.ViewModels
             SimpleIoc.Default.Register<DecksListViewModel>();
             SimpleIoc.Default.Register<ExamViewModel>();
             SimpleIoc.Default.Register<SummaryViewModel>();
-
+            SimpleIoc.Default.Register<RegisterViewModel>();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -46,6 +46,7 @@ namespace StudyBox.ViewModels
             navigationService.Configure("ExamView", typeof(ExamView));
             navigationService.Configure("MainPage", typeof(MainPage));
             navigationService.Configure("SummaryView", typeof(SummaryView));
+            navigationService.Configure("RegisterView", typeof(RegisterView));
 
             return navigationService;
         }
@@ -89,6 +90,15 @@ namespace StudyBox.ViewModels
                 return ServiceLocator.Current.GetInstance<MenuControlViewModel>();               
             }
         }
+
+        public RegisterViewModel RegisterViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<RegisterViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO: Clear the ViewModels

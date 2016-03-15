@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Resources/Config.xaml" />
                 <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
                 <ResourceDictionary Source="Resources/Themes/Fonts.xaml"/>
+                <ResourceDictionary Source="Resources/Themes/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

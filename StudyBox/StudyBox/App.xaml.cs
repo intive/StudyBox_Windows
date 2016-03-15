@@ -59,7 +59,7 @@ namespace StudyBox
 
             if (rootFrame.Content == null)
             {
-                rootFrame.Navigate(typeof(DecksListView), e.Arguments);
+                rootFrame.Navigate(typeof(RegisterView), e.Arguments);
             }
 
             Window.Current.Activate();
