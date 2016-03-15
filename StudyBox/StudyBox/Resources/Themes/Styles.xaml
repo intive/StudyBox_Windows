@@ -4,6 +4,7 @@
     xmlns:local="using:StudyBox.Resources.Themes">
 
     <Style TargetType="TextBox">
+        <Setter Property="IsSpellCheckEnabled" Value="False"/>
         <Setter Property="FontFamily" Value="{StaticResource LatoRegularFontFamily}"/>
         <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
         <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}"/>
@@ -156,6 +157,7 @@
     </Style>
 
     <Style TargetType="PasswordBox">
+        <Setter Property="PasswordChar" Value="*"/>
         <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
         <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}"/>
         <Setter Property="Foreground" Value="{StaticResource Graphite}"/>

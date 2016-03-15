@@ -45,8 +45,7 @@
                         <TextBox 
                             x:Uid="Email" 
                             FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"  
-                            Text="{Binding Email, Mode=TwoWay}" 
-                            IsSpellCheckEnabled="False" 
+                            Text="{Binding Email, Mode=TwoWay}"                           
                             Margin="0 5 0 5"/>
                         <TextBlock x:Name="EmailError" 
                                    x:Uid="EmailError" 
@@ -66,7 +65,6 @@
                         <PasswordBox 
                             x:Uid="Password" 
                             FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
-                            PasswordChar="*"  
                             Password="{Binding Password, Mode=TwoWay}" 
                             Margin="0 5 0 5"/>
                         <TextBlock x:Name="PasswordError" 
@@ -86,8 +84,7 @@
 
                         <PasswordBox 
                             x:Uid="RepeatPassword" 
-                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
-                            PasswordChar="*" 
+                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"                            
                             Password="{Binding RepeatPassword, Mode=TwoWay}" 
                             Margin="0 5 0 5"/>
                         <TextBlock x:Name="RepeatPasswordError" 
