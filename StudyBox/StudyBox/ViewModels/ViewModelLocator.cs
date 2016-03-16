@@ -26,6 +26,7 @@ namespace StudyBox.ViewModels
             SimpleIoc.Default.Register<ExamViewModel>();
             SimpleIoc.Default.Register<SummaryViewModel>();
             SimpleIoc.Default.Register<RegisterViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -47,6 +48,7 @@ namespace StudyBox.ViewModels
             navigationService.Configure("MainPage", typeof(MainPage));
             navigationService.Configure("SummaryView", typeof(SummaryView));
             navigationService.Configure("RegisterView", typeof(RegisterView));
+            navigationService.Configure("LoginView", typeof(LoginView));
 
             return navigationService;
         }
@@ -96,6 +98,14 @@ namespace StudyBox.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<RegisterViewModel>();
+            }
+        }
+
+        public LoginViewModel LoginViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<LoginViewModel>();
             }
         }
 

@@ -126,6 +126,9 @@
   <data name="Congrats" xml:space="preserve">
     <value>Congrats!</value>
   </data>
+  <data name="CreateAccount.Content" xml:space="preserve">
+    <value>Create new account</value>
+  </data>
   <data name="DecksListTitleText.Text" xml:space="preserve">
     <value>StudyBox</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="LoadingFlashcards.Text" xml:space="preserve">
     <value>Flashcards are loading...</value>
+  </data>
+  <data name="Login.Content" xml:space="preserve">
+    <value>Login</value>
   </data>
   <data name="MenuEditButton.Content" xml:space="preserve">
     <value>Edit</value>
