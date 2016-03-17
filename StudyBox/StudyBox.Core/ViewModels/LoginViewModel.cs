@@ -3,38 +3,34 @@ using GalaSoft.MvvmLight.Views;
 
 namespace StudyBox.Core.ViewModels
 {
-    public class RegisterViewModel : ExtendedViewModelBase
+    public class LoginViewModel : ExtendedViewModelBase
     {
-
-        private RelayCommand _registerAction;
-        private RelayCommand _cancelAction;
+        private RelayCommand _loginAction;
+        private RelayCommand _createAccountAction;
         private string _generalErrorMessage;
         private bool _isEmailNotValid;
         private bool _isPasswordNotValid;
-        private bool _isRepeatPasswordNotValid;
-        private bool _isGeneralError;
         private string _email;
         private string _password;
-        private string _repeatPassword;
+        private bool _isGeneralError;
 
-        public RegisterViewModel(INavigationService navigationService) : base(navigationService)
+        public LoginViewModel(INavigationService navigationService) : base(navigationService)
         {
         }
 
-
-        public RelayCommand RegisterAction
+        public RelayCommand LoginAction
         {
             get
             {
-                return _registerAction ?? (_registerAction = new RelayCommand(Register));
+                return _loginAction ?? (_loginAction = new RelayCommand(Login));
             }
         }
 
-        public RelayCommand CancelAction
+        public RelayCommand CreateAccountAction
         {
             get
             {
-                return _cancelAction ?? (_cancelAction = new RelayCommand(Cancel));
+                return _createAccountAction ?? (_createAccountAction = new RelayCommand(CreateAccount));
             }
         }
 
@@ -77,21 +73,6 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public string RepeatPassword
-        {
-            get { return _repeatPassword; }
-            set
-            {
-                if (_repeatPassword != value)
-                {
-                    _repeatPassword = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-
-
         public bool IsEmailNotValid
         {
             get { return _isEmailNotValid; }
@@ -118,19 +99,6 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public bool IsRepeatPasswordNotValid
-        {
-            get { return _isRepeatPasswordNotValid; }
-            set
-            {
-                if (_isRepeatPasswordNotValid != value)
-                {
-                    _isRepeatPasswordNotValid = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public bool IsGeneralError
         {
             get { return _isGeneralError; }
@@ -144,18 +112,17 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public void Register()
+        public void Login()
         {
             IsEmailNotValid = string.IsNullOrEmpty(Email);
             IsPasswordNotValid = string.IsNullOrEmpty(Password);
-            IsRepeatPasswordNotValid = string.IsNullOrEmpty(RepeatPassword);
             GeneralErrorMessage = StringResources.GetString("NoInternetConnection");
             IsGeneralError = true;
         }
 
-        public void Cancel()
+        public void CreateAccount()
         {
-            NavigationService.NavigateTo("DecksListView");
+            NavigationService.NavigateTo("RegisterView");
         }
     }
 }

@@ -1,18 +1,14 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Windows.ApplicationModel.Resources;
 using GalaSoft.MvvmLight.Messaging;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 
 namespace StudyBox.Core.ViewModels
 {
-    public class SummaryViewModel : ViewModelBase
+    public class SummaryViewModel : ExtendedViewModelBase
     {
-        private INavigationService _navigationService;
-        private ResourceLoader _stringResources;
         private Exam _exam;
         private Deck _deckInstance;
         private double _lowResult = 0.35;
@@ -20,10 +16,8 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToDecks;
         private RelayCommand _improveResults;
 
-        public SummaryViewModel(INavigationService navigationService)
+        public SummaryViewModel(INavigationService navigationService) : base(navigationService)
         {
-            _navigationService = navigationService;
-            _stringResources = new ResourceLoader();
             Messenger.Default.Register<DataMessageToSummary>(this, x => { _exam = x.ExamInstance; });
             Messenger.Default.Register<DataMessageToExam>(this, x => { _deckInstance = x.DeckInstance; });
 
@@ -63,13 +57,13 @@ namespace StudyBox.Core.ViewModels
 
         private void GoBackToDecks()
         {
-            _navigationService.NavigateTo("DecksListView");
+            NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, false));
         }
 
         private void TryImproveResults()
         {
-            _navigationService.NavigateTo("ExamView");
+            NavigationService.NavigateTo("ExamView");
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
         }
@@ -78,11 +72,11 @@ namespace StudyBox.Core.ViewModels
         {
             double percent = Convert.ToDouble(exam.CorrectAnswers) / Convert.ToDouble(exam.Questions);
             if (percent < _lowResult)
-                return _stringResources.GetString("TryAgain");
+                return StringResources.GetString("TryAgain");
             else if (percent > _highResult)
-                return _stringResources.GetString("Congrats");
+                return StringResources.GetString("Congrats");
             else
-                return _stringResources.GetString("NotBad");
+                return StringResources.GetString("NotBad");
         }
     }
 }

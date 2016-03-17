@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Messages;
 using GalaSoft.MvvmLight.Command;
-using Windows.ApplicationModel.Resources;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
 
 namespace StudyBox.Core.ViewModels
 {
-    public class ExamViewModel : ViewModelBase
+    public class ExamViewModel : ExtendedViewModelBase
     {
-        private INavigationService _navigationService;
         private IRestService _restService;
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
@@ -26,15 +23,12 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _showHint;
         private RelayCommand _countGoodAnswer;
         private RelayCommand _countBadAnswer;
-        private ResourceLoader _stringResources;
 
-        public ExamViewModel(INavigationService navigationService, IRestService restService)
+        public ExamViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
         {
-            _navigationService = navigationService;
             _restService = restService;
 
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance));
-            _stringResources = new ResourceLoader();
         }
 
         public RelayCommand CountBadAnswer
@@ -145,7 +139,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return _flashcards == null ? string.Empty : (!_isHintAlreadyShown ? _stringResources.GetString("HintRectangle") : _flashcards[_numberOfCurrentFlashcard].Hint);
+                return _flashcards == null ? string.Empty : (!_isHintAlreadyShown ? StringResources.GetString("HintRectangle") : _flashcards[_numberOfCurrentFlashcard].Hint);
             }
         }
 
@@ -225,7 +219,7 @@ namespace StudyBox.Core.ViewModels
             }
             else
             {
-                _navigationService.NavigateTo("SummaryView");
+                NavigationService.NavigateTo("SummaryView");
                 Messenger.Default.Send<DataMessageToSummary>(new DataMessageToSummary(new Exam { CorrectAnswers = _numberOfCorrectAnswers, Questions = _flashcards.Count }));
                 Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
                 Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));

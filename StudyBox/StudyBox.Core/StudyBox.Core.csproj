@@ -121,6 +121,8 @@
     <Compile Include="Services\RestService.cs" />
     <Compile Include="ViewModels\DecksListViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
+    <Compile Include="ViewModels\ExtendedViewModelBase.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuControlViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
