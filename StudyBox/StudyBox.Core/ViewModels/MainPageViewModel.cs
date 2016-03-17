@@ -1,20 +1,11 @@
-﻿using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using GalaSoft.MvvmLight.Views;
-using StudyBox.Core.Messages;
+﻿using GalaSoft.MvvmLight.Views;
 
 namespace StudyBox.Core.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class MainPageViewModel : ExtendedViewModelBase
     {
-        private INavigationService _navigationService;
-
-        public MainPageViewModel(INavigationService navigationService)
+        public MainPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            _navigationService = navigationService;
-
         }
 
 

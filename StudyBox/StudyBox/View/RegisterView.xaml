@@ -119,27 +119,33 @@
                                 </core:DataTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </TextBlock>
-
+                        
                         <Button 
-                            x:Uid="Register"
-                            HorizontalAlignment="Stretch" 
-                            Background="{StaticResource DarkBlue}" 
-                            Foreground="{StaticResource Grey}" 
-                            Margin="0 30 0 5" 
-                            Command="{Binding RegisterAction}"
-                            FontFamily="{StaticResource LatoRegularFontFamily}"
-                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                            Padding="5"/>
-
-                        <Button 
-                            x:Uid="Cancel"
                             HorizontalAlignment="Stretch"
-                            Foreground="{StaticResource Grey}" 
-                            Background="{StaticResource Graphite}" 
-                            Command="{Binding CancelAction}"
-                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                            FontFamily="{StaticResource LatoRegularFontFamily}"/>
+                            Margin="0 30 0 5"
+                            Background="{StaticResource DarkBlue}" 
+                            Command="{Binding RegisterAction}">
 
+                            <TextBlock
+                                TextWrapping="Wrap"
+                                x:Uid="Register"
+                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
+                                Foreground="{StaticResource Grey}" />
+                        </Button>
+
+                        <Button 
+                            HorizontalAlignment="Stretch"
+                            Background="{StaticResource Graphite}" 
+                            Command="{Binding CancelAction}">
+
+                            <TextBlock
+                                TextWrapping="Wrap"
+                                x:Uid="Cancel"
+                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
+                                Foreground="{StaticResource Grey}" />
+                        </Button>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>

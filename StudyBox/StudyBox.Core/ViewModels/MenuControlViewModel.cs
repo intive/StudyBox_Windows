@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Messages;
 
 namespace StudyBox.Core.ViewModels
 {
-    public class MenuControlViewModel : ViewModelBase
+    public class MenuControlViewModel : ExtendedViewModelBase
     {
-        private INavigationService _navigationService;
         private bool _isPaneOpen = false;
         private RelayCommand _openMenuCommand;
 
@@ -22,9 +15,8 @@ namespace StudyBox.Core.ViewModels
         private bool _saveButtonVisibility;
         private bool _exitButtonVisibility;
 
-        public MenuControlViewModel(INavigationService navigationService)
+        public MenuControlViewModel(INavigationService navigationService) : base(navigationService)
         {
-            this._navigationService = navigationService;
             Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.EditButton,x.SaveButton,x.ExitButton));
             SearchButtonVisibility = true;
         }

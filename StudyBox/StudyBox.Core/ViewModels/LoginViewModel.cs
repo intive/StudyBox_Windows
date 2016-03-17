@@ -1,14 +1,10 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Windows.ApplicationModel.Resources;
 
 namespace StudyBox.Core.ViewModels
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : ExtendedViewModelBase
     {
-        private INavigationService _navigationService;
-        private ResourceLoader _stringResources;
         private RelayCommand _loginAction;
         private RelayCommand _createAccountAction;
         private string _generalErrorMessage;
@@ -18,10 +14,8 @@ namespace StudyBox.Core.ViewModels
         private string _password;
         private bool _isGeneralError;
 
-        public LoginViewModel(INavigationService navigationService)
+        public LoginViewModel(INavigationService navigationService) : base(navigationService)
         {
-            _navigationService = navigationService;
-            _stringResources = new ResourceLoader();
         }
 
         public RelayCommand LoginAction
@@ -122,13 +116,13 @@ namespace StudyBox.Core.ViewModels
         {
             IsEmailNotValid = string.IsNullOrEmpty(Email);
             IsPasswordNotValid = string.IsNullOrEmpty(Password);
-            GeneralErrorMessage = _stringResources.GetString("NoInternetConnection");
+            GeneralErrorMessage = StringResources.GetString("NoInternetConnection");
             IsGeneralError = true;
         }
 
         public void CreateAccount()
         {
-            _navigationService.NavigateTo("RegisterView");
+            NavigationService.NavigateTo("RegisterView");
         }
     }
 }

@@ -1,14 +1,11 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Windows.ApplicationModel.Resources;
 
 namespace StudyBox.Core.ViewModels
 {
-    public class RegisterViewModel : ViewModelBase
+    public class RegisterViewModel : ExtendedViewModelBase
     {
-        private INavigationService _navigationService;
-        private ResourceLoader _stringResources;
+
         private RelayCommand _registerAction;
         private RelayCommand _cancelAction;
         private string _generalErrorMessage;
@@ -19,14 +16,11 @@ namespace StudyBox.Core.ViewModels
         private string _email;
         private string _password;
         private string _repeatPassword;
-        
 
-  
-        public RegisterViewModel(INavigationService navigationService)
+        public RegisterViewModel(INavigationService navigationService) : base(navigationService)
         {
-            _navigationService = navigationService;
-            _stringResources = new ResourceLoader();          
         }
+
 
         public RelayCommand RegisterAction
         {
@@ -155,13 +149,13 @@ namespace StudyBox.Core.ViewModels
             IsEmailNotValid = string.IsNullOrEmpty(Email);
             IsPasswordNotValid = string.IsNullOrEmpty(Password);
             IsRepeatPasswordNotValid = string.IsNullOrEmpty(RepeatPassword);
-            GeneralErrorMessage = _stringResources.GetString("NoInternetConnection");
+            GeneralErrorMessage = StringResources.GetString("NoInternetConnection");
             IsGeneralError = true;
         }
 
         public void Cancel()
         {
-            _navigationService.NavigateTo("DecksListView");
+            NavigationService.NavigateTo("DecksListView");
         }
     }
 }

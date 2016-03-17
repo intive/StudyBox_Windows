@@ -120,13 +120,13 @@
   <data name="AccessDenied" xml:space="preserve">
     <value>No Internet Access.</value>
   </data>
-  <data name="Cancel.Content" xml:space="preserve">
+  <data name="Cancel.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="Congrats" xml:space="preserve">
     <value>Congrats!</value>
   </data>
-  <data name="CreateAccount.Content" xml:space="preserve">
+  <data name="CreateAccount.Text" xml:space="preserve">
     <value>Create new account</value>
   </data>
   <data name="DecksListTitleText.Text" xml:space="preserve">
@@ -147,7 +147,7 @@
   <data name="LoadingFlashcards.Text" xml:space="preserve">
     <value>Flashcards are loading...</value>
   </data>
-  <data name="Login.Content" xml:space="preserve">
+  <data name="Login.Text" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="MenuEditButton.Content" xml:space="preserve">
@@ -171,7 +171,7 @@
   <data name="PasswordError.Text" xml:space="preserve">
     <value>Password is not valid</value>
   </data>
-  <data name="Register.Content" xml:space="preserve">
+  <data name="Register.Text" xml:space="preserve">
     <value>Register</value>
   </data>
   <data name="RepeatPassword.PlaceholderText" xml:space="preserve">

@@ -5,12 +5,8 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Xml.Linq;
-using Windows.ApplicationModel.Resources;
 using Windows.Networking.Connectivity;
-using Windows.System;
 using Windows.UI.Popups;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
@@ -20,23 +16,19 @@ using StudyBox.Core.Models;
 
 namespace StudyBox.Core.ViewModels
 {
-    public class DecksListViewModel : ViewModelBase
+    public class DecksListViewModel : ExtendedViewModelBase
     {
         #region fields
         private ObservableCollection<Deck> _decksCollection;
-        private INavigationService _navigationService;
         private IRestService _restService;
         private bool _isDataLoading=false;
-        private ResourceLoader _stringResources;
         #endregion
 
         #region Constructors
-        public DecksListViewModel(INavigationService navigationService, IRestService restService)
+        public DecksListViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
         {
-            this._navigationService = navigationService;
             this._restService = restService;
             DecksCollection = new ObservableCollection<Deck>();
-            _stringResources=new ResourceLoader();
 
             InitializeDecksCollection();
 
@@ -84,12 +76,12 @@ namespace StudyBox.Core.ViewModels
         {
             if (!(await Task.Run(() => NetworkInterface.GetIsNetworkAvailable())))
             {
-                MessageDialog msg = new MessageDialog(_stringResources.GetString("NoInternetConnection"));
+                MessageDialog msg = new MessageDialog(StringResources.GetString("NoInternetConnection"));
                 await msg.ShowAsync();
             }
             else if (!(NetworkInformation.GetInternetConnectionProfile().GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess))
             {
-                MessageDialog msg = new MessageDialog(_stringResources.GetString("AccessDenied"));
+                MessageDialog msg = new MessageDialog(StringResources.GetString("AccessDenied"));
                 await msg.ShowAsync();
             }
             else
@@ -110,7 +102,7 @@ namespace StudyBox.Core.ViewModels
         public ICommand TapTileCommand { get; set; }
         private void TapTile(string id)
         {
-            _navigationService.NavigateTo("ExamView");
+            NavigationService.NavigateTo("ExamView");
             Deck deck = DecksCollection.Where(x => x.ID == id).FirstOrDefault();
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
