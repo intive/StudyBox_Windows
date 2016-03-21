@@ -7,8 +7,12 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
+        //Need to delete this
         [JsonProperty(PropertyName = "deck")]
         public Deck Deck { get; set; }
+
+        [JsonProperty(PropertyName = "deckId")]
+        public string DeckID { get; set; }
 
         [JsonProperty(PropertyName = "question")]
         public string Question { get; set; }
@@ -16,6 +20,7 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "answer")]
         public string Answer { get; set; }
 
+        //Need to delete this
         [JsonProperty(PropertyName = "hint")]
         public string Hint { get; set; }
 
