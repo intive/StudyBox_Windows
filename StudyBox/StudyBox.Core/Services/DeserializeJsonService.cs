@@ -79,5 +79,149 @@ namespace StudyBox.Core.Services
             else
                 return null;
         }
+
+        public User GetUserFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    User userObject = JsonConvert.DeserializeObject<User>(jsonToDeserialize);
+                    return userObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        public List<User> GetUsersFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    List<User> usersObject = JsonConvert.DeserializeObject<List<User>>(jsonToDeserialize);
+                    return usersObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        public Tip GetTipFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    Tip tipObject = JsonConvert.DeserializeObject<Tip>(jsonToDeserialize);
+                    return tipObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        public List<Tip> GetTipsFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    List<Tip> tipsObject = JsonConvert.DeserializeObject<List<Tip>>(jsonToDeserialize);
+                    return tipsObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        public Tag GetTagFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    Tag tagObject = JsonConvert.DeserializeObject<Tag>(jsonToDeserialize);
+                    return tagObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        public List<Tag> GetTagsFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    List<Tag> tagsObject = JsonConvert.DeserializeObject<List<Tag>>(jsonToDeserialize);
+                    return tagsObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        public TestResult GetTestResultFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    TestResult testResultObject = JsonConvert.DeserializeObject<TestResult>(jsonToDeserialize);
+                    return testResultObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        public List<TestResult> GetTestResultsFromJson(string jsonToDeserialize)
+        {
+            if (jsonToDeserialize != null && jsonToDeserialize != "")
+            {
+                try
+                {
+                    List<TestResult> testResultsObject = JsonConvert.DeserializeObject<List<TestResult>>(jsonToDeserialize);
+                    return testResultsObject;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
     }
 }
