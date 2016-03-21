@@ -136,7 +136,10 @@
     <value>E-mail</value>
   </data>
   <data name="EmailError.Text" xml:space="preserve">
-    <value>E-mail jest nieprawidłowy</value>
+    <value>Niepoprawny e-mail!</value>
+  </data>
+  <data name="FillAllFields" xml:space="preserve">
+    <value>Wypełnij wszystkie pola!</value>
   </data>
   <data name="HintRectangle" xml:space="preserve">
     <value>Pokaż podpowiedź!</value>
@@ -168,8 +171,14 @@
   <data name="Password.PlaceholderText" xml:space="preserve">
     <value>Hasło</value>
   </data>
+  <data name="PasswordCannotHaveWhitespaces" xml:space="preserve">
+    <value>Nie można użyć w haśle białych znaków!</value>
+  </data>
   <data name="PasswordError.Text" xml:space="preserve">
     <value>Hasło jest nieprawidłowe</value>
+  </data>
+  <data name="PasswordTooShort" xml:space="preserve">
+    <value>Hasło jest za krótkie!</value>
   </data>
   <data name="Register.Text" xml:space="preserve">
     <value>Zarejestruj</value>
@@ -178,7 +187,7 @@
     <value>Powtórz hasło</value>
   </data>
   <data name="RepeatPasswordError.Text" xml:space="preserve">
-    <value>Hasła muszą się zgadzać</value>
+    <value>Hasła nie są jednakowe!</value>
   </data>
   <data name="TryAgain" xml:space="preserve">
     <value>Próbuj dalej...</value>

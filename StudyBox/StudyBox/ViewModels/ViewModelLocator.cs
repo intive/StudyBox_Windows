@@ -30,11 +30,15 @@ namespace StudyBox.ViewModels
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
+                SimpleIoc.Default.Register<IValidationService, ValidationService>();
+                SimpleIoc.Default.Register<IInternetConnectionService, InternetConnectionService>();
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
             }
             else
             {
+                SimpleIoc.Default.Register<IValidationService, ValidationService>();
+                SimpleIoc.Default.Register<IInternetConnectionService, InternetConnectionService>();
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
             }
