@@ -223,5 +223,23 @@ namespace StudyBox.Core.Services
             else
                 return null;
         }
+
+        public T GetObjectFromJson<T>(string jsonToDeserialize)
+        {
+            if (!String.IsNullOrEmpty(jsonToDeserialize))
+            {
+                try
+                {
+                    T tagObject = JsonConvert.DeserializeObject<T>(jsonToDeserialize);
+                    return tagObject;
+                }
+                catch (Exception)
+                {
+                    return default(T);
+                }
+            }
+            else
+                return default(T);
+        }
     }
 }
