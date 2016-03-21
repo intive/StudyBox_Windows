@@ -10,6 +10,9 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
+        [JsonProperty(PropertyName = "isPublic")]
+        public bool IsPublic { get; private set; }
+
         public Deck() { }
 
         public Deck(string id)
