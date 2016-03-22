@@ -8,8 +8,14 @@ namespace StudyBox.Core.Models
         public string FlashcardId { get; set; }
 
         [JsonProperty(PropertyName = "isCorrectAnswer")]
-        public string IsCorrectAnswer { get; set; }
+        public bool IsCorrectAnswer { get; set; }
 
         public TestResult() { }
+
+        public TestResult(string flashcardId, bool isCorrectAnswer)
+        {
+            FlashcardId = flashcardId;
+            IsCorrectAnswer = isCorrectAnswer;
+        }
     }
 }
