@@ -16,7 +16,7 @@ namespace StudyBox.Core.ViewModels
         private string _email;
         private string _password;
         private bool _isGeneralError;
-        private bool _rememberMe = true;
+        //private bool _rememberMe = true;
 
 
         public LoginViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService) : base(navigationService)
@@ -119,21 +119,21 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public bool RememberMe
-        {
-            get
-            {
-                return _rememberMe;
-            }
-            set
-            {
-                if (_rememberMe != value)
-                {
-                    _rememberMe = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        //public bool RememberMe
+        //{
+        //    get
+        //    {
+        //        return _rememberMe;
+        //    }
+        //    set
+        //    {
+        //        if (_rememberMe != value)
+        //        {
+        //            _rememberMe = value;
+        //            RaisePropertyChanged();
+        //        }
+        //    }
+        //}
 
         public void Login()
         {
