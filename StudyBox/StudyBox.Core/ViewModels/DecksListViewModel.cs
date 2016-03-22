@@ -89,6 +89,7 @@ namespace StudyBox.Core.ViewModels
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
                 _deckLists = await _restService.GetDecks();
+                _deckLists.Sort((x, y) => string.Compare(y.Name, x.Name));
                 _deckLists.ForEach(x => DecksCollection.Add(x));
                 IsDataLoading = false;
             }
