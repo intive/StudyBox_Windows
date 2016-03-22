@@ -7,5 +7,6 @@
         bool CheckIfPasswordContainsWhitespaces(string password);
         bool CheckIfPasswordsAreEqual(string password1, string password2);
         bool CheckIfEverythingIsFilled(string email, string password1, string password2);
+        bool CheckIfEverythingIsFilled(string email, string password);
     }
 }

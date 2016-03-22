@@ -1,10 +1,13 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using StudyBox.Core.Interfaces;
 
 namespace StudyBox.Core.ViewModels
 {
     public class LoginViewModel : ExtendedViewModelBase
     {
+        private IInternetConnectionService _internetConnectionService;
+        private IValidationService _validationService;
         private RelayCommand _loginAction;
         private RelayCommand _createAccountAction;
         private string _generalErrorMessage;
@@ -13,9 +16,13 @@ namespace StudyBox.Core.ViewModels
         private string _email;
         private string _password;
         private bool _isGeneralError;
+        private bool _rememberMe = true;
 
-        public LoginViewModel(INavigationService navigationService) : base(navigationService)
+
+        public LoginViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService) : base(navigationService)
         {
+            _internetConnectionService = internetConnectionService;
+            _validationService = validationService;
         }
 
         public RelayCommand LoginAction
@@ -112,12 +119,56 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool RememberMe
+        {
+            get
+            {
+                return _rememberMe;
+            }
+            set
+            {
+                if (_rememberMe != value)
+                {
+                    _rememberMe = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public void Login()
         {
-            IsEmailNotValid = string.IsNullOrEmpty(Email);
-            IsPasswordNotValid = string.IsNullOrEmpty(Password);
-            GeneralErrorMessage = StringResources.GetString("NoInternetConnection");
-            IsGeneralError = true;
+            bool isInternet = _internetConnectionService.CheckConnection();
+
+            if (isInternet)
+            {
+                IsEmailNotValid = !_validationService.CheckEmail(Email);
+                IsPasswordNotValid = !_validationService.CheckIfPasswordIsToShort(Password) || !_validationService.CheckIfPasswordContainsWhitespaces(Password);
+
+                IsGeneralError = !_validationService.CheckIfEverythingIsFilled(Email, Password);
+
+                if (!IsGeneralError && !IsEmailNotValid && !IsPasswordNotValid)
+                {
+                    if (Email == "user@mail.pl" && Password == "12345678")
+                    {
+                        NavigationService.NavigateTo("DecksListView");
+                    }
+                    else
+                    {
+                        IsGeneralError = true;
+                        GeneralErrorMessage = StringResources.GetString("AbsenceUserInDatabase");
+                    }
+                }
+                else
+                {
+                    IsGeneralError = true;
+                    GeneralErrorMessage = StringResources.GetString("FillAllFields");
+                }
+            }
+            else
+            {
+                IsGeneralError = true;
+                GeneralErrorMessage = StringResources.GetString("NoInternetConnection");
+            }
         }
 
         public void CreateAccount()

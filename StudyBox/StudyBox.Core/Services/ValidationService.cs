@@ -39,5 +39,12 @@ namespace StudyBox.Core.Services
 
             return isEverythingFilled;
         }
+
+        public bool CheckIfEverythingIsFilled(string email, string password)
+        {
+            bool isEverythingFilled = !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password);
+
+            return isEverythingFilled;
+        }
     }
 }
