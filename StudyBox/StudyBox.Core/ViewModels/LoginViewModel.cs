@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using System;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Interfaces;
 
@@ -16,8 +17,6 @@ namespace StudyBox.Core.ViewModels
         private string _email;
         private string _password;
         private bool _isGeneralError;
-        //private bool _rememberMe = true;
-
 
         public LoginViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService) : base(navigationService)
         {
@@ -119,32 +118,23 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        //public bool RememberMe
-        //{
-        //    get
-        //    {
-        //        return _rememberMe;
-        //    }
-        //    set
-        //    {
-        //        if (_rememberMe != value)
-        //        {
-        //            _rememberMe = value;
-        //            RaisePropertyChanged();
-        //        }
-        //    }
-        //}
-
         public void Login()
         {
             bool isInternet = _internetConnectionService.CheckConnection();
 
             if (isInternet)
             {
-                IsEmailNotValid = !_validationService.CheckEmail(Email);
-                IsPasswordNotValid = !_validationService.CheckIfPasswordIsToShort(Password) || !_validationService.CheckIfPasswordContainsWhitespaces(Password);
-
-                IsGeneralError = !_validationService.CheckIfEverythingIsFilled(Email, Password);
+                try
+                {
+                    IsEmailNotValid = !_validationService.CheckEmail(Email);
+                    IsPasswordNotValid = string.IsNullOrEmpty(Password) || !_validationService.CheckIfPasswordIsToShort(Password) || !_validationService.CheckIfPasswordContainsWhitespaces(Password);
+                    IsGeneralError = !_validationService.CheckIfEverythingIsFilled(Email, Password);
+                }
+                catch (NullReferenceException)
+                {
+                    IsGeneralError = true;
+                    GeneralErrorMessage = StringResources.GetString("FillAllFields");
+                }
 
                 if (!IsGeneralError && !IsEmailNotValid && !IsPasswordNotValid)
                 {
@@ -157,11 +147,6 @@ namespace StudyBox.Core.ViewModels
                         IsGeneralError = true;
                         GeneralErrorMessage = StringResources.GetString("AbsenceUserInDatabase");
                     }
-                }
-                else
-                {
-                    IsGeneralError = true;
-                    GeneralErrorMessage = StringResources.GetString("FillAllFields");
                 }
             }
             else
