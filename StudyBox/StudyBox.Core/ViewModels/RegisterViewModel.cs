@@ -1,11 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using StudyBox.Core.Interfaces;
 
 namespace StudyBox.Core.ViewModels
 {
     public class RegisterViewModel : ExtendedViewModelBase
     {
-
         private RelayCommand _registerAction;
         private RelayCommand _cancelAction;
         private string _generalErrorMessage;
@@ -16,9 +16,14 @@ namespace StudyBox.Core.ViewModels
         private string _email;
         private string _password;
         private string _repeatPassword;
+        private string _passwordErrorMessage;
+        private IInternetConnectionService _internetConnectionService;
+        private IValidationService _validationService;
 
-        public RegisterViewModel(INavigationService navigationService) : base(navigationService)
+        public RegisterViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService) : base(navigationService)
         {
+            _internetConnectionService = internetConnectionService;
+            _validationService = validationService;
         }
 
 
@@ -90,7 +95,18 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-
+        public string PasswordErrorMessage
+        {
+            get { return _passwordErrorMessage; }
+            set
+            {
+                if (_passwordErrorMessage != value)
+                {
+                    _passwordErrorMessage = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public bool IsEmailNotValid
         {
@@ -146,11 +162,39 @@ namespace StudyBox.Core.ViewModels
 
         public void Register()
         {
-            IsEmailNotValid = string.IsNullOrEmpty(Email);
-            IsPasswordNotValid = string.IsNullOrEmpty(Password);
-            IsRepeatPasswordNotValid = string.IsNullOrEmpty(RepeatPassword);
-            GeneralErrorMessage = StringResources.GetString("NoInternetConnection");
-            IsGeneralError = true;
+            bool isInternet = _internetConnectionService.CheckConnection();
+            if (isInternet)
+            {
+                IsGeneralError = !_validationService.CheckIfEverythingIsFilled(Email, Password, RepeatPassword);
+                if (!IsGeneralError)
+                {
+                    _email = _email.Trim();
+                    IsEmailNotValid = !_validationService.CheckEmail(Email);
+                    IsPasswordNotValid = !_validationService.CheckIfPasswordIsToShort(Password);
+                    if (IsPasswordNotValid)
+                    {
+                        PasswordErrorMessage = StringResources.GetString("PasswordTooShort");
+                    }
+                    else
+                    {
+                        IsPasswordNotValid = !_validationService.CheckIfPasswordContainsWhitespaces(Password);
+                        if (IsPasswordNotValid)
+                        {
+                            PasswordErrorMessage = StringResources.GetString("PasswordCannotHaveWhitespaces");
+                        }
+                    }
+                    IsRepeatPasswordNotValid = !_validationService.CheckIfPasswordsAreEqual(Password, RepeatPassword);
+                }
+                else
+                {
+                    GeneralErrorMessage = StringResources.GetString("FillAllFields");
+                }
+            }
+            else
+            {
+                IsGeneralError = true;
+                GeneralErrorMessage = StringResources.GetString("NoInternetConnection");
+            }
         }
 
         public void Cancel()

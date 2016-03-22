@@ -68,7 +68,7 @@
                             Password="{Binding Password, Mode=TwoWay}" 
                             Margin="0 5 0 5"/>
                         <TextBlock x:Name="PasswordError" 
-                                   x:Uid="PasswordError" 
+                                   Text="{Binding PasswordErrorMessage}"
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
                                    Style="{StaticResource ValidationErrorStyle}">
                             <i:Interaction.Behaviors>
