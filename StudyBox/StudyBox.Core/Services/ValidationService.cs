@@ -7,7 +7,7 @@ namespace StudyBox.Core.Services
     {
         public bool CheckEmail(string email)
         {
-            bool isEmailValid = email.Contains("@") || email.Any(x => char.IsWhiteSpace(x));
+            bool isEmailValid = email.Contains("@") && !email.Any(x => char.IsWhiteSpace(x));
 
             return isEmailValid;
         }
