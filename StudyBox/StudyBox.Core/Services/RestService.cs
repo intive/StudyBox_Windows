@@ -92,26 +92,59 @@ namespace StudyBox.Core.Services
 
         public async Task<List<Deck>> GetDecks(CancellationTokenSource cts = null)
         {
-            string url = _resources["DeckGetAllUrl"].ToString();
-            string webPageSource = await GetWebPageSource(url, cts);
+            try
+            {
+                string url = _resources["DeckGetAllUrl"].ToString();
+                string webPageSource = await GetWebPageSource(url, cts);
 
-            return _deserializeJsonService.GetObjectFromJson<List<Deck>>(webPageSource);
+                return _deserializeJsonService.GetObjectFromJson<List<Deck>>(webPageSource);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<Deck> GetDeckById(string deckId, CancellationTokenSource cts = null)
         {
-            string url = String.Format(_resources["DeckGetByIdUrl"].ToString(), deckId);
-            string webPageSource = await GetWebPageSource(url, cts);
+            try
+            {
+                string url = String.Format(_resources["DeckGetByIdUrl"].ToString(), deckId);
+                string webPageSource = await GetWebPageSource(url, cts);
 
-            return _deserializeJsonService.GetObjectFromJson<Deck>(webPageSource);
+                return _deserializeJsonService.GetObjectFromJson<Deck>(webPageSource);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<List<Deck>> GetDecksByName(string name, CancellationTokenSource cts = null)
         {
-            string url = String.Format(_resources["DeckGetAllByNameUrl"].ToString(), name);
-            string webPageSource = await GetWebPageSource(url, cts);
+            try
+            {
+                string url = String.Format(_resources["DeckGetAllByNameUrl"].ToString(), name);
+                string webPageSource = await GetWebPageSource(url, cts);
 
-            return _deserializeJsonService.GetObjectFromJson<List<Deck>>(webPageSource);
+                return _deserializeJsonService.GetObjectFromJson<List<Deck>>(webPageSource);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<Deck> CreateDeck(Deck deck, CancellationTokenSource cts = null)
@@ -270,10 +303,21 @@ namespace StudyBox.Core.Services
 
         public async Task<List<TestResult>> GetTestResults(string deckId, CancellationTokenSource cts = null)
         {
-            string url = String.Format(_resources["TestResultsGetAllUrl"].ToString(), deckId);
-            string webPageSource = await GetWebPageSource(url, cts);
+            try
+            {
+                string url = String.Format(_resources["TestResultsGetAllUrl"].ToString(), deckId);
+                string webPageSource = await GetWebPageSource(url, cts);
 
-            return _deserializeJsonService.GetObjectFromJson<List<TestResult>>(webPageSource);
+                return _deserializeJsonService.GetObjectFromJson<List<TestResult>>(webPageSource);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<bool> SaveTestResults(List<TestResult> testResults, string deckId, CancellationTokenSource cts = null)
