@@ -1,11 +1,13 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Interfaces;
+using StudyBox.Core.Models;
 
 namespace StudyBox.Core.ViewModels
 {
     public class RegisterViewModel : ExtendedViewModelBase
     {
+        private IRestService _restService;
         private RelayCommand _registerAction;
         private RelayCommand _cancelAction;
         private string _generalErrorMessage;
@@ -20,10 +22,11 @@ namespace StudyBox.Core.ViewModels
         private IInternetConnectionService _internetConnectionService;
         private IValidationService _validationService;
 
-        public RegisterViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService) : base(navigationService)
+        public RegisterViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, IRestService restService) : base(navigationService)
         {
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;
+            this._restService = restService;
         }
 
 
@@ -160,7 +163,7 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public void Register()
+        public async void Register()
         {
             bool isInternet = _internetConnectionService.CheckConnection();
             if (isInternet)
@@ -184,6 +187,23 @@ namespace StudyBox.Core.ViewModels
                         }
                     }
                     IsRepeatPasswordNotValid = !_validationService.CheckIfPasswordsAreEqual(Password, RepeatPassword);
+                    if (!IsRepeatPasswordNotValid)
+                    {
+                        User user = new User();
+                        user.Email = Email;
+                        user.Name = Email;
+                        user.Password = Password;
+                        user = await _restService.CreateUser(user);
+                        if (user!=null)
+                        {
+                            NavigationService.NavigateTo("DecksListView");
+                        }
+                        else
+                        {
+                            IsGeneralError = true;
+                            GeneralErrorMessage = StringResources.GetString("RegistrationFailed");
+                        }
+                    }
                 }
                 else
                 {

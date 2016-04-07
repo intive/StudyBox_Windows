@@ -186,6 +186,9 @@
   <data name="Register.Text" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="RegistrationFailed" xml:space="preserve">
+    <value>Registration failed!</value>
+  </data>
   <data name="RepeatPassword.PlaceholderText" xml:space="preserve">
     <value>Repeat password</value>
   </data>
