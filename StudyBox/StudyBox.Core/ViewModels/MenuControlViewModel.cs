@@ -30,7 +30,13 @@ namespace StudyBox.Core.ViewModels
 
         public string TitleBar
         {
-            get { return _titleBar;}
+            get
+            {
+                if (string.IsNullOrEmpty(_titleBar))
+                    return StringResources.GetString("StudyBox");
+                else
+                    return _titleBar;
+            }
             set
             {
                 if (_titleBar != value)

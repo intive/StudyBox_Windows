@@ -50,13 +50,15 @@
                         </Button.Content>
                     </Button>
                     <TextBlock
-                            Grid.Column="1" x:Uid="DecksListTitleText"
+                            Grid.Column="1"
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Center" 
                             FontSize="18" 
                             FontStretch="UltraExpanded" 
                             Foreground="{StaticResource Grey}" 
-                            FontFamily="{StaticResource LatoBlackFontFamily}"/>
+                            FontFamily="{StaticResource LatoBlackFontFamily}"
+                            Text="{Binding TitleBar}"
+                        />
 
                     <Button x:Uid="MenuSearchButton"
                             Grid.Column="2" 
