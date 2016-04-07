@@ -33,7 +33,7 @@ namespace StudyBox.Core.ViewModels
             InitializeDecksCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, false));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
         }
         #endregion
 
@@ -109,7 +109,7 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("ExamView");
             Deck deck = DecksCollection.Where(x => x.ID == id).FirstOrDefault();
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true,false,false,deck.Name));
         }
 
         #endregion

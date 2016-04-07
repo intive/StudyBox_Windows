@@ -222,7 +222,7 @@ namespace StudyBox.Core.ViewModels
                 NavigationService.NavigateTo("SummaryView");
                 Messenger.Default.Send<DataMessageToSummary>(new DataMessageToSummary(new Exam { CorrectAnswers = _numberOfCorrectAnswers, Questions = _flashcards.Count }));
                 Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, NameOfDeck));
             }
         }
 
