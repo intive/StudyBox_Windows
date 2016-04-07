@@ -7,9 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converters="using:StudyBox.Converters"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=RegisterViewModel}">
-
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
     <Grid Background="White">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -119,12 +122,13 @@
                                 </core:DataTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </TextBlock>
-                        
+
                         <Button 
                             HorizontalAlignment="Stretch"
                             Margin="0 30 0 5"
                             Background="{StaticResource DarkBlue}" 
                             Command="{Binding RegisterAction}">
+
 
                             <TextBlock
                                 TextWrapping="Wrap"
@@ -150,6 +154,18 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
+
+        <ProgressRing x:Name="InitializeProgressRing"
+                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                      Width="80"
+                      Height="80"
+                      Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      IsActive="{Binding IsDataLoading}"
+                      Foreground="{StaticResource DarkBlue}"
+                      FontWeight="Bold"
+                      />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">

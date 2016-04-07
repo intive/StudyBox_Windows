@@ -19,6 +19,7 @@ namespace StudyBox.Core.ViewModels
         private string _password;
         private string _repeatPassword;
         private string _passwordErrorMessage;
+        private bool _isDataLoading = false;
         private IInternetConnectionService _internetConnectionService;
         private IValidationService _validationService;
 
@@ -163,6 +164,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool IsDataLoading
+        {
+            get
+            {
+                return _isDataLoading;
+            }
+            set
+            {
+                if (_isDataLoading != value)
+                {
+                    _isDataLoading = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public async void Register()
         {
             bool isInternet = _internetConnectionService.CheckConnection();
@@ -189,11 +206,15 @@ namespace StudyBox.Core.ViewModels
                     IsRepeatPasswordNotValid = !_validationService.CheckIfPasswordsAreEqual(Password, RepeatPassword);
                     if (!IsRepeatPasswordNotValid)
                     {
+                        IsDataLoading = true;
+
                         User user = new User();
                         user.Email = Email;
                         user.Name = Email;
                         user.Password = Password;
                         user = await _restService.CreateUser(user);
+
+                        IsDataLoading = false;
                         if (user!=null)
                         {
                             NavigationService.NavigateTo("DecksListView");
