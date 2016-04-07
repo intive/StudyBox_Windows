@@ -26,7 +26,7 @@ namespace StudyBox.Core.ViewModels
         {
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;
-            this._restService = restService;
+            _restService = restService;
         }
 
 
