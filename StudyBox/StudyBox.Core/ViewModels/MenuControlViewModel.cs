@@ -18,7 +18,6 @@ namespace StudyBox.Core.ViewModels
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
-        private bool _editButtonVisibility;
         private bool _saveButtonVisibility;
         private bool _exitButtonVisibility;
 
@@ -107,7 +106,6 @@ namespace StudyBox.Core.ViewModels
                     _searchButtonVisibility = value;
                     if (_searchButtonVisibility == true)
                     {
-                        EditButtonVisibility = false;
                         SaveButtonVisibility = false;
                         ExitButtonVisibility = false;
                     }
@@ -116,27 +114,7 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public bool EditButtonVisibility
-        {
-            get
-            {
-                return _editButtonVisibility;
-            }
-            private set
-            {
-                if (_editButtonVisibility != value)
-                {
-                    _editButtonVisibility = value;
-                    if (_editButtonVisibility == true)
-                    {
-                        SearchButtonVisibility = false;
-                        SaveButtonVisibility = false;
-                        ExitButtonVisibility = false;
-                    }
-                    RaisePropertyChanged();
-                }
-            }
-        }
+     
 
         public bool SaveButtonVisibility
         {
@@ -152,7 +130,6 @@ namespace StudyBox.Core.ViewModels
                     if (_saveButtonVisibility == true)
                     {
                         SearchButtonVisibility = false;
-                        EditButtonVisibility = false;
                         ExitButtonVisibility = false;
                     }
                     RaisePropertyChanged();
@@ -174,7 +151,6 @@ namespace StudyBox.Core.ViewModels
                     if (_exitButtonVisibility == true)
                     {
                         SearchButtonVisibility = false;
-                        EditButtonVisibility = false;
                         SaveButtonVisibility = false;
                     }
                     RaisePropertyChanged();
@@ -204,7 +180,7 @@ namespace StudyBox.Core.ViewModels
 
         private void DoSearch()
         {
-            
+            //TODO SEARCH ACTION
         }
 
         private void CancelSearching()
@@ -214,6 +190,7 @@ namespace StudyBox.Core.ViewModels
                 IsSearchOpen = false;
                 SearchButtonVisibility = true;
             }
+            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
         }
         private void OpenMenu()
         {

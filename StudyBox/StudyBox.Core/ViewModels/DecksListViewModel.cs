@@ -27,6 +27,7 @@ namespace StudyBox.Core.ViewModels
         #region Constructors
         public DecksListViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
         {
+            Messenger.Default.Register<ReloadMessageToDecksList>(this,x=> HandleReloadMessage(x.Reload));
             this._restService = restService;
             DecksCollection = new ObservableCollection<Deck>();
 
@@ -114,6 +115,10 @@ namespace StudyBox.Core.ViewModels
 
         #endregion
 
-
+        private void HandleReloadMessage(bool b)
+        {
+            if(b)
+                InitializeDecksCollection();
+        }
     }
 }

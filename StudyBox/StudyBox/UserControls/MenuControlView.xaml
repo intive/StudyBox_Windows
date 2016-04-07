@@ -143,14 +143,14 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" 
-                                Margin="5,5,5,10" 
+                                Margin="5,3,5,10" 
                                  Background="{StaticResource Grey}" 
                                  Padding="5"
                                  MaxHeight="30"
                                  Text="{Binding SearchingContent}"
                                  />
                     <Button Grid.Column="1" 
-                                Margin="5,5,5,10"
+                                Margin="5,3,5,10"
                                 Padding="0" 
                                 VerticalAlignment="Stretch" 
                                 HorizontalAlignment="Stretch"
