@@ -30,5 +30,7 @@
 
     <x:String x:Key="TestResultsGetAllUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/results</x:String>
     <x:String x:Key="TestResultsSaveUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/results</x:String>
-    
+
+    <x:String x:Key="UserCreateUrl">http://78.133.154.70:2000/users</x:String>
+
 </ResourceDictionary>

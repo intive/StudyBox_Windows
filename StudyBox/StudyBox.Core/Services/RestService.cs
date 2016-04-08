@@ -357,7 +357,15 @@ namespace StudyBox.Core.Services
             return true;
         }
 
+        public async Task<User> CreateUser(User user, CancellationTokenSource cts = null)
+        {
+            string url = _resources["UserCreateUrl"].ToString();
 
+            return await CreateHelper<User>(url,
+                new { email = user.Email, name = user.Email, password = user.Password },
+                cts);
+        }
+        
         #endregion
 
 
