@@ -192,6 +192,9 @@
   <data name="RepeatPasswordError.Text" xml:space="preserve">
     <value>Hasła nie są jednakowe!</value>
   </data>
+  <data name="StudyBox" xml:space="preserve">
+    <value>StudyBox</value>
+  </data>
   <data name="TryAgain" xml:space="preserve">
     <value>Próbuj dalej...</value>
   </data>

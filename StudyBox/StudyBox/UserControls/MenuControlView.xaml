@@ -16,8 +16,19 @@
     </UserControl.Resources>
     
     <Grid>
-        <StackPanel>
-            <Border Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{StaticResource DarkBlue}" Padding="0,0" MinHeight="50" MaxHeight="60">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="50" MaxHeight="60" Height="*"/>
+                <RowDefinition Height="8*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border x:Name="TitleBorder"
+                    Grid.ColumnSpan="3" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Top" 
+                    Background="{StaticResource DarkBlue}" 
+                    Padding="0,0" 
+                    MinHeight="50" 
+                    MaxHeight="60">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition  Width="*"/>
@@ -39,39 +50,34 @@
                         </Button.Content>
                     </Button>
                     <TextBlock
-                            Grid.Column="1" x:Uid="DecksListTitleText"
+                            Grid.Column="1"
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Center" 
                             FontSize="18" 
                             FontStretch="UltraExpanded" 
                             Foreground="{StaticResource Grey}" 
-                            FontFamily="{StaticResource LatoBlackFontFamily}"/>
-                    <Button Grid.Column="2" 
-                            Visibility="{Binding SearchButtonVisibility,Converter={StaticResource BooleanToVisibilityConverter}}"
-                            HorizontalAlignment="Right" 
-                            VerticalAlignment="Center"
-                            Padding="5" FontSize="12"
-                            Foreground="{StaticResource Grey}" 
-                            Background="{StaticResource DarkBlue}"
-                            Margin="0,0,10,0"
-                            MaxWidth="32" 
-                            MaxHeight="32">
-                        <Button.Content>
-                            <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0"/>
-                        </Button.Content>
-                    </Button>
-                    <Button x:Uid="MenuEditButton"
+                            FontFamily="{StaticResource LatoBlackFontFamily}"
+                            Text="{Binding TitleBar}"
+                        />
+
+                    <Button x:Uid="MenuSearchButton"
                             Grid.Column="2" 
-                            Visibility="{Binding EditButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Visibility="{Binding SearchButtonVisibility,Converter={StaticResource BooleanToVisibilityConverter}}"
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center"
                             Padding="0" FontSize="12"
                             Foreground="{StaticResource Grey}" 
                             Background="{StaticResource DarkBlue}"
                             Margin="0,0,10,0"
-                            MaxWidth="50" 
+                            MaxWidth="32" 
                             MaxHeight="32"
-                            />
+                            Command="{Binding ShowSearchPanelCommand}"
+                            >
+                        <Button.Content>
+                            <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0"/>
+                        </Button.Content>
+                    </Button>
+                    
                     <Button x:Uid="MenuSaveButton"
                             Grid.Column="2" 
                             Visibility="{Binding SaveButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -95,6 +101,7 @@
                             Margin="0,0,10,0"
                             MaxWidth="32" 
                             MaxHeight="32"
+                            Command="{Binding CancelSearchingCommand}"
                             >
                         <Button.Content>
                             <Image Source="ms-appx:///Assets/Delete-64.png" Stretch="Fill" Margin="0"/>
@@ -103,7 +110,7 @@
 
                 </Grid>
             </Border>
-            <SplitView x:Name="MenuBar" Grid.Column="0"
+            <!--<SplitView x:Name="MenuBar" Grid.Column="0" Grid.Row="1"
                            DisplayMode="CompactInline" 
                            IsPaneOpen="{Binding Path=IsPaneOpen, UpdateSourceTrigger=PropertyChanged}"
                            CompactPaneLength="0"
@@ -121,7 +128,42 @@
                         </StackPanel>
                     </StackPanel>
                 </SplitView.Pane>
-            </SplitView>
-        </StackPanel>
+            </SplitView>-->
+
+            <StackPanel x:Name="Searching"
+                       Grid.Row="1"
+                       Visibility="{Binding IsSearchOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       MaxHeight="40"
+                       VerticalAlignment="Top"
+                       Grid.ColumnSpan="10"
+                       >
+                <Grid Background="{StaticResource Graphite}">
+                   <Grid.ColumnDefinitions>
+                       <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" 
+                                Margin="5,3,5,10" 
+                                 Background="{StaticResource Grey}" 
+                                 Padding="5"
+                                 MaxHeight="30"
+                                 Text="{Binding SearchingContent}"
+                                 />
+                    <Button Grid.Column="1" 
+                                Margin="5,3,5,10"
+                                Padding="0" 
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Stretch"
+                                Background="{StaticResource DarkBlue}"
+                                MaxHeight="30"
+                                Command="{Binding DoSearchCommand}"
+                                >
+                        <Button.Content>
+                            <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0" MaxHeight="24" MaxWidth="24"/>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

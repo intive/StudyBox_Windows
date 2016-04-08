@@ -58,14 +58,14 @@ namespace StudyBox.Core.ViewModels
         private void GoBackToDecks()
         {
             NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, false));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
         }
 
         private void TryImproveResults()
         {
             NavigationService.NavigateTo("ExamView");
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, true, false, false));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false,_deckInstance.Name));
         }
 
         private string ConcludeResult(Exam exam)
