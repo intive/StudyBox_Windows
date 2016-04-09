@@ -32,5 +32,10 @@
     <x:String x:Key="TestResultsSaveUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/results</x:String>
 
     <x:String x:Key="UserCreateUrl">http://78.133.154.70:2000/users</x:String>
+    <x:String x:Key="UserGetByIdUrl">http://78.133.154.70:2000/users/{0}</x:String>
+    <!--<x:String x:Key="UserGetLoggedUrl">http://78.133.154.70:2000/users/me</x:String>-->
+    
+    <!-- MOCK-UP - Ponieważ, serwer nie działa poprawnie -->
+    <x:String x:Key="UserGetLoggedUrl">https://api.myjson.com/bins/2v4iq</x:String>
 
 </ResourceDictionary>
