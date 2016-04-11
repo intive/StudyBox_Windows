@@ -217,7 +217,8 @@ namespace StudyBox.Core.ViewModels
                         IsDataLoading = false;
                         if (user!=null)
                         {
-                            NavigationService.NavigateTo("DecksListView");
+                            //NavigationService.NavigateTo("DecksListView");
+                            NavigationService.NavigateTo("LoginView");
                         }
                         else
                         {
