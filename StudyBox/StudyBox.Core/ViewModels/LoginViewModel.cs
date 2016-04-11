@@ -1,7 +1,10 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Interfaces;
+using StudyBox.Core.Messages;
+using StudyBox.Core.Models;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -9,6 +12,7 @@ namespace StudyBox.Core.ViewModels
     {
         private IInternetConnectionService _internetConnectionService;
         private IValidationService _validationService;
+        private readonly IAccountService _accountService;
         private RelayCommand _loginAction;
         private RelayCommand _createAccountAction;
         private string _generalErrorMessage;
@@ -18,10 +22,11 @@ namespace StudyBox.Core.ViewModels
         private string _password;
         private bool _isGeneralError;
 
-        public LoginViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService) : base(navigationService)
+        public LoginViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, IAccountService accountService) : base(navigationService)
         {
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;
+            _accountService = accountService;
         }
 
         public RelayCommand LoginAction
@@ -118,7 +123,7 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public void Login()
+        public async void Login()
         {
             bool isInternet = _internetConnectionService.CheckConnection();
 
@@ -126,6 +131,7 @@ namespace StudyBox.Core.ViewModels
             {
                 try
                 {
+                    _email = _email.Trim();
                     IsEmailNotValid = !_validationService.CheckEmail(Email);
                     IsPasswordNotValid = string.IsNullOrEmpty(Password) || !_validationService.CheckIfPasswordIsToShort(Password) || !_validationService.CheckIfPasswordContainsWhitespaces(Password);
                     IsGeneralError = !_validationService.CheckIfEverythingIsFilled(Email, Password);
@@ -138,14 +144,30 @@ namespace StudyBox.Core.ViewModels
 
                 if (!IsGeneralError && !IsEmailNotValid && !IsPasswordNotValid)
                 {
-                    if (Email == "user@mail.pl" && Password == "12345678")
+                    try
                     {
-                        NavigationService.NavigateTo("DecksListView");
+                        User user = new User
+                        {
+                            Email = Email,
+                            Password = Password
+                        };
+
+                        bool isLogged = await _accountService.Login(user);
+
+                        if (isLogged)
+                        {
+                            NavigationService.NavigateTo("DecksListView");
+                            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true,false,false));
+                        }
+                        else
+                        {
+                            IsGeneralError = true;
+                            GeneralErrorMessage = StringResources.GetString("AbsenceUserInDatabase");
+                        }
                     }
-                    else
+                    catch (Exception)
                     {
-                        IsGeneralError = true;
-                        GeneralErrorMessage = StringResources.GetString("AbsenceUserInDatabase");
+                        throw;
                     }
                 }
             }

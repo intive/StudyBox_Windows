@@ -18,6 +18,12 @@ namespace StudyBox.Core.Models
 
         public User() { }
 
+        public User(string email, string password)
+        {
+            this.Email = email;
+            this.Password = password;
+        }
+
         public User(string id, string name, string email, string password)
         {
             this.ID = id;
