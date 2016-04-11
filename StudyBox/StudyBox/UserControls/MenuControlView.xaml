@@ -18,7 +18,7 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition MinHeight="50" MaxHeight="60" Height="*"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="8*"></RowDefinition>
             </Grid.RowDefinitions>
             <Border x:Name="TitleBorder"
@@ -28,7 +28,9 @@
                     Background="{StaticResource DarkBlue}" 
                     Padding="0,0" 
                     MinHeight="50" 
-                    MaxHeight="60">
+                    MaxHeight="60"
+                    Margin="0"
+                    >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition  Width="*"/>
@@ -57,7 +59,7 @@
                             FontStretch="UltraExpanded" 
                             Foreground="{StaticResource Grey}" 
                             FontFamily="{StaticResource LatoBlackFontFamily}"
-                            Text="{Binding TitleBar}"
+                            Text="{Binding TitleBar, UpdateSourceTrigger=PropertyChanged}"
                         />
 
                     <Button x:Uid="MenuSearchButton"

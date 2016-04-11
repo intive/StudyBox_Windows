@@ -211,9 +211,9 @@ namespace StudyBox.Core.ViewModels
             SearchButtonVisibility = search;
             SaveButtonVisibility = save;
             ExitButtonVisibility = exit;
-            if (title != String.Empty)
+            if (String.IsNullOrEmpty(title))
             {
-                StringResources.GetString("StudyBox");
+                TitleBar = StringResources.GetString("StudyBox");
             }
             else
             {

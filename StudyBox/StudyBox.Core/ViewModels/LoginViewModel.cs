@@ -1,7 +1,9 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Interfaces;
+using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 
 namespace StudyBox.Core.ViewModels
@@ -155,6 +157,7 @@ namespace StudyBox.Core.ViewModels
                         if (isLogged)
                         {
                             NavigationService.NavigateTo("DecksListView");
+                            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true,false,false));
                         }
                         else
                         {
