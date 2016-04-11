@@ -129,6 +129,7 @@ namespace StudyBox.Core.ViewModels
             {
                 try
                 {
+                    _email = _email.Trim();
                     IsEmailNotValid = !_validationService.CheckEmail(Email);
                     IsPasswordNotValid = string.IsNullOrEmpty(Password) || !_validationService.CheckIfPasswordIsToShort(Password) || !_validationService.CheckIfPasswordContainsWhitespaces(Password);
                     IsGeneralError = !_validationService.CheckIfEverythingIsFilled(Email, Password);
