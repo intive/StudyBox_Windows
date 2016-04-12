@@ -19,6 +19,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _cancelSearchingCommand;
         private RelayCommand _doSearchCommand;
         private RelayCommand _logoutCommand;
+        private RelayCommand _loginCommand;
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
@@ -31,6 +32,7 @@ namespace StudyBox.Core.ViewModels
             SearchButtonVisibility = true;
             _accountService = accountService;
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
+            IsPaneOpen = false;
         }
 
         public string TitleBar
@@ -205,6 +207,11 @@ namespace StudyBox.Core.ViewModels
             get { return _logoutCommand ?? (_logoutCommand = new RelayCommand(Logout)); }
         }
 
+        public RelayCommand LoginCommand
+        {
+            get { return _loginCommand ?? (_loginCommand = new RelayCommand(Login)); }
+        }
+
         private void DoSearch()
         {
             //TODO SEARCH ACTION
@@ -221,7 +228,7 @@ namespace StudyBox.Core.ViewModels
         }
         private void OpenMenu()
         {
-            IsPaneOpen = !IsPaneOpen && LogoutButtonVisibility;
+            IsPaneOpen = IsSearchOpen != true;
         }
 
         private void ShowSearchPanel()
@@ -241,6 +248,12 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("LoginView");
         }
 
+        private void Login()
+        {
+            IsPaneOpen = false;
+            NavigationService.NavigateTo("LoginView");
+        }
+
         private void HandleMenuControlMessage(bool search, bool save, bool exit, string title)
         {
             SearchButtonVisibility = search;
@@ -255,6 +268,7 @@ namespace StudyBox.Core.ViewModels
                 TitleBar = title;
             }
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
+            IsPaneOpen = false;
         }
     }
 }

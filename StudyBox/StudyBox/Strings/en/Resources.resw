@@ -156,7 +156,10 @@
   <data name="Login.Text" xml:space="preserve">
     <value>Login</value>
   </data>
-  <data name="Logout.Content" xml:space="preserve">
+  <data name="LoginMenuButton.Content" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="LogoutMenuButton.Content" xml:space="preserve">
     <value>Log out</value>
   </data>
   <data name="MenuEditButton.Content" xml:space="preserve">
