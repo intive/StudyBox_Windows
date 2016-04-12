@@ -49,6 +49,7 @@ namespace StudyBox.Core.Services
         public void LogOut()
         {
             _userDataStorageService.LogOut();
+            _httpService.Logout();
         }
 
         public bool IsUserLoggedIn()

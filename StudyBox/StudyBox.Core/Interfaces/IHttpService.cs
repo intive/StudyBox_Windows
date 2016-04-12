@@ -7,6 +7,7 @@ namespace StudyBox.Core.Interfaces
     public interface IHttpService
     {
         Task<int> Login(User user, CancellationTokenSource cts = null);
+        void Logout();
         void SetAuthenticationHeader(string email, string password);
     }
 }

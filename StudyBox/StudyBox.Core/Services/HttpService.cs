@@ -27,5 +27,10 @@ namespace StudyBox.Core.Services
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", email, password))));
         }
+
+        public void Logout()
+        {
+            _client.DefaultRequestHeaders.Authorization = null;
+        }
     }
 }
