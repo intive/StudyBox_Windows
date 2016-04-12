@@ -147,7 +147,7 @@
   <data name="HintRectangle" xml:space="preserve">
     <value>Pokaż podpowiedź!</value>
   </data>
-  <data name="ImproveResults.Text" xml:space="preserve">
+  <data name="ImproveResults" xml:space="preserve">
     <value>POPRAW WYNIK</value>
   </data>
   <data name="LoadingFlashcards.Text" xml:space="preserve">
@@ -195,11 +195,17 @@
   <data name="RepeatPasswordError.Text" xml:space="preserve">
     <value>Hasła nie są jednakowe!</value>
   </data>
+  <data name="RepeatTest" xml:space="preserve">
+    <value>POWTÓRZ TEST</value>
+  </data>
   <data name="StudyBox" xml:space="preserve">
     <value>StudyBox</value>
   </data>
   <data name="TryAgain" xml:space="preserve">
     <value>Próbuj dalej...</value>
+  </data>
+  <data name="WorstTest.Text" xml:space="preserve">
+    <value>TEST Z NAJGORSZYCH</value>
   </data>
   <data name="YourScore.Text" xml:space="preserve">
     <value>Twój wynik</value>

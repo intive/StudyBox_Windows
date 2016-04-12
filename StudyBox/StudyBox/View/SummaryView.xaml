@@ -3,12 +3,18 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StudyBox.View"
+    xmlns:converters="using:StudyBox.Converters"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="using:StudyBox.UserControls"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=SummaryViewModel}"
     >
+
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
@@ -27,13 +33,12 @@
         <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Canvas.ZIndex="2"/>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock x:Name="Congrats" 
-                       Text="{Binding Congrats}" 
-                       Foreground="{StaticResource Graphite}" 
-                       FontFamily="{StaticResource LatoRegularFontFamily}" 
-                       FontSize="{Binding ElementName=HeaderFontManagment, Path=FontSize}" 
-                       HorizontalAlignment="Center"
-                       Opacity="0">
+            <TextBlock x:Name="Congrats"
+                       Text="{Binding Congrats}"
+                       Foreground="{StaticResource Graphite}"
+                       FontSize="{Binding ElementName=HeaderFontManagment, Path=FontSize}"
+                       Style="{StaticResource SummaryTextStyle}"
+                       Opacity="0" >
                 <TextBlock.RenderTransform>
                     <TranslateTransform x:Name="CongratsTransform" Y="10"></TranslateTransform>
                 </TextBlock.RenderTransform>
@@ -55,12 +60,11 @@
                 </TextBlock.Triggers>
             </TextBlock>
 
-            <TextBlock x:Name="YourScore" 
-                       x:Uid="YourScore" 
-                       Foreground="{StaticResource Graphite}" 
-                       FontFamily="{StaticResource LatoRegularFontFamily}" 
-                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
-                       HorizontalAlignment="Center"
+            <TextBlock x:Name="YourScore"
+                       x:Uid="YourScore"
+                       Foreground="{StaticResource Graphite}"
+                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                       Style="{StaticResource SummaryTextStyle}"
                        Opacity="0">
                 <TextBlock.RenderTransform>
                     <TranslateTransform x:Name="YourScoreTransform" Y="10"></TranslateTransform>
@@ -83,18 +87,61 @@
                 </TextBlock.Triggers>
             </TextBlock>
 
-            <TextBlock x:Name="Score" 
-                       Text="{Binding Score}" 
-                       Foreground="{StaticResource Graphite}" 
-                       FontFamily="{StaticResource LatoRegularFontFamily}" 
-                       FontSize="{Binding ElementName=HeaderFontManagment, Path=FontSize}" 
-                       HorizontalAlignment="Center"
-                       Opacity="0">
-                <TextBlock.RenderTransform>
+            <Grid x:Name="Score" VerticalAlignment="Top" HorizontalAlignment="Center" Opacity="0">
+                <TextBlock Text="{Binding Score}"
+                       Canvas.ZIndex="1"
+                       Foreground="{StaticResource Grey}"
+                       FontSize="{Binding ElementName=HeaderFontManagment, Path=FontSize}"
+                       Style="{StaticResource SummaryTextStyle}" />
+
+                <Charting:Chart x:Name="PieChart"
+                                Canvas.ZIndex="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Margin="0, -50, 0, -35">
+                    <Charting:Chart.LegendStyle>
+                        <Style TargetType="ItemsControl">
+                            <Setter Property="Width" Value="0"/>
+                        </Style>
+                    </Charting:Chart.LegendStyle>
+                    <Charting:Chart.Series>
+                        <Charting:PieSeries IsEnabled="False" ItemsSource="{Binding ResultList}"/>
+                    </Charting:Chart.Series>
+                    <Charting:Chart.Palette>
+                        <Charting:ResourceDictionaryCollection>
+                            <!-- DarkBlue -->
+                            <ResourceDictionary>
+                                <Style x:Key="DataPointStyle" TargetType="Control">
+                                    <Setter Property="Background" Value="{StaticResource DarkBlue}" />
+                                </Style>
+                                <Style x:Key="DataShapeStyle" TargetType="Shape">
+                                    <Setter Property="Stroke" Value="{StaticResource DarkBlue}" />
+                                    <Setter Property="StrokeThickness" Value="2" />
+                                    <Setter Property="StrokeMiterLimit" Value="1" />
+                                    <Setter Property="Fill" Value="{StaticResource DarkBlue}" />
+                                </Style>
+                            </ResourceDictionary>
+                            <!-- Raspberry -->
+                            <ResourceDictionary>
+                                <Style x:Key="DataPointStyle" TargetType="Control">
+                                    <Setter Property="Background" Value="{StaticResource Raspberry}" />
+                                </Style>
+                                <Style x:Key="DataShapeStyle" TargetType="Shape">
+                                    <Setter Property="Stroke" Value="{StaticResource Raspberry}" />
+                                    <Setter Property="StrokeThickness" Value="2" />
+                                    <Setter Property="StrokeMiterLimit" Value="1" />
+                                    <Setter Property="Fill" Value="{StaticResource Raspberry}" />
+                                </Style>
+                            </ResourceDictionary>
+                        </Charting:ResourceDictionaryCollection>
+                    </Charting:Chart.Palette>
+                </Charting:Chart>
+
+                <Grid.RenderTransform>
                     <TranslateTransform x:Name="ScoreTransform" Y="10"></TranslateTransform>
-                </TextBlock.RenderTransform>
-                <TextBlock.Triggers>
-                    <EventTrigger RoutedEvent="TextBlock.Loaded">
+                </Grid.RenderTransform>
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Grid.Loaded">
                         <BeginStoryboard>
                             <Storyboard>
                                 <DoubleAnimation
@@ -108,67 +155,72 @@
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
-                </TextBlock.Triggers>
-            </TextBlock>
+                </Grid.Triggers>
+            </Grid>
 
-            <Button x:Name="GoToDecks" 
-                    Command="{Binding GoToDecks}" 
-                    Background="{StaticResource Raspberry}" 
-                    HorizontalAlignment="Stretch" 
-                    Margin="5" 
+            <Button x:Name="RepeatTest"
+                    Command="{Binding ImproveResults}"
+                    Background="{StaticResource Raspberry}"
                     Height="{Binding ElementName=TileManagment, Path=Height}"
-                    Opacity="0">
-                <TextBlock x:Uid="MyDecks"  
-                           Foreground="{StaticResource Grey}" 
-                           FontFamily="{StaticResource LatoBlackFontFamily}" 
-                           FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"/>
+                    Style="{StaticResource SummaryButtonStyle}">
+                <TextBlock Text="{Binding RepeatTest}"
+                           FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                           Style="{StaticResource SummaryTextInButtonStyle}"/>
                 <Button.RenderTransform>
-                    <TranslateTransform x:Name="GoToDecksTransform" Y="10"></TranslateTransform>
+                    <TranslateTransform x:Name="RepeatTestTransform" Y="10"></TranslateTransform>
                 </Button.RenderTransform>
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.Loaded">
                         <BeginStoryboard>
                             <Storyboard>
                                 <DoubleAnimation
-                                    Storyboard.TargetName="GoToDecks"
+                                    Storyboard.TargetName="RepeatTest"
                                     Storyboard.TargetProperty="Opacity"
                                     BeginTime="0:0:1.5" From="0.0" To="1.0" Duration="0:0:0.75" />
                                 <DoubleAnimation
-                                    Storyboard.TargetName="GoToDecksTransform"
+                                    Storyboard.TargetName="RepeatTestTransform"
                                     Storyboard.TargetProperty="Y"
                                     BeginTime="0:0:1.5" From="10.0" To="0.0" Duration="0:0:0.75" />
+                                <ObjectAnimationUsingKeyFrames
+                                    Storyboard.TargetName="RepeatTest"
+                                    Storyboard.TargetProperty="IsHitTestVisible">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:2.25" Value="True"/>
+                                </ObjectAnimationUsingKeyFrames>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                 </Button.Triggers>
             </Button>
 
-            <Button x:Name="ImproveResults" 
-                    Command="{Binding ImproveResults}" 
-                    Background="{StaticResource DarkBlue}" 
-                    HorizontalAlignment="Stretch" 
-                    Margin="5" 
+            <Button x:Name="WorstTest"
+                    Command="{Binding WorstTest}"
+                    Background="{StaticResource DarkBlue}"
                     Height="{Binding ElementName=TileManagment, Path=Height}"
-                    Opacity="0">
-                <TextBlock x:Uid="ImproveResults" 
-                           Foreground="{StaticResource Grey}" 
-                           FontFamily="{StaticResource LatoBlackFontFamily}" 
-                           FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"/>
+                    Style="{StaticResource SummaryButtonStyle}"
+                    Visibility="{Binding WorstTestVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock x:Uid="WorstTest"
+                           FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                           Style="{StaticResource SummaryTextInButtonStyle}"/>
                 <Button.RenderTransform>
-                    <TranslateTransform x:Name="ImproveResultsTransform" Y="10"></TranslateTransform>
+                    <TranslateTransform x:Name="WorstTestTransform" Y="10"></TranslateTransform>
                 </Button.RenderTransform>
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.Loaded">
                         <BeginStoryboard>
                             <Storyboard>
                                 <DoubleAnimation
-                                    Storyboard.TargetName="ImproveResults"
+                                    Storyboard.TargetName="WorstTest"
                                     Storyboard.TargetProperty="Opacity"
                                     BeginTime="0:0:1.7" From="0.0" To="1.0" Duration="0:0:0.75" />
                                 <DoubleAnimation
-                                    Storyboard.TargetName="ImproveResultsTransform"
+                                    Storyboard.TargetName="WorstTestTransform"
                                     Storyboard.TargetProperty="Y"
                                     BeginTime="0:0:1.7" From="10.0" To="0.0" Duration="0:0:0.75" />
+                                <ObjectAnimationUsingKeyFrames
+                                    Storyboard.TargetName="WorstTest"
+                                    Storyboard.TargetProperty="IsHitTestVisible">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:2.45" Value="True"/>
+                                </ObjectAnimationUsingKeyFrames>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -178,25 +230,29 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">
-                <VisualState x:Name="NarrowPhoneState">
+                <VisualState x:Name="WidePhoneState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
+                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HeaderFontManagment.FontSize" Value="44"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="24"/>
-                        <Setter Target="TileManagment.Height" Value="40"/>
+                        <Setter Target="HeaderFontManagment.FontSize" Value="38"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="20"/>
+                        <Setter Target="TileManagment.Height" Value="35"/>
+                        <Setter Target="PieChart.Height" Value="180"/>
+                        <Setter Target="PieChart.Width" Value="180"/>
                     </VisualState.Setters>
                 </VisualState>
 
-                <VisualState x:Name="WidePhoneState">
+                <VisualState x:Name="NarrowPhoneState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="450"/>
+                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="500"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="HeaderFontManagment.FontSize" Value="44"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="24"/>
                         <Setter Target="TileManagment.Height" Value="40"/>
+                        <Setter Target="PieChart.Height" Value="200"/>
+                        <Setter Target="PieChart.Width" Value="200"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -205,9 +261,11 @@
                         <AdaptiveTrigger MinWindowWidth="720" MinWindowHeight="500"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HeaderFontManagment.FontSize" Value="70"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="40"/>
-                        <Setter Target="TileManagment.Height" Value="80"/>
+                        <Setter Target="HeaderFontManagment.FontSize" Value="50"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="28"/>
+                        <Setter Target="TileManagment.Height" Value="55"/>
+                        <Setter Target="PieChart.Height" Value="280"/>
+                        <Setter Target="PieChart.Width" Value="280"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -216,9 +274,11 @@
                         <AdaptiveTrigger MinWindowWidth="1024" MinWindowHeight="690"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HeaderFontManagment.FontSize" Value="100"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="55"/>
-                        <Setter Target="TileManagment.Height" Value="120"/>
+                        <Setter Target="HeaderFontManagment.FontSize" Value="60"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="35"/>
+                        <Setter Target="TileManagment.Height" Value="65"/>
+                        <Setter Target="PieChart.Height" Value="300"/>
+                        <Setter Target="PieChart.Width" Value="300"/>
                     </VisualState.Setters>
                 </VisualState>
 
