@@ -107,9 +107,9 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        private void HandleReloadMessage(bool b)
+        private void HandleReloadMessage(bool reload)
         {
-            if (b)
+            if (reload)
             {
                 DecksCollection.Clear();
                 SearchMessageVisibility = false;

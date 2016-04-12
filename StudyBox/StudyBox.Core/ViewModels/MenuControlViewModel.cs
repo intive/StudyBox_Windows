@@ -57,7 +57,7 @@ namespace StudyBox.Core.ViewModels
                 if (_searchingContent != value)
                 {
                     _searchingContent = value;
-                    if (_searchingContent.Trim() != "")
+                    if (!string.IsNullOrEmpty(_searchingContent.Trim()))
                         SearchButtonEnabled = true;
                     else
                         SearchButtonEnabled = false;
