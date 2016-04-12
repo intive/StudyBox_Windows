@@ -195,6 +195,9 @@
   <data name="RepeatPasswordError.Text" xml:space="preserve">
     <value>Hasła nie są jednakowe!</value>
   </data>
+  <data name="SearchMessage.Text" xml:space="preserve">
+    <value>Brak talii o podanej nazwie</value>
+  </data>
   <data name="StudyBox" xml:space="preserve">
     <value>StudyBox</value>
   </data>

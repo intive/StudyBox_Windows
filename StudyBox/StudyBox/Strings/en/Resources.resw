@@ -195,6 +195,9 @@
   <data name="RepeatPasswordError.Text" xml:space="preserve">
     <value>Passwords are not equal!</value>
   </data>
+  <data name="SearchMessage.Text" xml:space="preserve">
+    <value>There are no decks with given name</value>
+  </data>
   <data name="StudyBox" xml:space="preserve">
     <value>StudyBox</value>
   </data>

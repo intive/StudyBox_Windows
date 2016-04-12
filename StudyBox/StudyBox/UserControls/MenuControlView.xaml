@@ -149,7 +149,7 @@
                                  Background="{StaticResource Grey}" 
                                  Padding="5"
                                  MaxHeight="30"
-                                 Text="{Binding SearchingContent}"
+                                 Text="{Binding SearchingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  />
                     <Button Grid.Column="1" 
                                 Margin="5,3,5,10"
@@ -158,7 +158,8 @@
                                 HorizontalAlignment="Stretch"
                                 Background="{StaticResource DarkBlue}"
                                 MaxHeight="30"
-                                Command="{Binding DoSearchCommand}"
+                                Command="{Binding DoSearchCommand}" 
+                                IsEnabled="{Binding SearchButtonEnabled}"
                                 >
                         <Button.Content>
                             <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0" MaxHeight="24" MaxWidth="24"/>

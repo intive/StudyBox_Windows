@@ -20,6 +20,7 @@ namespace StudyBox.Core.Interfaces
         Task<Deck> CreateDeck(Deck deck, CancellationTokenSource cts = null);
         Task<bool> UpdateDeck(Deck deck, CancellationTokenSource cts = null);
         Task<bool> RemoveDeck(string deckId, CancellationTokenSource cts = null);
+        Task<List<Deck>> GetAllDecks(bool includeOwn, bool isEnabled, string name, CancellationTokenSource cts = null);
 
         Task<List<Tip>> GetTips(string deckId, string flashcardId, CancellationTokenSource cts = null);
         Task<Tip> GetTipById(string deckId, string flashcardId, string tipId, CancellationTokenSource cts = null);
