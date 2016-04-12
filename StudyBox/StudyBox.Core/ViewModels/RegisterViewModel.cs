@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Interfaces;
+using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 
 namespace StudyBox.Core.ViewModels
@@ -8,6 +10,7 @@ namespace StudyBox.Core.ViewModels
     public class RegisterViewModel : ExtendedViewModelBase
     {
         private IRestService _restService;
+        private readonly IAccountService _accountService;
         private RelayCommand _registerAction;
         private RelayCommand _cancelAction;
         private string _generalErrorMessage;
@@ -23,11 +26,12 @@ namespace StudyBox.Core.ViewModels
         private IInternetConnectionService _internetConnectionService;
         private IValidationService _validationService;
 
-        public RegisterViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, IRestService restService) : base(navigationService)
+        public RegisterViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, IRestService restService, IAccountService accountService) : base(navigationService)
         {
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;
             _restService = restService;
+            _accountService = accountService;
         }
 
 
@@ -214,14 +218,26 @@ namespace StudyBox.Core.ViewModels
                         user.Password = Password;
                         user = await _restService.CreateUser(user);
 
-                        IsDataLoading = false;
-                        if (user!=null)
+                        if (user != null)
                         {
-                            //NavigationService.NavigateTo("DecksListView");
-                            NavigationService.NavigateTo("LoginView");
+                            user.Password = Password;
+                            bool isLogged = await _accountService.Login(user);
+                            IsDataLoading = false;
+                            if (isLogged)
+                            {
+                                NavigationService.NavigateTo("DecksListView");
+                                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                                ClearInputs();
+                            }
+                            else
+                            {
+                                IsGeneralError = true;
+                                GeneralErrorMessage = StringResources.GetString("AbsenceUserInDatabase");
+                            }
                         }
                         else
                         {
+                            IsDataLoading = false;
                             IsGeneralError = true;
                             GeneralErrorMessage = StringResources.GetString("RegistrationFailed");
                         }
@@ -242,6 +258,17 @@ namespace StudyBox.Core.ViewModels
         public void Cancel()
         {
             NavigationService.NavigateTo("DecksListView");
+            ClearInputs();
+        }
+
+        private void ClearInputs()
+        {
+            Password = null;
+            RepeatPassword = null;
+            Email = null;
+            IsEmailNotValid = false;
+            IsPasswordNotValid = false;
+            IsGeneralError = false;
         }
     }
 }

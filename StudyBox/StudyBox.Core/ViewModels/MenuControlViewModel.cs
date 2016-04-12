@@ -4,27 +4,35 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Messages;
+using StudyBox.Core.Interfaces;
 
 namespace StudyBox.Core.ViewModels
 {
     public class MenuControlViewModel : ExtendedViewModelBase
     {
+        private readonly IAccountService _accountService;
         private bool _isSearchOpen = false;
         private bool _isPaneOpen = false;
+        private bool _logoutButtonVisibility;
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
         private RelayCommand _cancelSearchingCommand;
         private RelayCommand _doSearchCommand;
+        private RelayCommand _logoutCommand;
+        private RelayCommand _loginCommand;
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
         private bool _saveButtonVisibility;
         private bool _exitButtonVisibility;
 
-        public MenuControlViewModel(INavigationService navigationService) : base(navigationService)
+        public MenuControlViewModel(INavigationService navigationService, IAccountService accountService) : base(navigationService)
         {
             Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.SaveButton,x.ExitButton,x.TitleString));
             SearchButtonVisibility = true;
+            _accountService = accountService;
+            LogoutButtonVisibility = _accountService.IsUserLoggedIn();
+            IsPaneOpen = false;
         }
 
         public string TitleBar
@@ -158,6 +166,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool LogoutButtonVisibility
+        {
+            get
+            {
+                return _logoutButtonVisibility;
+            }
+            set
+            {
+                if (_logoutButtonVisibility != value)
+                {
+                    _logoutButtonVisibility = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public RelayCommand OpenMenuCommand
         {
             get { return _openMenuCommand ?? (_openMenuCommand = new RelayCommand(OpenMenu)); }
@@ -178,6 +202,16 @@ namespace StudyBox.Core.ViewModels
             get { return _doSearchCommand ?? (_doSearchCommand = new RelayCommand(DoSearch)); }
         }
 
+        public RelayCommand LogoutCommand
+        {
+            get { return _logoutCommand ?? (_logoutCommand = new RelayCommand(Logout)); }
+        }
+
+        public RelayCommand LoginCommand
+        {
+            get { return _loginCommand ?? (_loginCommand = new RelayCommand(Login)); }
+        }
+
         private void DoSearch()
         {
             //TODO SEARCH ACTION
@@ -194,7 +228,7 @@ namespace StudyBox.Core.ViewModels
         }
         private void OpenMenu()
         {
-            IsPaneOpen = IsPaneOpen != true;
+            IsPaneOpen = IsSearchOpen != true;
         }
 
         private void ShowSearchPanel()
@@ -204,6 +238,20 @@ namespace StudyBox.Core.ViewModels
                 ExitButtonVisibility = true;
             else
                 SearchButtonVisibility = true;
+        }
+
+        private void Logout()
+        {
+            _accountService.LogOut();
+            IsPaneOpen = false;
+            LogoutButtonVisibility = false;
+            NavigationService.NavigateTo("LoginView");
+        }
+
+        private void Login()
+        {
+            IsPaneOpen = false;
+            NavigationService.NavigateTo("LoginView");
         }
 
         private void HandleMenuControlMessage(bool search, bool save, bool exit, string title)
@@ -219,6 +267,8 @@ namespace StudyBox.Core.ViewModels
             {
                 TitleBar = title;
             }
+            LogoutButtonVisibility = _accountService.IsUserLoggedIn();
+            IsPaneOpen = false;
         }
     }
 }
