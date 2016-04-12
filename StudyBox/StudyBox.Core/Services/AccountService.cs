@@ -48,7 +48,7 @@ namespace StudyBox.Core.Services
         }
         public void LogOut()
         {
-            throw new NotImplementedException();
+            _userDataStorageService.LogOut();
         }
 
         public bool IsUserLoggedIn()

@@ -7,7 +7,7 @@ namespace StudyBox.Core.Interfaces
     {
         Task<bool> Login(User user);
         bool IsUserLoggedIn();
-        //void LogOut();
+        void LogOut();
         string GetUserEmail();
         string GetUserPassword();
         string GetUserName();
