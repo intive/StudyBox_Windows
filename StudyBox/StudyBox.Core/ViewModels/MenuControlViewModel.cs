@@ -228,7 +228,7 @@ namespace StudyBox.Core.ViewModels
         }
         private void OpenMenu()
         {
-            IsPaneOpen = IsSearchOpen != true;
+            IsPaneOpen = IsPaneOpen != true;
         }
 
         private void ShowSearchPanel()
