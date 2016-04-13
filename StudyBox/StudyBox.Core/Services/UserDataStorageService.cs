@@ -29,7 +29,16 @@ namespace StudyBox.Core.Services
 
         public void LogOut()
         {
-            throw new NotImplementedException();
+            var vault = new PasswordVault();
+            var credentials = vault.RetrieveAll();
+            int credentialsCount = credentials.Count;
+            if (credentialsCount != 0)
+            {
+                for (int i = credentialsCount - 1; i >= 0; i--)
+                {
+                    vault.Remove(credentials[i]);
+                }
+            }
         }
 
         public string GetUserEmail()

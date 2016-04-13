@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
+using Windows.Security.Credentials;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -158,6 +159,7 @@ namespace StudyBox.Core.ViewModels
                         {
                             NavigationService.NavigateTo("DecksListView");
                             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true,false,false));
+                            ClearInputs();
                         }
                         else
                         {
@@ -181,6 +183,16 @@ namespace StudyBox.Core.ViewModels
         public void CreateAccount()
         {
             NavigationService.NavigateTo("RegisterView");
+            ClearInputs();
+        }
+
+        private void ClearInputs()
+        {
+            Password = null;
+            Email = null;
+            IsEmailNotValid = false;
+            IsPasswordNotValid = false;
+            IsGeneralError = false;
         }
     }
 }
