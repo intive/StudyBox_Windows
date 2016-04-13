@@ -315,5 +315,27 @@
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
+    <Style x:Key="SummaryTextStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegularFontFamily}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+    </Style>
+
+    <Style x:Key="SummaryTextInButtonStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Grey}"/>
+        <Setter Property="FontFamily" Value="{StaticResource LatoBlackFontFamily}"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+    </Style>
+
+    <Style x:Key="SummaryButtonStyle" TargetType="Button">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+    </Style>
+
     
 </ResourceDictionary>
