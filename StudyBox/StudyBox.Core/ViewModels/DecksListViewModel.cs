@@ -21,14 +21,18 @@ namespace StudyBox.Core.ViewModels
         #region fields
         private ObservableCollection<Deck> _decksCollection;
         private IRestService _restService;
+        private IInternetConnectionService _internetConnectionService;
         private bool _isDataLoading=false;
+        private bool _isSearchMessageVisible = false;
         #endregion
 
         #region Constructors
-        public DecksListViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
+        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService) : base(navigationService)
         {
             Messenger.Default.Register<ReloadMessageToDecksList>(this,x=> HandleReloadMessage(x.Reload));
+            Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
             this._restService = restService;
+            this._internetConnectionService = internetConnectionService;
             DecksCollection = new ObservableCollection<Deck>();
 
             InitializeDecksCollection();
@@ -70,22 +74,28 @@ namespace StudyBox.Core.ViewModels
                 }
             }
         }
+
+        public bool SearchMessageVisibility
+        {
+            get
+            {
+                return _isSearchMessageVisible;
+            }
+            set
+            {
+                if (_isSearchMessageVisible != value)
+                {
+                    _isSearchMessageVisible = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
         #endregion
 
         #region Methods
         private async void InitializeDecksCollection()
         {
-            if (!(await Task.Run(() => NetworkInterface.GetIsNetworkAvailable())))
-            {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("NoInternetConnection"));
-                await msg.ShowAsync();
-            }
-            else if (!(NetworkInformation.GetInternetConnectionProfile().GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess))
-            {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("AccessDenied"));
-                await msg.ShowAsync();
-            }
-            else
+            if (await CheckInternetConnection())
             {
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
@@ -97,7 +107,55 @@ namespace StudyBox.Core.ViewModels
                 }
                 IsDataLoading = false;
             }
+        }
 
+        private void HandleReloadMessage(bool reload)
+        {
+            if (reload)
+            {
+                DecksCollection.Clear();
+                SearchMessageVisibility = false;
+                InitializeDecksCollection();
+            }
+        }
+
+        private async void HandleSearchMessage(string searchingContent)
+        {
+            if (await CheckInternetConnection())
+            {
+                DecksCollection.Clear();
+                SearchMessageVisibility = false;
+                IsDataLoading = true;
+                List<Deck> searchList = await _restService.GetAllDecks(false, true, searchingContent);
+                if (searchList != null)
+                {
+                    searchList.ForEach(x => DecksCollection.Add(x));
+                    IsDataLoading = false;
+                }
+                else
+                {
+                    IsDataLoading = false;
+                    SearchMessageVisibility = true;
+                }
+            }
+        }
+
+        private async Task<bool> CheckInternetConnection()
+        {
+            if (! await _internetConnectionService.IsNetworkAvailable())
+            {
+                MessageDialog msg = new MessageDialog(StringResources.GetString("NoInternetConnection"));
+                await msg.ShowAsync();
+                return false;
+            }
+            else if (! _internetConnectionService.IsInternetAccess())
+            {
+                MessageDialog msg = new MessageDialog(StringResources.GetString("AccessDenied"));
+                await msg.ShowAsync();
+                return false;
+            }
+            else
+                return true;
         }
         #endregion
 
@@ -114,11 +172,5 @@ namespace StudyBox.Core.ViewModels
         }
 
         #endregion
-
-        private void HandleReloadMessage(bool b)
-        {
-            if(b)
-                InitializeDecksCollection();
-        }
     }
 }

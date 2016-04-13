@@ -1,5 +1,4 @@
 ﻿using System;
-using Windows.UI.Xaml.Media.Animation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
@@ -13,6 +12,7 @@ namespace StudyBox.Core.ViewModels
         private readonly IAccountService _accountService;
         private bool _isSearchOpen = false;
         private bool _isPaneOpen = false;
+        private bool _isSearchButtonEnabled = false;
         private bool _logoutButtonVisibility;
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
@@ -64,6 +64,10 @@ namespace StudyBox.Core.ViewModels
                 if (_searchingContent != value)
                 {
                     _searchingContent = value;
+                    if (!string.IsNullOrEmpty(_searchingContent.Trim()))
+                        SearchButtonEnabled = true;
+                    else
+                        SearchButtonEnabled = false;
                     RaisePropertyChanged();
                 }
             }
@@ -96,6 +100,22 @@ namespace StudyBox.Core.ViewModels
                 if (_isPaneOpen != value)
                 {
                     _isPaneOpen = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool SearchButtonEnabled
+        {
+            get
+            {
+                return _isSearchButtonEnabled;
+            }
+            set
+            {
+                if (_isSearchButtonEnabled != value)
+                {
+                    _isSearchButtonEnabled = value;
                     RaisePropertyChanged();
                 }
             }
@@ -214,7 +234,7 @@ namespace StudyBox.Core.ViewModels
 
         private void DoSearch()
         {
-            //TODO SEARCH ACTION
+            Messenger.Default.Send<SearchMessageToDeckList>(new SearchMessageToDeckList(SearchingContent.Trim()));
         }
 
         private void CancelSearching()

@@ -118,6 +118,7 @@
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
     <Compile Include="Messages\ReloadMessageToDecksList.cs" />
+    <Compile Include="Messages\SearchMessageToDeckList.cs" />
     <Compile Include="Messages\StartStoryboardMessage.cs" />
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Exam.cs" />

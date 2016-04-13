@@ -31,6 +31,7 @@
 
         <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="1" Grid.Column="0" Margin="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
+                <TextBlock x:Uid="SearchMessage" Visibility="{Binding SearchMessageVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWholeWords" Margin="0,30,0,0"/>
                 <GridView x:Name="GridView" ItemsSource="{Binding DecksCollection}" 
                           IsItemClickEnabled="False"
                           Margin="0"

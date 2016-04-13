@@ -170,6 +170,24 @@ namespace StudyBox.Core.Services
             return await RemoveHelper(url, cts);
         }
 
+        public async Task<List<Deck>> GetAllDecks(bool includeOwn, bool isEnabled, string name, CancellationTokenSource cts = null)
+        {
+            try
+            {
+                string url = String.Format(_resources["GetAllDecksUrl"].ToString(), includeOwn.ToString(), isEnabled.ToString(), name);
+                string webPageSource = await GetWebPageSource(url, cts);
+
+                return _deserializeJsonService.GetObjectFromJson<List<Deck>>(webPageSource);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
 
         public async Task<List<Tip>> GetTips(string deckId, string flashcardId, CancellationTokenSource cts = null)
