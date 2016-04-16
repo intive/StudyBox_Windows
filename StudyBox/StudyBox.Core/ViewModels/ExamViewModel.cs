@@ -155,7 +155,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return !_isDataLoading && _flashcards.Count == 0;
+                return !_isDataLoading && (_flashcards == null || _flashcards.Count == 0);
             }
         }
 
@@ -182,7 +182,7 @@ namespace StudyBox.Core.ViewModels
 
                 IsDataLoading = false;
 
-                if (_flashcards.Count > 0)
+                if (_flashcards != null && _flashcards.Count > 0)
                 {
                     if(!IsQuestionVisible)
                     {
