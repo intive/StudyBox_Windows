@@ -52,7 +52,6 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*" MinHeight="50" />
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="3.5*"/>
                 <RowDefinition Height="0.4*"/>
@@ -63,12 +62,7 @@
 
             <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" Canvas.ZIndex="2"/>
 
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1">
-                <TextBlock Text="{Binding NameOfDeck}" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding NumberOfFlashcard}" HorizontalAlignment="Center"/>
-            </StackPanel>
-
-            <Border x:Name="AnswerCard" UseLayoutRounding="True" BorderBrush="Transparent" Grid.Column="1" Grid.Row="2" Background="{StaticResource DarkBlue}">
+            <Border x:Name="AnswerCard" UseLayoutRounding="True" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Background="{StaticResource DarkBlue}">
                 <TextBlock Text="{Binding Answer}" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
@@ -80,7 +74,7 @@
             </Border>
             <Border x:Name="QuestionCard" 
                     Grid.Column="1" 
-                    Grid.Row="2" 
+                    Grid.Row="1" 
                     Background="{StaticResource DarkBlue}" 
                     BorderBrush="Transparent">
                 <TextBlock Text="{Binding Question}" 
@@ -98,7 +92,7 @@
                 </i:Interaction.Behaviors>
             </Border>
 
-            <Button Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding IsHintAvailable}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}">
+            <Button Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="3" IsEnabled="{Binding IsHintAvailable}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}">
                 <i:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
                         <core:InvokeCommandAction Command="{Binding ShowHint}" />
@@ -111,7 +105,7 @@
                         Foreground="{StaticResource Grey}" />
             </Button>
 
-            <Grid Visibility="{Binding IsQuestionVisible, Converter={StaticResource NegativeBooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="4" >
+            <Grid Visibility="{Binding IsQuestionVisible, Converter={StaticResource NegativeBooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="3" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="0.1*" />
@@ -140,7 +134,7 @@
                 </Button>
             </Grid>
 
-            <TextBlock Text="{Binding CurrentResult}"
+            <TextBlock Text="{Binding NumberOfFlashcard}"
                         FontFamily="{StaticResource LatoRegularFontFamily}" 
                         Foreground="{StaticResource Graphite}" 
                         Grid.Column="1" 

@@ -83,7 +83,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return string.Format("#{0}", (_numberOfCurrentFlashcard + 1));
+                return string.Format("{0} {1} {2}", (_numberOfCurrentFlashcard + 1), StringResources.GetString("OutOf"), _flashcards.Count.ToString());
             }
         }
 
@@ -151,14 +151,6 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public string CurrentResult
-        {
-            get
-            {
-                return string.Format("{0}/{1}", _numberOfCorrectAnswers, _flashcards == null ? "0" : _flashcards.Count.ToString());
-            }
-        }
-
         private async void HandleDataMessage(Deck deckInstance)
         {
             if (deckInstance != null)
@@ -191,7 +183,6 @@ namespace StudyBox.Core.ViewModels
             RaisePropertyChanged("Question");
             RaisePropertyChanged("Hint");
             RaisePropertyChanged("IsHintAvailable");
-            RaisePropertyChanged("CurrentResult");
             RaisePropertyChanged("NumberOfFlashcard");
         }
 
