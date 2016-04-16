@@ -172,7 +172,16 @@ namespace StudyBox.Core.ViewModels
                     new Flashcard("3", new Deck(), "Question3?", "Answer3?", "Hint3")
                 };
 
-                RaiseAllPropertiesChanged();
+                if(!IsQuestionVisible)
+                {
+                    ShowQuestionView();
+                }
+                else
+                {
+                    _isHintAlreadyShown = false;
+                    RaiseAllPropertiesChanged();
+                }
+
                 IsDataLoading = false;
             }
         }
@@ -203,10 +212,7 @@ namespace StudyBox.Core.ViewModels
             _numberOfCurrentFlashcard++;
             if (_numberOfCurrentFlashcard < _flashcards.Count)
             {
-                Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowQuestion" });
-                _isHintAlreadyShown = false;
-                IsQuestionVisible = true;
-                RaiseAllPropertiesChanged();
+                ShowQuestionView();
             }
             else
             {
@@ -226,6 +232,14 @@ namespace StudyBox.Core.ViewModels
         {
             _isHintAlreadyShown = true;
             RaisePropertyChanged("Hint");
+        }
+
+        private void ShowQuestionView()
+        {
+            Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowQuestion" });
+            _isHintAlreadyShown = false;
+            IsQuestionVisible = true;
+            RaiseAllPropertiesChanged();
         }
     }
 }
