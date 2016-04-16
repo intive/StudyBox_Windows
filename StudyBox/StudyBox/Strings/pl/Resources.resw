@@ -219,6 +219,9 @@
   <data name="YourScore.Text" xml:space="preserve">
     <value>Twój wynik</value>
   </data>
+  <data name="NoFlashcards.Text" xml:space="preserve">
+    <value>Nie ma żadnych fiszek w tej talii!</value>
+  </data>
   <data name="OutOf" xml:space="preserve">
     <value>z</value>
   </data>

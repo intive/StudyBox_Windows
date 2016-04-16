@@ -40,12 +40,19 @@
 
     <Grid Background="White">
 
+        <userControls:MenuControlView Canvas.ZIndex="2"/>
+
+
         <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="6" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ProgressBar IsIndeterminate="True" />
             <TextBlock x:Uid="LoadingFlashcards" Margin="0,10,0,0" />
         </StackPanel>
 
-        <Grid Visibility="{Binding IsDataLoading, Converter={StaticResource NegativeBooleanToVisibilityConverter}}">
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="6" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding AreAnyFlashcards, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock x:Uid="NoFlashcards" Margin="0,10,0,0" />
+        </StackPanel>
+
+        <Grid Visibility="{Binding AreAnyFlashcards, Converter={StaticResource NegativeBooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="10*" MaxWidth="500"/>
@@ -58,10 +65,7 @@
                 <RowDefinition Height="1.2*"/>
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
-
-
-            <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" Canvas.ZIndex="2"/>
-
+            
             <Border x:Name="AnswerCard" UseLayoutRounding="True" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Background="{StaticResource DarkBlue}">
                 <TextBlock Text="{Binding Answer}" 
                             HorizontalAlignment="Center" 

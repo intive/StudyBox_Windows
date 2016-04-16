@@ -219,6 +219,9 @@
   <data name="YourScore.Text" xml:space="preserve">
     <value>Your score</value>
   </data>
+  <data name="NoFlashcards.Text" xml:space="preserve">
+    <value>There are no available flashcards in this deck!</value>
+  </data>
   <data name="OutOf" xml:space="preserve">
     <value>out of</value>
   </data>
