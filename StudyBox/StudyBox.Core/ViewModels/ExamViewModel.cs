@@ -155,6 +155,14 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
+                return !_isDataLoading && (_flashcards != null && _flashcards.Count > 0);
+            }
+        }
+
+        public bool ShowInformationAboutNoFlashcards
+        {
+            get
+            {
                 return !_isDataLoading && (_flashcards == null || _flashcards.Count == 0);
             }
         }
@@ -179,9 +187,7 @@ namespace StudyBox.Core.ViewModels
                 //    new Flashcard("2", new Deck(), "Question2?", "Answer2?", "Hint2"),
                 //    new Flashcard("3", new Deck(), "Question3?", "Answer3?", "Hint3")
                 //};
-
-                IsDataLoading = false;
-
+                
                 if (_flashcards != null && _flashcards.Count > 0)
                 {
                     if(!IsQuestionVisible)
@@ -195,7 +201,9 @@ namespace StudyBox.Core.ViewModels
                     }
                 }
 
+                IsDataLoading = false;
                 RaisePropertyChanged("AreAnyFlashcards");
+                RaisePropertyChanged("ShowInformationAboutNoFlashcards");
             }
         }
 
