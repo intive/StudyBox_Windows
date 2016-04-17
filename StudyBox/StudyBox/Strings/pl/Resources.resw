@@ -225,4 +225,7 @@
   <data name="OutOf" xml:space="preserve">
     <value>z</value>
   </data>
+  <data name="TestRandomDeckButton.Content" xml:space="preserve">
+    <value>Odkryj nową talię</value>
+  </data>
 </root>

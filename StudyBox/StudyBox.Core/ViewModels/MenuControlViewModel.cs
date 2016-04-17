@@ -20,6 +20,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _doSearchCommand;
         private RelayCommand _logoutCommand;
         private RelayCommand _loginCommand;
+        private RelayCommand _testRandomDeckCommand;
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
@@ -230,6 +231,16 @@ namespace StudyBox.Core.ViewModels
         public RelayCommand LoginCommand
         {
             get { return _loginCommand ?? (_loginCommand = new RelayCommand(Login)); }
+        }
+
+        public RelayCommand TestRandomDeckCommand
+        {
+            get { return _testRandomDeckCommand ?? (_testRandomDeckCommand = new RelayCommand(TestRandomDeck)); }
+        }
+
+        private void TestRandomDeck()
+        {
+            throw new NotImplementedException();
         }
 
         private void DoSearch()
