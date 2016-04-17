@@ -16,6 +16,7 @@ namespace StudyBox.Core.ViewModels
         private readonly IAccountService _accountService;
         private RelayCommand _loginAction;
         private RelayCommand _createAccountAction;
+        private RelayCommand _continueWithoutLogin;      
         private string _generalErrorMessage;
         private bool _isEmailNotValid;
         private bool _isPasswordNotValid;
@@ -43,6 +44,14 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _createAccountAction ?? (_createAccountAction = new RelayCommand(CreateAccount));
+            }
+        }
+
+        public RelayCommand ContinueWithoutLogin
+        {
+            get
+            {
+                return _continueWithoutLogin ?? (_continueWithoutLogin = new RelayCommand(ContinueWithoutLoggingIn));
             }
         }
 
@@ -184,6 +193,11 @@ namespace StudyBox.Core.ViewModels
         {
             NavigationService.NavigateTo("RegisterView");
             ClearInputs();
+        }
+
+        public void ContinueWithoutLoggingIn()
+        {
+            NavigationService.NavigateTo("DecksListView");
         }
 
         private void ClearInputs()

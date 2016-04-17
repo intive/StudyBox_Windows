@@ -231,4 +231,7 @@
   <data name="ServerConnectionError" xml:space="preserve">
     <value>Błąd połączenia z serwerem.</value>
   </data>
+  <data name="ContinueWithoutLogin.Text" xml:space="preserve">
+    <value>Wejdź jako niezarejestrowany użytkownik</value>
+  </data>
 </root>
