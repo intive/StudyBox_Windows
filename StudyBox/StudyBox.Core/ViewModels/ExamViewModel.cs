@@ -168,7 +168,7 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        private async void HandleDataMessage(Deck deckInstance, List<Flashcard> badAnswer)
+        private async void HandleDataMessage(Deck deckInstance, List<Flashcard> badAnswerFlashcards)
         {
             if (deckInstance != null)
             {
@@ -180,10 +180,10 @@ namespace StudyBox.Core.ViewModels
 
                 IsDataLoading = true;
 
-                if (badAnswer == null)
+                if (badAnswerFlashcards == null)
                     _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
                 else
-                    _flashcards = badAnswer;
+                    _flashcards = badAnswerFlashcards;
                 _badAnswerFlashcards = new List<Flashcard>();
                 
                 //MOCK-UP:
