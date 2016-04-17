@@ -4,12 +4,15 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Interfaces;
+using Windows.UI.Popups;
 
 namespace StudyBox.Core.ViewModels
 {
     public class MenuControlViewModel : ExtendedViewModelBase
     {
         private readonly IAccountService _accountService;
+        private readonly IRestService _restservice;
+        private readonly IInternetConnectionService _internetConnectionService;
         private bool _isSearchOpen = false;
         private bool _isPaneOpen = false;
         private bool _isSearchButtonEnabled = false;
@@ -27,11 +30,16 @@ namespace StudyBox.Core.ViewModels
         private bool _saveButtonVisibility;
         private bool _exitButtonVisibility;
 
-        public MenuControlViewModel(INavigationService navigationService, IAccountService accountService) : base(navigationService)
+        public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService) : base(navigationService)
         {
             Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.SaveButton,x.ExitButton,x.TitleString));
+
             SearchButtonVisibility = true;
+
             _accountService = accountService;
+            _internetConnectionService = internetConnectionService;
+            _restservice = restservice;
+
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             IsPaneOpen = false;
         }
@@ -54,6 +62,7 @@ namespace StudyBox.Core.ViewModels
                 }
             }
         }
+
         public string SearchingContent
         {
             get
@@ -142,8 +151,6 @@ namespace StudyBox.Core.ViewModels
                 }
             }
         }
-
-     
 
         public bool SaveButtonVisibility
         {
@@ -238,9 +245,41 @@ namespace StudyBox.Core.ViewModels
             get { return _testRandomDeckCommand ?? (_testRandomDeckCommand = new RelayCommand(TestRandomDeck)); }
         }
 
-        private void TestRandomDeck()
+        private async void TestRandomDeck()
         {
-            throw new NotImplementedException();
+            if (!await _internetConnectionService.IsNetworkAvailable())
+            {
+                MessageDialog msg = new MessageDialog(StringResources.GetString("NoInternetConnection"));
+                await msg.ShowAsync();
+                return;
+            }
+            else if (!_internetConnectionService.IsInternetAccess())
+            {
+                MessageDialog msg = new MessageDialog(StringResources.GetString("AccessDenied"));
+                await msg.ShowAsync();
+                return;
+            }
+
+            try
+            {
+                var deck = await _restservice.GetRandomDeck();
+
+                if (deck != null)
+                {
+                    NavigationService.NavigateTo("ExamView");
+                    Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+                }
+                else
+                {
+                    throw new Exception(StringResources.GetString("ServerConnectionError"));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageDialog msg = new MessageDialog(ex.Message);
+                await msg.ShowAsync();
+            }
         }
 
         private void DoSearch()

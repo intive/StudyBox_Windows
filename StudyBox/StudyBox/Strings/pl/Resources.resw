@@ -228,4 +228,7 @@
   <data name="TestRandomDeckButton.Content" xml:space="preserve">
     <value>Odkryj nową talię</value>
   </data>
+  <data name="ServerConnectionError" xml:space="preserve">
+    <value>Błąd połączenia z serwerem.</value>
+  </data>
 </root>
