@@ -11,6 +11,7 @@ namespace StudyBox.Core.ViewModels
     public class SummaryViewModel : ExtendedViewModelBase
     {
         private Deck _deckInstance;
+        private List<Flashcard> _badAnswerFlashcards;
         private const double _lowResult = 0.34;
         private const double _highResult = 0.67;
         private string _congrats;
@@ -24,7 +25,7 @@ namespace StudyBox.Core.ViewModels
         public SummaryViewModel(INavigationService navigationService) : base(navigationService)
         {
             Messenger.Default.Register<DataMessageToSummary>(this, x => { CalculateResult(x.ExamInstance); });
-            Messenger.Default.Register<DataMessageToExam>(this, x => { _deckInstance = x.DeckInstance; });
+            Messenger.Default.Register<DataMessageToExam>(this, x => { _deckInstance = x.DeckInstance; _badAnswerFlashcards = x.BadAnswerFlashcards; });
         }
 
         public RelayCommand WorstTest
@@ -137,9 +138,9 @@ namespace StudyBox.Core.ViewModels
 
         private void GoToWorstTest()
         {
-            //TODO worst test logic
-            NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+            NavigationService.NavigateTo("ExamView");
+            Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance, _badAnswerFlashcards));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, _deckInstance.Name));
         }
 
         private void TryImproveResults()
