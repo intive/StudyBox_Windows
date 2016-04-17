@@ -211,7 +211,7 @@
     <value>StudyBox</value>
   </data>
   <data name="TryAgain" xml:space="preserve">
-    <value>Próbuj dalej...</value>
+    <value>Spróbuj ponownie</value>
   </data>
   <data name="WorstTest.Text" xml:space="preserve">
     <value>TEST Z NAJGORSZYCH</value>

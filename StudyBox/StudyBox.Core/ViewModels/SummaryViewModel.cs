@@ -11,8 +11,8 @@ namespace StudyBox.Core.ViewModels
     public class SummaryViewModel : ExtendedViewModelBase
     {
         private Deck _deckInstance;
-        private double _lowResult = 0.35;
-        private double _highResult = 0.75;
+        private const double _lowResult = 0.34;
+        private const double _highResult = 0.67;
         private string _congrats;
         private string _score;
         private string _repeatTest;
@@ -114,7 +114,7 @@ namespace StudyBox.Core.ViewModels
             Score = string.Format("{0}/{1}", exam.CorrectAnswers, exam.Questions);
             if (_result < _lowResult)
                 Congrats = StringResources.GetString("TryAgain");
-            else if (_result > _highResult)
+            else if (_result >= _highResult)
                 Congrats = StringResources.GetString("Congrats");
             else
                 Congrats = StringResources.GetString("NotBad");
