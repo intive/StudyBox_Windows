@@ -225,4 +225,10 @@
   <data name="OutOf" xml:space="preserve">
     <value>out of</value>
   </data>
+  <data name="TestRandomDeckButton.Content" xml:space="preserve">
+    <value>Discover new deck</value>
+  </data>
+  <data name="ServerConnectionError" xml:space="preserve">
+    <value>Server connection error.</value>
+  </data>
 </root>
