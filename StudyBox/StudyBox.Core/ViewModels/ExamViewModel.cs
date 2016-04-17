@@ -13,6 +13,7 @@ namespace StudyBox.Core.ViewModels
         private IRestService _restService;
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
+        private List<Flashcard> _badAnswerFlashcards;
         private string _nameOfDeck;
         private bool _isDataLoading;
         private bool _isHintAlreadyShown = false;
@@ -28,7 +29,7 @@ namespace StudyBox.Core.ViewModels
         {
             _restService = restService;
 
-            Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance));
+            Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance, x.BadAnswerFlashcards));
         }
 
         public RelayCommand CountBadAnswer
@@ -167,7 +168,7 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        private async void HandleDataMessage(Deck deckInstance)
+        private async void HandleDataMessage(Deck deckInstance, List<Flashcard> badAnswer)
         {
             if (deckInstance != null)
             {
@@ -178,8 +179,13 @@ namespace StudyBox.Core.ViewModels
                 NameOfDeck = _deckInstance.Name;
 
                 IsDataLoading = true;
-                _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
 
+                if (badAnswer == null)
+                    _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+                else
+                    _flashcards = badAnswer;
+                _badAnswerFlashcards = new List<Flashcard>();
+                
                 //MOCK-UP:
                 //_flashcards = new List<Flashcard>()
                 //{
@@ -187,7 +193,7 @@ namespace StudyBox.Core.ViewModels
                 //    new Flashcard("2", new Deck(), "Question2?", "Answer2?", "Hint2"),
                 //    new Flashcard("3", new Deck(), "Question3?", "Answer3?", "Hint3")
                 //};
-                
+
                 if (_flashcards != null && _flashcards.Count > 0)
                 {
                     if(!IsQuestionVisible)
@@ -239,13 +245,14 @@ namespace StudyBox.Core.ViewModels
             {
                 NavigationService.NavigateTo("SummaryView");
                 Messenger.Default.Send<DataMessageToSummary>(new DataMessageToSummary(new Exam { CorrectAnswers = _numberOfCorrectAnswers, Questions = _flashcards.Count }));
-                Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
+                Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance, _badAnswerFlashcards));
                 Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, NameOfDeck));
             }
         }
 
         private void CountBadAnswerAndShowNextFlashcard()
         {
+            _badAnswerFlashcards.Add(_flashcards[_numberOfCurrentFlashcard]);
             ShowNexFlashCardOrGoToResults();
         }
 
