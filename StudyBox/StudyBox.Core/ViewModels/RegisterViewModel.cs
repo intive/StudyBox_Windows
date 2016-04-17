@@ -257,7 +257,7 @@ namespace StudyBox.Core.ViewModels
 
         public void Cancel()
         {
-            NavigationService.NavigateTo("DecksListView");
+            NavigationService.NavigateTo("LoginView");
             ClearInputs();
         }
 
