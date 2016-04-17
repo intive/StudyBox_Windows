@@ -5,6 +5,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using StudyBox.View;
+using StudyBox.Core.Interfaces;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace StudyBox
 {
@@ -59,7 +61,15 @@ namespace StudyBox
 
             if (rootFrame.Content == null)
             {
-                rootFrame.Navigate(typeof(LoginView), e.Arguments);
+                IAccountService service = SimpleIoc.Default.GetInstance<IAccountService>();
+                if (service.IsUserLoggedIn())
+                {
+                    rootFrame.Navigate(typeof(DecksListView), e.Arguments);
+                }
+                else
+                {
+                    rootFrame.Navigate(typeof(LoginView), e.Arguments);
+                }
             }
 
             Window.Current.Activate();
