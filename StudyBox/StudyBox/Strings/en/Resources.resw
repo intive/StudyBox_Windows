@@ -231,4 +231,7 @@
   <data name="ServerConnectionError" xml:space="preserve">
     <value>Server connection error.</value>
   </data>
+  <data name="ContinueWithoutLogin.Text" xml:space="preserve">
+    <value>Continue without login</value>
+  </data>
 </root>

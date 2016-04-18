@@ -108,12 +108,28 @@
 
                             <TextBlock
                                 TextWrapping="Wrap"
+                                TextAlignment="Center"
                                 x:Uid="Login"
                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
                                 Foreground="{StaticResource Grey}" />
                         </Button>
-                        
+
+                        <Button 
+                            HorizontalAlignment="Stretch"
+                            Background="{StaticResource Graphite}" 
+                            Margin="0 0 0 5"
+                            Command="{Binding ContinueWithoutLogin}">
+
+                            <TextBlock
+                                TextWrapping="Wrap"
+                                TextAlignment="Center"
+                                x:Uid="ContinueWithoutLogin"
+                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
+                                Foreground="{StaticResource Grey}" />
+                        </Button>
+
                         <Button 
                             HorizontalAlignment="Stretch"
                             Background="{StaticResource Graphite}" 
@@ -121,6 +137,7 @@
                             
                             <TextBlock
                                 TextWrapping="Wrap"
+                                TextAlignment="Center"
                                 x:Uid="CreateAccount"
                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
