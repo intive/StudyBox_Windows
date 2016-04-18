@@ -21,35 +21,51 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
-            <TextBlock x:Name="MessageFontManagment" Visibility="Collapsed"/>
+            <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock x:Name="MessageFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock x:Name="SmallFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
 
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="0.1*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0" Grid.RowSpan="3" 
+                              Grid.Column="0" Grid.ColumnSpan="3"  
+                              Margin="5" 
+                              VerticalScrollBarVisibility="Hidden" 
+                              HorizontalAlignment="Stretch" 
+                              VerticalAlignment="Stretch">
 
-                <Image Name="Logo" 
-                       Grid.Row="0" 
-                       Source="ms-appx:///Assets/Square150x150Logo.scale-200.png"  
-                       Width="150" Height="150" 
-                       VerticalAlignment="Center"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="2" Margin="5" VerticalScrollBarVisibility="Auto">
-
-                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="25 0 25 0" >
-                        <TextBox 
-                            x:Uid="Email" 
-                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"  
-                            Text="{Binding Email, Mode=TwoWay}"                           
-                            Margin="0 5 0 5"/>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center" 
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Padding="15,0,15,0"
+                                >
+                        <Image Name="Logo" 
+                               Grid.Row="0" 
+                               Source="ms-appx:///Assets/Square150x150Logo.scale-200.png"  
+                               Width="150" Height="150" 
+                               VerticalAlignment="Top"
+                               Margin="0,0,0,20"
+                               />
+                        <TextBox x:Uid="Email" 
+                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"  
+                                 Text="{Binding Email, Mode=TwoWay}"                           
+                                 Margin="0,5,0,5"/>
                         <TextBlock x:Name="EmailError" 
                                    x:Uid="EmailError" 
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}"
@@ -65,11 +81,10 @@
                             </i:Interaction.Behaviors>
                         </TextBlock>
 
-                        <PasswordBox 
-                            x:Uid="Password" 
-                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
-                            Password="{Binding Password, Mode=TwoWay}" 
-                            Margin="0 5 0 5"/>
+                        <PasswordBox x:Uid="Password" 
+                                     FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
+                                     Password="{Binding Password, Mode=TwoWay}" 
+                                     Margin="0 5 0 5"/>  
                         <TextBlock x:Name="PasswordError" 
                                    Text="{Binding PasswordErrorMessage}"
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
@@ -85,11 +100,10 @@
                             </i:Interaction.Behaviors>
                         </TextBlock>
 
-                        <PasswordBox 
-                            x:Uid="RepeatPassword" 
-                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"                            
-                            Password="{Binding RepeatPassword, Mode=TwoWay}" 
-                            Margin="0 5 0 5"/>
+                        <PasswordBox x:Uid="RepeatPassword" 
+                                     FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"                            
+                                     Password="{Binding RepeatPassword, Mode=TwoWay}" 
+                                     Margin="0 5 0 5"/>
                         <TextBlock x:Name="RepeatPasswordError" 
                                    x:Uid="RepeatPasswordError" 
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
@@ -123,40 +137,41 @@
                             </i:Interaction.Behaviors>
                         </TextBlock>
 
-                        <Button 
-                            HorizontalAlignment="Stretch"
-                            Margin="0 30 0 5"
-                            Background="{StaticResource DarkBlue}" 
-                            Command="{Binding RegisterAction}">
-
-
-                            <TextBlock
-                                TextWrapping="Wrap"
-                                x:Uid="Register"
-                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                FontFamily="{StaticResource LatoRegularFontFamily}"
-                                Foreground="{StaticResource Grey}" />
+                        <Button HorizontalAlignment="Stretch"
+                                Margin="0 30 0 5"
+                                Background="{StaticResource DarkBlue}" 
+                                Command="{Binding RegisterAction}"
+                                >
+                            <TextBlock TextWrapping="Wrap"
+                                       x:Uid="Register"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Grey}" 
+                                       Padding="0,5"
+                                       />
                         </Button>
 
-                        <Button 
-                            HorizontalAlignment="Stretch"
-                            Background="{StaticResource Graphite}" 
-                            Command="{Binding CancelAction}">
+                        <Button HorizontalAlignment="Stretch"
+                                Background="Transparent" 
+                                Command="{Binding CancelAction}"
+                                BorderThickness="0"
+                                >
 
-                            <TextBlock
-                                TextWrapping="Wrap"
-                                x:Uid="Cancel"
-                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                FontFamily="{StaticResource LatoRegularFontFamily}"
-                                Foreground="{StaticResource Grey}" />
+                            <TextBlock TextWrapping="Wrap"
+                                       x:Uid="Cancel"
+                                       FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Graphite}"
+                                       />
                         </Button>
                     </StackPanel>
-                </ScrollViewer>
-            </Grid>
+                </Grid>
+            </ScrollViewer>
+
         </Grid>
 
         <ProgressRing x:Name="InitializeProgressRing"
-                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                      Grid.Column="0" Grid.Row="0" 
                       Width="80"
                       Height="80"
                       Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -176,9 +191,10 @@
                     <VisualState.Setters>
                         <Setter Target="StandardFontManagment.FontSize" Value="18"/>
                         <Setter Target="MessageFontManagment.FontSize" Value="14"/>
-                        <Setter Target="Logo.Width" Value="88"/>
-                        <Setter Target="Logo.Height" Value="88"/>
-                        <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square44x44Logo.scale-200.png"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="11"/>
+                        <Setter Target="Logo.Width" Value="150"/>
+                        <Setter Target="Logo.Height" Value="150"/>
+                        <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -189,6 +205,7 @@
                     <VisualState.Setters>
                         <Setter Target="StandardFontManagment.FontSize" Value="18"/>
                         <Setter Target="MessageFontManagment.FontSize" Value="14"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="14"/>
                         <Setter Target="Logo.Width" Value="150"/>
                         <Setter Target="Logo.Height" Value="150"/>
                         <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
@@ -202,6 +219,7 @@
                     <VisualState.Setters>
                         <Setter Target="StandardFontManagment.FontSize" Value="25"/>
                         <Setter Target="MessageFontManagment.FontSize" Value="18"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="18"/>
                         <Setter Target="Logo.Width" Value="225"/>
                         <Setter Target="Logo.Height" Value="225"/>
                         <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
@@ -215,6 +233,7 @@
                     <VisualState.Setters>
                         <Setter Target="StandardFontManagment.FontSize" Value="25"/>
                         <Setter Target="MessageFontManagment.FontSize" Value="18"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="18"/>
                         <Setter Target="Logo.Width" Value="300"/>
                         <Setter Target="Logo.Height" Value="300"/>
                         <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
