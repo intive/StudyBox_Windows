@@ -55,7 +55,7 @@
                                Source="ms-appx:///Assets/Square150x150Logo.scale-200.png"  
                                Width="150" Height="150" 
                                VerticalAlignment="Top"
-                               Margin="0,0,0,30"
+                               Margin="0,0,0,20"
                                />
 
                         <TextBox 
@@ -116,7 +116,7 @@
                         </TextBlock>
 
                         <Button HorizontalAlignment="Stretch"
-                                Margin="0,30,0,5"
+                                Margin="0,20,0,5"
                                 Background="{StaticResource DarkBlue}" 
                                 Command="{Binding LoginAction}">
                             <TextBlock TextWrapping="Wrap"
@@ -140,7 +140,8 @@
                                 x:Uid="ContinueWithoutLogin"
                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
-                                Foreground="{StaticResource Grey}" />
+                                Foreground="{StaticResource Grey}" 
+                                Padding="0,5"/>
                         </Button>
 
                         <Button 
@@ -154,7 +155,9 @@
                                 x:Uid="CreateAccount"
                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
-                                Foreground="{StaticResource Grey}" />
+                                Foreground="{StaticResource Grey}" 
+                                Padding="0,5"
+                                />
                         </Button>
                     </StackPanel>
 
@@ -177,7 +180,7 @@
                         <Setter Target="MessageFontManagment.FontSize" Value="14"/>
                         <Setter Target="Logo.Width" Value="150"/>
                         <Setter Target="Logo.Height" Value="150"/>
-                        <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square44x44Logo.scale-200.png"/>
+                        <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
                     </VisualState.Setters>
                 </VisualState>
 
