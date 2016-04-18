@@ -108,6 +108,7 @@
 
                             <TextBlock
                                 TextWrapping="Wrap"
+                                TextAlignment="Center"
                                 x:Uid="Login"
                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
@@ -122,6 +123,7 @@
 
                             <TextBlock
                                 TextWrapping="Wrap"
+                                TextAlignment="Center"
                                 x:Uid="ContinueWithoutLogin"
                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
@@ -135,6 +137,7 @@
                             
                             <TextBlock
                                 TextWrapping="Wrap"
+                                TextAlignment="Center"
                                 x:Uid="CreateAccount"
                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
