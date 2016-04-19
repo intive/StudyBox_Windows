@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox", "StudyBox\StudyB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox.Core", "StudyBox.Core\StudyBox.Core.csproj", "{5CB8A73E-8520-4D20-BDB0-90AA135D1A9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBoxUnitTest", "StudyBoxUnitTest\StudyBoxUnitTest.csproj", "{4F5E6567-B9D5-415C-A30A-D4978701C22C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyBox.Tests", "StudyBoxUnitTest\StudyBox.Tests.csproj", "{4F5E6567-B9D5-415C-A30A-D4978701C22C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
