@@ -18,30 +18,47 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
-            <TextBlock x:Name="MessageFontManagment" Visibility="Collapsed"/>
+            <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock x:Name="MessageFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock x:Name="SmallFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
 
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="0.1*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0" Grid.RowSpan="3" 
+                              Grid.Column="0" Grid.ColumnSpan="3"  
+                              Margin="5" 
+                              VerticalScrollBarVisibility="Hidden" 
+                              HorizontalAlignment="Stretch" 
+                              VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <Image Name="Logo" 
-                       Grid.Row="0" 
-                       Source="ms-appx:///Assets/Square150x150Logo.scale-200.png"  
-                       Width="150" Height="150" 
-                       VerticalAlignment="Center"/>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center" 
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Padding="15,0,15,0"
+                                >
+                        <Image Name="Logo" 
+                               Grid.Row="0" 
+                               Source="ms-appx:///Assets/Square150x150Logo.scale-200.png"  
+                               Width="150" Height="150" 
+                               VerticalAlignment="Top"
+                               Margin="0,0,0,20"
+                               />
 
-                <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="2" Margin="5" VerticalScrollBarVisibility="Auto">
-
-                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="25 0 25 0" >
                         <TextBox 
                             x:Uid="Email" 
                             FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"  
@@ -62,11 +79,10 @@
                             </i:Interaction.Behaviors>
                         </TextBlock>
 
-                        <PasswordBox 
-                            x:Uid="Password" 
-                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
-                            Password="{Binding Password, Mode=TwoWay}" 
-                            Margin="0 5 0 5"/>
+                        <PasswordBox x:Uid="Password" 
+                                     FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
+                                     Password="{Binding Password, Mode=TwoWay}" 
+                                     Margin="0 5 0 5"/>
                         <TextBlock x:Name="PasswordError" 
                                    x:Uid="PasswordError" 
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
@@ -88,7 +104,7 @@
                                    TextAlignment="Justify"  
                                    Style="{StaticResource ValidationErrorStyle}" 
                                    Text="{Binding GeneralErrorMessage}" 
-                                   Margin="10 15 0 10" >
+                                   Margin="10,15,0,10" >
                             <i:Interaction.Behaviors>
                                 <core:DataTriggerBehavior Binding="{Binding Path=IsGeneralError}" Value="True">
                                     <core:GoToStateAction StateName="GeneralErrorState"/>
@@ -100,53 +116,54 @@
                             </i:Interaction.Behaviors>
                         </TextBlock>
 
-                        <Button 
-                            HorizontalAlignment="Stretch"
-                            Margin="0 30 0 5"
-                            Background="{StaticResource DarkBlue}" 
-                            Command="{Binding LoginAction}">
-
-                            <TextBlock
-                                TextWrapping="Wrap"
-                                TextAlignment="Center"
-                                x:Uid="Login"
-                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                FontFamily="{StaticResource LatoRegularFontFamily}"
-                                Foreground="{StaticResource Grey}" />
+                        <Button HorizontalAlignment="Stretch"
+                                Margin="0,20,0,5"
+                                Background="{StaticResource DarkBlue}" 
+                                Command="{Binding LoginAction}">
+                            <TextBlock TextWrapping="Wrap"
+                                       x:Uid="Login"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Grey}" 
+                                       Padding="0,5"
+                                       />
                         </Button>
 
                         <Button 
                             HorizontalAlignment="Stretch"
-                            Background="{StaticResource Graphite}" 
+                            Background="Transparent" 
                             Margin="0 0 0 5"
-                            Command="{Binding ContinueWithoutLogin}">
+                            Command="{Binding ContinueWithoutLogin}"
+                            BorderThickness="0"
+                            Foreground="{StaticResource Graphite}"
+                            >
 
-                            <TextBlock
-                                TextWrapping="Wrap"
-                                TextAlignment="Center"
-                                x:Uid="ContinueWithoutLogin"
-                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                FontFamily="{StaticResource LatoRegularFontFamily}"
-                                Foreground="{StaticResource Grey}" />
+                            <TextBlock TextWrapping="Wrap"
+                                       TextAlignment="Center"
+                                       x:Uid="ContinueWithoutLogin"
+                                       FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Graphite}" 
+                                       Padding="0,0"/>
                         </Button>
 
-                        <Button 
-                            HorizontalAlignment="Stretch"
-                            Background="{StaticResource Graphite}" 
-                            Command="{Binding CreateAccountAction}">
-                            
-                            <TextBlock
-                                TextWrapping="Wrap"
-                                TextAlignment="Center"
-                                x:Uid="CreateAccount"
-                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                FontFamily="{StaticResource LatoRegularFontFamily}"
-                                Foreground="{StaticResource Grey}" />
+                        <Button HorizontalAlignment="Stretch"
+                                Background="Transparent" 
+                                Command="{Binding CreateAccountAction}"
+                                BorderThickness="0"
+                            >
+                            <TextBlock TextWrapping="Wrap"
+                                       TextAlignment="Center"
+                                       x:Uid="CreateAccount"
+                                       FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Graphite}"
+                                       Padding="0,0"
+                                       />
                         </Button>
-
                     </StackPanel>
-                </ScrollViewer>
-            </Grid>
+                </Grid>
+            </ScrollViewer>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
@@ -156,11 +173,12 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="StandardFontManagment.FontSize" Value="18"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
                         <Setter Target="MessageFontManagment.FontSize" Value="14"/>
-                        <Setter Target="Logo.Width" Value="88"/>
-                        <Setter Target="Logo.Height" Value="88"/>
-                        <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square44x44Logo.scale-200.png"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="11"/>
+                        <Setter Target="Logo.Width" Value="150"/>
+                        <Setter Target="Logo.Height" Value="150"/>
+                        <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -171,6 +189,7 @@
                     <VisualState.Setters>
                         <Setter Target="StandardFontManagment.FontSize" Value="18"/>
                         <Setter Target="MessageFontManagment.FontSize" Value="14"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="14"/>
                         <Setter Target="Logo.Width" Value="150"/>
                         <Setter Target="Logo.Height" Value="150"/>
                         <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
@@ -184,6 +203,7 @@
                     <VisualState.Setters>
                         <Setter Target="StandardFontManagment.FontSize" Value="25"/>
                         <Setter Target="MessageFontManagment.FontSize" Value="18"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="18"/>
                         <Setter Target="Logo.Width" Value="225"/>
                         <Setter Target="Logo.Height" Value="225"/>
                         <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
@@ -197,6 +217,7 @@
                     <VisualState.Setters>
                         <Setter Target="StandardFontManagment.FontSize" Value="25"/>
                         <Setter Target="MessageFontManagment.FontSize" Value="18"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="16"/>
                         <Setter Target="Logo.Width" Value="300"/>
                         <Setter Target="Logo.Height" Value="300"/>
                         <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
