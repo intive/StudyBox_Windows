@@ -48,7 +48,17 @@
                                         VerticalAlignment="Top"
                                         Margin="0"
                                         >
-                                        <TextBlock Text="{Binding Name}" Foreground="{StaticResource Grey}" FontFamily="{StaticResource LatoBlackFontFamily}"/>
+                                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <TextBlock Text="{Binding Name}" 
+                                                       Foreground="{StaticResource Grey}" 
+                                                       FontFamily="{StaticResource LatoBlackFontFamily}"
+                                                       />
+                                            <TextBlock Text="{Binding CountOfFlashcards}" 
+                                                       Foreground="{StaticResource Grey}" 
+                                                       FontFamily="{StaticResource LatoBlackFontFamily}"
+                                                       HorizontalAlignment="Center"
+                                                       />
+                                        </StackPanel>
                                     </Button>
                                 </StackPanel>
                             </StackPanel>
