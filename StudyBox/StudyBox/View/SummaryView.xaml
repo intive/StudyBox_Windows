@@ -29,6 +29,7 @@
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="HeaderFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
+        <Viewbox x:Name="ViewboxManagment" Visibility="Collapsed"/>
 
         <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Canvas.ZIndex="2"/>
 
@@ -88,11 +89,11 @@
             </TextBlock>
 
             <Grid x:Name="Score" VerticalAlignment="Top" HorizontalAlignment="Center" Opacity="0">
-                <TextBlock Text="{Binding Score}"
-                       Canvas.ZIndex="1"
+                <Viewbox Width="{Binding ElementName=ViewboxManagment, Path=Width}" Canvas.ZIndex="1" MaxHeight="50">
+                    <TextBlock Text="{Binding Score}"
                        Foreground="{StaticResource Grey}"
-                       FontSize="{Binding ElementName=HeaderFontManagment, Path=FontSize}"
-                       Style="{StaticResource SummaryTextStyle}" />
+                       Style="{StaticResource SummaryTextStyle}"/>
+                </Viewbox>
 
                 <Charting:Chart x:Name="PieChart"
                                 Canvas.ZIndex="0"
@@ -240,6 +241,7 @@
                         <Setter Target="TileManagment.Height" Value="35"/>
                         <Setter Target="PieChart.Height" Value="180"/>
                         <Setter Target="PieChart.Width" Value="180"/>
+                        <Setter Target="ViewboxManagment.Width" Value="80" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -253,6 +255,7 @@
                         <Setter Target="TileManagment.Height" Value="40"/>
                         <Setter Target="PieChart.Height" Value="200"/>
                         <Setter Target="PieChart.Width" Value="200"/>
+                        <Setter Target="ViewboxManagment.Width" Value="100" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -266,6 +269,7 @@
                         <Setter Target="TileManagment.Height" Value="55"/>
                         <Setter Target="PieChart.Height" Value="280"/>
                         <Setter Target="PieChart.Width" Value="280"/>
+                        <Setter Target="ViewboxManagment.Width" Value="170"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -279,6 +283,7 @@
                         <Setter Target="TileManagment.Height" Value="65"/>
                         <Setter Target="PieChart.Height" Value="300"/>
                         <Setter Target="PieChart.Width" Value="300"/>
+                        <Setter Target="ViewboxManagment.Width" Value="190" />
                     </VisualState.Setters>
                 </VisualState>
 
