@@ -351,6 +351,7 @@ namespace StudyBox.Core.ViewModels
             }
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             IsPaneOpen = false;
+            IsSearchOpen = false;
         }
     }
 }
