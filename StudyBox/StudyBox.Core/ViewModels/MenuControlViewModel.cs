@@ -292,6 +292,7 @@ namespace StudyBox.Core.ViewModels
         {
             NavigationService.NavigateTo("DecksListView");
             IsPaneOpen = false;
+            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
         }
 
         private void DoSearch()
