@@ -234,4 +234,7 @@
   <data name="ContinueWithoutLogin.Text" xml:space="preserve">
     <value>Wejdź jako niezarejestrowany użytkownik</value>
   </data>
+  <data name="GoToDecksList.Content" xml:space="preserve">
+    <value>Moje talie</value>
+  </data>
 </root>

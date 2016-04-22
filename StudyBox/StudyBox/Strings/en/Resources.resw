@@ -234,4 +234,7 @@
   <data name="ContinueWithoutLogin.Text" xml:space="preserve">
     <value>Continue without login</value>
   </data>
+  <data name="GoToDecksList.Content" xml:space="preserve">
+    <value>Back to my decks</value>
+  </data>
 </root>

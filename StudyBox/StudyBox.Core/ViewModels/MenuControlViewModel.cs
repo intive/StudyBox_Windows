@@ -24,6 +24,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _logoutCommand;
         private RelayCommand _loginCommand;
         private RelayCommand _testRandomDeckCommand;
+        private RelayCommand _goToDecksCommand;
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
@@ -245,6 +246,11 @@ namespace StudyBox.Core.ViewModels
             get { return _testRandomDeckCommand ?? (_testRandomDeckCommand = new RelayCommand(TestRandomDeck)); }
         }
 
+        public RelayCommand GoToDecksCommand
+        {
+            get { return _goToDecksCommand ?? (_goToDecksCommand = new RelayCommand(GoToDecks)); }
+        }
+
         private async void TestRandomDeck()
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
@@ -280,6 +286,13 @@ namespace StudyBox.Core.ViewModels
                 MessageDialog msg = new MessageDialog(ex.Message);
                 await msg.ShowAsync();
             }
+        }
+
+        private void GoToDecks()
+        {
+            NavigationService.NavigateTo("DecksListView");
+            IsPaneOpen = false;
+            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
         }
 
         private void DoSearch()
@@ -339,6 +352,7 @@ namespace StudyBox.Core.ViewModels
             }
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             IsPaneOpen = false;
+            IsSearchOpen = false;
         }
     }
 }

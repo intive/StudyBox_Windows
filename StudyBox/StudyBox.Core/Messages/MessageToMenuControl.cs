@@ -21,5 +21,6 @@ namespace StudyBox.Core.Messages
             ExitButton = exit;
             TitleString = title;
         }
+
     }
 }
