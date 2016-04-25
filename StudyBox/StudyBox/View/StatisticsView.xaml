@@ -7,19 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:StudyBox.Converters"
     xmlns:userControls="using:StudyBox.UserControls"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Locator},Path=StatisticsViewModel}"
+    >
 
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="ExternalGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="80"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" MinHeight="50" />
-            <RowDefinition x:Name="MainGridRow" Height="2*"/>
+            <RowDefinition x:Name="StatsRow" Height="2*"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
@@ -59,6 +61,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
+                                Text="{Binding GoodAnwersCount}"
                                 />
             </Border>
 
@@ -84,6 +87,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
+                                Text="{Binding CountOfDecks}"
                                 />
             </Border>
             
@@ -110,6 +114,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
+                                Text="{Binding CountOfDecks}"
                                 />
             </Border>
             
@@ -136,10 +141,55 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
+                                Text="{Binding TestesCount}"
                                 />
             </Border>
             
             
         </Grid>
+
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Phone">
+                <VisualState x:Name="NarrowPhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WidePhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="450"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StatsRow.Heigth" Value="4*"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideTabletState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+
     </Grid>
 </Page>

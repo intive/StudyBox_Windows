@@ -242,12 +242,16 @@
     <comment>statistics page</comment>
   </data>
   <data name="CountOfDecks.Text" xml:space="preserve">
-    <value>Ilość talii, które testowano</value>
+    <value>Ilość talii, które testowano:</value>
     <comment>statistics page</comment>
   </data>
   <data name="GoodAnswersCount.Text" xml:space="preserve">
     <value>Ilość poprawnych odpowiedzi:</value>
     <comment>statistics page</comment>
+  </data>
+  <data name="GoToStatistics.Content" xml:space="preserve">
+    <value>Statystyki</value>
+    <comment>menu control - hamburger</comment>
   </data>
   <data name="TestsCount.Text" xml:space="preserve">
     <value>Ilość testów:</value>

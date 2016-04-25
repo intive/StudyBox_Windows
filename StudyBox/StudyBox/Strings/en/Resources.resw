@@ -249,6 +249,10 @@
     <value>Count of correct answers:</value>
     <comment>statistics page</comment>
   </data>
+  <data name="GoToStatistics.Content" xml:space="preserve">
+    <value>Statistics</value>
+    <comment>menu control - hamburger</comment>
+  </data>
   <data name="TestsCount.Text" xml:space="preserve">
     <value>Count of tests:</value>
     <comment>statistics page</comment>

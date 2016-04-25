@@ -123,6 +123,7 @@
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Exam.cs" />
     <Compile Include="Models\Flashcard.cs" />
+    <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TestResult.cs" />
     <Compile Include="Models\Tip.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuControlViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />
     <EmbeddedResource Include="Properties\StudyBox.Core.rd.xml" />
   </ItemGroup>
