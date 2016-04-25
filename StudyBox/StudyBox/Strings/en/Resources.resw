@@ -237,4 +237,20 @@
   <data name="GoToDecksList.Content" xml:space="preserve">
     <value>Back to my decks</value>
   </data>
+  <data name="BadAnswersCount.Text" xml:space="preserve">
+    <value>Count of bad answers:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="CountOfDecks.Text" xml:space="preserve">
+    <value>Count of tested decks:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="GoodAnswersCount.Text" xml:space="preserve">
+    <value>Count of correct answers:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="TestsCount.Text" xml:space="preserve">
+    <value>Count of tests:</value>
+    <comment>statistics page</comment>
+  </data>
 </root>
