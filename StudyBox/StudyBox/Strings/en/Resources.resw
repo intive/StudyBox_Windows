@@ -237,4 +237,25 @@
   <data name="GoToDecksList.Content" xml:space="preserve">
     <value>Back to my decks</value>
   </data>
+  <data name="ChooseLearning.Text" xml:space="preserve">
+    <value>Learning</value>
+  </data>
+  <data name="ChooseLearningOrTest.Text" xml:space="preserve">
+    <value>What do you want to do?</value>
+  </data>
+  <data name="ChooseTest.Text" xml:space="preserve">
+    <value>Exam</value>
+  </data>
+  <data name="DontRepeatLearning.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="FinishLearningMessage.Text" xml:space="preserve">
+    <value>That's all the flashcards within the deck. Would you like to start again?</value>
+  </data>
+  <data name="RepeatLearning.Text" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ShowAnswerMessage.Text" xml:space="preserve">
+    <value>Show answer</value>
+  </data>
 </root>

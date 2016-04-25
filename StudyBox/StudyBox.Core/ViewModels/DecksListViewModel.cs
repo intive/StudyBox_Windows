@@ -24,6 +24,9 @@ namespace StudyBox.Core.ViewModels
         private IInternetConnectionService _internetConnectionService;
         private bool _isDataLoading=false;
         private bool _isSearchMessageVisible = false;
+        private bool _isDeckSelected = false;
+        private string _selectedID = "";
+
         #endregion
 
         #region Constructors
@@ -54,6 +57,22 @@ namespace StudyBox.Core.ViewModels
                 if (_decksCollection != value)
                 {
                     _decksCollection = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsDeckSelected
+        {
+            get
+            {
+                return _isDeckSelected;
+            }
+            set
+            {
+                if (_isDeckSelected != value)
+                {
+                    _isDeckSelected = value;
                     RaisePropertyChanged();
                 }
             }
@@ -163,12 +182,64 @@ namespace StudyBox.Core.ViewModels
         #region Buttons
 
         public ICommand TapTileCommand { get; set; }
+        private RelayCommand _chooseLearning;
+        private RelayCommand _chooseTest;
+        private RelayCommand _cancel;
+
+        public RelayCommand ChooseLearning
+        {
+            get
+            {
+                return _chooseLearning ?? (_chooseLearning = new RelayCommand(GoToLearning));
+            }
+        }
+
+        public RelayCommand ChooseTest
+        {
+            get
+            {
+                return _chooseTest ?? (_chooseTest = new RelayCommand(GoToTest));
+            }
+        }
+
+        public RelayCommand Cancel
+        {
+            get
+            {
+                return _cancel ?? (_cancel = new RelayCommand(BackToDeck));
+            }
+        }
+
+        private void GoToLearning()
+        {
+            IsDeckSelected = false;
+            NavigationService.NavigateTo("LearningView");
+            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
+            _selectedID = "";
+            Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+        }
+
+        private void GoToTest()
+        {
+            IsDeckSelected = false;
+            NavigationService.NavigateTo("ExamView");
+            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
+            _selectedID = "";
+            Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+        }
+
+        private void BackToDeck()
+        {
+            IsDeckSelected = false;
+            _selectedID = "";
+        }
+
         private void TapTile(string id)
         {
-            NavigationService.NavigateTo("ExamView");
-            Deck deck = DecksCollection.Where(x => x.ID == id).FirstOrDefault();
-            Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true,false,false,deck.Name));
+            _selectedID = id;
+            IsDeckSelected = true;
         }
 
         #endregion
