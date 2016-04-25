@@ -246,4 +246,16 @@
   <data name="ChooseTest.Text" xml:space="preserve">
     <value>Test</value>
   </data>
+  <data name="DontRepeatLearning.Text" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="FinishLearningMessage.Text" xml:space="preserve">
+    <value>To już wszystkie fiszki w ramach tej talii. Czy rozpocząć naukę od nowa?</value>
+  </data>
+  <data name="RepeatLearning.Text" xml:space="preserve">
+    <value>Tak</value>
+  </data>
+  <data name="ShowAnswerMessage.Text" xml:space="preserve">
+    <value>Pokaż odpowiedź</value>
+  </data>
 </root>

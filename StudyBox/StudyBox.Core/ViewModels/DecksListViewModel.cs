@@ -213,7 +213,7 @@ namespace StudyBox.Core.ViewModels
         private void GoToLearning()
         {
             IsDeckSelected = false;
-            NavigationService.NavigateTo("ExamView");
+            NavigationService.NavigateTo("LearningView");
             Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
             _selectedID = "";
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
