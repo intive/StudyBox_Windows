@@ -237,4 +237,13 @@
   <data name="GoToDecksList.Content" xml:space="preserve">
     <value>Back to my decks</value>
   </data>
+  <data name="ChooseLearning.Text" xml:space="preserve">
+    <value>Learning</value>
+  </data>
+  <data name="ChooseLearningOrTest.Text" xml:space="preserve">
+    <value>What do you want to do?</value>
+  </data>
+  <data name="ChooseTest.Text" xml:space="preserve">
+    <value>Exam</value>
+  </data>
 </root>
