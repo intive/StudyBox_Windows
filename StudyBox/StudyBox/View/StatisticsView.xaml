@@ -26,8 +26,10 @@
         </Grid.RowDefinitions>
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
 
+        
         <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
-
+        <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
+        
         <Grid Grid.Row="1" Grid.Column="0" Margin="5,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
@@ -50,6 +52,7 @@
                                VerticalAlignment="Center"
                                Margin="10,0"
                                Foreground="{StaticResource Grey}"
+                               FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                />
             </Border>
             <Border Grid.Row="0" 
@@ -62,6 +65,7 @@
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
                                 Text="{Binding GoodAnwersCount}"
+                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 />
             </Border>
 
@@ -76,6 +80,7 @@
                                VerticalAlignment="Center"
                                Margin="10,0"
                                Foreground="{StaticResource Grey}"
+                               FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                />
             </Border>
             <Border Grid.Row="1" 
@@ -88,6 +93,7 @@
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
                                 Text="{Binding AnswersCount}"
+                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 />
             </Border>
             
@@ -103,6 +109,7 @@
                                VerticalAlignment="Center"
                                Margin="10,0"
                                Foreground="{StaticResource Grey}"
+                               FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                />
             </Border>
             <Border Grid.Row="2" 
@@ -115,6 +122,7 @@
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
                                 Text="{Binding CountOfDecks}"
+                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 />
             </Border>
             
@@ -130,6 +138,7 @@
                                VerticalAlignment="Center"
                                Margin="10,0"
                                Foreground="{StaticResource Grey}"
+                               FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                />
             </Border>
             <Border Grid.Row="3" 
@@ -142,6 +151,7 @@
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
                                 Text="{Binding TestesCount}"
+                                FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 />
             </Border>
             
@@ -156,7 +166,7 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        
+                        <Setter Target="StandardFontManagment.FontSize" Value="11"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -166,6 +176,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="StatsRow.Heigth" Value="4*"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="14"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -174,7 +185,7 @@
                         <AdaptiveTrigger MinWindowWidth="720"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-
+                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -183,7 +194,7 @@
                         <AdaptiveTrigger MinWindowWidth="1024"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-
+                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
                     </VisualState.Setters>
                 </VisualState>
 
