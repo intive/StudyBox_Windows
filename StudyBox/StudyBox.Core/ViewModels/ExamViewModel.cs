@@ -211,7 +211,7 @@ namespace StudyBox.Core.ViewModels
 
                 IsDataLoading = false;
                 RaisePropertyChanged("AreAnyFlashcards");
-                RaisePropertyChanged("ShowInformationAboutNoFlashcards");
+                RaisePropertyChanged("ShowInformationAboutNoFlashcards");           
             }
         }
 
@@ -233,21 +233,8 @@ namespace StudyBox.Core.ViewModels
         private void CountGoodAnswerAndShowNextFlashcard()
         {
             _numberOfCorrectAnswers++;
-            
-            for (int i = 0; i < 1; i++)
-            {
-                for (int j = 0; j < 1; j++)
-                {
-                    _statisticsService.IncrementGoodAnswers();
-                    for(int k = 0; k < 200; k++)
-                        _statisticsService.IncrementAnswers();
-                    _statisticsService.IncrementCountOfDecks(_deckInstance);
-                    for(int z=0;z<1;z++)
-                        _statisticsService.IncrementTestsCountAnswers();
-                    
-                }   
-            }
-            
+            _statisticsService.IncrementAnswers();
+            _statisticsService.IncrementGoodAnswers();
             ShowNexFlashCardOrGoToResults();
             
         }
@@ -271,6 +258,7 @@ namespace StudyBox.Core.ViewModels
         private void CountBadAnswerAndShowNextFlashcard()
         {
             _badAnswerFlashcards.Add(_flashcards[_numberOfCurrentFlashcard]);
+            _statisticsService.IncrementAnswers();
             ShowNexFlashCardOrGoToResults();
         }
 

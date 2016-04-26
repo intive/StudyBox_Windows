@@ -304,6 +304,7 @@ namespace StudyBox.Core.ViewModels
         private void GoToStatistics()
         {
             NavigationService.NavigateTo("StatisticsView");
+            Messenger.Default.Send<ReloadMessageToStatistics>(new ReloadMessageToStatistics(true));
             IsPaneOpen = false;
         }
 

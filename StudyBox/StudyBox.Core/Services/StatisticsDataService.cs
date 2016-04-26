@@ -16,7 +16,7 @@ namespace StudyBox.Core.Services
 {
     public class StatisticsDataService : IStatisticsDataService
     {
-        private ResourceDictionary _resources = Application.Current.Resources;
+        private readonly ResourceDictionary _resources = Application.Current.Resources;
 
         public StatisticsDataService()
         {
@@ -26,7 +26,6 @@ namespace StudyBox.Core.Services
             string path2 = ApplicationData.Current.LocalFolder.Path + "/" + _resources["StatisticsFileName"].ToString();
             if (!File.Exists(path2))
                 File.Create(path2);
-
         }
 
         public void SaveStatistics(Statistics statistics)
@@ -47,9 +46,9 @@ namespace StudyBox.Core.Services
                 }
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+                SaveStatistics(statistics);
             }
         }
 
@@ -58,12 +57,18 @@ namespace StudyBox.Core.Services
             var statistics = new Statistics();
             try
             {
-                var localFolder = ApplicationData.Current.LocalFolder;
                 string path = ApplicationData.Current.LocalFolder.Path + "/"+_resources["StatisticsFileName"].ToString();
                 if (!File.Exists(path))
-                    SaveStatistics(new Statistics(0,0,0,0)); 
+                    SaveStatistics(new Statistics(0,0,0,0));
+
                 string fileContent = File.ReadAllText(path);
+   
+                if (fileContent == String.Empty)
+                {
+                    SaveStatistics(new Statistics(0,0,0,0));
+                }
                 List<string> lines = fileContent.Split(';').ToList();
+ 
                 if (lines.Count == 4)
                 {
                     statistics.GoodAnswersCount = Convert.ToInt32(lines[0]);
@@ -72,9 +77,9 @@ namespace StudyBox.Core.Services
                     statistics.TestsCount = Convert.ToInt32(lines[3]);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+                GetStatistics();
             }
             return statistics;
         }
@@ -127,9 +132,9 @@ namespace StudyBox.Core.Services
                     w.Write(fileContent);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+               SaveTestedDecks(deckId);
             }
         }
 
@@ -149,9 +154,9 @@ namespace StudyBox.Core.Services
                         isTested = true;     
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+                IsDeckAlreadyTested(deckId);
             }
             return isTested;
         }

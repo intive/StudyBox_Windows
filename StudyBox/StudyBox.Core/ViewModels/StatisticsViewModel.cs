@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Interfaces;
+using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 
 namespace StudyBox.Core.ViewModels
@@ -22,6 +24,7 @@ namespace StudyBox.Core.ViewModels
 
         public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService, IStatisticsDataService statisticsSercice) : base(navigationService)
         {
+            Messenger.Default.Register<ReloadMessageToStatistics>(this,x=>HandleReloadMessage(x.Reload));
             _internetConnetioConnectionService = internetConnectionService;
             _restService = restService;
             _statisticsService = statisticsSercice;
@@ -106,10 +109,12 @@ namespace StudyBox.Core.ViewModels
                 CountOfDecks = _statistics.CountOfDecks;
                 TestesCount = _statistics.TestsCount;
             }
-            else
-            {
-                
-            }
+        }
+
+        private void HandleReloadMessage(bool reload)
+        {
+            if (reload)
+                GetStatistics();
         }
     }
 }
