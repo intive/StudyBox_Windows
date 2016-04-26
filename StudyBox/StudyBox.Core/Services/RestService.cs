@@ -42,6 +42,25 @@ namespace StudyBox.Core.Services
             }
         }
 
+        public async Task<List<Flashcard>> GetFlashcardsWithTipsCount(string deckId, CancellationTokenSource cts = null)
+        {
+            try
+            {
+                string url = String.Format(_resources["FlashcardWithTipsCountGetAllUrl"].ToString(), deckId);
+                string webPageSource = await GetWebPageSource(url, cts);
+
+                return _deserializeJsonService.GetObjectFromJson<List<Flashcard>>(webPageSource);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public async Task<Flashcard> GetFlashcardById(string deckId, string flashcardId, CancellationTokenSource cts = null)
         {
             try

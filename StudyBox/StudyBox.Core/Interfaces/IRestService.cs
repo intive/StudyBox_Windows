@@ -9,6 +9,7 @@ namespace StudyBox.Core.Interfaces
     {
 
         Task<List<Flashcard>> GetFlashcards(string deckId, CancellationTokenSource cts = null);
+        Task<List<Flashcard>> GetFlashcardsWithTipsCount(string deckId, CancellationTokenSource cts = null);
         Task<Flashcard> GetFlashcardById(string deckId, string flashcardId, CancellationTokenSource cts = null);
         Task<Flashcard> CreateFlashcard(Flashcard flashcard, string deckId, CancellationTokenSource cts = null);
         Task<bool> UpdateFlashcard(Flashcard flashcard, string deckId, CancellationTokenSource cts = null);
