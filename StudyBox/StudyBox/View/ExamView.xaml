@@ -39,9 +39,7 @@
     </Page.Resources>
 
     <Grid Background="White">
-
         <userControls:MenuControlView Canvas.ZIndex="2"/>
-
 
         <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="6" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ProgressBar IsIndeterminate="True" />
@@ -66,7 +64,13 @@
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
             
-            <Border x:Name="AnswerCard" UseLayoutRounding="True" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Background="{StaticResource DarkBlue}">
+            <Border 
+                x:Name="AnswerCard" 
+                UseLayoutRounding="True" 
+                BorderBrush="Transparent" 
+                Grid.Column="1" 
+                Grid.Row="1" 
+                Background="{StaticResource DarkBlue}">
                 <TextBlock Text="{Binding Answer}" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
@@ -83,13 +87,21 @@
                     BorderBrush="Transparent">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="LeftArrow" VerticalAlignment="Center" Visibility="{Binding IsLeftArrowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="0" Background="Transparent">
+                    <Button Width="60" 
+                            Height="60" 
+                            VerticalAlignment="Center" 
+                            Visibility="{Binding IsLeftArrowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                            Grid.Column="0" 
+                            Background="Transparent">
                         <Button.Content>
-                            <Image   Source="ms-appx:///Assets/arrow.png" Margin="0"/>
+                            <Image 
+                                Stretch="UniformToFill"  
+                                Source="ms-appx:///Assets/leftArrow.png" 
+                                Margin="0"/>
                         </Button.Content>
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Tapped">
@@ -97,14 +109,26 @@
                             </core:EventTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </Button>
-                    <TextBlock Grid.Column="1" Text="{Binding MainRectangleWithQuestionOrHint}" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            FontFamily="{StaticResource LatoRegularFontFamily}" 
-                            Foreground="{StaticResource Grey}"/>
-                    <Button x:Name="RightArrow" VerticalAlignment="Center" Visibility="{Binding IsRightArrowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="2" Background="Transparent">
+                    <TextBlock 
+                        Grid.Column="1" 
+                        Text="{Binding MainRectangleWithQuestionOrHint}" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Foreground="{StaticResource Grey}"/>
+                    <Button 
+                        Margin="0,0,5,0"
+                        Width="60" 
+                        Height="60" 
+                        VerticalAlignment="Center" 
+                        Visibility="{Binding IsRightArrowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                        Grid.Column="2" 
+                        Background="Transparent">
                         <Button.Content>
-                            <Image   Source="ms-appx:///Assets/arrow.png" Margin="0"/>
+                            <Image 
+                                Margin="0,0,-3,0" 
+                                Stretch="UniformToFill"  
+                                Source="ms-appx:///Assets/rightArrow.png"/>
                         </Button.Content>
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Tapped">
@@ -113,7 +137,6 @@
                         </i:Interaction.Behaviors>
                     </Button>
                 </Grid>
-                
                 <Border.Projection>
                     <PlaneProjection/>
                 </Border.Projection>
@@ -185,8 +208,6 @@
                     <VisualState.Setters>
                         <Setter Target="CancelButton.Padding" Value="10"/>
                         <Setter Target="ApproveButton.Padding" Value="12"/>
-                        <Setter Target="LeftArrow.Padding" Value="12"/>
-                        <Setter Target="RightArrow.Padding" Value="32"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -197,8 +218,6 @@
                     <VisualState.Setters>
                         <Setter Target="CancelButton.Padding" Value="10"/>
                         <Setter Target="ApproveButton.Padding" Value="12"/>
-                        <Setter Target="LeftArrow.Padding" Value="12"/>
-                        <Setter Target="RightArrow.Padding" Value="32"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -209,8 +228,6 @@
                     <VisualState.Setters>
                         <Setter Target="CancelButton.Padding" Value="20"/>
                         <Setter Target="ApproveButton.Padding" Value="22"/>
-                        <Setter Target="LeftArrow.Padding" Value="22"/>
-                        <Setter Target="RightArrow.Padding" Value="32"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -221,8 +238,6 @@
                     <VisualState.Setters>
                         <Setter Target="CancelButton.Padding" Value="20"/>
                         <Setter Target="ApproveButton.Padding" Value="22"/>
-                        <Setter Target="LeftArrow.Padding" Value="22"/>
-                        <Setter Target="RightArrow.Padding" Value="32"/>
                     </VisualState.Setters>
                 </VisualState>
 
