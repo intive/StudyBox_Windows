@@ -6,17 +6,21 @@ using GalaSoft.MvvmLight.Command;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
 using System;
+using Windows.UI.Popups;
 
 namespace StudyBox.Core.ViewModels
 {
     public class ExamViewModel : ExtendedViewModelBase
     {
+        #region Private Fields
         private IRestService _restService;
+        private IInternetConnectionService _internetConnectionService;
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
         private List<Flashcard> _badAnswerFlashcards;
-        private List<string> Hints;
+        private List<Tip> Hints;
         private string _nameOfDeck;
+        private string _mainRectangleWithQuestionOrHint;
         private bool _isDataLoading;
         private bool _currentlyVisibleHint = false;
         private bool _isQuestionVisible = true;
@@ -29,14 +33,18 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _countBadAnswer;
         private RelayCommand _leftArrowClicked;
         private RelayCommand _rightArrowClicked;
+        #endregion
 
-        public ExamViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
+        #region Constructor
+        public ExamViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService) : base(navigationService)
         {
             _restService = restService;
-
+            _internetConnectionService = internetConnectionService;
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance, x.BadAnswerFlashcards));
-        }
+        } 
+        #endregion
 
+        #region Commands
         public RelayCommand LeftArrowClicked
         {
             get
@@ -45,28 +53,12 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        private void GetNextHint()
-        {
-            _numberOfCurrentHint++;
-            MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint];
-            RaisePropertyChanged("IsLeftArrowVisible");
-            RaisePropertyChanged("IsRightArrowVisible");
-        }
-
         public RelayCommand RightArrowClicked
         {
             get
             {
                 return _rightArrowClicked ?? (_rightArrowClicked = new RelayCommand(GetNextHint));
             }
-        }
-
-        private void GetPreviousHint()
-        {
-            _numberOfCurrentHint--;
-            MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint];
-            RaisePropertyChanged("IsLeftArrowVisible");
-            RaisePropertyChanged("IsRightArrowVisible");
         }
 
         public RelayCommand CountBadAnswer
@@ -100,7 +92,9 @@ namespace StudyBox.Core.ViewModels
                 return _showHintOrQuestion ?? (_showHintOrQuestion = new RelayCommand(ShowAvailableHintOrQuestion, () => IsHintAvailable));
             }
         }
+        #endregion
 
+        #region Other Properties
         public string NameOfDeck
         {
             get
@@ -165,7 +159,6 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        private string _mainRectangleWithQuestionOrHint;
         public string MainRectangleWithQuestionOrHint
         {
             get
@@ -239,7 +232,9 @@ namespace StudyBox.Core.ViewModels
                 return !_isDataLoading && (_flashcards == null || _flashcards.Count == 0);
             }
         }
+        #endregion
 
+        #region Private Methods
         private async void HandleDataMessage(Deck deckInstance, List<Flashcard> badAnswerFlashcards)
         {
             if (deckInstance != null)
@@ -254,19 +249,27 @@ namespace StudyBox.Core.ViewModels
 
                 if (badAnswerFlashcards == null)
                 {
-                    _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+                    try
+                    {
+                        _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowErrorMessage(ex.Message);
+                    }
 
+                    //MOCK
                     _flashcards = new List<Flashcard>
                     {
                         new Flashcard {Answer="a", Question="q", TipsCount=2 },
                         new Flashcard {Answer="a2", Question="q2", TipsCount=0 }
                     };
-                }   
+                }
                 else
                 {
                     _flashcards = badAnswerFlashcards;
                 }
-                   
+
                 _badAnswerFlashcards = new List<Flashcard>();
 
                 if (_flashcards != null && _flashcards.Count > 0)
@@ -334,20 +337,35 @@ namespace StudyBox.Core.ViewModels
             ShowNexFlashCardOrGoToResults();
         }
 
-        private void ShowAvailableHintOrQuestion()
+        private async void ShowAvailableHintOrQuestion()
         {
-            //_isHintAlreadyShown = true;
             if (!CurrentlyVisibleHint)
             {
                 CurrentlyVisibleHint = true;
                 _numberOfCurrentHint = 0;
-                Hints = new List<string>
+
+                if (!await _internetConnectionService.IsNetworkAvailable())
                 {
-                    "hint1",
-                    "hint2",
-                    "hint3"
-                };
-                MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint];
+                    ShowErrorMessage(StringResources.GetString("NoInternetConnection"));
+                    return;
+                }
+                else if (!_internetConnectionService.IsInternetAccess())
+                {
+                    ShowErrorMessage(StringResources.GetString("AccessDenied"));
+                    return;
+                }
+                else
+                {
+                    try
+                    {
+                        Hints = await _restService.GetTips(_deckInstance.ID, _flashcards[_numberOfCurrentFlashcard].Id);
+                        ShowNewHint();
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowErrorMessage(ex.Message);
+                    }
+                }
             }
             else
             {
@@ -359,18 +377,44 @@ namespace StudyBox.Core.ViewModels
             RaisePropertyChanged("BottomRectangleText");
         }
 
+        private async void ShowErrorMessage(string message)
+        {
+            MessageDialog msg = new MessageDialog(message);
+            await msg.ShowAsync();
+        }
+
         private void ShowQuestionView()
         {
             Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowQuestion" });
             ShowQuestionInMainRectangle();
-            IsQuestionVisible = true;
             RaiseAllPropertiesChanged();
         }
 
         private void ShowQuestionInMainRectangle()
         {
             CurrentlyVisibleHint = false;
+            IsQuestionVisible = true;
             MainRectangleWithQuestionOrHint = _flashcards[_numberOfCurrentFlashcard].Question;
         }
+
+        private void GetNextHint()
+        {
+            _numberOfCurrentHint++;
+            ShowNewHint();
+        }
+
+        private void GetPreviousHint()
+        {
+            _numberOfCurrentHint--;
+            ShowNewHint();
+        }
+
+        private void ShowNewHint()
+        {
+            MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint].Prompt;
+            RaisePropertyChanged("IsLeftArrowVisible");
+            RaisePropertyChanged("IsRightArrowVisible");
+        } 
+        #endregion
     }
 }
