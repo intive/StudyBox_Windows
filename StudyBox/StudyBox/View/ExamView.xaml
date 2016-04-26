@@ -81,7 +81,7 @@
                     Grid.Row="1" 
                     Background="{StaticResource DarkBlue}" 
                     BorderBrush="Transparent">
-                <TextBlock Text="{Binding Question}" 
+                <TextBlock Text="{Binding MainRectangleWithQuestionOrHint}" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
                             FontFamily="{StaticResource LatoRegularFontFamily}" 
@@ -99,10 +99,10 @@
             <Button Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="3" IsEnabled="{Binding IsHintAvailable}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}">
                 <i:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
-                        <core:InvokeCommandAction Command="{Binding ShowHint}" />
+                        <core:InvokeCommandAction Command="{Binding ShowHintOrQuestion}" />
                     </core:EventTriggerBehavior>
                 </i:Interaction.Behaviors>
-                <TextBlock Text="{Binding Hint}"
+                <TextBlock Text="{Binding BottomRectangleText}"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         FontFamily="{StaticResource LatoRegularFontFamily}" 

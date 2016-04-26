@@ -6,7 +6,7 @@
     <x:String x:Key="FlashcardCreateUrl">http://78.133.154.70:2000/decks/{0}/flashcards</x:String>
     <x:String x:Key="FlashcardGetByIdUrl">http://78.133.154.70:2000/decks/{0}/flashcards/{1}</x:String>
     <x:String x:Key="FlashcardGetAllUrl">http://78.133.154.70:2000/decks/{0}/flashcards</x:String>
-    <x:String x:Key="FlashcardWithTipsCountGetAllUrl">http://78.133.154.70:2000/decks/{0}/flashcards?tipsCount=true</x:String>
+    <x:String x:Key="FlashcardWithTipsCountGetAllUrl">http://private-anon-015b2f748-studybox.apiary-mock.com/decks/{0}/flashcards?tipsCount=true</x:String>
     <x:String x:Key="FlashcardUpdateUrl">http://78.133.154.70:2000/decks/{0}/flashcards/{1}</x:String>
     <x:String x:Key="FlashcardRemoveUrl">http://78.133.154.70:2000/decks/{0}/flashcards/{1}</x:String>
 

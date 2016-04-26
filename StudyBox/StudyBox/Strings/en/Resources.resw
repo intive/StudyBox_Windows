@@ -144,8 +144,8 @@
   <data name="FillAllFields" xml:space="preserve">
     <value>Fill all fields!</value>
   </data>
-  <data name="HintRectangle" xml:space="preserve">
-    <value>Show me the hint!</value>
+  <data name="Hint" xml:space="preserve">
+    <value>HINT</value>
   </data>
   <data name="ImproveResults" xml:space="preserve">
     <value>IMPROVE YOUR RESULTS</value>
@@ -257,5 +257,8 @@
   </data>
   <data name="ShowAnswerMessage.Text" xml:space="preserve">
     <value>Show answer</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>QUESTION</value>
   </data>
 </root>
