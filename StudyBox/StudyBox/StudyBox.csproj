@@ -94,6 +94,7 @@
     </Content>
     <None Include="project.json" />
     <Content Include="Assets\approve.png" />
+    <Content Include="Assets\arrow.png" />
     <Content Include="Assets\cancel.png" />
     <Content Include="Assets\Delete-64.png" />
     <Content Include="Assets\Menu-64.png" />

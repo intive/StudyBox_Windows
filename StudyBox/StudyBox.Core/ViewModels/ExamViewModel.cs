@@ -5,6 +5,7 @@ using StudyBox.Core.Messages;
 using GalaSoft.MvvmLight.Command;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
+using System;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -14,22 +15,58 @@ namespace StudyBox.Core.ViewModels
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
         private List<Flashcard> _badAnswerFlashcards;
+        private List<string> Hints;
         private string _nameOfDeck;
         private bool _isDataLoading;
         private bool _currentlyVisibleHint = false;
         private bool _isQuestionVisible = true;
+        private int _numberOfCurrentHint = 0;
         private int _numberOfCurrentFlashcard = 0;
         private int _numberOfCorrectAnswers = 0;
         private RelayCommand _showAnswer;
         private RelayCommand _showHintOrQuestion;
         private RelayCommand _countGoodAnswer;
         private RelayCommand _countBadAnswer;
+        private RelayCommand _leftArrowClicked;
+        private RelayCommand _rightArrowClicked;
 
         public ExamViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
         {
             _restService = restService;
 
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance, x.BadAnswerFlashcards));
+        }
+
+        public RelayCommand LeftArrowClicked
+        {
+            get
+            {
+                return _leftArrowClicked ?? (_leftArrowClicked = new RelayCommand(GetPreviousHint));
+            }
+        }
+
+        private void GetNextHint()
+        {
+            _numberOfCurrentHint++;
+            MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint];
+            RaisePropertyChanged("IsLeftArrowVisible");
+            RaisePropertyChanged("IsRightArrowVisible");
+        }
+
+        public RelayCommand RightArrowClicked
+        {
+            get
+            {
+                return _rightArrowClicked ?? (_rightArrowClicked = new RelayCommand(GetNextHint));
+            }
+        }
+
+        private void GetPreviousHint()
+        {
+            _numberOfCurrentHint--;
+            MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint];
+            RaisePropertyChanged("IsLeftArrowVisible");
+            RaisePropertyChanged("IsRightArrowVisible");
         }
 
         public RelayCommand CountBadAnswer
@@ -92,7 +129,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return _flashcards == null || _flashcards.Count == 0 ? string.Empty : (_currentlyVisibleHint ? StringResources.GetString("Question") : StringResources.GetString("Hint"));
+                return _flashcards == null || _flashcards.Count == 0 ? string.Empty : (CurrentlyVisibleHint ? StringResources.GetString("Question") : StringResources.GetString("Hint"));
             }
         }
 
@@ -154,7 +191,20 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return _flashcards != null && _flashcards.Count > 0  && _flashcards[_numberOfCurrentFlashcard].TipsCount > 0;
+                return _flashcards != null && _flashcards.Count > 0 && _flashcards[_numberOfCurrentFlashcard].TipsCount > 0;
+            }
+        }
+
+        public bool CurrentlyVisibleHint
+        {
+            get
+            {
+                return _currentlyVisibleHint;
+            }
+            set
+            {
+                _currentlyVisibleHint = value;
+                RaisePropertyChanged("CurrentlyVisibleHint");
             }
         }
 
@@ -163,6 +213,22 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return !_isDataLoading && (_flashcards != null && _flashcards.Count > 0);
+            }
+        }
+
+        public bool IsLeftArrowVisible
+        {
+            get
+            {
+                return _flashcards != null && _flashcards.Count > 0 && _currentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint > 0;
+            }
+        }
+
+        public bool IsRightArrowVisible
+        {
+            get
+            {
+                return _flashcards != null && _flashcards.Count > 0 && _currentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint < Hints.Count - 1;
             }
         }
 
@@ -233,8 +299,11 @@ namespace StudyBox.Core.ViewModels
 
         private void SwipeAndShowAnswer()
         {
-            Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowAnswer" });
-            IsQuestionVisible = false;
+            if (!CurrentlyVisibleHint)
+            {
+                Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowAnswer" });
+                IsQuestionVisible = false;
+            }
         }
 
         private void CountGoodAnswerAndShowNextFlashcard()
@@ -268,15 +337,25 @@ namespace StudyBox.Core.ViewModels
         private void ShowAvailableHintOrQuestion()
         {
             //_isHintAlreadyShown = true;
-            if (!_currentlyVisibleHint)
+            if (!CurrentlyVisibleHint)
             {
-                _currentlyVisibleHint = true;
-                MainRectangleWithQuestionOrHint = "hint" + _numberOfCurrentFlashcard;
+                CurrentlyVisibleHint = true;
+                _numberOfCurrentHint = 0;
+                Hints = new List<string>
+                {
+                    "hint1",
+                    "hint2",
+                    "hint3"
+                };
+                MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint];
             }
             else
             {
                 ShowQuestionInMainRectangle();
             }
+
+            RaisePropertyChanged("IsRightArrowVisible");
+            RaisePropertyChanged("IsLeftArrowVisible");
             RaisePropertyChanged("BottomRectangleText");
         }
 
@@ -290,7 +369,7 @@ namespace StudyBox.Core.ViewModels
 
         private void ShowQuestionInMainRectangle()
         {
-            _currentlyVisibleHint = false;
+            CurrentlyVisibleHint = false;
             MainRectangleWithQuestionOrHint = _flashcards[_numberOfCurrentFlashcard].Question;
         }
     }
