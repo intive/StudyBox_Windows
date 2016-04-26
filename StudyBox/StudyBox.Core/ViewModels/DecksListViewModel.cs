@@ -22,6 +22,7 @@ namespace StudyBox.Core.ViewModels
         private ObservableCollection<Deck> _decksCollection;
         private IRestService _restService;
         private IInternetConnectionService _internetConnectionService;
+        private IStatisticsDataService _statisticsService;
         private bool _isDataLoading=false;
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
@@ -30,14 +31,14 @@ namespace StudyBox.Core.ViewModels
         #endregion
 
         #region Constructors
-        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService) : base(navigationService)
+        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService) : base(navigationService)
         {
             Messenger.Default.Register<ReloadMessageToDecksList>(this,x=> HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
             DecksCollection = new ObservableCollection<Deck>();
-
+            _statisticsService = statisticsService;
             InitializeDecksCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
@@ -215,7 +216,8 @@ namespace StudyBox.Core.ViewModels
             IsDeckSelected = false;
             NavigationService.NavigateTo("LearningView");
             Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
-            _selectedID = "";
+            _selectedID = String.Empty;
+
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
         }
@@ -225,9 +227,12 @@ namespace StudyBox.Core.ViewModels
             IsDeckSelected = false;
             NavigationService.NavigateTo("ExamView");
             Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
-            _selectedID = "";
+            _selectedID = String.Empty;
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+
+            _statisticsService.IncrementTestsCountAnswers();
+            _statisticsService.IncrementCountOfDecks(deck);
         }
 
         private void BackToDeck()

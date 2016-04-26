@@ -258,6 +258,26 @@
   <data name="ShowAnswerMessage.Text" xml:space="preserve">
     <value>Show answer</value>
   </data>
+  <data name="BadAnswersCount.Text" xml:space="preserve">
+    <value>Count of bad answers:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="CountOfDecks.Text" xml:space="preserve">
+    <value>Count of tested decks:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="GoodAnswersCount.Text" xml:space="preserve">
+    <value>Count of correct answers:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="GoToStatistics.Content" xml:space="preserve">
+    <value>Statistics</value>
+    <comment>menu control - hamburger</comment>
+  </data>
+  <data name="TestsCount.Text" xml:space="preserve">
+    <value>Count of tests:</value>
+    <comment>statistics page</comment>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>QUESTION</value>
   </data>

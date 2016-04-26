@@ -112,17 +112,20 @@
     <Compile Include="Interfaces\IHttpService.cs" />
     <Compile Include="Interfaces\IInternetConnectionService.cs" />
     <Compile Include="Interfaces\IRestService.cs" />
+    <Compile Include="Interfaces\IStatisticsDataService.cs" />
     <Compile Include="Interfaces\IUserDataStorageService.cs" />
     <Compile Include="Interfaces\IValidationService.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
     <Compile Include="Messages\ReloadMessageToDecksList.cs" />
+    <Compile Include="Messages\ReloadMessageToStatistics.cs" />
     <Compile Include="Messages\SearchMessageToDeckList.cs" />
     <Compile Include="Messages\StartStoryboardMessage.cs" />
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Exam.cs" />
     <Compile Include="Models\Flashcard.cs" />
+    <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TestResult.cs" />
     <Compile Include="Models\Tip.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\InternetConnectionService.cs" />
     <Compile Include="Services\RestService.cs" />
+    <Compile Include="Services\StatisticsDataService.cs" />
     <Compile Include="Services\UserDataStorageService.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="ViewModels\DecksListViewModel.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuControlViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />
     <EmbeddedResource Include="Properties\StudyBox.Core.rd.xml" />
   </ItemGroup>

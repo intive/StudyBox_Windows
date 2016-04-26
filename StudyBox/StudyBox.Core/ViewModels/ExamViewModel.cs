@@ -5,6 +5,7 @@ using StudyBox.Core.Messages;
 using GalaSoft.MvvmLight.Command;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
+using StudyBox.Core.Services;
 using System;
 using Windows.UI.Popups;
 
@@ -15,6 +16,7 @@ namespace StudyBox.Core.ViewModels
         #region Private Fields
         private IRestService _restService;
         private IInternetConnectionService _internetConnectionService;
+        private IStatisticsDataService _statisticsService;
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
         private List<Flashcard> _badAnswerFlashcards;
@@ -36,12 +38,13 @@ namespace StudyBox.Core.ViewModels
         #endregion
 
         #region Constructor
-        public ExamViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService) : base(navigationService)
+        public ExamViewModel(INavigationService navigationService, IRestService restService, IStatisticsDataService statisticsService, IInternetConnectionService internetConnectionService) : base(navigationService)
         {
             _restService = restService;
             _internetConnectionService = internetConnectionService;
+            _statisticsService = statisticsService;
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance, x.BadAnswerFlashcards));
-        } 
+        }
         #endregion
 
         #region Commands
@@ -169,7 +172,7 @@ namespace StudyBox.Core.ViewModels
             {
                 _mainRectangleWithQuestionOrHint = value;
                 RaisePropertyChanged("MainRectangleWithQuestionOrHint");
-            }
+        }
         }
 
         public string Answer
@@ -198,7 +201,7 @@ namespace StudyBox.Core.ViewModels
             {
                 _currentlyVisibleHint = value;
                 RaisePropertyChanged("CurrentlyVisibleHint");
-            }
+        }
         }
 
         public bool AreAnyFlashcards
@@ -251,7 +254,7 @@ namespace StudyBox.Core.ViewModels
                 {
                     try
                     {
-                        _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+                    _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
                     }
                     catch (Exception ex)
                     {
@@ -271,7 +274,7 @@ namespace StudyBox.Core.ViewModels
                 }
 
                 _badAnswerFlashcards = new List<Flashcard>();
-
+                
                 if (_flashcards != null && _flashcards.Count > 0)
                 {
                     if (!IsQuestionVisible)
@@ -304,15 +307,18 @@ namespace StudyBox.Core.ViewModels
         {
             if (!CurrentlyVisibleHint)
             {
-                Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowAnswer" });
-                IsQuestionVisible = false;
-            }
+            Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowAnswer" });
+            IsQuestionVisible = false;
+        }
         }
 
         private void CountGoodAnswerAndShowNextFlashcard()
         {
             _numberOfCorrectAnswers++;
+            _statisticsService.IncrementAnswers();
+            _statisticsService.IncrementGoodAnswers();
             ShowNexFlashCardOrGoToResults();
+            
         }
 
         private void ShowNexFlashCardOrGoToResults()
@@ -334,6 +340,7 @@ namespace StudyBox.Core.ViewModels
         private void CountBadAnswerAndShowNextFlashcard()
         {
             _badAnswerFlashcards.Add(_flashcards[_numberOfCurrentFlashcard]);
+            _statisticsService.IncrementAnswers();
             ShowNexFlashCardOrGoToResults();
         }
 
@@ -414,7 +421,7 @@ namespace StudyBox.Core.ViewModels
             MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint].Prompt;
             RaisePropertyChanged("IsLeftArrowVisible");
             RaisePropertyChanged("IsRightArrowVisible");
-        } 
+        }
         #endregion
     }
 }
