@@ -258,4 +258,24 @@
   <data name="ShowAnswerMessage.Text" xml:space="preserve">
     <value>Pokaż odpowiedź</value>
   </data>
+  <data name="BadAnswersCount.Text" xml:space="preserve">
+    <value>Ilość fiszek, na które odpowiedziano:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="CountOfDecks.Text" xml:space="preserve">
+    <value>Ilość talii, które testowano:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="GoodAnswersCount.Text" xml:space="preserve">
+    <value>Ilość poprawnych odpowiedzi:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="GoToStatistics.Content" xml:space="preserve">
+    <value>Statystyki</value>
+    <comment>menu control - hamburger</comment>
+  </data>
+  <data name="TestsCount.Text" xml:space="preserve">
+    <value>Ilość testów:</value>
+    <comment>statistics page</comment>
+  </data>
 </root>

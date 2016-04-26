@@ -5,12 +5,14 @@ using StudyBox.Core.Messages;
 using GalaSoft.MvvmLight.Command;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
+using StudyBox.Core.Services;
 
 namespace StudyBox.Core.ViewModels
 {
     public class ExamViewModel : ExtendedViewModelBase
     {
         private IRestService _restService;
+        private IStatisticsDataService _statisticsService;
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
         private List<Flashcard> _badAnswerFlashcards;
@@ -25,10 +27,10 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _countGoodAnswer;
         private RelayCommand _countBadAnswer;
 
-        public ExamViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
+        public ExamViewModel(INavigationService navigationService, IRestService restService, IStatisticsDataService statisticsService) : base(navigationService)
         {
             _restService = restService;
-
+            _statisticsService = statisticsService;
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance, x.BadAnswerFlashcards));
         }
 
@@ -209,7 +211,7 @@ namespace StudyBox.Core.ViewModels
 
                 IsDataLoading = false;
                 RaisePropertyChanged("AreAnyFlashcards");
-                RaisePropertyChanged("ShowInformationAboutNoFlashcards");
+                RaisePropertyChanged("ShowInformationAboutNoFlashcards");           
             }
         }
 
@@ -231,7 +233,10 @@ namespace StudyBox.Core.ViewModels
         private void CountGoodAnswerAndShowNextFlashcard()
         {
             _numberOfCorrectAnswers++;
+            _statisticsService.IncrementAnswers();
+            _statisticsService.IncrementGoodAnswers();
             ShowNexFlashCardOrGoToResults();
+            
         }
 
         private void ShowNexFlashCardOrGoToResults()
@@ -253,6 +258,7 @@ namespace StudyBox.Core.ViewModels
         private void CountBadAnswerAndShowNextFlashcard()
         {
             _badAnswerFlashcards.Add(_flashcards[_numberOfCurrentFlashcard]);
+            _statisticsService.IncrementAnswers();
             ShowNexFlashCardOrGoToResults();
         }
 
