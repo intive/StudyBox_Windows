@@ -39,6 +39,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IInternetConnectionService, InternetConnectionService>();
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
+                SimpleIoc.Default.Register<IStatisticsDataService,StatisticsDataService>();
             }
             else
             {
@@ -49,6 +50,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IInternetConnectionService, InternetConnectionService>();
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
+                SimpleIoc.Default.Register<IStatisticsDataService, StatisticsDataService>();
             }
         }
 

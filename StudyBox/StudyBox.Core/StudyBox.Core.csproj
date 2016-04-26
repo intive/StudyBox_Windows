@@ -112,6 +112,7 @@
     <Compile Include="Interfaces\IHttpService.cs" />
     <Compile Include="Interfaces\IInternetConnectionService.cs" />
     <Compile Include="Interfaces\IRestService.cs" />
+    <Compile Include="Interfaces\IStatisticsDataService.cs" />
     <Compile Include="Interfaces\IUserDataStorageService.cs" />
     <Compile Include="Interfaces\IValidationService.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\InternetConnectionService.cs" />
     <Compile Include="Services\RestService.cs" />
+    <Compile Include="Services\StatisticsDataService.cs" />
     <Compile Include="Services\UserDataStorageService.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="ViewModels\DecksListViewModel.cs" />

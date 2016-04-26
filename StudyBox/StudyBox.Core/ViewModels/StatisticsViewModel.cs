@@ -12,17 +12,19 @@ namespace StudyBox.Core.ViewModels
     public class StatisticsViewModel : ExtendedViewModelBase
     {
         private int _goodAnswersCount;
-        private int _badAnswersCount;
+        private int _answersCount;
         private int _countOfDecks;
         private int _testsCount;
         private Statistics _statistics;
         private IInternetConnectionService _internetConnetioConnectionService;
         private IRestService _restService;
+        private IStatisticsDataService _statisticsService;
 
-        public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService) : base(navigationService)
+        public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService, IStatisticsDataService statisticsSercice) : base(navigationService)
         {
             _internetConnetioConnectionService = internetConnectionService;
             _restService = restService;
+            _statisticsService = statisticsSercice;
             GetStatistics();
         }
 
@@ -43,18 +45,18 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public int BadAnswersCount
+        public int AnswersCount
         {
             get
             {
-                return _badAnswersCount;
+                return _answersCount;
 
             }
             set
             {
-                if (_badAnswersCount != value)
+                if (_answersCount != value)
                 {
-                    _badAnswersCount = value;
+                    _answersCount = value;
                     RaisePropertyChanged();
                 }
             }
@@ -98,11 +100,9 @@ namespace StudyBox.Core.ViewModels
             bool isConnection = _internetConnetioConnectionService.CheckConnection();
             if (isConnection)
             {
-                //TODO get all statistics from backend
-                //mock
-                _statistics=new Statistics(0,0,0,0);
+                _statistics = _statisticsService.GetStatistics();
                 GoodAnwersCount = _statistics.GoodAnswersCount;
-                BadAnswersCount = _statistics.BadAnswersCount;
+                AnswersCount = _statistics.AnswersCount;
                 CountOfDecks = _statistics.CountOfDecks;
                 TestesCount = _statistics.TestsCount;
             }

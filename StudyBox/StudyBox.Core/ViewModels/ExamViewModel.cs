@@ -5,12 +5,14 @@ using StudyBox.Core.Messages;
 using GalaSoft.MvvmLight.Command;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
+using StudyBox.Core.Services;
 
 namespace StudyBox.Core.ViewModels
 {
     public class ExamViewModel : ExtendedViewModelBase
     {
         private IRestService _restService;
+        private IStatisticsDataService _statisticsService;
         private Deck _deckInstance;
         private List<Flashcard> _flashcards;
         private List<Flashcard> _badAnswerFlashcards;
@@ -25,10 +27,10 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _countGoodAnswer;
         private RelayCommand _countBadAnswer;
 
-        public ExamViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
+        public ExamViewModel(INavigationService navigationService, IRestService restService, IStatisticsDataService statisticsService) : base(navigationService)
         {
             _restService = restService;
-
+            _statisticsService = statisticsService;
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance, x.BadAnswerFlashcards));
         }
 
@@ -231,7 +233,23 @@ namespace StudyBox.Core.ViewModels
         private void CountGoodAnswerAndShowNextFlashcard()
         {
             _numberOfCorrectAnswers++;
+            
+            for (int i = 0; i < 1; i++)
+            {
+                for (int j = 0; j < 1; j++)
+                {
+                    _statisticsService.IncrementGoodAnswers();
+                    for(int k = 0; k < 200; k++)
+                        _statisticsService.IncrementAnswers();
+                    _statisticsService.IncrementCountOfDecks(_deckInstance);
+                    for(int z=0;z<1;z++)
+                        _statisticsService.IncrementTestsCountAnswers();
+                    
+                }   
+            }
+            
             ShowNexFlashCardOrGoToResults();
+            
         }
 
         private void ShowNexFlashCardOrGoToResults()

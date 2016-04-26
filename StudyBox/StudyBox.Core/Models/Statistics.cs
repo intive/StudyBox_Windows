@@ -9,22 +9,22 @@ namespace StudyBox.Core.Models
     public class Statistics
     {
         public int GoodAnswersCount { get; set; }
-        public int BadAnswersCount { get;set; }
+        public int AnswersCount { get;set; }
         public int CountOfDecks { get; set; }
         public int TestsCount { get; set; }
 
         public Statistics()
         {
             GoodAnswersCount = 0;
-            BadAnswersCount = 0;
+            AnswersCount = 0;
             CountOfDecks = 0;
             TestsCount = 0;
         }
 
-        public Statistics(int goodAnswers, int badAnswers, int countOfDecks, int testsCount)
+        public Statistics(int goodAnswers, int answers, int countOfDecks, int testsCount)
         {
             GoodAnswersCount = goodAnswers;
-            BadAnswersCount = badAnswers;
+            AnswersCount = answers;
             CountOfDecks = countOfDecks;
             TestsCount = testsCount;
         }

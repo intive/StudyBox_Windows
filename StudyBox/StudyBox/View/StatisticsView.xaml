@@ -87,7 +87,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource Grey}"
-                                Text="{Binding CountOfDecks}"
+                                Text="{Binding AnswersCount}"
                                 />
             </Border>
             
