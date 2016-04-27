@@ -94,9 +94,12 @@
     </Content>
     <None Include="project.json" />
     <Content Include="Assets\approve.png" />
+    <Content Include="Assets\arrow.png" />
     <Content Include="Assets\cancel.png" />
     <Content Include="Assets\Delete-64.png" />
+    <Content Include="Assets\leftArrow.png" />
     <Content Include="Assets\Menu-64.png" />
+    <Content Include="Assets\rightArrow.png" />
     <Content Include="Assets\Search-64.png" />
     <Content Include="Resources\Themes\Fonts\Lato-Regular.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
