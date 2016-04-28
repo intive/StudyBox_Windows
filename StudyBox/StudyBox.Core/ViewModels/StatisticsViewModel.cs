@@ -28,8 +28,8 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _sortByDateCommand;
         private RelayCommand _sortByDeckNameCommand;
         private RelayCommand _showMoreCommand;
-        private List<TestsHistory> _testsHistoryList;
         private List<TestsHistory> _localHistoryList;
+        private List<TestsHistory> _globalHistoryList;
         private bool _sortResultDescending;
         private int _howMuchToShow;
 
@@ -139,7 +139,7 @@ namespace StudyBox.Core.ViewModels
                 TestesCount = _statistics.TestsCount;
             }
             //MOCK
-            _testsHistoryList = new List<TestsHistory>()
+            _globalHistoryList = new List<TestsHistory>()
             {
                 new TestsHistory("2012-11-24", "Geografia", 12, 34),
                 new TestsHistory("2015-02-14", "Fizyka", 5, 10),
@@ -148,8 +148,10 @@ namespace StudyBox.Core.ViewModels
                 new TestsHistory("2010-12-23", "asdasd", 28, 30),
                 new TestsHistory("2016-09-12", "Geogra123123fia", 11, 15)
             };
+            _localHistoryList = new List<TestsHistory>();
+            GetRows();
             TestsHistoryCollection=new ObservableCollection<TestsHistory>();
-            _testsHistoryList.ForEach(x => TestsHistoryCollection.Add(x));
+            _localHistoryList.ForEach(x => TestsHistoryCollection.Add(x));
         }
 
         private void HandleReloadMessage(bool reload)
@@ -210,47 +212,67 @@ namespace StudyBox.Core.ViewModels
         private void ShowMore()
         {
             _howMuchToShow++;
+            GetRows();
             RefreshCollection(_howMuchToShow);
+
+        }
+
+        private void GetRows()
+        {
+            if (_localHistoryList != null && _globalHistoryList != null)
+            {
+                int addsLimit = _howMuchToShow*5;
+                int startIndex = 0;
+                _localHistoryList.Clear();
+                _globalHistoryList.ForEach(x =>
+                {
+                    if (startIndex < addsLimit)
+                    {
+                        _localHistoryList.Add(x);
+                        startIndex++;
+                    }
+                });
+            }
         }
 
         private void SortListByResult()
         {
             SortResultDescending = !SortResultDescending;
             if (_sortResultDescending)
-                _testsHistoryList = _testsHistoryList?.OrderBy(x => x.SortingResult).ToList();        
+                _localHistoryList = _localHistoryList?.OrderBy(x => x.SortingResult).ToList();        
             else
-                _testsHistoryList = _testsHistoryList?.OrderByDescending(x => x.SortingResult).ToList();
-            RefreshCollection();
+                _localHistoryList = _localHistoryList?.OrderByDescending(x => x.SortingResult).ToList();
+            RefreshCollection(_howMuchToShow);
         }
 
         private void SortListByDate()
         {
             SortResultDescending = !SortResultDescending;
             if (_sortResultDescending)
-                _testsHistoryList = _testsHistoryList?.OrderBy(x => x.TestsDate).ToList();
+                _localHistoryList = _localHistoryList?.OrderBy(x => x.TestsDate).ToList();
             else
-                _testsHistoryList = _testsHistoryList?.OrderByDescending(x => x.TestsDate).ToList();
-            RefreshCollection();
+                _localHistoryList = _localHistoryList?.OrderByDescending(x => x.TestsDate).ToList();
+            RefreshCollection(_howMuchToShow);
         }
 
         private void SortListByDeckName()
         {
             SortResultDescending = !SortResultDescending;
             if (_sortResultDescending)
-                _testsHistoryList = _testsHistoryList?.OrderBy(x => x.DeckName).ToList();
+                _localHistoryList = _localHistoryList?.OrderBy(x => x.DeckName).ToList();
             else
-                _testsHistoryList = _testsHistoryList?.OrderByDescending(x => x.DeckName).ToList();
-            RefreshCollection();
+                _localHistoryList = _localHistoryList?.OrderByDescending(x => x.DeckName).ToList();
+            RefreshCollection(_howMuchToShow);
         }
 
         private void RefreshCollection(int limitCounter=1)
         {
-            if (_testsHistoryList != null && TestsHistoryCollection != null)
+            if (_localHistoryList != null && TestsHistoryCollection != null)
             {
                 int addsLimit = limitCounter * 5;
                 int startIndex = 0;
                 TestsHistoryCollection.Clear();
-                _testsHistoryList.ForEach(x =>
+                _localHistoryList.ForEach(x =>
                 {
                     if (startIndex < addsLimit)
                     {
