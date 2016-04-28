@@ -167,38 +167,70 @@
 
                 <controls:DataGrid ItemsSource="{Binding TestsHistoryCollection}"
                                    SelectionMode="Single"
-                                   DefaultOrderIndex="1"
+                                   DefaultOrderIndex="0"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Top"
                                    Margin="20,0"
                                    FontFamily="{StaticResource LatoBlackFontFamily}"
                                    HeaderBackground="{StaticResource Graphite}"
+                                   x:Name="TestsHistoryDataGrid"
                                    >
                     <controls:DataGrid.Columns>
                         <controls:DataGridTextColumn Width="2*"
                                                      Binding="{Binding TestsDate}"
+                                                     IsAscendingDefault="False"
+                                                      CanSort="False"
                                                     >
                             <controls:DataGridTextColumn.Header>
-                                <TextBlock x:Uid="TestDateColumnHeader" Foreground="{StaticResource Grey}"/>
-                            </controls:DataGridTextColumn.Header>
+                            <Button Background="Transparent" 
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" 
+                                    BorderThickness="0"
+                                    Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByDateCommand}"
+                                    >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Uid="TestDateColumnHeader" Foreground="{StaticResource Grey}"/>
+                                </StackPanel>
+                            </Button>
+                        </controls:DataGridTextColumn.Header>
                      </controls:DataGridTextColumn>
 
                     <controls:DataGridTextColumn Width="2*"
                                                  Binding="{Binding DeckName}"  
+                                                 CanSort="False"
                                                  >
                         <controls:DataGridTextColumn.Header>
-                            <TextBlock x:Uid="DeckNameColumnHeader" Foreground="{StaticResource Grey}"/>
+                            <Button Background="Transparent" 
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" 
+                                    BorderThickness="0"
+                                    Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByDeckNameCommand}"
+                                    >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Uid="DeckNameColumnHeader" Foreground="{StaticResource Grey}"/>
+                                </StackPanel>
+                            </Button>
                         </controls:DataGridTextColumn.Header>
                     </controls:DataGridTextColumn>
 
-                    <controls:DataGridTextColumn Width="*"
-                                                 Binding="{Binding Result}"  
-                                                 >
+                     <controls:DataGridTextColumn Width="*"
+                                                  Binding="{Binding Result}"
+                                                  CanSort="False"
+                                                  >
                         <controls:DataGridTextColumn.Header>
-                            <TextBlock x:Uid="ResultColumnHeader" Foreground="{StaticResource Grey}"/>
+                            <Button Background="Transparent" 
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" 
+                                    BorderThickness="0"
+                                    Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByResultCommand}"
+                                    >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Uid="ResultColumnHeader" Foreground="{StaticResource Grey}"/>
+                                </StackPanel>
+                            </Button>
                         </controls:DataGridTextColumn.Header>
                     </controls:DataGridTextColumn>
-                        
+
                 </controls:DataGrid.Columns>
                 </controls:DataGrid>
                 <!--<ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding TestsHistoryCollection}">

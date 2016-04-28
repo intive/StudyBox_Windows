@@ -12,12 +12,20 @@ namespace StudyBox.Core.Models
         public string DeckName { get; set; }
         public int ScoredPoints { get; set; }
         public int AllPoints { get; set; }
-
+        
         public string Result
         {
             get
             {
                 return String.Format("{0}/{1}", ScoredPoints, AllPoints);
+            }
+        }
+
+        public int SortingResult
+        {
+            get
+            {
+                return Math.Abs(ScoredPoints - AllPoints);
             }
         }
 
