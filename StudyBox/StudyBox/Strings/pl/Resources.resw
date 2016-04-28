@@ -281,4 +281,16 @@
     <value>Ilość testów:</value>
     <comment>statistics page</comment>
   </data>
+  <data name="DeckNameColumnHeader.Text" xml:space="preserve">
+    <value>Nazwa talii</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="ResultColumnHeader.Text" xml:space="preserve">
+    <value>Wynik</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="TestDateColumnHeader.Text" xml:space="preserve">
+    <value>Data testu</value>
+    <comment>statistics page</comment>
+  </data>
 </root>

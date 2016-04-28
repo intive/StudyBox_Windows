@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:StudyBox.Converters"
     xmlns:userControls="using:StudyBox.UserControls"
+    xmlns:controls="using:MyToolkit.Controls"
+    xmlns:models="using:StudyBox.Core.Models"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator},Path=StatisticsViewModel}"
     >
@@ -157,7 +159,73 @@
             
             
         </Grid>
+        <Grid x:Name="HistoryGrid" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
 
+                <controls:DataGrid ItemsSource="{Binding TestsHistoryCollection}"
+                                   SelectionMode="Single"
+                                   DefaultOrderIndex="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   Margin="20,0"
+                                   FontFamily="{StaticResource LatoBlackFontFamily}"
+                                   HeaderBackground="{StaticResource Graphite}"
+                                   >
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn Width="2*"
+                                                     Binding="{Binding TestsDate}"
+                                                    >
+                            <controls:DataGridTextColumn.Header>
+                                <TextBlock x:Uid="TestDateColumnHeader" Foreground="{StaticResource Grey}"/>
+                            </controls:DataGridTextColumn.Header>
+                     </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Width="2*"
+                                                 Binding="{Binding DeckName}"  
+                                                 >
+                        <controls:DataGridTextColumn.Header>
+                            <TextBlock x:Uid="DeckNameColumnHeader" Foreground="{StaticResource Grey}"/>
+                        </controls:DataGridTextColumn.Header>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Width="*"
+                                                 Binding="{Binding Result}"  
+                                                 >
+                        <controls:DataGridTextColumn.Header>
+                            <TextBlock x:Uid="ResultColumnHeader" Foreground="{StaticResource Grey}"/>
+                        </controls:DataGridTextColumn.Header>
+                    </controls:DataGridTextColumn>
+                        
+                </controls:DataGrid.Columns>
+                </controls:DataGrid>
+                <!--<ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding TestsHistoryCollection}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="33*"/>
+                                    <ColumnDefinition Width="33*"/>
+                                    <ColumnDefinition Width="33*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Background="Gray">
+                                    <TextBlock Text="{Binding DeckName}" />
+                                </Border>
+                                <Border Grid.Column="1" Background="Gray">
+                                    <TextBlock Text="{Binding TestsDate}" />
+                                </Border>
+                                <Border Grid.Column="2" Background="Gray">
+                                    <TextBlock Text="{Binding Result}" />
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>-->
+
+
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">

@@ -128,6 +128,7 @@
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TestResult.cs" />
+    <Compile Include="Models\TestsHistory.cs" />
     <Compile Include="Models\Tip.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

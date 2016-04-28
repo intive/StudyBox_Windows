@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace StudyBox.Core.ViewModels
         private IInternetConnectionService _internetConnetioConnectionService;
         private IRestService _restService;
         private IStatisticsDataService _statisticsService;
+        private ObservableCollection<TestsHistory> _testsHistoryCollection; 
 
         public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService, IStatisticsDataService statisticsSercice) : base(navigationService)
         {
@@ -30,6 +32,22 @@ namespace StudyBox.Core.ViewModels
             _statisticsService = statisticsSercice;
             GetStatistics();
         }
+
+        public ObservableCollection<TestsHistory> TestsHistoryCollection
+        {
+            get
+            {
+                return _testsHistoryCollection;
+            }
+            set
+            {
+                if (_testsHistoryCollection != value)
+                {
+                    _testsHistoryCollection = value;
+                    RaisePropertyChanged();
+                }
+            }
+        } 
 
         public int GoodAnwersCount
         {
@@ -109,6 +127,15 @@ namespace StudyBox.Core.ViewModels
                 CountOfDecks = _statistics.CountOfDecks;
                 TestesCount = _statistics.TestsCount;
             }
+            TestsHistoryCollection = new ObservableCollection<TestsHistory>()
+            {
+                new TestsHistory("2012-31-24", "Geografia", 3212, 34),
+                new TestsHistory("1234-23-54", "Fizyka", 1232, 233),
+                new TestsHistory("2134-45-65", "Wf", 1232, 45454),
+                new TestsHistory("4534-34-34", "Informatyka", 12, 2334),
+                new TestsHistory("1223-21-23", "asdasd", 1232, 2334),
+                new TestsHistory("4123-12-12", "Geogra123123fia", 2312, 34)
+            };
         }
 
         private void HandleReloadMessage(bool reload)

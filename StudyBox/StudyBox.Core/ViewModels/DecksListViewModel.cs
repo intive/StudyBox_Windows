@@ -27,7 +27,6 @@ namespace StudyBox.Core.ViewModels
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
         private string _selectedID = "";
-
         #endregion
 
         #region Constructors
