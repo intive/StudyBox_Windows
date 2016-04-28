@@ -293,4 +293,8 @@
     <value>Test date</value>
     <comment>statistics page</comment>
   </data>
+  <data name="ShowMoreButton.Content" xml:space="preserve">
+    <value>Show more...</value>
+    <comment>statistics page</comment>
+  </data>
 </root>

@@ -15,6 +15,7 @@
 
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BoolToSortingArrowConventer x:Key="BoolToSortingArrowConventer"/>
     </Page.Resources>
 
     <Grid x:Name="ExternalGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -178,9 +179,8 @@
                     <controls:DataGrid.Columns>
                         <controls:DataGridTextColumn Width="2*"
                                                      Binding="{Binding TestsDate}"
-                                                     IsAscendingDefault="False"
-                                                      CanSort="False"
-                                                    >
+                                                     CanSort="False"
+                                                     >
                             <controls:DataGridTextColumn.Header>
                             <Button Background="Transparent" 
                                     HorizontalAlignment="Stretch" 
@@ -189,7 +189,15 @@
                                     Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByDateCommand}"
                                     >
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Uid="TestDateColumnHeader" Foreground="{StaticResource Grey}"/>
+                                    <SymbolIcon Symbol="{Binding ElementName=TestsHistoryDataGrid, 
+                                                              Path=DataContext.SortResultDescending,
+                                                              Converter={StaticResource BoolToSortingArrowConventer}}"
+                                                Foreground="{StaticResource Grey}"
+                                                />
+                                    <TextBlock x:Uid="TestDateColumnHeader" 
+                                               Foreground="{StaticResource Grey}"
+                                               FontFamily="{StaticResource LatoBlackFontFamily}"
+                                               />
                                 </StackPanel>
                             </Button>
                         </controls:DataGridTextColumn.Header>
@@ -207,13 +215,21 @@
                                     Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByDeckNameCommand}"
                                     >
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Uid="DeckNameColumnHeader" Foreground="{StaticResource Grey}"/>
+                                    <SymbolIcon Symbol="{Binding ElementName=TestsHistoryDataGrid, 
+                                                              Path=DataContext.SortResultDescending,
+                                                              Converter={StaticResource BoolToSortingArrowConventer}}"
+                                                Foreground="{StaticResource Grey}"
+                                                />
+                                    <TextBlock x:Uid="DeckNameColumnHeader" 
+                                               Foreground="{StaticResource Grey}"
+                                               FontFamily="{StaticResource LatoBlackFontFamily}"
+                                               />
                                 </StackPanel>
                             </Button>
                         </controls:DataGridTextColumn.Header>
                     </controls:DataGridTextColumn>
 
-                     <controls:DataGridTextColumn Width="*"
+                    <controls:DataGridTextColumn Width="*"
                                                   Binding="{Binding Result}"
                                                   CanSort="False"
                                                   >
@@ -225,37 +241,30 @@
                                     Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByResultCommand}"
                                     >
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Uid="ResultColumnHeader" Foreground="{StaticResource Grey}"/>
+                                    <SymbolIcon Symbol="{Binding ElementName=TestsHistoryDataGrid, 
+                                                              Path=DataContext.SortResultDescending,
+                                                              Converter={StaticResource BoolToSortingArrowConventer}}"
+                                                Foreground="{StaticResource Grey}"
+                                                />
+                                    <TextBlock x:Uid="ResultColumnHeader" 
+                                               Foreground="{StaticResource Grey}"
+                                               FontFamily="{StaticResource LatoBlackFontFamily}"
+                                               />
                                 </StackPanel>
                             </Button>
                         </controls:DataGridTextColumn.Header>
                     </controls:DataGridTextColumn>
-
                 </controls:DataGrid.Columns>
                 </controls:DataGrid>
-                <!--<ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding TestsHistoryCollection}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="33*"/>
-                                    <ColumnDefinition Width="33*"/>
-                                    <ColumnDefinition Width="33*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="Gray">
-                                    <TextBlock Text="{Binding DeckName}" />
-                                </Border>
-                                <Border Grid.Column="1" Background="Gray">
-                                    <TextBlock Text="{Binding TestsDate}" />
-                                </Border>
-                                <Border Grid.Column="2" Background="Gray">
-                                    <TextBlock Text="{Binding Result}" />
-                                </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>-->
 
+            <Button x:Uid="ShowMoreButton"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    Command="{Binding ShowMoreCommand}"
+                    Background="{StaticResource DarkBlue}"
+                    Foreground="{StaticResource Grey}"
+                    />
+               
 
         </Grid>
 

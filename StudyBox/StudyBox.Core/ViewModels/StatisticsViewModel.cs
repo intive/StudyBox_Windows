@@ -27,8 +27,11 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _sortByResultCommand;
         private RelayCommand _sortByDateCommand;
         private RelayCommand _sortByDeckNameCommand;
+        private RelayCommand _showMoreCommand;
         private List<TestsHistory> _testsHistoryList;
+        private List<TestsHistory> _localHistoryList;
         private bool _sortResultDescending;
+        private int _howMuchToShow;
 
         public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService, IStatisticsDataService statisticsSercice) : base(navigationService)
         {
@@ -37,6 +40,7 @@ namespace StudyBox.Core.ViewModels
             _internetConnetioConnectionService = internetConnectionService;
             _restService = restService;
             _statisticsService = statisticsSercice;
+            _howMuchToShow = 1;
             GetStatistics();
         }
 
@@ -179,6 +183,14 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public RelayCommand ShowMoreCommand
+        {
+            get
+            {
+                return _showMoreCommand ??(_showMoreCommand = new RelayCommand(ShowMore));
+            }
+        }
+
         public bool SortResultDescending
         {
             get
@@ -193,6 +205,12 @@ namespace StudyBox.Core.ViewModels
                     RaisePropertyChanged();
                 }
             }
+        }
+
+        private void ShowMore()
+        {
+            _howMuchToShow++;
+            RefreshCollection(_howMuchToShow);
         }
 
         private void SortListByResult()
