@@ -28,7 +28,10 @@ namespace StudyBox.Core.Services
             captureUI.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
             captureUI.PhotoSettings.AllowCropping = false;
             captureUI.PhotoSettings.MaxResolution = CameraCaptureUIMaxPhotoResolution.HighestAvailable;
-            return await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
+            StorageFile image = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
+            if (image != null)
+                await image.RenameAsync("New deck " + DateTime.Now.ToString("yyyyMMdd Hmmss") + ".jpg");
+            return image;
         }
 
         public async Task<StorageFile> PickPhoto()

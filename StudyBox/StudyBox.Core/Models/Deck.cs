@@ -5,13 +5,13 @@ namespace StudyBox.Core.Models
     public class Deck
     {
         [JsonProperty(PropertyName = "id")]
-        public string ID { get; private set; }
+        public string ID { get; set; }
 
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         [JsonProperty(PropertyName = "isPublic")]
-        public bool IsPublic { get; private set; }
+        public bool IsPublic { get; set; }
 
         //TODO connect with background as soon as will be possible
         public int CountOfFlashcards { get; set; }
