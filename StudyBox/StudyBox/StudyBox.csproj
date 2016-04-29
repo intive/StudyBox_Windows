@@ -122,6 +122,9 @@
     <Compile Include="View\ExamView.xaml.cs">
       <DependentUpon>ExamView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ImageImportView.xaml.cs">
+      <DependentUpon>ImageImportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LearningView.xaml.cs">
       <DependentUpon>LearningView.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ExamView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ImageImportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

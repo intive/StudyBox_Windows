@@ -281,4 +281,19 @@
   <data name="Question" xml:space="preserve">
     <value>QUESTION</value>
   </data>
+  <data name="AddFlashcardsFromFile" xml:space="preserve">
+    <value>Add flashcards to deck from file</value>
+  </data>
+  <data name="CreateNewDeckFromFile" xml:space="preserve">
+    <value>Create new deck from file</value>
+  </data>
+  <data name="ImportFile.Text" xml:space="preserve">
+    <value>IMPORT FILE</value>
+  </data>
+  <data name="NewDeckFromFile.Content" xml:space="preserve">
+    <value>Create new deck from file</value>
+  </data>
+  <data name="TakePhoto.Text" xml:space="preserve">
+    <value>TAKE A PHOTO</value>
+  </data>
 </root>

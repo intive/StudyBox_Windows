@@ -118,6 +118,7 @@
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
+    <Compile Include="Messages\NewDeckMessageToImageImport.cs" />
     <Compile Include="Messages\ReloadMessageToDecksList.cs" />
     <Compile Include="Messages\ReloadMessageToStatistics.cs" />
     <Compile Include="Messages\SearchMessageToDeckList.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="ViewModels\DecksListViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
     <Compile Include="ViewModels\ExtendedViewModelBase.cs" />
+    <Compile Include="ViewModels\ImageImportViewModel.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />

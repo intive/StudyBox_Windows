@@ -1,0 +1,106 @@
+﻿<Page
+    x:Class="StudyBox.View.ImageImportView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StudyBox.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="using:StudyBox.UserControls"
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Locator}, Path=ImageImportViewModel}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="80"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" MinHeight="50" />
+            <RowDefinition x:Name="MainGridRow" Height="13*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border x:Name="TileManagment" Visibility="Collapsed"/>
+        <TextBlock x:Name="HeaderFontManagment" Visibility="Collapsed"/>
+        <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
+
+        <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Canvas.ZIndex="2"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding HeaderText}"
+                       Foreground="{StaticResource Graphite}"
+                       FontSize="{Binding ElementName=HeaderFontManagment, Path=FontSize}"
+                       Style="{StaticResource SummaryTextStyle}" Margin="0,0,0,10">
+            </TextBlock>
+
+            <Button Command="{Binding ImportFileCommand}"
+                    Background="{StaticResource Raspberry}"
+                    Height="{Binding ElementName=TileManagment, Path=Height}"
+                    Style="{StaticResource SummaryButtonStyle}"
+                    Opacity="1" IsHitTestVisible="True">
+                <TextBlock x:Uid="ImportFile"
+                           FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                           Style="{StaticResource SummaryTextInButtonStyle}"/>
+            </Button>
+
+            <Button Command="{Binding TakePhotoCommand}"
+                    Background="{StaticResource DarkBlue}"
+                    Height="{Binding ElementName=TileManagment, Path=Height}"
+                    Style="{StaticResource SummaryButtonStyle}"
+                    Opacity="1" IsHitTestVisible="True">
+                <TextBlock x:Uid="TakePhoto"
+                           FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                           Style="{StaticResource SummaryTextInButtonStyle}"/>
+            </Button>
+        </StackPanel>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Phone">
+                <VisualState x:Name="WidePhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HeaderFontManagment.FontSize" Value="30"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="20"/>
+                        <Setter Target="TileManagment.Height" Value="35"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NarrowPhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="500"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HeaderFontManagment.FontSize" Value="34"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="24"/>
+                        <Setter Target="TileManagment.Height" Value="40"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideTabletState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" MinWindowHeight="500"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HeaderFontManagment.FontSize" Value="38"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="28"/>
+                        <Setter Target="TileManagment.Height" Value="55"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024" MinWindowHeight="690"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HeaderFontManagment.FontSize" Value="45"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="35"/>
+                        <Setter Target="TileManagment.Height" Value="65"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+    </Grid>
+</Page>

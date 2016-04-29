@@ -281,4 +281,19 @@
     <value>Ilość testów:</value>
     <comment>statistics page</comment>
   </data>
+  <data name="AddFlashcardsFromFile" xml:space="preserve">
+    <value>Dodaj fiszki do talii z pliku</value>
+  </data>
+  <data name="CreateNewDeckFromFile" xml:space="preserve">
+    <value>Utwórz nową talię z pliku</value>
+  </data>
+  <data name="ImportFile.Text" xml:space="preserve">
+    <value>IMPORTUJ PLIK</value>
+  </data>
+  <data name="NewDeckFromFile.Content" xml:space="preserve">
+    <value>Utwórz nową talię z pliku</value>
+  </data>
+  <data name="TakePhoto.Text" xml:space="preserve">
+    <value>ZRÓB ZDJĘCIE</value>
+  </data>
 </root>
