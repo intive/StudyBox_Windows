@@ -11,6 +11,7 @@ using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
 using Windows.UI.Popups;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -18,6 +19,7 @@ namespace StudyBox.Core.ViewModels
     {
         private string _headerText;
         private bool _isNewDeck;
+        private const ulong _maxImageSize = 62914560; //60 MB
         private RelayCommand _importFileCommand;
         private RelayCommand _takePhotoCommand;
         private ICameraService _cameraService;
@@ -64,7 +66,7 @@ namespace StudyBox.Core.ViewModels
         private void HandleNewDeckMessage(bool isNewDeck)
         {
             _isNewDeck = isNewDeck;
-            if (!isNewDeck)
+            if (isNewDeck)
                 HeaderText = StringResources.GetString("CreateNewDeckFromFile");
             else
                 HeaderText = StringResources.GetString("AddFlashcardsFromFile");
@@ -96,12 +98,28 @@ namespace StudyBox.Core.ViewModels
 
         private async void UploadImage(StorageFile image)
         {
+            if (await IsImageToLarge(image))
+            {
+                MessageDialog msg = new MessageDialog(StringResources.GetString("ImageTooLarge"));
+                await msg.ShowAsync();
+                return;
+            }
+
             if (_isNewDeck)
             {
                Deck deck = await _restService.CreateDeck(new Deck { Name = image.DisplayName, IsPublic = true });
             }
 
             //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
+        }
+
+        private async Task<bool> IsImageToLarge(StorageFile image)
+        {
+            BasicProperties imageProperties = await image.GetBasicPropertiesAsync();
+            if (imageProperties.Size <= _maxImageSize)
+                return false;
+            else
+                return true;
         }
     }
 }

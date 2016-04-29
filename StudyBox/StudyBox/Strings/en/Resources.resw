@@ -299,4 +299,7 @@
   <data name="CameraNotFound" xml:space="preserve">
     <value>Camera not found</value>
   </data>
+  <data name="ImageTooLarge" xml:space="preserve">
+    <value>Image is too large</value>
+  </data>
 </root>

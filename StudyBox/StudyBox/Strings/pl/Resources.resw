@@ -299,4 +299,7 @@
   <data name="CameraNotFound" xml:space="preserve">
     <value>Nie znaleziono aparatu w urządzeniu</value>
   </data>
+  <data name="ImageTooLarge" xml:space="preserve">
+    <value>Rozmiar zdjęcia jest zbyt duży</value>
+  </data>
 </root>
