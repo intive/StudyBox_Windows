@@ -7,6 +7,9 @@ using StudyBox.Core.Messages;
 using GalaSoft.MvvmLight.Views;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Command;
+using StudyBox.Core.Interfaces;
+using Windows.UI.Popups;
+using Windows.Storage;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -15,12 +18,14 @@ namespace StudyBox.Core.ViewModels
         private string _headerText;
         private RelayCommand _importFileCommand;
         private RelayCommand _takePhotoCommand;
+        private ICameraService _cameraService;
         private INavigationService _navigationService;
 
-        public ImageImportViewModel(INavigationService navigationService) : base(navigationService)
+        public ImageImportViewModel(ICameraService cameraService, INavigationService navigationService) : base(navigationService)
         {
             Messenger.Default.Register<NewDeckMessageToImageImport>(this, x => HandleNewDeckMessage(x.IsNewDeck));
             _navigationService = navigationService;
+            _cameraService = cameraService;
         }
 
         public string HeaderText
@@ -60,14 +65,33 @@ namespace StudyBox.Core.ViewModels
                 HeaderText = StringResources.GetString("AddFlashcardsFromFile");
         }
 
-        private void ImportFile()
+        private async void ImportFile()
         {
+            StorageFile image = await _cameraService.PickPhoto();
+            if (image != null)
+                UploadImage(image);
+        }
+
+        private async void TakePhoto()
+        {
+            StorageFile image;
+            if (await _cameraService.IsCamera())
+            {
+                image = await _cameraService.CapturePhoto();
+                if (image != null)
+                    UploadImage(image);
+            }                
+            else
+            {
+                MessageDialog msg = new MessageDialog(StringResources.GetString("CameraNotFound"));
+                await msg.ShowAsync();
+            }
 
         }
 
-        private void TakePhoto()
+        private void UploadImage(StorageFile image)
         {
-
+            //TODO komuniakcja z serwerem
         }
     }
 }

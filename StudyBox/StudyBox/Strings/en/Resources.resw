@@ -296,4 +296,7 @@
   <data name="TakePhoto.Text" xml:space="preserve">
     <value>TAKE A PHOTO</value>
   </data>
+  <data name="CameraNotFound" xml:space="preserve">
+    <value>Camera not found</value>
+  </data>
 </root>

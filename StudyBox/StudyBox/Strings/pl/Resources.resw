@@ -296,4 +296,7 @@
   <data name="TakePhoto.Text" xml:space="preserve">
     <value>ZRÓB ZDJĘCIE</value>
   </data>
+  <data name="CameraNotFound" xml:space="preserve">
+    <value>Nie znaleziono aparatu w urządzeniu</value>
+  </data>
 </root>

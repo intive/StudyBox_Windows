@@ -41,6 +41,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService,StatisticsDataService>();
+                SimpleIoc.Default.Register<ICameraService, CameraService>();
             }
             else
             {
@@ -52,6 +53,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService, StatisticsDataService>();
+                SimpleIoc.Default.Register<ICameraService, CameraService>();
             }
         }
 

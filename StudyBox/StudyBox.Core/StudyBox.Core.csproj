@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IAccountService.cs" />
+    <Compile Include="Interfaces\ICameraService.cs" />
     <Compile Include="Interfaces\IDeserializeJsonService.cs" />
     <Compile Include="Interfaces\IHttpService.cs" />
     <Compile Include="Interfaces\IInternetConnectionService.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\CameraService.cs" />
     <Compile Include="Services\DeserializeJsonService.cs" />
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\InternetConnectionService.cs" />
