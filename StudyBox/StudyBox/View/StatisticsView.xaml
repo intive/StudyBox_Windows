@@ -293,6 +293,7 @@
                             FontWeight="Light"
                             Padding="10,5"
                             FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                            Width="120"
                     />
                     <Button x:Uid="ShowLessButton"
                             HorizontalAlignment="Center"
@@ -303,7 +304,7 @@
                             FontWeight="Light"
                             Padding="10,5"
                             Margin="3"
-                            Width="{Binding ElementName=ShowMoreBtn, Path=ActualWidth}"
+                            Width="120"
                             FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                     />
                     </StackPanel>
