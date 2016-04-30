@@ -24,16 +24,16 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" MinHeight="50" />
-            <RowDefinition x:Name="StatsRow" Height="2*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition x:Name="StatsRow" Height="9*"/>
+<!--            <RowDefinition Height="4*"/>-->
         </Grid.RowDefinitions>
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
+        <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2" Grid.Row="0" Grid.Column="0"/>
+        <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
 
-        
-        <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
-        <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
-        
-        <Grid Grid.Row="1" Grid.Column="0" Margin="5,10">
+        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+        <StackPanel >
+        <Grid Margin="5,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
@@ -48,6 +48,7 @@
                     Grid.Column="0"
                     Background="{StaticResource DarkBlue}"
                     Margin="0,2"
+                    Padding="0,5"
                     >
                     <TextBlock x:Uid="GoodAnswersCount" 
                                FontFamily="{StaticResource LatoBlackFontFamily}" 
@@ -76,6 +77,7 @@
                     Grid.Column="0"
                     Background="{StaticResource DarkBlue}"
                     Margin="0,2"
+                    Padding="0,5"
                     >
                 <TextBlock x:Uid="BadAnswersCount" 
                                FontFamily="{StaticResource LatoBlackFontFamily}" 
@@ -90,6 +92,7 @@
                     Grid.Column="1"
                     Background="{StaticResource Graphite}"
                     Margin="0,2"
+                    Padding="0,5"
                     >
                 <TextBlock  FontFamily="{StaticResource LatoBlackFontFamily}" 
                                 HorizontalAlignment="Center"
@@ -105,6 +108,7 @@
                     Grid.Column="0"
                     Background="{StaticResource DarkBlue}"
                     Margin="0,2"
+                    Padding="0,5"
                     >
                 <TextBlock x:Uid="CountOfDecks" 
                                FontFamily="{StaticResource LatoBlackFontFamily}" 
@@ -134,6 +138,7 @@
                     Grid.Column="0"
                     Background="{StaticResource DarkBlue}"
                     Margin="0,2"
+                    Padding="0,5"
                     >
                 <TextBlock x:Uid="TestsCount" 
                                FontFamily="{StaticResource LatoBlackFontFamily}" 
@@ -160,7 +165,7 @@
             
             
         </Grid>
-        <Grid x:Name="HistoryGrid" Grid.Row="2">
+        <Grid x:Name="HistoryGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="45"/>
@@ -171,84 +176,104 @@
                                    DefaultOrderIndex="0"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Top"
-                                   Margin="20,0"
+                                   Margin="10,0"
                                    FontFamily="{StaticResource LatoBlackFontFamily}"
                                    HeaderBackground="{StaticResource Graphite}"
-                                   x:Name="TestsHistoryDataGrid"
+                                   x:Name="TestsHistoryDataGrid" 
                                    >
                     <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn Width="2*"
+                        <controls:DataGridTextColumn Width="0.6*"
                                                      Binding="{Binding TestsDate}"
                                                      CanSort="False"
+                                                     FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                                      >
                             <controls:DataGridTextColumn.Header>
                             <Button Background="Transparent" 
-                                    HorizontalAlignment="Stretch" 
+                                    HorizontalAlignment="Left" 
                                     VerticalAlignment="Stretch" 
                                     BorderThickness="0"
                                     Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByDateCommand}"
+                                    Padding="0,5,5,5"
                                     >
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="{Binding ElementName=TestsHistoryDataGrid, 
-                                                              Path=DataContext.SortResultDescending,
-                                                              Converter={StaticResource BoolToSortingArrowConventer}}"
-                                                Foreground="{StaticResource Grey}"
-                                                />
+                                    <TextBlock FontFamily="Segoe UI Symbol" Text="{Binding ElementName=TestsHistoryDataGrid, 
+                                                                                           Path=DataContext.SortResultDescending,
+                                                                                           Converter={StaticResource BoolToSortingArrowConventer}}"
+                                               Foreground="{StaticResource Grey}"
+                                               FontSize="18"
+                                               VerticalAlignment="Center"
+                                               />
                                     <TextBlock x:Uid="TestDateColumnHeader" 
                                                Foreground="{StaticResource Grey}"
                                                FontFamily="{StaticResource LatoBlackFontFamily}"
+                                               FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                               VerticalAlignment="Center"
                                                />
                                 </StackPanel>
                             </Button>
                         </controls:DataGridTextColumn.Header>
                      </controls:DataGridTextColumn>
 
-                    <controls:DataGridTextColumn Width="2*"
+                    <controls:DataGridTextColumn Width="0.8*"
                                                  Binding="{Binding DeckName}"  
                                                  CanSort="False"
+                                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                                  >
                         <controls:DataGridTextColumn.Header>
                             <Button Background="Transparent" 
-                                    HorizontalAlignment="Stretch" 
+                                    HorizontalAlignment="Left" 
                                     VerticalAlignment="Stretch" 
                                     BorderThickness="0"
                                     Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByDeckNameCommand}"
+                                    Padding="0,5,5,5"
                                     >
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="{Binding ElementName=TestsHistoryDataGrid, 
-                                                              Path=DataContext.SortResultDescending,
-                                                              Converter={StaticResource BoolToSortingArrowConventer}}"
-                                                Foreground="{StaticResource Grey}"
-                                                />
+                                    <TextBlock FontFamily="Segoe UI Symbol" Text="{Binding ElementName=TestsHistoryDataGrid, 
+                                                                                           Path=DataContext.SortResultDescending,
+                                                                                           Converter={StaticResource BoolToSortingArrowConventer}}"
+                                               Foreground="{StaticResource Grey}"
+                                               FontSize="18"
+                                               VerticalAlignment="Center"
+                                               />
                                     <TextBlock x:Uid="DeckNameColumnHeader" 
                                                Foreground="{StaticResource Grey}"
                                                FontFamily="{StaticResource LatoBlackFontFamily}"
+                                               FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                               VerticalAlignment="Center"
                                                />
                                 </StackPanel>
                             </Button>
                         </controls:DataGridTextColumn.Header>
                     </controls:DataGridTextColumn>
 
-                    <controls:DataGridTextColumn Width="*"
-                                                  Binding="{Binding Result}"
-                                                  CanSort="False"
+                    <controls:DataGridTextColumn Width="100"
+                                                 Binding="{Binding Result}"
+                                                 CanSort="False"
+                                                 FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                                
                                                   >
                         <controls:DataGridTextColumn.Header>
                             <Button Background="Transparent" 
-                                    HorizontalAlignment="Stretch" 
-                                    VerticalAlignment="Stretch" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Stretch"                                    
                                     BorderThickness="0"
                                     Command="{Binding ElementName=TestsHistoryDataGrid, Path=DataContext.SortByResultCommand}"
+                                    Margin="0,0,35,0"
+                                    Padding="0,5,5,5"
                                     >
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="{Binding ElementName=TestsHistoryDataGrid, 
-                                                              Path=DataContext.SortResultDescending,
-                                                              Converter={StaticResource BoolToSortingArrowConventer}}"
-                                                Foreground="{StaticResource Grey}"
-                                                />
+                                    <TextBlock FontFamily="Segoe UI Symbol" Text="{Binding ElementName=TestsHistoryDataGrid, 
+                                                                                           Path=DataContext.SortResultDescending,
+                                                                                           Converter={StaticResource BoolToSortingArrowConventer}}"
+                                               Foreground="{StaticResource Grey}"
+                                               FontSize="18"
+                                               VerticalAlignment="Center"
+                                               />
                                     <TextBlock x:Uid="ResultColumnHeader" 
                                                Foreground="{StaticResource Grey}"
                                                FontFamily="{StaticResource LatoBlackFontFamily}"
+                                               FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                               VerticalAlignment="Center"
                                                />
                                 </StackPanel>
                             </Button>
@@ -257,17 +282,17 @@
                 </controls:DataGrid.Columns>
                 </controls:DataGrid>
 
-            <Button x:Uid="ShowMoreButton"
+                    <Button x:Uid="ShowMoreButton"
                     Grid.Row="1"
                     HorizontalAlignment="Center"
                     Command="{Binding ShowMoreCommand}"
                     Background="{StaticResource DarkBlue}"
                     Foreground="{StaticResource Grey}"
                     />
-               
-
-        </Grid>
-
+                </Grid>
+               </StackPanel>
+             </ScrollViewer>
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">
                 <VisualState x:Name="NarrowPhoneState">
@@ -284,7 +309,7 @@
                         <AdaptiveTrigger MinWindowWidth="450"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="StatsRow.Heigth" Value="4*"/>
+                        <Setter Target="StatsRow.Height" Value="4*"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="14"/>
                     </VisualState.Setters>
                 </VisualState>

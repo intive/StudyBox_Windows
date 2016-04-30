@@ -18,12 +18,12 @@ namespace StudyBox.Converters
                 if (value is bool)
                 {
                     if ((bool) value)
-                        return Symbol.Upload;
+                        return '\u25B4';
                     else
-                        return Symbol.Download;
+                        return '\u25BE';
                 }
             }
-            return Symbol.Sort;
+            return String.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
