@@ -297,4 +297,8 @@
     <value>Show more...</value>
     <comment>statistics page</comment>
   </data>
+  <data name="ShowLessButton.Content" xml:space="preserve">
+    <value>Show less..</value>
+    <comment>statistics page</comment>
+  </data>
 </root>

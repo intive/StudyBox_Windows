@@ -262,11 +262,11 @@ namespace StudyBox.Core.ViewModels
                     }
 
                     //MOCK
-                    _flashcards = new List<Flashcard>
+                   /* _flashcards = new List<Flashcard>
                     {
                         new Flashcard {Answer="a", Question="q", TipsCount=2 },
                         new Flashcard {Answer="a2", Question="q2", TipsCount=0 }
-                    };
+                    };*/
                 }
                 else
                 {
@@ -330,6 +330,7 @@ namespace StudyBox.Core.ViewModels
             }
             else
             {
+                _statisticsService.SaveTestsHistory(new TestsHistory(DateTime.Now.ToString("g"),_nameOfDeck,_numberOfCorrectAnswers,_numberOfCurrentFlashcard));
                 NavigationService.NavigateTo("SummaryView");
                 Messenger.Default.Send<DataMessageToSummary>(new DataMessageToSummary(new Exam { CorrectAnswers = _numberOfCorrectAnswers, Questions = _flashcards.Count }));
                 Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance, _badAnswerFlashcards));

@@ -165,16 +165,16 @@
             
             
         </Grid>
-        <Grid x:Name="HistoryGrid">
+        <Grid x:Name="HistoryGrid" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="45"/>
+                <RowDefinition Height="90"/>
             </Grid.RowDefinitions>
 
                 <controls:DataGrid ItemsSource="{Binding TestsHistoryCollection}"
                                    SelectionMode="Single"
                                    DefaultOrderIndex="0"
-                                   HorizontalAlignment="Center"
+                                   HorizontalAlignment="Stretch"
                                    VerticalAlignment="Top"
                                    Margin="10,0"
                                    FontFamily="{StaticResource LatoBlackFontFamily}"
@@ -282,13 +282,31 @@
                 </controls:DataGrid.Columns>
                 </controls:DataGrid>
 
+                    <StackPanel Grid.Row="1">
                     <Button x:Uid="ShowMoreButton"
-                    Grid.Row="1"
-                    HorizontalAlignment="Center"
-                    Command="{Binding ShowMoreCommand}"
-                    Background="{StaticResource DarkBlue}"
-                    Foreground="{StaticResource Grey}"
+                            x:Name="ShowMoreBtn"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ShowMoreCommand}"
+                            Background="{StaticResource DarkBlue}"
+                            Foreground="{StaticResource Grey}"
+                            IsEnabled="{Binding IsMoreAvaiable}"
+                            FontWeight="Light"
+                            Padding="10,5"
+                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                     />
+                    <Button x:Uid="ShowLessButton"
+                            HorizontalAlignment="Center"
+                            Command="{Binding ShowLessCommand}"
+                            Background="{StaticResource Graphite}"
+                            Foreground="{StaticResource Grey}"
+                            IsEnabled="{Binding IsLessAvaiable}"
+                            FontWeight="Light"
+                            Padding="10,5"
+                            Margin="3"
+                            Width="{Binding ElementName=ShowMoreBtn, Path=ActualWidth}"
+                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                    />
+                    </StackPanel>
                 </Grid>
                </StackPanel>
              </ScrollViewer>
@@ -309,7 +327,6 @@
                         <AdaptiveTrigger MinWindowWidth="450"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="StatsRow.Height" Value="4*"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="14"/>
                     </VisualState.Setters>
                 </VisualState>

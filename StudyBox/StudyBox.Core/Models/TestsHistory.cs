@@ -12,14 +12,7 @@ namespace StudyBox.Core.Models
         public string DeckName { get; set; }
         public int ScoredPoints { get; set; }
         public int AllPoints { get; set; }
-        
-        public string Result
-        {
-            get
-            {
-                return String.Format("{0}/{1}", ScoredPoints, AllPoints);
-            }
-        }
+        public string Result { get; set; }
 
         public int SortingResult
         {
@@ -37,6 +30,21 @@ namespace StudyBox.Core.Models
             DeckName = deckName;
             ScoredPoints = scoredPoints;
             AllPoints = allPoints;
+            Result = String.Format("{0}/{1}", ScoredPoints, AllPoints);
+        }
+
+        public TestsHistory(string testsDate, string deckName, string result)
+        {
+            TestsDate = testsDate;
+            DeckName = deckName;
+            Result = result;
+            string[] points = result.Split('/');
+            if (points != null && points.Length == 2)
+            {
+                ScoredPoints = Convert.ToInt32(points[0]);
+                AllPoints = Convert.ToInt32(points[1]);
+            }
+            
         }
     }
 }

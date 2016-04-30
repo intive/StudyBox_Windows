@@ -28,10 +28,13 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _sortByDateCommand;
         private RelayCommand _sortByDeckNameCommand;
         private RelayCommand _showMoreCommand;
+        private RelayCommand _showLessCommand;
         private List<TestsHistory> _localHistoryList;
         private List<TestsHistory> _globalHistoryList;
         private bool _sortResultDescending;
         private int _howMuchToShow;
+        private bool _isMoreAvaiable;
+        private bool _isLessAvaiable;
 
         public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService, IStatisticsDataService statisticsSercice) : base(navigationService)
         {
@@ -42,6 +45,39 @@ namespace StudyBox.Core.ViewModels
             _statisticsService = statisticsSercice;
             _howMuchToShow = 1;
             GetStatistics();
+            IsMoreAvaiable = true;
+        }
+
+        public bool IsLessAvaiable
+        {
+            get
+            {
+                return _isLessAvaiable;
+            }
+            set
+            {
+                if (_isLessAvaiable != value)
+                {
+                    _isLessAvaiable = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsMoreAvaiable
+        {
+            get
+            {
+                return _isMoreAvaiable;
+            }
+            set
+            {
+                if (_isMoreAvaiable != value)
+                {
+                    _isMoreAvaiable = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public ObservableCollection<TestsHistory> TestsHistoryCollection
@@ -138,16 +174,8 @@ namespace StudyBox.Core.ViewModels
                 CountOfDecks = _statistics.CountOfDecks;
                 TestesCount = _statistics.TestsCount;
             }
-            //MOCK
-            _globalHistoryList = new List<TestsHistory>()
-            {
-                new TestsHistory("2012-11-24", "Geografia", 12, 34),
-                new TestsHistory("2015-02-14", "Fizyka", 5, 10),
-                new TestsHistory("2014-01-30", "Wf", 3, 9),
-                new TestsHistory("2014-04-11", "Informatyka", 39, 40),
-                new TestsHistory("2010-12-23", "asdasd", 28, 30),
-                new TestsHistory("2016-09-12", "Geogra123123fia", 11, 15)
-            };
+
+            _globalHistoryList = _statisticsService.GetTestsHistory();
             _localHistoryList = new List<TestsHistory>();
             GetRows();
             TestsHistoryCollection=new ObservableCollection<TestsHistory>();
@@ -157,7 +185,11 @@ namespace StudyBox.Core.ViewModels
         private void HandleReloadMessage(bool reload)
         {
             if (reload)
+            {
+                _howMuchToShow = 1;
                 GetStatistics();
+                IsMoreAvaiable = true;
+            }
         }
 
 
@@ -193,6 +225,14 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public RelayCommand ShowLessCommand
+        {
+            get
+            {
+                return _showLessCommand ?? (_showLessCommand = new RelayCommand(ShowLess));
+            }
+        }
+
         public bool SortResultDescending
         {
             get
@@ -214,7 +254,14 @@ namespace StudyBox.Core.ViewModels
             _howMuchToShow++;
             GetRows();
             RefreshCollection(_howMuchToShow);
+        }
 
+        private void ShowLess()
+        {
+            if(_howMuchToShow >=2)
+                _howMuchToShow--;
+            GetRows();
+            RefreshCollection(_howMuchToShow);
         }
 
         private void GetRows()
@@ -232,6 +279,8 @@ namespace StudyBox.Core.ViewModels
                         startIndex++;
                     }
                 });
+                IsLessAvaiable = _localHistoryList.Count >= 6;
+                IsMoreAvaiable = _localHistoryList.Count != _globalHistoryList.Count;
             }
         }
 
