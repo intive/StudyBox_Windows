@@ -144,8 +144,8 @@
   <data name="FillAllFields" xml:space="preserve">
     <value>Wypełnij wszystkie pola!</value>
   </data>
-  <data name="HintRectangle" xml:space="preserve">
-    <value>Pokaż podpowiedź!</value>
+  <data name="Hint" xml:space="preserve">
+    <value>PODPOWIEDŹ</value>
   </data>
   <data name="ImproveResults" xml:space="preserve">
     <value>POPRAW WYNIK</value>
@@ -233,5 +233,52 @@
   </data>
   <data name="ContinueWithoutLogin.Text" xml:space="preserve">
     <value>Wejdź jako niezarejestrowany użytkownik</value>
+  </data>
+  <data name="GoToDecksList.Content" xml:space="preserve">
+    <value>Moje talie</value>
+  </data>
+  <data name="ChooseLearning.Text" xml:space="preserve">
+    <value>Nauka</value>
+  </data>
+  <data name="ChooseLearningOrTest.Text" xml:space="preserve">
+    <value>Co chcesz zrobić?</value>
+  </data>
+  <data name="ChooseTest.Text" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="DontRepeatLearning.Text" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="FinishLearningMessage.Text" xml:space="preserve">
+    <value>To już wszystkie fiszki w ramach tej talii. Czy rozpocząć naukę od nowa?</value>
+  </data>
+  <data name="RepeatLearning.Text" xml:space="preserve">
+    <value>Tak</value>
+  </data>
+  <data name="ShowAnswerMessage.Text" xml:space="preserve">
+    <value>Pokaż odpowiedź</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>PYTANIE</value>
+  </data>
+  <data name="BadAnswersCount.Text" xml:space="preserve">
+    <value>Ilość fiszek, na które odpowiedziano:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="CountOfDecks.Text" xml:space="preserve">
+    <value>Ilość talii, które testowano:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="GoodAnswersCount.Text" xml:space="preserve">
+    <value>Ilość poprawnych odpowiedzi:</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="GoToStatistics.Content" xml:space="preserve">
+    <value>Statystyki</value>
+    <comment>menu control - hamburger</comment>
+  </data>
+  <data name="TestsCount.Text" xml:space="preserve">
+    <value>Ilość testów:</value>
+    <comment>statistics page</comment>
   </data>
 </root>

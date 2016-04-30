@@ -39,9 +39,7 @@
     </Page.Resources>
 
     <Grid Background="White">
-
         <userControls:MenuControlView Canvas.ZIndex="2"/>
-
 
         <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="6" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ProgressBar IsIndeterminate="True" />
@@ -66,7 +64,13 @@
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
             
-            <Border x:Name="AnswerCard" UseLayoutRounding="True" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Background="{StaticResource DarkBlue}">
+            <Border 
+                x:Name="AnswerCard" 
+                UseLayoutRounding="True" 
+                BorderBrush="Transparent" 
+                Grid.Column="1" 
+                Grid.Row="1" 
+                Background="{StaticResource DarkBlue}">
                 <TextBlock Text="{Binding Answer}" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
@@ -81,11 +85,58 @@
                     Grid.Row="1" 
                     Background="{StaticResource DarkBlue}" 
                     BorderBrush="Transparent">
-                <TextBlock Text="{Binding Question}" 
-                            HorizontalAlignment="Center" 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button Width="60" 
+                            Height="60" 
                             VerticalAlignment="Center" 
-                            FontFamily="{StaticResource LatoRegularFontFamily}" 
-                            Foreground="{StaticResource Grey}"/>
+                            Visibility="{Binding IsLeftArrowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                            Grid.Column="0" 
+                            Background="Transparent">
+                        <Button.Content>
+                            <Image 
+                                Stretch="UniformToFill"  
+                                Source="ms-appx:///Assets/leftArrow.png" 
+                                Margin="0"/>
+                        </Button.Content>
+                        <i:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="Tapped">
+                                <core:InvokeCommandAction Command="{Binding LeftArrowClicked}" />
+                            </core:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Button>
+                    <TextBlock 
+                        Grid.Column="1" 
+                        Text="{Binding MainRectangleWithQuestionOrHint}" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Foreground="{StaticResource Grey}"/>
+                    <Button 
+                        Margin="0,0,5,0"
+                        Width="60" 
+                        Height="60" 
+                        VerticalAlignment="Center" 
+                        Visibility="{Binding IsRightArrowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                        Grid.Column="2" 
+                        Background="Transparent">
+                        <Button.Content>
+                            <Image 
+                                Margin="0,0,-3,0" 
+                                Stretch="UniformToFill"  
+                                Source="ms-appx:///Assets/rightArrow.png"/>
+                        </Button.Content>
+                        <i:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="Tapped">
+                                <core:InvokeCommandAction Command="{Binding RightArrowClicked}" />
+                            </core:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Button>
+                </Grid>
                 <Border.Projection>
                     <PlaneProjection/>
                 </Border.Projection>
@@ -99,10 +150,10 @@
             <Button Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="3" IsEnabled="{Binding IsHintAvailable}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}">
                 <i:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
-                        <core:InvokeCommandAction Command="{Binding ShowHint}" />
+                        <core:InvokeCommandAction Command="{Binding ShowHintOrQuestion}" />
                     </core:EventTriggerBehavior>
                 </i:Interaction.Behaviors>
-                <TextBlock Text="{Binding Hint}"
+                <TextBlock Text="{Binding BottomRectangleText}"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         FontFamily="{StaticResource LatoRegularFontFamily}" 

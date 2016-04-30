@@ -20,6 +20,9 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "answer")]
         public string Answer { get; set; }
 
+        [JsonProperty(PropertyName = "tipsCount")]
+        public int TipsCount { get; set; }
+
         //Need to delete this
         [JsonProperty(PropertyName = "hint")]
         public string Hint { get; set; }

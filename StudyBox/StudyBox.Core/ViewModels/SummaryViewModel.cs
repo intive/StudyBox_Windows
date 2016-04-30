@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 using System.Collections.Generic;
+using StudyBox.Core.Interfaces;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -21,9 +22,11 @@ namespace StudyBox.Core.ViewModels
         private List<int> _resultList;
         private RelayCommand _worstTest;
         private RelayCommand _improveResults;
+        private IStatisticsDataService _statisticsService;
 
-        public SummaryViewModel(INavigationService navigationService) : base(navigationService)
+        public SummaryViewModel(INavigationService navigationService, IStatisticsDataService statisticsService) : base(navigationService)
         {
+            _statisticsService = statisticsService;
             Messenger.Default.Register<DataMessageToSummary>(this, x => { CalculateResult(x.ExamInstance); });
             Messenger.Default.Register<DataMessageToExam>(this, x => { _deckInstance = x.DeckInstance; _badAnswerFlashcards = x.BadAnswerFlashcards; });
         }
@@ -148,6 +151,7 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("ExamView");
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, _deckInstance.Name));
+            _statisticsService.IncrementTestsCountAnswers();
         }
     }
 }

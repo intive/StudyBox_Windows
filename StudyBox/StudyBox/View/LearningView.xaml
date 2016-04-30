@@ -1,0 +1,258 @@
+﻿<Page
+    x:Class="StudyBox.View.LearningView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StudyBox.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converters="using:StudyBox.Converters"
+    xmlns:userControls="using:StudyBox.UserControls"
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Locator}, Path=LearningViewModel}"
+    >
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter" />
+        <Storyboard x:Name="TurnFlashcardToShowAnswer">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="QuestionCard">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="-90"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="AnswerCard">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="90"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="TurnFlashcardToShowQuestion">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="QuestionCard">
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="-90"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="AnswerCard">
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="90"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="90"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
+
+    <Grid Background="White">
+
+        <userControls:MenuControlView Canvas.ZIndex="2"/>
+
+        <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
+        <TextBlock x:Name="BigFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
+
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="6" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ProgressBar IsIndeterminate="True" />
+            <TextBlock x:Uid="LoadingFlashcards" Margin="0,10,0,0" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="6" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding ShowInformationAboutNoFlashcards, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock x:Uid="NoFlashcards" Margin="0,10,0,0" />
+        </StackPanel>
+
+        <StackPanel MaxWidth="500" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsFinishLearning, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Margin="10" x:Uid="FinishLearningMessage"
+                       TextWrapping="WrapWholeWords"
+                       FontSize="{Binding ElementName=BigFontManagment, Path=FontSize}"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       TextAlignment="Center"
+                       FontFamily="{StaticResource LatoRegularFontFamily}" />
+            <Grid Margin="10 25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.05*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding RepeatLearning}">
+                    <TextBlock x:Uid="RepeatLearning"
+                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Padding="0 10"
+                        Foreground="{StaticResource Grey}" />
+                </Button>
+
+                <Button Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Raspberry}" Command="{Binding DontRepeatLearning}">
+                    <TextBlock x:Uid="DontRepeatLearning"
+                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                               Padding="0 10"
+                        Foreground="{StaticResource Grey}" />
+                </Button>
+            </Grid>
+
+        </StackPanel>
+
+        <Grid Visibility="{Binding AreAnyFlashcards, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10*" MaxWidth="500"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3.5*"/>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.9*"/>
+            </Grid.RowDefinitions>
+
+            <Border x:Name="AnswerCard" UseLayoutRounding="True" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Background="{StaticResource DarkBlue}">
+                <TextBlock Text="{Binding Answer}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            FontFamily="{StaticResource LatoRegularFontFamily}" 
+                            Foreground="{StaticResource Grey}"/>
+                <Border.Projection>
+                    <PlaneProjection RotationY="90" />
+                </Border.Projection>
+            </Border>
+            <Border x:Name="QuestionCard" 
+                    Grid.Column="1" 
+                    Grid.Row="1" 
+                    Background="{StaticResource DarkBlue}" 
+                    BorderBrush="Transparent">
+                <TextBlock Text="{Binding Question}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            FontFamily="{StaticResource LatoRegularFontFamily}" 
+                            Foreground="{StaticResource Grey}"/>
+                <Border.Projection>
+                    <PlaneProjection/>
+                </Border.Projection>
+                <i:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding ShowAnswer}" />
+                    </core:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+            </Border>
+
+            <Button Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}">
+                <i:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding ShowAnswer}" />
+                    </core:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+                <TextBlock x:Uid="ShowAnswerMessage"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Foreground="{StaticResource Grey}" />
+            </Button>
+
+            <Grid Visibility="{Binding IsQuestionVisible, Converter={StaticResource NegativeBooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="3" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.1*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.1*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="CancelButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
+                    <Button.Content>
+                        <Image Source="ms-appx:///Assets/cancel.png" Margin="0"/>
+                    </Button.Content>
+                    <i:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding BadAnswer}" />
+                        </core:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </Button>
+                <Button x:Name="ApproveButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
+                    <Button.Content>
+                        <Image Source="ms-appx:///Assets/approve.png" Margin="0"/>
+                    </Button.Content>
+                    <i:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding GoodAnswer}" />
+                        </core:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </Button>
+
+                <Button x:Name="SkipButton" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
+                    <Button.Content>
+                        <!--TODO : CHANGE GRAPHICS-->
+                        <Image Source="ms-appx:///Assets/cancel.png" Margin="0"/>
+                    </Button.Content>
+                    <i:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding SkipFlashcard}" />
+                        </core:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </Button>
+            </Grid>
+
+            <TextBlock Text="{Binding NumberOfFlashcard}"
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Foreground="{StaticResource Graphite}" 
+                        Grid.Column="1" 
+                        Grid.Row="5" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"/>
+
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Phone">
+                <VisualState x:Name="NarrowPhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
+                        <Setter Target="BigFontManagment.FontSize" Value="24"/>
+                        <Setter Target="CancelButton.Padding" Value="10"/>
+                        <Setter Target="ApproveButton.Padding" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WidePhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="450"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StandardFontManagment.FontSize" Value="18"/>
+                        <Setter Target="BigFontManagment.FontSize" Value="26"/>
+                        <Setter Target="CancelButton.Padding" Value="10"/>
+                        <Setter Target="ApproveButton.Padding" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideTabletState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="BigFontManagment.FontSize" Value="35"/>
+                        <Setter Target="CancelButton.Padding" Value="20"/>
+                        <Setter Target="ApproveButton.Padding" Value="22"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="BigFontManagment.FontSize" Value="35"/>
+                        <Setter Target="CancelButton.Padding" Value="20"/>
+                        <Setter Target="ApproveButton.Padding" Value="22"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>

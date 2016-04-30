@@ -12,8 +12,9 @@
     >
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter"/>
     </Page.Resources>
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="80"/>
@@ -23,11 +24,60 @@
             <RowDefinition x:Name="MainGridRow" Height="13*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
-
+        <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
+        <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
+        
         <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
 
-        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="1" Grid.Column="0" Margin="5">
+        <StackPanel Grid.Row="1" Grid.Column="0" MaxWidth="500" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDeckSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Margin="10 20" x:Uid="ChooseLearningOrTest"
+                       TextWrapping="WrapWholeWords"
+                       FontSize="{Binding ElementName=BigFontManagment, Path=FontSize}"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       TextAlignment="Center"
+                       FontFamily="{StaticResource LatoRegularFontFamily}" />
+
+            <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding ChooseLearning}">
+                <TextBlock x:Uid="ChooseLearning"
+                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Padding="0 10"
+                        Foreground="{StaticResource Grey}" />
+            </Button>
+
+            <Button  Margin="0 10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Raspberry}" Command="{Binding ChooseTest}">
+                <TextBlock x:Uid="ChooseTest"
+                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                               Padding="0 10"
+                        Foreground="{StaticResource Grey}" />
+            </Button>
+
+
+            <Button HorizontalAlignment="Stretch"
+                                Background="Transparent" 
+                                Command="{Binding Cancel}"
+                                BorderThickness="0"
+                            >
+                <TextBlock TextWrapping="Wrap"
+                                       TextAlignment="Center"
+                                       x:Uid="Cancel"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Graphite}"
+                                       Padding="0,0"
+                                       />
+            </Button>
+        </StackPanel>
+
+        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="1" Grid.Column="0" Margin="5" Visibility="{Binding IsDeckSelected, Converter={StaticResource NegativeBooleanToVisibilityConverter}}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
                 <TextBlock x:Uid="SearchMessage" Visibility="{Binding SearchMessageVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWholeWords" Margin="0,30,0,0"/>
                 <GridView x:Name="GridView" ItemsSource="{Binding DecksCollection}" 
@@ -48,7 +98,17 @@
                                         VerticalAlignment="Top"
                                         Margin="0"
                                         >
-                                        <TextBlock Text="{Binding Name}" Foreground="{StaticResource Grey}" FontFamily="{StaticResource LatoBlackFontFamily}"/>
+                                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <TextBlock Text="{Binding Name}" 
+                                                       Foreground="{StaticResource Grey}" 
+                                                       FontFamily="{StaticResource LatoBlackFontFamily}"
+                                                       />
+                                            <TextBlock Text="{Binding CountOfFlashcards}" 
+                                                       Foreground="{StaticResource Grey}" 
+                                                       FontFamily="{StaticResource LatoBlackFontFamily}"
+                                                       HorizontalAlignment="Center"
+                                                       />
+                                        </StackPanel>
                                     </Button>
                                 </StackPanel>
                             </StackPanel>
@@ -79,6 +139,8 @@
                     <VisualState.Setters>
                         <Setter Target="TileManagment.Width" Value="120"/>
                         <Setter Target="TileManagment.Height" Value="120"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
+                        <Setter Target="BigFontManagment.FontSize" Value="24"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -89,6 +151,8 @@
                     <VisualState.Setters>
                         <Setter Target="TileManagment.Width" Value="220"/>
                         <Setter Target="TileManagment.Height" Value="220"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="18"/>
+                        <Setter Target="BigFontManagment.FontSize" Value="26"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -99,6 +163,8 @@
                     <VisualState.Setters>
                         <Setter Target="TileManagment.Width" Value="240"/>
                         <Setter Target="TileManagment.Height" Value="240"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="BigFontManagment.FontSize" Value="35"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -109,6 +175,8 @@
                     <VisualState.Setters>
                         <Setter Target="TileManagment.Width" Value="350"/>
                         <Setter Target="TileManagment.Height" Value="350"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="BigFontManagment.FontSize" Value="35"/>
                     </VisualState.Setters>
                 </VisualState>
 

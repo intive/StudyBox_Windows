@@ -124,6 +124,20 @@
                            >
                 <SplitView.Pane>
                     <StackPanel Background="{StaticResource Graphite}" Opacity="0.8">
+                        <Button x:Uid="GoToDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
+                            <i:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding GoToDecksCommand}" />
+                                </core:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </Button>
+                        <Button x:Uid="GoToStatistics" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
+                            <i:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding GoToStatisticsCommand}" />
+                                </core:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </Button>
                         <Button x:Uid="Logout" 
                                     Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
                                     Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
