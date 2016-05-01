@@ -13,7 +13,7 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "isPublic")]
         public bool IsPublic { get; private set; }
 
-        //TODO connect with background as soon as will be possible
+        [JsonProperty(PropertyName = "flashcardsCount")]
         public int CountOfFlashcards { get; set; }
 
         public Deck()

@@ -299,6 +299,7 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("DecksListView");
             IsPaneOpen = false;
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
+            TitleBar = String.Empty;
         }
 
         private void GoToStatistics()
@@ -306,6 +307,7 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("StatisticsView");
             Messenger.Default.Send<ReloadMessageToStatistics>(new ReloadMessageToStatistics(true));
             IsPaneOpen = false;
+            TitleBar = String.Empty;
         }
 
         private void DoSearch()
@@ -342,12 +344,14 @@ namespace StudyBox.Core.ViewModels
             IsPaneOpen = false;
             LogoutButtonVisibility = false;
             NavigationService.NavigateTo("LoginView");
+            TitleBar = String.Empty;
         }
 
         private void Login()
         {
             IsPaneOpen = false;
             NavigationService.NavigateTo("LoginView");
+            TitleBar = String.Empty;
         }
 
         private void HandleMenuControlMessage(bool search, bool save, bool exit, string title)

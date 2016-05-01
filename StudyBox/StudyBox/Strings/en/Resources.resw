@@ -281,4 +281,24 @@
   <data name="Question" xml:space="preserve">
     <value>QUESTION</value>
   </data>
+  <data name="DeckNameColumnHeader.Text" xml:space="preserve">
+    <value>Deck name</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="ResultColumnHeader.Text" xml:space="preserve">
+    <value>Result</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="TestDateColumnHeader.Text" xml:space="preserve">
+    <value>Test date</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="ShowMoreButton.Content" xml:space="preserve">
+    <value>Show more...</value>
+    <comment>statistics page</comment>
+  </data>
+  <data name="ShowLessButton.Content" xml:space="preserve">
+    <value>Show less..</value>
+    <comment>statistics page</comment>
+  </data>
 </root>

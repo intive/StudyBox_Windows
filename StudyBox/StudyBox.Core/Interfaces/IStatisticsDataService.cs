@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using StudyBox.Core.Models;
 
 namespace StudyBox.Core.Interfaces
@@ -13,6 +14,7 @@ namespace StudyBox.Core.Interfaces
         void IncrementCountOfDecks(Deck deck);
         void SaveTestedDecks(string deckId);
         bool IsDeckAlreadyTested(string deckId);
-        
+        void SaveTestsHistory(TestsHistory testToSave);
+        List<TestsHistory> GetTestsHistory();
     }
 }
