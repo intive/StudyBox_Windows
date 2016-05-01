@@ -33,8 +33,8 @@ namespace StudyBox.Core.ViewModels
         private List<TestsHistory> _globalHistoryList;
         private bool _sortResultDescending;
         private int _howMuchToShow;
-        private bool _isMoreAvaiable;
-        private bool _isLessAvaiable;
+        private bool _isMoreAvailable;
+        private bool _isLessAvailable;
 
         public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService, IStatisticsDataService statisticsSercice) : base(navigationService)
         {
@@ -45,36 +45,36 @@ namespace StudyBox.Core.ViewModels
             _statisticsService = statisticsSercice;
             _howMuchToShow = 1;
             GetStatistics();
-            IsMoreAvaiable = true;
+            IsMoreAvailable = true;
         }
 
-        public bool IsLessAvaiable
+        public bool IsLessAvailable
         {
             get
             {
-                return _isLessAvaiable;
+                return _isLessAvailable;
             }
             set
             {
-                if (_isLessAvaiable != value)
+                if (_isLessAvailable != value)
                 {
-                    _isLessAvaiable = value;
+                    _isLessAvailable = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        public bool IsMoreAvaiable
+        public bool IsMoreAvailable
         {
             get
             {
-                return _isMoreAvaiable;
+                return _isMoreAvailable;
             }
             set
             {
-                if (_isMoreAvaiable != value)
+                if (_isMoreAvailable != value)
                 {
-                    _isMoreAvaiable = value;
+                    _isMoreAvailable = value;
                     RaisePropertyChanged();
                 }
             }
@@ -188,7 +188,7 @@ namespace StudyBox.Core.ViewModels
             {
                 _howMuchToShow = 1;
                 GetStatistics();
-                IsMoreAvaiable = true;
+                IsMoreAvailable = true;
             }
         }
 
@@ -279,8 +279,8 @@ namespace StudyBox.Core.ViewModels
                         startIndex++;
                     }
                 });
-                IsLessAvaiable = _localHistoryList.Count >= 6;
-                IsMoreAvaiable = _localHistoryList.Count != _globalHistoryList.Count;
+                IsLessAvailable = _localHistoryList.Count >= 6;
+                IsMoreAvailable = _localHistoryList.Count != _globalHistoryList.Count;
             }
         }
 
