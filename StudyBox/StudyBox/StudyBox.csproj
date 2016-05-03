@@ -111,6 +111,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToSortingArrowConventer.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
     <Compile Include="UserControls\MenuControlView.xaml.cs">
       <DependentUpon>MenuControlView.xaml</DependentUpon>
@@ -244,7 +245,7 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

@@ -12,11 +12,13 @@
 
     <x:String x:Key="DeckCreateUrl">http://78.133.154.70:2000/decks</x:String>
     <x:String x:Key="DeckGetByIdUrl">http://78.133.154.70:2000/decks/{0}</x:String>
-    <x:String x:Key="DeckGetAllUrl">http://78.133.154.70:2000/decks</x:String>
+    <!--<x:String x:Key="DeckGetAllUrl">http://78.133.154.70:2000/decks</x:String>-->
+    <x:String x:Key="DeckGetAllUrl">http://78.133.154.70:2000/decks?includeOwn=true&amp;flashcardsCount=true</x:String>
     <x:String x:Key="DeckGetAllByNameUrl">http://78.133.154.70:2000/decks?name={0}</x:String>
     <x:String x:Key="DeckUpdateUrl">http://78.133.154.70:2000/decks/{0}</x:String>
     <x:String x:Key="DeckRemoveUrl">http://78.133.154.70:2000/decks/{0}</x:String>
-    <x:String x:Key="GetAllDecksUrl">http://78.133.154.70:2000/decks?includeOwn={0}&amp;isEnabled={1}&amp;name={2}</x:String>
+    <!--<x:String x:Key="GetAllDecksUrl">http://78.133.154.70:2000/decks?includeOwn={0}&amp;isEnabled={1}&amp;name={2}</x:String>-->
+    <x:String x:Key="GetAllDecksUrl">http://78.133.154.70:2000/decks?includeOwn={0}&amp;flashcardsCount={1}&amp;name={2}</x:String>
     <x:String x:Key="GetRandomDeckUrl">http://private-anon-015b2f748-studybox.apiary-mock.com/decks?random=true</x:String>
 
     <x:String x:Key="TipCreateUrl">http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/{0}/flashcards/{1}/tips</x:String>
@@ -39,6 +41,7 @@
     <x:String x:Key="UserGetLoggedUrl">http://78.133.154.70:3000/users/me</x:String>
     <x:String x:Key="StatisticsFileName">statistics.txt</x:String>
     <x:String x:Key="TestedDecksFileName">testedDecks.txt</x:String>
+    <x:String x:Key="HistoryFileName">history.txt</x:String>
     <!--<x:String x:Key="UserGetLoggedUrl">https://api.myjson.com/bins/2v4iq</x:String>-->
 
 </ResourceDictionary>

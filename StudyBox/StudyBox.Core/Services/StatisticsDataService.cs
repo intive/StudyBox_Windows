@@ -26,6 +26,9 @@ namespace StudyBox.Core.Services
             string path2 = ApplicationData.Current.LocalFolder.Path + "/" + _resources["StatisticsFileName"].ToString();
             if (!File.Exists(path2))
                 File.Create(path2);
+            string path3 = ApplicationData.Current.LocalFolder.Path + "/" + _resources["HistoryFileName"].ToString();
+            if (!File.Exists(path3))
+                File.Create(path3);
         }
 
         public void SaveStatistics(Statistics statistics)
@@ -160,5 +163,53 @@ namespace StudyBox.Core.Services
             }
             return isTested;
         }
+
+        public List<TestsHistory> GetTestsHistory()
+        {
+            List<TestsHistory> testsHistories = new List<TestsHistory>();
+            try
+            {                
+                string path = ApplicationData.Current.LocalFolder.Path + "/" + _resources["HistoryFileName"].ToString();
+                if (!File.Exists(path))
+                    File.Create(path);
+
+                List<string> list = File.ReadAllLines(path).ToList();
+                list.ForEach(line =>
+                {
+                    List<string> lineContent = line.Split(';').ToList();
+                    if (lineContent.Count == 3)
+                    {
+                        testsHistories.Add(new TestsHistory(lineContent[0],lineContent[1],lineContent[2]));
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                GetTestsHistory();
+            }
+            testsHistories.Reverse();
+            return testsHistories;
+        }
+
+        public void SaveTestsHistory(TestsHistory testToSave)
+        {
+            try
+            {
+                string path = ApplicationData.Current.LocalFolder.Path + "/" + _resources["HistoryFileName"].ToString();
+                if (!File.Exists(path))
+                    File.Create(path);                          
+                using (StreamWriter w = File.AppendText(path))
+                {
+                    string fileContent = String.Format("{0};{1};{2}", testToSave.TestsDate, testToSave.DeckName, testToSave.Result);
+                    w.WriteLine(fileContent);
+                }
+
+            }
+            catch (Exception)
+            {
+                SaveTestsHistory(testToSave);
+            }
+        }
+
     }
 }
