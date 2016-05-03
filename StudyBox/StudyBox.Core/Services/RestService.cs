@@ -192,11 +192,11 @@ namespace StudyBox.Core.Services
             return await RemoveHelper(url, cts);
         }
 
-        public async Task<List<Deck>> GetAllDecks(bool includeOwn, bool isEnabled, string name, CancellationTokenSource cts = null)
+        public async Task<List<Deck>> GetAllDecks(bool includeOwn, bool flashcardsCount, string name, CancellationTokenSource cts = null)
         {
             try
             {
-                string url = String.Format(_resources["GetAllDecksUrl"].ToString(), includeOwn.ToString(), isEnabled.ToString(), name);
+                string url = String.Format(_resources["GetAllDecksUrl"].ToString(), includeOwn.ToString(), flashcardsCount.ToString(), name);
                 string webPageSource = await GetWebPageSource(url, cts);
 
                 return _deserializeJsonService.GetObjectFromJson<List<Deck>>(webPageSource);

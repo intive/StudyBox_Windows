@@ -26,6 +26,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _testRandomDeckCommand;
         private RelayCommand _goToDecksCommand;
         private RelayCommand _goToStatisticsCommand;
+        private RelayCommand _newDeckFromFileCommand;
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
@@ -257,6 +258,11 @@ namespace StudyBox.Core.ViewModels
             get { return _goToStatisticsCommand ?? (_goToStatisticsCommand = new RelayCommand(GoToStatistics)); }
         }
 
+        public RelayCommand NewDeckFromFileCommand
+        {
+            get { return _newDeckFromFileCommand ?? (_newDeckFromFileCommand = new RelayCommand(GoToNewDeckFromFile)); }
+        }
+
         private async void TestRandomDeck()
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
@@ -310,8 +316,16 @@ namespace StudyBox.Core.ViewModels
             TitleBar = String.Empty;
         }
 
+        private void GoToNewDeckFromFile()
+        {
+            NavigationService.NavigateTo("ImageImportView");
+            Messenger.Default.Send<NewDeckMessageToImageImport>(new NewDeckMessageToImageImport(true));
+            IsPaneOpen = false;
+        }
+
         private void DoSearch()
         {
+            NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<SearchMessageToDeckList>(new SearchMessageToDeckList(SearchingContent.Trim()));
         }
 

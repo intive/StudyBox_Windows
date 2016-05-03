@@ -7,10 +7,6 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
-        //Need to delete this
-        [JsonProperty(PropertyName = "deck")]
-        public Deck Deck { get; set; }
-
         [JsonProperty(PropertyName = "deckId")]
         public string DeckID { get; set; }
 
@@ -20,26 +16,22 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "answer")]
         public string Answer { get; set; }
 
-        [JsonProperty(PropertyName = "tipsCount")]
-        public int TipsCount { get; set; }
-
         [JsonProperty(PropertyName = "isHidden")]
         public bool IsHidden { get; set; }
 
-        //Need to delete this
-        [JsonProperty(PropertyName = "hint")]
-        public string Hint { get; set; }
+        [JsonProperty(PropertyName = "tipsCount")]
+        public int TipsCount { get; set; }
 
         public Flashcard() { }
 
-        public Flashcard(string id, Deck deck, string question, string answer, string hint, bool isHidden)
+        public Flashcard(string id, string deckId, string question, string answer, bool idHidden, int tipsCount)
         {
             Id = id;
-            Deck = deck;
+            DeckID = deckId;
             Question = question;
             Answer = answer;
-            Hint = hint;
-            IsHidden = isHidden;
+            IsHidden = IsHidden;
+            TipsCount = tipsCount;
         }
     }
 }
