@@ -107,7 +107,7 @@ namespace StudyBox.Core.ViewModels
 
             if (_isNewDeck)
             {
-               Deck deck = await _restService.CreateDeck(new Deck { Name = image.DisplayName, IsPublic = true });
+               //Deck deck = await _restService.CreateDeck(new Deck { Name = image.DisplayName, IsPublic = true });
             }
 
             //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
