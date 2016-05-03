@@ -131,6 +131,14 @@
                                 </core:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </Button>
+                        <Button x:Uid="NewDeckFromFile" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <i:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding NewDeckFromFileCommand}" />
+                                </core:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </Button>
                         <Button x:Uid="GoToStatistics" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">

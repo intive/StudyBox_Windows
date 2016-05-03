@@ -29,6 +29,7 @@ namespace StudyBox.ViewModels
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<LearningViewModel>();
             SimpleIoc.Default.Register<StatisticsViewModel>();
+            SimpleIoc.Default.Register<ImageImportViewModel>();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -40,6 +41,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService,StatisticsDataService>();
+                SimpleIoc.Default.Register<ICameraService, CameraService>();
             }
             else
             {
@@ -51,6 +53,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService, StatisticsDataService>();
+                SimpleIoc.Default.Register<ICameraService, CameraService>();
             }
         }
 
@@ -65,6 +68,7 @@ namespace StudyBox.ViewModels
             navigationService.Configure("LoginView", typeof(LoginView));
             navigationService.Configure("LearningView", typeof(LearningView));
             navigationService.Configure("StatisticsView",typeof(StatisticsView));
+            navigationService.Configure("ImageImportView", typeof(ImageImportView));
 
             return navigationService;
         }
@@ -137,6 +141,13 @@ namespace StudyBox.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<StatisticsViewModel>();
+            }
+        }
+        public ImageImportViewModel ImageImportViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ImageImportViewModel>();
             }
         }
 
