@@ -29,6 +29,7 @@ namespace StudyBox.ViewModels
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<LearningViewModel>();
             SimpleIoc.Default.Register<StatisticsViewModel>();
+            SimpleIoc.Default.Register<CreateFlashcardViewModel>();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -65,6 +66,7 @@ namespace StudyBox.ViewModels
             navigationService.Configure("LoginView", typeof(LoginView));
             navigationService.Configure("LearningView", typeof(LearningView));
             navigationService.Configure("StatisticsView",typeof(StatisticsView));
+            navigationService.Configure("CreateFlashcardView", typeof(CreateFlashcardView));
 
             return navigationService;
         }
@@ -132,11 +134,20 @@ namespace StudyBox.ViewModels
                 return ServiceLocator.Current.GetInstance<LearningViewModel>();
             }
         }
+
         public StatisticsViewModel StatisticsViewModel
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<StatisticsViewModel>();
+            }
+        }
+
+        public CreateFlashcardViewModel CreateFlashcardViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CreateFlashcardViewModel>();
             }
         }
 

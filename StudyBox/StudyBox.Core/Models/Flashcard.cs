@@ -23,19 +23,23 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "tipsCount")]
         public int TipsCount { get; set; }
 
+        [JsonProperty(PropertyName = "isHidden")]
+        public bool IsHidden { get; set; }
+
         //Need to delete this
         [JsonProperty(PropertyName = "hint")]
         public string Hint { get; set; }
 
         public Flashcard() { }
 
-        public Flashcard(string id, Deck deck, string question, string answer, string hint)
+        public Flashcard(string id, Deck deck, string question, string answer, string hint, bool isHidden)
         {
             Id = id;
             Deck = deck;
             Question = question;
             Answer = answer;
             Hint = hint;
+            IsHidden = isHidden;
         }
     }
 }

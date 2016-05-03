@@ -301,4 +301,40 @@
     <value>Pokaż mniej...</value>
     <comment>statistics page</comment>
   </data>
+  <data name="AddFlashcard" xml:space="preserve">
+    <value>Dodaj fiszkę</value>
+  </data>
+  <data name="AddTip.Text" xml:space="preserve">
+    <value>Dodaj podpowiedź</value>
+  </data>
+  <data name="Answer.Text" xml:space="preserve">
+    <value>Odpowiedź</value>
+  </data>
+  <data name="CreateNewDeck" xml:space="preserve">
+    <value>Stwórz nową talię</value>
+  </data>
+  <data name="DeckName.Text" xml:space="preserve">
+    <value>Nazwa talii</value>
+  </data>
+  <data name="DeleteTip.Text" xml:space="preserve">
+    <value>Usuń podpowiedź</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Zapisz zmiany</value>
+  </data>
+  <data name="EditFlashcard" xml:space="preserve">
+    <value>Edycja fiszki</value>
+  </data>
+  <data name="FillAllFieldsMessage.Text" xml:space="preserve">
+    <value>Uzupełnij pola</value>
+  </data>
+  <data name="OperationFailed" xml:space="preserve">
+    <value>Operacja nie powiodła się</value>
+  </data>
+  <data name="QuestionLabel.Text" xml:space="preserve">
+    <value>Pytanie</value>
+  </data>
+  <data name="Tips.Text" xml:space="preserve">
+    <value>Podpowiedzi</value>
+  </data>
 </root>

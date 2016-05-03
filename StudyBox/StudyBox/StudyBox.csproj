@@ -117,6 +117,9 @@
       <DependentUpon>MenuControlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="View\CreateFlashcardView.xaml.cs">
+      <DependentUpon>CreateFlashcardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DecksListView.xaml.cs">
       <DependentUpon>DecksListView.xaml</DependentUpon>
     </Compile>
@@ -186,6 +189,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="UserControls\MenuControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CreateFlashcardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

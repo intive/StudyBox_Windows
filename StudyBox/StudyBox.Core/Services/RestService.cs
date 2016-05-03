@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using System.Net.Http.Headers;
 
 namespace StudyBox.Core.Services
 {
@@ -15,10 +16,12 @@ namespace StudyBox.Core.Services
     {
         private ResourceDictionary _resources = Application.Current.Resources;
         private readonly IDeserializeJsonService _deserializeJsonService;
+        private readonly IAccountService _accountService;
 
-        public RestService(IDeserializeJsonService deserializeJsonService)
+        public RestService(IDeserializeJsonService deserializeJsonService, IAccountService accountService)
         {
             _deserializeJsonService = deserializeJsonService;
+            _accountService = accountService;
         }
 
         #region public methods
@@ -85,7 +88,7 @@ namespace StudyBox.Core.Services
             string url = String.Format(_resources["FlashcardCreateUrl"].ToString(), deckId);
 
             return await CreateHelper<Flashcard>(url,
-                new { question = flashcard.Question, answer = flashcard.Answer },
+                new { question = flashcard.Question, answer = flashcard.Answer, isHidden = flashcard.IsHidden },
                 cts);
         }
 
@@ -470,11 +473,12 @@ namespace StudyBox.Core.Services
 
         private async Task<T> CreateHelper<T>(string url, object apiCreateObject, CancellationTokenSource cts)
         {
-
             try
             {
                 using (var client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
+
                     HttpResponseMessage response;
                     if (cts == null)
                     {
@@ -511,6 +515,7 @@ namespace StudyBox.Core.Services
             {
                 using (var client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
 
                     HttpResponseMessage response;
                     if (cts == null)
@@ -547,6 +552,7 @@ namespace StudyBox.Core.Services
             {
                 using (var client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
 
                     HttpResponseMessage response;
                     if (cts == null)
