@@ -81,7 +81,8 @@
                 <TextBlock Margin="0,20,0,5" 
                            FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                            x:Uid="Answer"/>
-                <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
+                <TextBox Name="Answer"
+                         FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
                          Height="250" 
                          TextWrapping="Wrap" 
                          AcceptsReturn="True" 
@@ -107,18 +108,20 @@
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Padding" Value="0"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Padding="0" Width="{Binding ElementName=Tips, Path=ActualWidth}" Margin="0">
+                            <StackPanel Padding="0" Margin="0" HorizontalAlignment="Stretch">
                                 
                                 <Button Background="Transparent"                                        
                                     Command="{Binding ElementName=Tips, Path=DataContext.Remove}" 
                                     CommandParameter="{Binding ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     BorderThickness="0">
                                     <TextBlock TextWrapping="Wrap"                                       
-                                       x:Uid="DeleteTip"                                      
+                                       x:Uid="DeleteTip"  
+                                       TextAlignment="DetectFromContent"   
                                        HorizontalAlignment="Stretch"
                                        FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                        FontFamily="{StaticResource LatoRegularFontFamily}"
@@ -127,9 +130,7 @@
                                        />
                                 </Button>
 
-                                <TextBox  Height="200" Name="Content"
-                                          Margin="0"
-                                          Padding="0"
+                                <TextBox  Height="200" Name="Content"      
                                          
                                           HorizontalAlignment="Stretch"
                                           FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
@@ -147,7 +148,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
+              
                 <Button  Margin="0,20,0,5"
                                 Background="{StaticResource DarkBlue}" 
                                 Command="{Binding AddTip}">

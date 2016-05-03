@@ -52,8 +52,6 @@ namespace StudyBox.Core.ViewModels
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
             TipsCollection = new ObservableCollection<TipViewModel>();
-            TipsCollection.Add(new TipViewModel(System.Guid.NewGuid().ToString(), "sadasd"));
-            TipsCollection.Add(new TipViewModel(System.Guid.NewGuid().ToString(), "sasdfsddasd"));
             Remove = new RelayCommand<string>(RemoveTip);
             Messenger.Default.Register<DataMessageToCreateFlashcard>(this, x => HandleDataMessage(x.DeckInstance, x.FlashcardIntance));
         }
