@@ -312,6 +312,7 @@ namespace StudyBox.Core.ViewModels
 
         private void DoSearch()
         {
+            NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<SearchMessageToDeckList>(new SearchMessageToDeckList(SearchingContent.Trim()));
         }
 
