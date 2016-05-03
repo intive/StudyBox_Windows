@@ -116,6 +116,7 @@
     <Compile Include="Interfaces\IStatisticsDataService.cs" />
     <Compile Include="Interfaces\IUserDataStorageService.cs" />
     <Compile Include="Interfaces\IValidationService.cs" />
+    <Compile Include="Messages\DataMessageToCreateFlashcard.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Services\StatisticsDataService.cs" />
     <Compile Include="Services\UserDataStorageService.cs" />
     <Compile Include="Services\ValidationService.cs" />
+    <Compile Include="ViewModels\CreateFlashcardViewModel.cs" />
     <Compile Include="ViewModels\DecksListViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
     <Compile Include="ViewModels\ExtendedViewModelBase.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />
+    <Compile Include="ViewModels\TipViewModel.cs" />
     <EmbeddedResource Include="Properties\StudyBox.Core.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

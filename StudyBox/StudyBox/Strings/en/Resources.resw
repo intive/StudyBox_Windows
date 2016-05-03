@@ -322,4 +322,40 @@
     <value>Show less..</value>
     <comment>statistics page</comment>
   </data>
+  <data name="AddFlashcard" xml:space="preserve">
+    <value>Add flashcard</value>
+  </data>
+  <data name="AddTip.Text" xml:space="preserve">
+    <value>Add new tip</value>
+  </data>
+  <data name="Answer.Text" xml:space="preserve">
+    <value>Answer</value>
+  </data>
+  <data name="CreateNewDeck" xml:space="preserve">
+    <value>Create new deck</value>
+  </data>
+  <data name="DeckName.Text" xml:space="preserve">
+    <value>Deck name</value>
+  </data>
+  <data name="DeleteTip.Text" xml:space="preserve">
+    <value>Delete tip</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="EditFlashcard" xml:space="preserve">
+    <value>Edit flashcard</value>
+  </data>
+  <data name="FillAllFieldsMessage.Text" xml:space="preserve">
+    <value>Fill all fields.</value>
+  </data>
+  <data name="OperationFailed" xml:space="preserve">
+    <value>Operation failed</value>
+  </data>
+  <data name="QuestionLabel.Text" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="Tips.Text" xml:space="preserve">
+    <value>Tips</value>
+  </data>
 </root>
