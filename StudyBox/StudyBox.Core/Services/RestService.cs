@@ -89,6 +89,7 @@ namespace StudyBox.Core.Services
 
             return await CreateHelper<Flashcard>(url,
                 new { question = flashcard.Question, answer = flashcard.Answer, isHidden = flashcard.IsHidden },
+                true,
                 cts);
         }
 
@@ -175,6 +176,7 @@ namespace StudyBox.Core.Services
 
             return await CreateHelper<Deck>(url,
                 new { name = deck.Name, isPublic = deck.IsPublic },
+                true,
                 cts);
         }
 
@@ -275,6 +277,7 @@ namespace StudyBox.Core.Services
 
             return await CreateHelper<Tip>(url,
                 new { prompt = tip.Prompt },
+                true,
                 cts);
         }
 
@@ -339,6 +342,7 @@ namespace StudyBox.Core.Services
 
             return await CreateHelper<Tag>(url,
                 new { name = tag.Name },
+                true,
                 cts);
         }
 
@@ -421,6 +425,7 @@ namespace StudyBox.Core.Services
 
             return await CreateHelper<User>(url,
                 new { email = user.Email, name = user.Email, password = user.Password },
+                false,
                 cts);
         }
         
@@ -471,13 +476,16 @@ namespace StudyBox.Core.Services
 
 
 
-        private async Task<T> CreateHelper<T>(string url, object apiCreateObject, CancellationTokenSource cts)
+        private async Task<T> CreateHelper<T>(string url, object apiCreateObject, bool authorize , CancellationTokenSource cts)
         {
             try
             {
                 using (var client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
+                    if (authorize)
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
+                    }
 
                     HttpResponseMessage response;
                     if (cts == null)
