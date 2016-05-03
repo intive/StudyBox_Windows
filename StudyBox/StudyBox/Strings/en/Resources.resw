@@ -202,7 +202,7 @@
     <value>Passwords are not equal!</value>
   </data>
   <data name="SearchMessage.Text" xml:space="preserve">
-    <value>There are no decks with given name</value>
+    <value>There are no decks with suitable search conditions</value>
   </data>
   <data name="RepeatTest" xml:space="preserve">
     <value>REPEAT TEST</value>

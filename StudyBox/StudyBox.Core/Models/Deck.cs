@@ -1,20 +1,27 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace StudyBox.Core.Models
 {
     public class Deck
     {
         [JsonProperty(PropertyName = "id")]
-        public string ID { get; private set; }
+        public string ID { get; set; }
 
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         [JsonProperty(PropertyName = "isPublic")]
-        public bool IsPublic { get; private set; }
+        public bool IsPublic { get; set; }
 
         [JsonProperty(PropertyName = "flashcardsCount")]
         public int CountOfFlashcards { get; set; }
+
+        [JsonProperty(PropertyName = "creationDate")]
+        public DateTime CreationDate { get; set; }
+
+        [JsonProperty(PropertyName = "creatorEmail")]
+        public string CreatorEmail { get; set; }
 
         public Deck()
         {
