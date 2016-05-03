@@ -148,6 +148,7 @@ namespace StudyBox.Core.ViewModels
                 List<Deck> searchList = await _restService.GetAllDecks(false, true, searchingContent);
                 if (searchList != null && searchList.Count > 0)
                 {
+                    searchList.Sort((x, y) => DateTime.Compare(y.CreationDate, x.CreationDate));
                     searchList.ForEach(x => DecksCollection.Add(x));
                     IsDataLoading = false;
                 }
