@@ -367,4 +367,7 @@
   <data name="GoToAddFlashcard.Text" xml:space="preserve">
     <value>Add new flashcard</value>
   </data>
+  <data name="IsPublic.Content" xml:space="preserve">
+    <value>Is deck public?</value>
+  </data>
 </root>

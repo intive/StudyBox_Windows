@@ -23,6 +23,7 @@ namespace StudyBox.Core.ViewModels
         private IRestService _restService;
         private IInternetConnectionService _internetConnectionService;
         private IStatisticsDataService _statisticsService;
+        private IAccountService _accountService;
         private bool _isDataLoading=false;
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
@@ -31,12 +32,13 @@ namespace StudyBox.Core.ViewModels
         #endregion
 
         #region Constructors
-        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService) : base(navigationService)
+        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService, IAccountService accountService) : base(navigationService)
         {
             Messenger.Default.Register<ReloadMessageToDecksList>(this,x=> HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
+            _accountService = accountService;
             DecksCollection = new ObservableCollection<Deck>();
             _statisticsService = statisticsService;
             InitializeDecksCollection();
@@ -280,13 +282,15 @@ namespace StudyBox.Core.ViewModels
             _selectedID = "";
         }
 
-        private void TapTile(string id)
+        private async void TapTile(string id)
         {
             _selectedID = id;
             IsDeckSelected = true;
-            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
-            //if (_accountService.GetUserEmail() == deck.CreatorEmail)
-            IsMyDeck = true;
+            Deck deck = await _restService.GetDeckById(_selectedID);
+            if (_accountService.GetUserEmail() == deck.CreatorEmail)
+                IsMyDeck = true;
+            else
+                IsMyDeck = false;
         }
 
         #endregion

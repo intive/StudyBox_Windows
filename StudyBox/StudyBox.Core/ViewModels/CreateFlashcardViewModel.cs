@@ -29,6 +29,7 @@ namespace StudyBox.Core.ViewModels
         private IInternetConnectionService _internetConnectionService;
 
         private string _question;
+        private bool _isPublic;
         private string _answer;
         private string _deckName;
         private string _headerMessage;
@@ -154,6 +155,22 @@ namespace StudyBox.Core.ViewModels
                     _answer = value;
                     RaisePropertyChanged("Answer");
                     RaisePropertyChanged("CurrentAnswerCharactersNumber");
+                }
+            }
+        }
+
+        public bool IsPublic
+        {
+            get
+            {
+                return _isPublic;
+            }
+            set
+            {
+                if (_isPublic != value)
+                {
+                    _isPublic = value;
+                    RaisePropertyChanged("IsPublic");
                 }
             }
         }
@@ -312,7 +329,7 @@ namespace StudyBox.Core.ViewModels
                             break;
 
                         case Mode.CreateFlashcardAndDeck:
-                            Deck createdDeck = await _restService.CreateDeck(new Deck("1", DeckName));
+                            Deck createdDeck = await _restService.CreateDeck(new Deck("1", DeckName, IsPublic));
                             Flashcard addedFlashcard = await _restService.CreateFlashcard(_flashcard, createdDeck.ID);
 
                             foreach (var tip in tips)
@@ -355,6 +372,7 @@ namespace StudyBox.Core.ViewModels
                 {
                     case Mode.CreateFlashcardAndDeck:
                         NavigationService.NavigateTo("DecksListView");
+                        Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
                         Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
                         break;
 

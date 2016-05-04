@@ -367,4 +367,7 @@
   <data name="GoToAddFlashcard.Text" xml:space="preserve">
     <value>Dodaj fiszkę do talii</value>
   </data>
+  <data name="IsPublic.Content" xml:space="preserve">
+    <value>Czy talia jest publiczna?</value>
+  </data>
 </root>

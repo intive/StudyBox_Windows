@@ -175,7 +175,7 @@ namespace StudyBox.Core.Services
             string url = _resources["DeckCreateUrl"].ToString();
 
             return await CreateHelper<Deck>(url,
-                new { name = deck.Name, isPublic = deck.IsPublic },
+                new { name = deck.Name, publicVisible = deck.PublicVisible },
                 true,
                 cts);
         }
@@ -184,7 +184,7 @@ namespace StudyBox.Core.Services
         {
             string url = String.Format(_resources["DeckUpdateUrl"].ToString(), deck.ID);
             return await UpdateHelper(url,
-                new { name = deck.Name, isPublic = deck.IsPublic },
+                new { name = deck.Name, isPublic = deck.PublicVisible },
                 cts);
         }
 
