@@ -53,7 +53,7 @@
                              TextWrapping="Wrap" 
                              Text="{Binding DeckName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                              MaxLength="{Binding MaxDeckNameCharacters, Mode=OneTime}" />
-
+                    <CheckBox IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Uid="isPublic"/>
                     <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
                     <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
                     <Run Text="/"/>
@@ -185,7 +185,7 @@
                                 Background="{StaticResource DarkBlue}" 
                                 Command="{Binding SubmitForm}">
                     <TextBlock TextWrapping="Wrap"
-                                       Text="{Binding SubmitFormMessage}"
+                                       Text="{Binding SubmitFormMessage, Mode=OneWay}"
                                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                        FontFamily="{StaticResource LatoRegularFontFamily}"
                                        Foreground="{StaticResource Grey}" 

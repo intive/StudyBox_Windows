@@ -11,8 +11,8 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "isPublic")]
-        public bool IsPublic { get; set; }
+        [JsonProperty(PropertyName = "publicVisible")]
+        public bool PublicVisible { get; set; }
 
         [JsonProperty(PropertyName = "flashcardsCount")]
         public int CountOfFlashcards { get; set; }
@@ -39,6 +39,14 @@ namespace StudyBox.Core.Models
             this.ID = id;
             this.Name = name;
             this.CountOfFlashcards = 0;
+        }
+
+        public Deck(string id, string name, bool isPublic)
+        {
+            this.ID = id;
+            this.Name = name;
+            this.CountOfFlashcards = 0;
+            this.PublicVisible = isPublic;
         }
 
         public Deck(string id, string name, int countOfFlashCards)

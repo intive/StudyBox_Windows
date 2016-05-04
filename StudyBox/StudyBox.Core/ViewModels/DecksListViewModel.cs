@@ -23,19 +23,22 @@ namespace StudyBox.Core.ViewModels
         private IRestService _restService;
         private IInternetConnectionService _internetConnectionService;
         private IStatisticsDataService _statisticsService;
+        private IAccountService _accountService;
         private bool _isDataLoading=false;
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
         private string _selectedID = "";
+        private bool _isMyDeck = false;
         #endregion
 
         #region Constructors
-        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService) : base(navigationService)
+        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService, IAccountService accountService) : base(navigationService)
         {
             Messenger.Default.Register<ReloadMessageToDecksList>(this,x=> HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
+            _accountService = accountService;
             DecksCollection = new ObservableCollection<Deck>();
             _statisticsService = statisticsService;
             InitializeDecksCollection();
@@ -73,6 +76,22 @@ namespace StudyBox.Core.ViewModels
                 if (_isDeckSelected != value)
                 {
                     _isDeckSelected = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsMyDeck
+        {
+            get
+            {
+                return _isMyDeck;
+            }
+            set
+            {
+                if (_isMyDeck != value)
+                {
+                    _isMyDeck = value;
                     RaisePropertyChanged();
                 }
             }
@@ -185,6 +204,7 @@ namespace StudyBox.Core.ViewModels
         public ICommand TapTileCommand { get; set; }
         private RelayCommand _chooseLearning;
         private RelayCommand _chooseTest;
+        private RelayCommand _chooseManageDeck;
         private RelayCommand _cancel;
 
         public RelayCommand ChooseLearning
@@ -200,6 +220,14 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _chooseTest ?? (_chooseTest = new RelayCommand(GoToTest));
+            }
+        }
+
+        public RelayCommand ChooseManageDeck
+        {
+            get
+            {
+                return _chooseManageDeck ?? (_chooseManageDeck = new RelayCommand(GoToManageDeck));
             }
         }
 
@@ -235,16 +263,34 @@ namespace StudyBox.Core.ViewModels
             _statisticsService.IncrementCountOfDecks(deck);
         }
 
+        private void GoToManageDeck()
+        {
+            IsDeckSelected = false;
+            IsMyDeck = false;
+            NavigationService.NavigateTo("ManageDeckView");
+            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
+            _selectedID = String.Empty;
+
+            Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(deck));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+
+        }
+
         private void BackToDeck()
         {
             IsDeckSelected = false;
             _selectedID = "";
         }
 
-        private void TapTile(string id)
+        private async void TapTile(string id)
         {
             _selectedID = id;
             IsDeckSelected = true;
+            Deck deck = await _restService.GetDeckById(_selectedID);
+            if (_accountService.GetUserEmail() == deck.CreatorEmail)
+                IsMyDeck = true;
+            else
+                IsMyDeck = false;
         }
 
         #endregion

@@ -98,7 +98,7 @@ namespace StudyBox.Core.Services
             string url = String.Format(_resources["FlashcardUpdateUrl"].ToString(), deckId, flashcard.Id);
 
             return await UpdateHelper(url,
-                new { question = flashcard.Question, answer = flashcard.Answer },
+                new { question = flashcard.Question, answer = flashcard.Answer, isHidden = flashcard.IsHidden },
                 cts);
         }
 
@@ -175,7 +175,7 @@ namespace StudyBox.Core.Services
             string url = _resources["DeckCreateUrl"].ToString();
 
             return await CreateHelper<Deck>(url,
-                new { name = deck.Name, isPublic = deck.IsPublic },
+                new { name = deck.Name, publicVisible = deck.PublicVisible },
                 true,
                 cts);
         }
@@ -184,7 +184,7 @@ namespace StudyBox.Core.Services
         {
             string url = String.Format(_resources["DeckUpdateUrl"].ToString(), deck.ID);
             return await UpdateHelper(url,
-                new { name = deck.Name, isPublic = deck.IsPublic },
+                new { name = deck.Name, isPublic = deck.PublicVisible },
                 cts);
         }
 

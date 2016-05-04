@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="StudyBox.View.DecksListView"
+    x:Class="StudyBox.View.ManageDeckView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StudyBox.View"
@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:StudyBox.Converters"
     mc:Ignorable="d"
-    DataContext="{Binding Source={StaticResource Locator}, Path=DecksViewModel}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=ManageDeckViewModel}"
     >
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -21,81 +21,28 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" MinHeight="50" />
+            <RowDefinition Height="1*" />
             <RowDefinition x:Name="MainGridRow" Height="13*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
-        
-        <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" MaxWidth="500" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDeckSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <TextBlock Margin="10 20" x:Uid="ChooseLearningOrTest"
-                       TextWrapping="WrapWholeWords"
-                       FontSize="{Binding ElementName=BigFontManagment, Path=FontSize}"
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center" 
-                       TextAlignment="Center"
-                       FontFamily="{StaticResource LatoRegularFontFamily}" />
-
-            <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding ChooseLearning}">
-                <TextBlock x:Uid="ChooseLearning"
-                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        FontFamily="{StaticResource LatoRegularFontFamily}" 
-                        Padding="0 10"
-                        Foreground="{StaticResource Grey}" />
-            </Button>
-
-            <Button  Margin="0 10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Raspberry}" Command="{Binding ChooseTest}">
-                <TextBlock x:Uid="ChooseTest"
+        <userControls:MenuControlView Grid.RowSpan="4" Canvas.ZIndex="2"/>
+        <Button  Grid.Row="1" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcard}">
+            <TextBlock x:Uid="GoToAddFlashcard"
                         FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         FontFamily="{StaticResource LatoRegularFontFamily}" 
                                Padding="0 10"
                         Foreground="{StaticResource Grey}" />
-            </Button>
-
-            <Button HorizontalAlignment="Stretch"
-                                Background="Transparent" 
-                                Command="{Binding ChooseManageDeck}"
-                                BorderThickness="0"
-                                Visibility="{Binding IsMyDeck, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            >
-                <TextBlock TextWrapping="Wrap"
-                                       TextAlignment="Center"
-                                       x:Uid="ManageDeck"
-                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Graphite}"
-                                       Padding="0,0"
-                                       />
-            </Button>
-
-            <Button HorizontalAlignment="Stretch"
-                                Background="Transparent" 
-                                Command="{Binding Cancel}"
-                                BorderThickness="0"
-                            >
-                <TextBlock TextWrapping="Wrap"
-                                       TextAlignment="Center"
-                                       x:Uid="Cancel"
-                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Graphite}"
-                                       Padding="0,0"
-                                       />
-            </Button>
-        </StackPanel>
-
-        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="1" Grid.Column="0" Margin="5" Visibility="{Binding IsDeckSelected, Converter={StaticResource NegativeBooleanToVisibilityConverter}}">
+        </Button>
+        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="2" Grid.Column="0" Margin="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
-                <TextBlock x:Uid="SearchMessage" Visibility="{Binding SearchMessageVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWholeWords" Margin="0,30,0,0"/>
-                <GridView x:Name="GridView" ItemsSource="{Binding DecksCollection}" 
+                <GridView x:Name="GridView" ItemsSource="{Binding FlashcardsCollection}" 
                           IsItemClickEnabled="False"
                           Margin="0"
                           >
@@ -104,22 +51,25 @@
                             <StackPanel x:Name="FirstPanel" Orientation="Horizontal" Margin="0">
                                 <StackPanel x:Name="SecondPanel" Margin="0" Padding="0">
                                     <Button x:Name="Tile"
-                                        CommandParameter="{Binding ID}"
+                                        CommandParameter="{Binding Id}"
                                         Command="{Binding ElementName=GridView, Path=DataContext.TapTileCommand}"
                                         Background="{StaticResource Graphite}"
-                                        Padding="0"
+                                        Padding="10"
                                         Width="{Binding ElementName=TileManagment, Path=Width}"
-                                        Height="{Binding ElementName=TileManagment, Path=Height}"
                                         VerticalAlignment="Top"
                                         Margin="0"
                                         >
                                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <TextBlock Text="{Binding Name}" 
+                                            <TextBlock Text="{Binding Question}" 
+                                                       TextTrimming="CharacterEllipsis"
+                                                       TextAlignment="Center"
                                                        Foreground="{StaticResource Grey}" 
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        />
-                                            <TextBlock Text="{Binding CountOfFlashcards}" 
+                                            <TextBlock Text="{Binding Answer}" 
                                                        Foreground="{StaticResource Grey}" 
+                                                       TextTrimming="CharacterEllipsis"
+                                                       TextAlignment="Center"
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        HorizontalAlignment="Center"
                                                        />

@@ -17,6 +17,7 @@ namespace StudyBox.Core.ViewModels
         private bool _isPaneOpen = false;
         private bool _isSearchButtonEnabled = false;
         private bool _logoutButtonVisibility;
+        private bool _addFlashcardVisibility;
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
         private RelayCommand _cancelSearchingCommand;
@@ -27,6 +28,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToDecksCommand;
         private RelayCommand _goToStatisticsCommand;
         private RelayCommand _newDeckFromFileCommand;
+        private RelayCommand _goToAddDeckCommand;
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
@@ -213,6 +215,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool AddFlashcardVisibility
+        {
+            get
+            {
+                return _addFlashcardVisibility;
+            }
+            set
+            {
+                if (_addFlashcardVisibility != value)
+                {
+                    _addFlashcardVisibility = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public RelayCommand OpenMenuCommand
         {
             get { return _openMenuCommand ?? (_openMenuCommand = new RelayCommand(OpenMenu)); }
@@ -263,6 +281,11 @@ namespace StudyBox.Core.ViewModels
             get { return _newDeckFromFileCommand ?? (_newDeckFromFileCommand = new RelayCommand(GoToNewDeckFromFile)); }
         }
 
+        public RelayCommand GoToAddDeckCommand
+        {
+            get { return _goToAddDeckCommand ?? (_goToAddDeckCommand = new RelayCommand(GoToAddDeck)); }
+        }
+
         private async void TestRandomDeck()
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
@@ -306,6 +329,17 @@ namespace StudyBox.Core.ViewModels
             IsPaneOpen = false;
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
             TitleBar = String.Empty;
+        }
+
+        private void GoToAddDeck()
+        {
+            if (_accountService.IsUserLoggedIn())
+            {
+                NavigationService.NavigateTo("CreateFlashcardView");
+                IsPaneOpen = false;
+                Messenger.Default.Send<DataMessageToCreateFlashcard>(new DataMessageToCreateFlashcard(null, null));
+                TitleBar = String.Empty;
+            }
         }
 
         private void GoToStatistics()

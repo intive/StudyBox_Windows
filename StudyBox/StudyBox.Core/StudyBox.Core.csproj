@@ -118,6 +118,7 @@
     <Compile Include="Interfaces\IValidationService.cs" />
     <Compile Include="Messages\DataMessageToCreateFlashcard.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
+    <Compile Include="Messages\DataMessageToMenageDeck.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
     <Compile Include="Messages\NewDeckMessageToImageImport.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\ManageDeckViewModel.cs" />
     <Compile Include="ViewModels\MenuControlViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
