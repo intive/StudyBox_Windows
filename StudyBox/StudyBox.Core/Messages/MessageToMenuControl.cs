@@ -15,13 +15,12 @@ namespace StudyBox.Core.Messages
         public string TitleString { get; set; }
         public bool AddFlashcardButton { get; set; }
 
-        public MessageToMenuControl(bool search, bool save, bool exit, string title="", bool addFlashcard = false)
+        public MessageToMenuControl(bool search, bool save, bool exit, string title="")
         {
             SearchButton = search;
             SaveButton = save;
             ExitButton = exit;
             TitleString = title;
-            AddFlashcardButton = addFlashcard;
         }
 
     }
