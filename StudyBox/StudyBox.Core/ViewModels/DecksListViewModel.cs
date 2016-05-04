@@ -27,6 +27,7 @@ namespace StudyBox.Core.ViewModels
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
         private string _selectedID = "";
+        private bool _isMyDeck = false;
         #endregion
 
         #region Constructors
@@ -73,6 +74,22 @@ namespace StudyBox.Core.ViewModels
                 if (_isDeckSelected != value)
                 {
                     _isDeckSelected = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsMyDeck
+        {
+            get
+            {
+                return _isMyDeck;
+            }
+            set
+            {
+                if (_isMyDeck != value)
+                {
+                    _isMyDeck = value;
                     RaisePropertyChanged();
                 }
             }
@@ -185,6 +202,7 @@ namespace StudyBox.Core.ViewModels
         public ICommand TapTileCommand { get; set; }
         private RelayCommand _chooseLearning;
         private RelayCommand _chooseTest;
+        private RelayCommand _chooseManageDeck;
         private RelayCommand _cancel;
 
         public RelayCommand ChooseLearning
@@ -200,6 +218,14 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _chooseTest ?? (_chooseTest = new RelayCommand(GoToTest));
+            }
+        }
+
+        public RelayCommand ChooseManageDeck
+        {
+            get
+            {
+                return _chooseManageDeck ?? (_chooseManageDeck = new RelayCommand(GoToManageDeck));
             }
         }
 
@@ -235,6 +261,19 @@ namespace StudyBox.Core.ViewModels
             _statisticsService.IncrementCountOfDecks(deck);
         }
 
+        private void GoToManageDeck()
+        {
+            IsDeckSelected = false;
+            IsMyDeck = false;
+            NavigationService.NavigateTo("ManageDeckView");
+            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
+            _selectedID = String.Empty;
+
+            Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(deck));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name, true));
+
+        }
+
         private void BackToDeck()
         {
             IsDeckSelected = false;
@@ -245,6 +284,9 @@ namespace StudyBox.Core.ViewModels
         {
             _selectedID = id;
             IsDeckSelected = true;
+            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
+            //if (_accountService.GetUserEmail() == deck.CreatorEmail)
+            IsMyDeck = true;
         }
 
         #endregion
