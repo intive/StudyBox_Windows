@@ -332,7 +332,7 @@
     <value>Odpowiedź</value>
   </data>
   <data name="CreateNewDeck" xml:space="preserve">
-    <value>Stwórz nową talię z fiszką</value>
+    <value>Stwórz nową talię</value>
   </data>
   <data name="DeckName.Text" xml:space="preserve">
     <value>Nazwa talii</value>
@@ -362,7 +362,7 @@
     <value>Zarządzaj talią</value>
   </data>
   <data name="GoToAddDeck.Content" xml:space="preserve">
-    <value>Dodaj talię</value>
+    <value>Utwórz nową talię z fiszką</value>
   </data>
   <data name="GoToAddFlashcard.Content" xml:space="preserve">
     <value>Dodaj fiszkę do talii</value>

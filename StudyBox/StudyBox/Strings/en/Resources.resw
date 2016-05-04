@@ -332,7 +332,7 @@
     <value>Answer</value>
   </data>
   <data name="CreateNewDeck" xml:space="preserve">
-    <value>Create new deck with flashcard</value>
+    <value>Create new deck</value>
   </data>
   <data name="DeckName.Text" xml:space="preserve">
     <value>Deck name</value>
@@ -362,7 +362,7 @@
     <value>Manage deck</value>
   </data>
   <data name="GoToAddDeck.Content" xml:space="preserve">
-    <value>Add new deck</value>
+    <value>Create new deck with flashcard</value>
   </data>
   <data name="GoToAddFlashcard.Content" xml:space="preserve">
     <value>Add new flashcard</value>

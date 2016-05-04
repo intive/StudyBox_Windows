@@ -17,6 +17,7 @@ namespace StudyBox.Core.ViewModels
         private bool _isPaneOpen = false;
         private bool _isSearchButtonEnabled = false;
         private bool _logoutButtonVisibility;
+        private bool _addFlashcardVisibility;
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
         private RelayCommand _cancelSearchingCommand;
@@ -27,6 +28,8 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToDecksCommand;
         private RelayCommand _goToStatisticsCommand;
         private RelayCommand _newDeckFromFileCommand;
+        private RelayCommand _goToAddDeckCommand;
+        private RelayCommand _goToAddFlashcardCommand;
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
@@ -35,7 +38,7 @@ namespace StudyBox.Core.ViewModels
 
         public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService) : base(navigationService)
         {
-            Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.SaveButton,x.ExitButton,x.TitleString));
+            Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.SaveButton,x.ExitButton,x.TitleString, x.AddFlashcardButton));
 
             SearchButtonVisibility = true;
 
@@ -213,6 +216,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool AddFlashcardVisibility
+        {
+            get
+            {
+                return _addFlashcardVisibility;
+            }
+            set
+            {
+                if (_addFlashcardVisibility != value)
+                {
+                    _addFlashcardVisibility = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public RelayCommand OpenMenuCommand
         {
             get { return _openMenuCommand ?? (_openMenuCommand = new RelayCommand(OpenMenu)); }
@@ -263,6 +282,16 @@ namespace StudyBox.Core.ViewModels
             get { return _newDeckFromFileCommand ?? (_newDeckFromFileCommand = new RelayCommand(GoToNewDeckFromFile)); }
         }
 
+        public RelayCommand GoToAddDeckCommand
+        {
+            get { return _goToAddDeckCommand ?? (_goToAddDeckCommand = new RelayCommand(GoToAddDeck)); }
+        }
+
+        public RelayCommand GoToAddFlashcardCommand
+        {
+            get { return _goToAddFlashcardCommand ?? (_goToAddFlashcardCommand = new RelayCommand(GoToAddFlashcard)); }
+        }
+
         private async void TestRandomDeck()
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
@@ -306,6 +335,16 @@ namespace StudyBox.Core.ViewModels
             IsPaneOpen = false;
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
             TitleBar = String.Empty;
+        }
+
+        private void GoToAddDeck()
+        {
+
+        }
+
+        private void GoToAddFlashcard()
+        {
+
         }
 
         private void GoToStatistics()
@@ -368,7 +407,7 @@ namespace StudyBox.Core.ViewModels
             TitleBar = String.Empty;
         }
 
-        private void HandleMenuControlMessage(bool search, bool save, bool exit, string title)
+        private void HandleMenuControlMessage(bool search, bool save, bool exit, string title, bool addFlashcard = false)
         {
             SearchButtonVisibility = search;
             SaveButtonVisibility = save;
@@ -384,6 +423,7 @@ namespace StudyBox.Core.ViewModels
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             IsPaneOpen = false;
             IsSearchOpen = false;
+            AddFlashcardVisibility = addFlashcard;
         }
     }
 }
