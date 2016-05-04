@@ -287,8 +287,13 @@ namespace StudyBox.Core.ViewModels
             _selectedID = id;
             IsDeckSelected = true;
             Deck deck = await _restService.GetDeckById(_selectedID);
-            if (_accountService.GetUserEmail() == deck.CreatorEmail)
-                IsMyDeck = true;
+            if (_accountService.IsUserLoggedIn())
+            {
+                if (_accountService.GetUserEmail() == deck.CreatorEmail)
+                    IsMyDeck = true;
+                else
+                    IsMyDeck = false;
+            }
             else
                 IsMyDeck = false;
         }
