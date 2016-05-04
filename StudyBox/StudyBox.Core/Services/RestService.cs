@@ -98,7 +98,7 @@ namespace StudyBox.Core.Services
             string url = String.Format(_resources["FlashcardUpdateUrl"].ToString(), deckId, flashcard.Id);
 
             return await UpdateHelper(url,
-                new { question = flashcard.Question, answer = flashcard.Answer },
+                new { question = flashcard.Question, answer = flashcard.Answer, isHidden = flashcard.IsHidden },
                 cts);
         }
 

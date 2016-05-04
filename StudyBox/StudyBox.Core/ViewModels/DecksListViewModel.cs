@@ -270,7 +270,7 @@ namespace StudyBox.Core.ViewModels
             _selectedID = String.Empty;
 
             Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name, true));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
 
         }
 

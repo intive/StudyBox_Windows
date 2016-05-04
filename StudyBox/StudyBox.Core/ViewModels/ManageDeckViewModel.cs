@@ -113,9 +113,28 @@ namespace StudyBox.Core.ViewModels
 
         public ICommand TapTileCommand { get; set; }
 
+        private RelayCommand _addNewFlashcard;
+
         private void TapTile(string id)
         {
             _selectedID = id;
+            NavigationService.NavigateTo("CreateFlashcardView");
+            Flashcard flashcard = FlashcardsCollection.Where(x => x.Id == _selectedID).FirstOrDefault();
+            _selectedID = String.Empty;
+            Messenger.Default.Send<DataMessageToCreateFlashcard>(new DataMessageToCreateFlashcard(_deckInstance, flashcard));
+        }
+        public RelayCommand AddNewFlashcard
+        {
+            get
+            {
+                return _addNewFlashcard ?? (_addNewFlashcard = new RelayCommand(GoToAddNewFlashcard));
+            }
+        }
+
+        private void GoToAddNewFlashcard()
+        {
+            NavigationService.NavigateTo("CreateFlashcardView");
+            Messenger.Default.Send<DataMessageToCreateFlashcard>(new DataMessageToCreateFlashcard(_deckInstance, null));
         }
     }
 }

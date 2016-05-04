@@ -364,7 +364,7 @@
   <data name="GoToAddDeck.Content" xml:space="preserve">
     <value>Utwórz nową talię z fiszką</value>
   </data>
-  <data name="GoToAddFlashcard.Content" xml:space="preserve">
+  <data name="GoToAddFlashcard.Text" xml:space="preserve">
     <value>Dodaj fiszkę do talii</value>
   </data>
 </root>

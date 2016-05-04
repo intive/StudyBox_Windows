@@ -16,7 +16,7 @@ using Windows.UI.Popups;
 
 namespace StudyBox.Core.ViewModels
 {
-  
+
 
     public class CreateFlashcardViewModel : ExtendedViewModelBase
     {
@@ -329,9 +329,13 @@ namespace StudyBox.Core.ViewModels
                             bool result = await _restService.UpdateFlashcard(_flashcard, deckId);
 
                             var oldTips = await _restService.GetTips(deckId, flashcardId);
-                            foreach (var oldTip in oldTips)
+
+                            if (oldTips!=null)
                             {
-                                await _restService.RemoveTip(deckId, flashcardId, oldTip.ID);
+                                foreach (var oldTip in oldTips)
+                                {
+                                    await _restService.RemoveTip(deckId, flashcardId, oldTip.ID);
+                                }
                             }
 
                             foreach (var tip in tips)
@@ -346,7 +350,23 @@ namespace StudyBox.Core.ViewModels
                 {
                     ShowErrorMessage(StringResources.GetString("OperationFailed"));
                 }
-                //TODO navigate
+
+                switch (_mode)
+                {
+                    case Mode.CreateFlashcardAndDeck:
+                        NavigationService.NavigateTo("DecksListView");
+                        Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                        break;
+
+                    default:
+                        NavigationService.NavigateTo("ManageDeckView");
+                        Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                        Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deck));
+                        break;
+
+                }
+
+                
             }
         }
 
@@ -400,9 +420,12 @@ namespace StudyBox.Core.ViewModels
                     SubmitFormMessage = StringResources.GetString("Edit"); ;
 
                     var tips = await _restService.GetTips(deckInstance.ID, flashcardInstance.Id);
-                    foreach (var tip in tips)
+                    if (tips != null)
                     {
-                        TipsCollection.Add(new TipViewModel(tip.ID, tip.Prompt));
+                        foreach (var tip in tips)
+                        {
+                            TipsCollection.Add(new TipViewModel(tip.ID, tip.Prompt));
+                        }
                     }
 
 
@@ -415,12 +438,13 @@ namespace StudyBox.Core.ViewModels
                     Answer = "";
 
                     _flashcard = new Flashcard();
+                    HeaderMessage = StringResources.GetString("AddFlashcard");
+                    SubmitFormMessage = StringResources.GetString("AddFlashcard");
                 }
 
                 _deck = deckInstance;
 
-                HeaderMessage = StringResources.GetString("AddFlashcard");
-                SubmitFormMessage = StringResources.GetString("AddFlashcard");
+                
                 ShowDeckName = false;
 
                 TipsCollection = new ObservableCollection<TipViewModel>();
