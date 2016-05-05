@@ -347,7 +347,7 @@
     <value>Edycja fiszki</value>
   </data>
   <data name="FillAllFieldsMessage.Text" xml:space="preserve">
-    <value>Uzupełnij pola</value>
+    <value>Nie wszystkie pola zawierają prawidłową liczbę znaków.</value>
   </data>
   <data name="OperationFailed" xml:space="preserve">
     <value>Operacja nie powiodła się</value>

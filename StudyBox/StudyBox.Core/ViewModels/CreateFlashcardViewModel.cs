@@ -139,6 +139,7 @@ namespace StudyBox.Core.ViewModels
                     _question = value;
                     RaisePropertyChanged("Question");
                     RaisePropertyChanged("CurrentQuestionCharactersNumber");
+                    RaisePropertyChanged("IsQuestionValid");
                 }
             }
         }
@@ -156,6 +157,7 @@ namespace StudyBox.Core.ViewModels
                     _answer = value;
                     RaisePropertyChanged("Answer");
                     RaisePropertyChanged("CurrentAnswerCharactersNumber");
+                    RaisePropertyChanged("IsAnswerValid");
                 }
             }
         }
@@ -189,6 +191,7 @@ namespace StudyBox.Core.ViewModels
                     _deckName = value;
                     RaisePropertyChanged("DeckName");
                     RaisePropertyChanged("CurrentDeckNameCharactersNumber");
+                    RaisePropertyChanged("IsDeckNameValid");
                 }
             }
         }
@@ -197,7 +200,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return Question.Length > _maxQuestionCharacters ? _maxAnswerCharacters : Question.Length;
+                return Question.Length;
             }
         }
 
@@ -205,7 +208,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return Answer.Length > _maxAnswerCharacters ? _maxAnswerCharacters : Answer.Length;
+                return Answer.Length;
             }
         }
 
@@ -213,7 +216,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return DeckName.Length > _maxDeckNameCharacters ? _maxDeckNameCharacters : DeckName.Length;
+                return DeckName.Length;
             }
         }
 
@@ -238,6 +241,53 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _maxDeckNameCharacters;
+            }
+        }
+
+        public bool IsQuestionValid
+        {
+            get
+            {
+                if (CurrentQuestionCharactersNumber > MaxQuestionCharacters || CurrentQuestionCharactersNumber == 0)
+                {
+                    return false;
+                }                 
+                else
+                {
+                    return true;
+                }                 
+            }
+        }
+
+
+        public bool IsAnswerValid
+        {
+            get
+            {
+                if (CurrentAnswerCharactersNumber > MaxAnswerCharacters || CurrentAnswerCharactersNumber == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+
+        public bool IsDeckNameValid
+        {
+            get
+            {
+                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
@@ -407,15 +457,13 @@ namespace StudyBox.Core.ViewModels
                         Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deck));
                         break;
 
-                }
-
-                
+                }               
             }
         }
 
         private bool ValidateForm()
         {
-            if (Answer.Trim().Length == 0 || Question.Length == 0)
+            if (!IsQuestionValid || !IsAnswerValid)
             {
                 IsGeneralError = true;
                 return false;
@@ -423,7 +471,7 @@ namespace StudyBox.Core.ViewModels
 
             if (_mode == Mode.CreateFlashcardAndDeck)
             {
-                if (DeckName.Trim().Length == 0)
+                if (!IsDeckNameValid)
                 {
                     IsGeneralError = true;
                     return false;
@@ -432,7 +480,7 @@ namespace StudyBox.Core.ViewModels
 
             foreach (var tip in TipsCollection)
             {
-                if (tip.Prompt.Trim().Length == 0)
+                if (!tip.IsPromptValid)
                 {
                     IsGeneralError = true;
                     return false;

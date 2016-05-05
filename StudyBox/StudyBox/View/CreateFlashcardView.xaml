@@ -16,6 +16,7 @@
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter" />
+        <converters:BoolToBrushConverter x:Key="BoolToBrushConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch">
@@ -49,31 +50,36 @@
                     <TextBlock  Margin="0,20,0,5"  
                                 FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                 x:Uid="DeckName" />
-                    <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
+                    <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"                            
                              TextWrapping="Wrap" 
                              Text="{Binding DeckName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                              MaxLength="{Binding MaxDeckNameCharacters, Mode=OneTime}" />
-                    <CheckBox IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Uid="isPublic"/>
+                    
                     <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
-                    <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
+                    <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Foreground="{Binding IsDeckNameValid, Converter={StaticResource BoolToBrushConverter}}">                      
+                    </Run>
                     <Run Text="/"/>
                     <Run Text="{Binding MaxDeckNameCharacters}"></Run>
                     </TextBlock>
 
+                    <CheckBox  Margin="0,20,0,5"  IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Uid="isPublic"/>
                 </StackPanel>
 
                 <TextBlock  Margin="0,20,0,5" 
                             FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                             x:Uid="QuestionLabel"/>
                 <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
-                         Height="250" 
+                         
                          TextWrapping="Wrap" 
                          AcceptsReturn="True" 
                          Text="{Binding Question, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                          MaxLength="{Binding MaxQuestionCharacters, Mode=OneTime}" />
 
                 <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
-                    <Run Text="{Binding CurrentQuestionCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
+                    <Run Text="{Binding CurrentQuestionCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Foreground="{Binding IsQuestionValid, Converter={StaticResource BoolToBrushConverter}}">                      
+                    </Run>
                     <Run Text="/"/>
                     <Run Text="{Binding MaxQuestionCharacters}"></Run>
                 </TextBlock>
@@ -83,14 +89,15 @@
                            x:Uid="Answer"/>
                 <TextBox Name="Answer"
                          FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
-                         Height="250" 
                          TextWrapping="Wrap" 
                          AcceptsReturn="True" 
                          Text="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                          MaxLength="{Binding MaxAnswerCharacters, Mode=OneTime}"/>
 
                 <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
-                    <Run Text="{Binding CurrentAnswerCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
+                    <Run Text="{Binding CurrentAnswerCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Foreground="{Binding IsAnswerValid, Converter={StaticResource BoolToBrushConverter}}">                       
+                    </Run>
                     <Run Text="/"/>
                     <Run Text="{Binding MaxAnswerCharacters}"></Run>
                 </TextBlock>
@@ -130,7 +137,7 @@
                                        />
                                 </Button>
 
-                                <TextBox  Height="200" Name="Content"      
+                                <TextBox  Name="Content"      
                                          
                                           HorizontalAlignment="Stretch"
                                           FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
@@ -139,7 +146,9 @@
                                           Text="{Binding Prompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                 <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
-                                    <Run Text="{Binding CurrentPromptCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
+                                    <Run Text="{Binding CurrentPromptCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Foreground="{Binding IsPromptValid, Converter={StaticResource BoolToBrushConverter}}">                                      
+                                    </Run>
                                     <Run Text="/"/>
                                     <Run Text="{Binding MaxPromptCharacters, Mode=OneTime}"></Run>
                                 </TextBlock>

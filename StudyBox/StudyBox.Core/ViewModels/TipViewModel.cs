@@ -42,6 +42,7 @@ namespace StudyBox.Core.ViewModels
                     _prompt = value;
                     RaisePropertyChanged("Prompt");
                     RaisePropertyChanged("CurrentPromptCharactersNumber");
+                    RaisePropertyChanged("IsPromptValid");
                 }
             }
         }
@@ -50,7 +51,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return Prompt.Length > _maxPromptCharacters ? _maxPromptCharacters : Prompt.Length;
+                return Prompt.Length;
             }
         }
 
@@ -59,6 +60,21 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _maxPromptCharacters;
+            }
+        }
+
+        public bool IsPromptValid
+        {
+            get
+            {
+                if (CurrentPromptCharactersNumber > MaxPromptCharacters || CurrentPromptCharactersNumber == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
