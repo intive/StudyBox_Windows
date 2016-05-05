@@ -34,7 +34,6 @@ namespace StudyBox.Core.ViewModels
         private string _deckName;
         private string _headerMessage;
         private string _submitFormMessage;
-        private bool _showDeckName;
         private bool _isGeneralError;
         private bool _isDataLoading = false;
         private ObservableCollection<TipViewModel> _tipsCollection;
@@ -94,21 +93,7 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public bool ShowDeckName
-        {
-            get
-            {
-                return _showDeckName;
-            }
-            set
-            {
-                if (_showDeckName != value)
-                {
-                    _showDeckName = value;
-                    RaisePropertyChanged("ShowDeckName");
-                }
-            }
-        }
+
 
         public bool IsGeneralError
         {
@@ -251,11 +236,11 @@ namespace StudyBox.Core.ViewModels
                 if (CurrentQuestionCharactersNumber > MaxQuestionCharacters || CurrentQuestionCharactersNumber == 0)
                 {
                     return false;
-                }                 
+                }
                 else
                 {
                     return true;
-                }                 
+                }
             }
         }
 
@@ -376,6 +361,12 @@ namespace StudyBox.Core.ViewModels
                 _flashcard.Answer = Answer.TrimEnd();
                 _flashcard.Question = Question.TrimEnd();
 
+                string oldDeckName = _deck.Name;
+                bool oldIsPublic = _deck.IsPublic;
+                _deck.Name = DeckName.Trim();
+                _deck.IsPublic = IsPublic;
+
+
                 List<Tip> tips = new List<Tip>();
                 foreach (TipViewModel tip in TipsCollection)
                 {
@@ -384,10 +375,17 @@ namespace StudyBox.Core.ViewModels
 
                 try
                 {
+                    IsDataLoading = true;
+
                     switch (_mode)
                     {
                         case Mode.AddNewFlashcardToDeck:
-                            IsDataLoading = true;
+
+                            if (oldDeckName != DeckName || oldIsPublic!= IsPublic)
+                            {
+                                await _restService.UpdateDeck(_deck);
+                            }
+                          
                             Flashcard createdFlashcard = await _restService.CreateFlashcard(_flashcard, _deck.ID);
 
                             foreach (var tip in tips)
@@ -398,8 +396,8 @@ namespace StudyBox.Core.ViewModels
                             break;
 
                         case Mode.CreateFlashcardAndDeck:
-                            IsDataLoading = true;
-                            Deck createdDeck = await _restService.CreateDeck(new Deck("1", DeckName, IsPublic));
+
+                            Deck createdDeck = await _restService.CreateDeck(_deck);
                             Flashcard addedFlashcard = await _restService.CreateFlashcard(_flashcard, createdDeck.ID);
 
                             foreach (var tip in tips)
@@ -410,7 +408,12 @@ namespace StudyBox.Core.ViewModels
                             break;
 
                         case Mode.EditFlashcard:
-                            IsDataLoading = true;
+                            
+                            if (oldDeckName != DeckName || oldIsPublic != IsPublic)
+                            {
+                                await _restService.UpdateDeck(_deck);
+                            }
+
                             string flashcardId = _flashcard.Id;
                             string deckId = _flashcard.DeckID;
 
@@ -418,7 +421,7 @@ namespace StudyBox.Core.ViewModels
 
                             var oldTips = await _restService.GetTips(deckId, flashcardId);
 
-                            if (oldTips!=null)
+                            if (oldTips != null)
                             {
                                 foreach (var oldTip in oldTips)
                                 {
@@ -457,25 +460,16 @@ namespace StudyBox.Core.ViewModels
                         Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deck));
                         break;
 
-                }               
+                }
             }
         }
 
         private bool ValidateForm()
         {
-            if (!IsQuestionValid || !IsAnswerValid)
+            if (!IsQuestionValid || !IsAnswerValid || !IsDeckNameValid)
             {
                 IsGeneralError = true;
                 return false;
-            }
-
-            if (_mode == Mode.CreateFlashcardAndDeck)
-            {
-                if (!IsDeckNameValid)
-                {
-                    IsGeneralError = true;
-                    return false;
-                }
             }
 
             foreach (var tip in TipsCollection)
@@ -520,7 +514,6 @@ namespace StudyBox.Core.ViewModels
                         }
                     }
 
-
                     _flashcard = flashcardInstance;
                 }
                 else
@@ -534,10 +527,8 @@ namespace StudyBox.Core.ViewModels
                     SubmitFormMessage = StringResources.GetString("AddFlashcard");
                 }
 
+                DeckName = deckInstance.Name;
                 _deck = deckInstance;
-
-                
-                ShowDeckName = false;
 
                 TipsCollection = new ObservableCollection<TipViewModel>();
             }
@@ -551,10 +542,9 @@ namespace StudyBox.Core.ViewModels
                 _flashcard = new Flashcard();
                 HeaderMessage = StringResources.GetString("CreateNewDeck");
                 SubmitFormMessage = StringResources.GetString("CreateNewDeck");
-                ShowDeckName = true;
-
                 TipsCollection = new ObservableCollection<TipViewModel>();
             }
+
             IsGeneralError = false;
         }
     }

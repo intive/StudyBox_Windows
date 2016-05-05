@@ -46,25 +46,24 @@
                             HorizontalAlignment="Center" 
                             Text="{Binding HeaderMessage}" />
 
-                <StackPanel  Visibility="{Binding ShowDeckName, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <TextBlock  Margin="0,20,0,5"  
+                <TextBlock  Margin="0,20,0,5"  
                                 FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                 x:Uid="DeckName" />
-                    <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"                            
+                <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"                            
                              TextWrapping="Wrap" 
                              Text="{Binding DeckName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                              MaxLength="{Binding MaxDeckNameCharacters, Mode=OneTime}" />
-                    
-                    <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
+
+                <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
                     <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Foreground="{Binding IsDeckNameValid, Converter={StaticResource BoolToBrushConverter}}">                      
                     </Run>
                     <Run Text="/"/>
                     <Run Text="{Binding MaxDeckNameCharacters}"></Run>
-                    </TextBlock>
+                </TextBlock>
 
-                    <CheckBox  Margin="0,20,0,5"  IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Uid="isPublic"/>
-                </StackPanel>
+                <CheckBox  Margin="0,20,0,5"  IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Uid="isPublic"/>
+
 
                 <TextBlock  Margin="0,20,0,5" 
                             FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
@@ -121,7 +120,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Padding="0" Margin="0" HorizontalAlignment="Stretch">
-                                
+
                                 <Button Background="Transparent"                                        
                                     Command="{Binding ElementName=Tips, Path=DataContext.Remove}" 
                                     CommandParameter="{Binding ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -157,7 +156,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-              
+
                 <Button  Margin="0,20,0,5"
                                 Background="{StaticResource DarkBlue}" 
                                 Command="{Binding AddTip}">
