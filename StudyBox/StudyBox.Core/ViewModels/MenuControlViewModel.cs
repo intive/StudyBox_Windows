@@ -19,6 +19,9 @@ namespace StudyBox.Core.ViewModels
         private bool _isSearchButtonEnabled = false;
         private bool _logoutButtonVisibility;
         private bool _addFlashcardVisibility;
+        private bool _searchButtonVisibility;
+        private bool _saveButtonVisibility;
+        private bool _exitButtonVisibility;
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
         private RelayCommand _cancelSearchingCommand;
@@ -33,9 +36,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToUsersDecksCommand;
         private string _searchingContent;
         private string _titleBar;
-        private bool _searchButtonVisibility;
-        private bool _saveButtonVisibility;
-        private bool _exitButtonVisibility;
+
 
         public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService) : base(navigationService)
         {
@@ -381,6 +382,7 @@ namespace StudyBox.Core.ViewModels
         {
             NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<SearchMessageToDeckList>(new SearchMessageToDeckList(SearchingContent.Trim()));
+            SearchingContent = String.Empty;
         }
 
         private void CancelSearching()
@@ -389,6 +391,7 @@ namespace StudyBox.Core.ViewModels
             {
                 IsSearchOpen = false;
                 SearchButtonVisibility = true;
+                SearchingContent = String.Empty;
             }
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
         }
@@ -438,6 +441,7 @@ namespace StudyBox.Core.ViewModels
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             IsPaneOpen = false;
             IsSearchOpen = false;
+            SearchingContent = String.Empty;
         }
     }
 }

@@ -124,21 +124,27 @@
                            >
                 <SplitView.Pane>
                     <StackPanel Background="{StaticResource Graphite}" Opacity="0.8">
-                        <Button x:Uid="GoToUserDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
+                        <Button x:Uid="GoToUserDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                >
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding GoToUsersDecksCommand}" />
                                 </core:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </Button>
-                        <Button x:Uid="GoToDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
+                        <Button x:Uid="GoToDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                >
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding GoToDecksCommand}" />
                                 </core:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </Button>
-                        <Button x:Uid="GoToAddDeck" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
+                        <Button x:Uid="GoToAddDeck" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                >
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding GoToAddDeckCommand}" />
@@ -155,7 +161,9 @@
                             </i:Interaction.Behaviors>
                         </Button>
 
-                        <Button x:Uid="GoToStatistics" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
+                        <Button x:Uid="GoToStatistics" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                >
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding GoToStatisticsCommand}" />
