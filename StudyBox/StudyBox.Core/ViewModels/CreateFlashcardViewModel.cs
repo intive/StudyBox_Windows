@@ -36,6 +36,7 @@ namespace StudyBox.Core.ViewModels
         private string _submitFormMessage;
         private bool _showDeckName;
         private bool _isGeneralError;
+        private bool _isDataLoading = false;
         private ObservableCollection<TipViewModel> _tipsCollection;
 
         private readonly int _maxQuestionCharacters = 1000;
@@ -272,6 +273,23 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool IsDataLoading
+        {
+            get
+            {
+                return _isDataLoading;
+            }
+            set
+            {
+                if (_isDataLoading != value)
+                {
+                    _isDataLoading = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+
         public void RemoveTip(string id)
         {
             TipViewModel tip = TipsCollection.Where(x => x.ID == id).FirstOrDefault();
@@ -319,6 +337,7 @@ namespace StudyBox.Core.ViewModels
                     switch (_mode)
                     {
                         case Mode.AddNewFlashcardToDeck:
+                            IsDataLoading = true;
                             Flashcard createdFlashcard = await _restService.CreateFlashcard(_flashcard, _deck.ID);
 
                             foreach (var tip in tips)
@@ -329,6 +348,7 @@ namespace StudyBox.Core.ViewModels
                             break;
 
                         case Mode.CreateFlashcardAndDeck:
+                            IsDataLoading = true;
                             Deck createdDeck = await _restService.CreateDeck(new Deck("1", DeckName, IsPublic));
                             Flashcard addedFlashcard = await _restService.CreateFlashcard(_flashcard, createdDeck.ID);
 
@@ -340,6 +360,7 @@ namespace StudyBox.Core.ViewModels
                             break;
 
                         case Mode.EditFlashcard:
+                            IsDataLoading = true;
                             string flashcardId = _flashcard.Id;
                             string deckId = _flashcard.DeckID;
 
@@ -366,6 +387,10 @@ namespace StudyBox.Core.ViewModels
                 catch
                 {
                     ShowErrorMessage(StringResources.GetString("OperationFailed"));
+                }
+                finally
+                {
+                    IsDataLoading = false;
                 }
 
                 switch (_mode)
@@ -426,6 +451,7 @@ namespace StudyBox.Core.ViewModels
 
         private async void HandleDataMessage(Deck deckInstance, Flashcard flashcardInstance)
         {
+            IsDataLoading = false;
             if (deckInstance != null)
             {
                 if (flashcardInstance != null)
