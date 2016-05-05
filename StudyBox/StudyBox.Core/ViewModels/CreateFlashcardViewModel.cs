@@ -44,6 +44,7 @@ namespace StudyBox.Core.ViewModels
 
         private RelayCommand _addTip;
         private RelayCommand _submitForm;
+        private RelayCommand _cancel;
 
         public CreateFlashcardViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService) : base(navigationService)
         {
@@ -73,6 +74,13 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public RelayCommand Cancel
+        {
+            get
+            {
+                return _cancel ?? (_cancel = new RelayCommand(LeaveForm));
+            }
+        }
 
         public ICommand Remove { get; set; }
 
@@ -446,21 +454,7 @@ namespace StudyBox.Core.ViewModels
                     IsDataLoading = false;
                 }
 
-                switch (_mode)
-                {
-                    case Mode.CreateFlashcardAndDeck:
-                        NavigationService.NavigateTo("DecksListView");
-                        Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
-                        Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
-                        break;
-
-                    default:
-                        NavigationService.NavigateTo("ManageDeckView");
-                        Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
-                        Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deck));
-                        break;
-
-                }
+                LeaveForm();
             }
         }
 
@@ -485,11 +479,31 @@ namespace StudyBox.Core.ViewModels
             return true;
         }
 
+        private void LeaveForm()
+        {
+            switch (_mode)
+            {
+                case Mode.CreateFlashcardAndDeck:
+                    NavigationService.NavigateTo("DecksListView");
+                    Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                    break;
+
+                default:
+                    NavigationService.NavigateTo("ManageDeckView");
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                    Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deck));
+                    break;
+
+            }
+        }
+
         private async void ShowErrorMessage(string message)
         {
             MessageDialog msg = new MessageDialog(message);
             await msg.ShowAsync();
         }
+     
 
         private async void HandleDataMessage(Deck deckInstance, Flashcard flashcardInstance)
         {
