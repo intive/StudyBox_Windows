@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\DecksType.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\ICameraService.cs" />
     <Compile Include="Interfaces\IDeserializeJsonService.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Messages\DataMessageToMenageDeck.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
+    <Compile Include="Messages\DecksTypeMessage.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
     <Compile Include="Messages\NewDeckMessageToImageImport.cs" />
     <Compile Include="Messages\ReloadMessageToDecksList.cs" />

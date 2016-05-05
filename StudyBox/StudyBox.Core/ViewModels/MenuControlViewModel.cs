@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Interfaces;
 using Windows.UI.Popups;
+using StudyBox.Core.Enums;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -29,6 +30,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToStatisticsCommand;
         private RelayCommand _newDeckFromFileCommand;
         private RelayCommand _goToAddDeckCommand;
+        private RelayCommand _goToUsersDecksCommand;
         private string _searchingContent;
         private string _titleBar;
         private bool _searchButtonVisibility;
@@ -286,6 +288,23 @@ namespace StudyBox.Core.ViewModels
             get { return _goToAddDeckCommand ?? (_goToAddDeckCommand = new RelayCommand(GoToAddDeck)); }
         }
 
+        public RelayCommand GoToUsersDecksCommand
+        {
+            get
+            {
+                return _goToUsersDecksCommand ?? (_goToUsersDecksCommand = new RelayCommand(GoToUsersDecks));
+            }
+        }
+
+        private void GoToUsersDecks()
+        {
+            NavigationService.NavigateTo("DecksListView");
+            IsPaneOpen = false;
+            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
+            Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
+            TitleBar = String.Empty;
+        }
+
         private async void TestRandomDeck()
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
@@ -328,6 +347,7 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("DecksListView");
             IsPaneOpen = false;
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
+            Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
             TitleBar = String.Empty;
         }
 
