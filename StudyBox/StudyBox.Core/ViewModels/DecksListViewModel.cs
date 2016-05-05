@@ -157,6 +157,7 @@ namespace StudyBox.Core.ViewModels
         {
             if (reload)
             {
+                IsDeckSelected = false;
                 DecksCollection.Clear();
                 SearchMessageVisibility = false;
                 InitializeDecksCollection();
@@ -165,6 +166,7 @@ namespace StudyBox.Core.ViewModels
 
         private async void HandleSearchMessage(string searchingContent)
         {
+            IsDeckSelected = false;
             if (await CheckInternetConnection())
             {
                 DecksCollection.Clear();
@@ -187,6 +189,7 @@ namespace StudyBox.Core.ViewModels
 
         private void HandleDecksTypeMessage(DecksType decksType)
         {
+            IsDeckSelected = false;
             _decksType = decksType;
             DecksCollection.Clear();
             SearchMessageVisibility = false;
