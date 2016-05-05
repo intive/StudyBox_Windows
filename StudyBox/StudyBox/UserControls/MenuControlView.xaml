@@ -170,15 +170,6 @@
                                 </core:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </Button>
-                        <Button x:Uid="Logout" 
-                                    Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
-                                    Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding LogoutCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
                         <Button x:Uid="TestRandomDeckButton" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
