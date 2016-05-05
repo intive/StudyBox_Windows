@@ -87,9 +87,9 @@
                     BorderBrush="Transparent">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="60" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="60" />
                     </Grid.ColumnDefinitions>
                     <Button Width="60" 
                             Height="60" 

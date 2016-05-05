@@ -254,7 +254,7 @@ namespace StudyBox.Core.ViewModels
                 {
                     try
                     {
-                    _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+                    _flashcards = await _restService.GetFlashcardsWithTipsCount(_deckInstance.ID);
                     }
                     catch (Exception ex)
                     {
