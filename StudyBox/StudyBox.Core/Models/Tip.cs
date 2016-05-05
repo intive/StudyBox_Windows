@@ -7,8 +7,11 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "id")]
         public string ID { get; set; }
 
-        [JsonProperty(PropertyName = "prompt")]
+        [JsonProperty(PropertyName = "essence")]
         public string Prompt { get; set; }
+
+        [JsonProperty(PropertyName = "difficult")]
+        public int Difficulty { get; set; }
 
         public Tip() { }
 
