@@ -19,7 +19,7 @@
     <x:String x:Key="DeckUpdateUrl">http://78.133.154.70:3000/decks/{0}</x:String>
     <x:String x:Key="DeckRemoveUrl">http://78.133.154.70:3000/decks/{0}</x:String>
     <x:String x:Key="GetAllDecksUrl">http://78.133.154.70:3000/decks?includeOwn={0}&amp;flashcardsCount={1}&amp;name={2}</x:String>
-    <x:String x:Key="GetRandomDeckUrl">http://78.133.154.70:3000/decks?random=true</x:String>
+    <x:String x:Key="GetRandomDeckUrl">http://dev.patronage2016.blstream.com:2000/decks/random</x:String>
 
     <x:String x:Key="TipCreateUrl">http://78.133.154.70:3000/decks/{0}/flashcards/{1}/tips</x:String>
     <x:String x:Key="TipGetByIdUrl">http://78.133.154.70:3000/decks/{0}/flashcards/{1}/tips/{2}</x:String>
