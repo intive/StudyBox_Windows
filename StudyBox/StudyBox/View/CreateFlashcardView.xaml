@@ -33,6 +33,7 @@
         <TextBlock x:Name="SmallFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
+        <ContentControl x:Name="LabelMarginManagment" Visibility="Collapsed"/>
 
         <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
         <SplitView  Grid.Row="1" 
@@ -45,7 +46,7 @@
                     Name="MainSplitView"
                    >
             <SplitView.Pane>
-                <ScrollViewer  VerticalScrollBarVisibility="Hidden" Margin="10,5,5,5">
+                <ScrollViewer  VerticalScrollBarVisibility="Hidden" Margin="10,5,0,5">
                     <StackPanel>
                         <Grid Grid.Row="2" Margin="0,24,0,24" >
                             <Grid.ColumnDefinitions>
@@ -119,7 +120,7 @@
                                 HorizontalAlignment="Center" 
                                 Text="{Binding HeaderMessage}" />
 
-                        <TextBlock  Margin="0,20,0,5"  
+                        <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
                                 FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
                                 x:Uid="DeckName" />
@@ -139,14 +140,15 @@
                             <Run Text="{Binding MaxDeckNameCharacters}"></Run>
                         </TextBlock>
 
-                        <CheckBox  Margin="0,20,0,5"  
+                        <CheckBox  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"   
                                    IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                    x:Uid="isPublic"
                                    FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                   FontFamily="{StaticResource LatoRegularFontFamily}"/>
+                                   FontFamily="{StaticResource LatoRegularFontFamily}"
+                                   VerticalAlignment="Center"/>
 
 
-                        <TextBlock  Margin="0,20,0,5" 
+                        <TextBlock  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
                             FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                             FontFamily="{StaticResource LatoRegularFontFamily}"    
                             x:Uid="QuestionLabel"/>
@@ -166,7 +168,7 @@
                             <Run Text="{Binding MaxQuestionCharacters}"></Run>
                         </TextBlock>
 
-                        <TextBlock Margin="0,20,0,5" 
+                        <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
                            FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                            FontFamily="{StaticResource LatoRegularFontFamily}"
                            x:Uid="Answer"/>
@@ -187,7 +189,7 @@
                             <Run Text="{Binding MaxAnswerCharacters}"></Run>
                         </TextBlock>
 
-                        <TextBlock Margin="0,20,0,5" 
+                        <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
                            FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                            FontFamily="{StaticResource LatoRegularFontFamily}"
                            x:Uid="Tips"/>
@@ -320,8 +322,9 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SmallFontManagment.FontSize" Value="11"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="11"/>
                         <Setter Target="BigFontManagment.FontSize" Value="24"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,10,0,0"/>
                         <Setter Target="MainSplitView.OpenPaneLength" Value="300"/>
                         <Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay"/>
                     </VisualState.Setters>
@@ -335,6 +338,7 @@
                         <Setter Target="SmallFontManagment.FontSize" Value="14"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="18"/>
                         <Setter Target="BigFontManagment.FontSize" Value="26"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,15,0,0"/>
                         <Setter Target="MainSplitView.OpenPaneLength" Value="430"/>
                         <Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay"/>
                     </VisualState.Setters>
@@ -348,6 +352,7 @@
                         <Setter Target="SmallFontManagment.FontSize" Value="18"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="25"/>
                         <Setter Target="BigFontManagment.FontSize" Value="35"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
                         <Setter Target="MainSplitView.OpenPaneLength" Value="250"/>
                         <Setter Target="MainSplitView.DisplayMode" Value="CompactInline"/>
                     </VisualState.Setters>
@@ -361,6 +366,7 @@
                         <Setter Target="SmallFontManagment.FontSize" Value="16"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="25"/>
                         <Setter Target="BigFontManagment.FontSize" Value="35"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
                         <Setter Target="MainSplitView.OpenPaneLength" Value="350"/>
                         <Setter Target="MainSplitView.DisplayMode" Value="CompactInline"/>
                     </VisualState.Setters>
