@@ -18,18 +18,18 @@ namespace StudyBox.Core.Services
     {
         public string UserId { get; set; }
         private readonly ResourceDictionary _resources = Application.Current.Resources;
-        private IUserDataStorageService _restService;
+        private IUserDataStorageService _userDataStorageService;
 
-        public StatisticsDataService(IUserDataStorageService restService)
+        public StatisticsDataService(IUserDataStorageService userDataStorageService)
         {
             UserId = String.Empty;
-            _restService = restService;
+            _userDataStorageService = userDataStorageService;
             InitializeFiles();
         }
 
         public void InitializeFiles()
         {
-            UserId = _restService.GetUserEmail();
+            UserId = _userDataStorageService.GetUserEmail();
             if (UserId == null)
                 UserId = String.Empty;
             string path1 = ApplicationData.Current.LocalFolder.Path + "/" + UserId +_resources["TestedDecksFileName"].ToString();
