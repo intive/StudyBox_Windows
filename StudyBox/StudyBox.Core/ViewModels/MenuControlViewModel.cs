@@ -34,7 +34,6 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _newDeckFromFileCommand;
         private RelayCommand _goToAddDeckCommand;
         private RelayCommand _goToUsersDecksCommand;
-        private RelayCommand _hideSearchingContentCommand;
         private string _searchingContent;
         private string _titleBar;
 
@@ -296,16 +295,6 @@ namespace StudyBox.Core.ViewModels
                 return _goToUsersDecksCommand ?? (_goToUsersDecksCommand = new RelayCommand(GoToUsersDecks));
             }
         }
-
-        public RelayCommand HideSearchingContentCommand
-        {
-            get
-            {
-                return _hideSearchingContentCommand ??
-                       (_hideSearchingContentCommand = new RelayCommand(HideSearchingContent));
-            }
-        }
-
 
         private void HideSearchingContent()
         {
