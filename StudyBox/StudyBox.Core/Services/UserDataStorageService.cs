@@ -45,15 +45,27 @@ namespace StudyBox.Core.Services
         {
             var vault = new PasswordVault();
             var credentials = vault.RetrieveAll();
-            return credentials[0].UserName;
+
+            if(credentials.Any())
+            {
+                return credentials[0].UserName;
+            }
+
+            return string.Empty;
         }
 
         public string GetUserPassword()
         {
             var vault = new PasswordVault();
             var credentials = vault.RetrieveAll();
-            credentials[0].RetrievePassword();
-            return credentials[0].Password;
+
+            if (credentials.Any())
+            {
+                credentials[0].RetrievePassword();
+                return credentials[0].Password;
+            }
+
+            return string.Empty;
         }
     }
 }
