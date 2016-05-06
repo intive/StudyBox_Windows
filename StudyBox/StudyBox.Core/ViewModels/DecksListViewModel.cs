@@ -136,7 +136,7 @@ namespace StudyBox.Core.ViewModels
         #region Methods
         private async void InitializeDecksCollection()
         {
-            if (await CheckInternetConnection())
+            if (await CheckInternetConnection() && _accountService.IsUserLoggedIn())
             {
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
