@@ -13,7 +13,8 @@
     <x:String x:Key="DeckCreateUrl">http://78.133.154.70:3000/decks</x:String>
     <x:String x:Key="DeckGetByIdUrl">http://78.133.154.70:3000/decks/{0}</x:String>
     <!--<x:String x:Key="DeckGetAllUrl">http://78.133.154.70:3000/decks</x:String>-->
-    <x:String x:Key="DeckGetAllUrl">http://78.133.154.70:3000/decks?includeOwn=true&amp;flashcardsCount=true</x:String>
+    <x:String x:Key="GetAllUserDecks">http://78.133.154.70:3000/decks/me?flashcardsCount=true</x:String>
+    <x:String x:Key="DeckGetAllUrl">http://78.133.154.70:3000/decks?includeOwn=false&amp;flashcardsCount=true</x:String>
     <x:String x:Key="DeckGetAllByNameUrl">http://78.133.154.70:3000/decks?name={0}</x:String>
     <x:String x:Key="DeckUpdateUrl">http://78.133.154.70:3000/decks/{0}</x:String>
     <x:String x:Key="DeckRemoveUrl">http://78.133.154.70:3000/decks/{0}</x:String>

@@ -6,6 +6,7 @@ using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 using Windows.Security.Credentials;
+using StudyBox.Core.Enums;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -168,12 +169,14 @@ namespace StudyBox.Core.ViewModels
                         {
                             NavigationService.NavigateTo("DecksListView");
                             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true,false,false));
+                            Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
                             ClearInputs();
                         }
                         else
                         {
                             IsGeneralError = true;
                             GeneralErrorMessage = StringResources.GetString("AbsenceUserInDatabase");
+                            Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
                         }
                     }
                     catch (Exception)
@@ -198,6 +201,7 @@ namespace StudyBox.Core.ViewModels
         public void ContinueWithoutLoggingIn()
         {
             NavigationService.NavigateTo("DecksListView");
+            Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
         }
 
         private void ClearInputs()

@@ -235,7 +235,7 @@
     <value>Wejdź jako niezarejestrowany użytkownik</value>
   </data>
   <data name="GoToDecksList.Content" xml:space="preserve">
-    <value>Moje talie</value>
+    <value>Publiczne talie</value>
   </data>
   <data name="ChooseLearning.Text" xml:space="preserve">
     <value>Nauka</value>
@@ -369,5 +369,9 @@
   </data>
   <data name="IsPublic.Content" xml:space="preserve">
     <value>Czy talia jest publiczna?</value>
+  </data>
+  <data name="GoToUserDecksList.Content" xml:space="preserve">
+    <value>Moje talie</value>
+    <comment>DecksListView</comment>
   </data>
 </root>

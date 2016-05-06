@@ -16,6 +16,7 @@ namespace StudyBox.Core.Interfaces
         Task<bool> RemoveFlashcard(string deckId, string flashcardId, CancellationTokenSource cts = null);
 
         Task<List<Deck>> GetDecks(CancellationTokenSource cts = null);
+        Task<List<Deck>> GetUserDecks(CancellationTokenSource cts = null);
         Task<Deck> GetDeckById(string deckId, CancellationTokenSource cts = null);
         Task<List<Deck>> GetDecksByName(string name, CancellationTokenSource cts = null);
         Task<Deck> CreateDeck(Deck deck, CancellationTokenSource cts = null);
