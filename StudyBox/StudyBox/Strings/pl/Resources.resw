@@ -370,4 +370,7 @@
   <data name="IsPublic.Content" xml:space="preserve">
     <value>Czy talia jest publiczna?</value>
   </data>
+  <data name="FlashcardsInDeck.Text" xml:space="preserve">
+    <value>Fiszki w talii</value>
+  </data>
 </root>

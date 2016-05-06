@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToBrushConverter.cs" />
+    <Compile Include="Converters\BoolToExpandArrowSymbol.cs" />
     <Compile Include="Converters\BoolToSortingArrowConventer.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
     <Compile Include="UserControls\MenuControlView.xaml.cs">

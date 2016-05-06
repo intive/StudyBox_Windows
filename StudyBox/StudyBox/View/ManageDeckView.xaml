@@ -59,6 +59,7 @@
                                         VerticalAlignment="Top"
                                         Margin="0"
                                         >
+                                        
                                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <TextBlock Text="{Binding Question}" 
                                                        TextTrimming="CharacterEllipsis"

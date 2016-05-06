@@ -370,4 +370,7 @@
   <data name="IsPublic.Content" xml:space="preserve">
     <value>Is deck public?</value>
   </data>
+  <data name="FlashcardsInDeck.Text" xml:space="preserve">
+    <value>Flashcards in deck</value>
+  </data>
 </root>
