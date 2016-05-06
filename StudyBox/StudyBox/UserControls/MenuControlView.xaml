@@ -17,7 +17,7 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -82,7 +82,7 @@
                             <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0"/>
                         </Button.Content>
                     </Button>
-                    
+
                     <Button x:Uid="MenuSaveButton"
                             Grid.Column="2" 
                             Visibility="{Binding SaveButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -111,7 +111,7 @@
                         <Button.Content>
                             <Image Source="ms-appx:///Assets/Delete-64.png" Stretch="Fill" Margin="0"/>
                         </Button.Content>
-                   </Button>
+                    </Button>
 
                 </Grid>
             </Border>
@@ -151,7 +151,7 @@
                                 </core:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </Button>
-                        
+
                         <Button x:Uid="NewDeckFromFile" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
                                 Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <i:Interaction.Behaviors>
@@ -199,7 +199,7 @@
                 </SplitView.Pane>
             </SplitView>
 
-            <StackPanel x:Name="Searching"
+            <StackPanel x:Name="Searching" 
                        Grid.Row="1"
                        Visibility="{Binding IsSearchOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
                        MaxHeight="40"
@@ -207,11 +207,11 @@
                        Grid.ColumnSpan="10"
                        >
                 <Grid Background="{StaticResource Graphite}">
-                   <Grid.ColumnDefinitions>
-                       <ColumnDefinition Width="4*"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" 
+                    <TextBox Grid.Column="0" 
                                 Margin="5,3,5,10" 
                                  Background="{StaticResource Grey}" 
                                  Padding="5"
