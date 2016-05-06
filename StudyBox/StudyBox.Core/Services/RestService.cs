@@ -447,7 +447,25 @@ namespace StudyBox.Core.Services
                 false,
                 cts);
         }
-        
+
+        public async Task<User> GetLoggedUser(CancellationTokenSource cts = null)
+        {
+            try
+            {
+                string url = _resources["UserGetLoggedUrl"].ToString();
+                string webPageSource = await GetWebPageSource(url, cts);
+
+                return _deserializeJsonService.GetObjectFromJson<User>(webPageSource);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         #endregion
 
 

@@ -6,6 +6,7 @@ namespace StudyBox.Core.Interfaces
 {
     public interface IStatisticsDataService
     {
+        string UserId { get; set; }
         void SaveStatistics(Statistics statistics);
         Statistics GetStatistics();
         void IncrementGoodAnswers();
@@ -16,5 +17,6 @@ namespace StudyBox.Core.Interfaces
         bool IsDeckAlreadyTested(string deckId);
         void SaveTestsHistory(TestsHistory testToSave);
         List<TestsHistory> GetTestsHistory();
+        void InitializeFiles();
     }
 }

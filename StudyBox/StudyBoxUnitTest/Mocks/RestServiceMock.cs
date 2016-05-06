@@ -139,6 +139,11 @@ namespace StudyBoxUnitTest.Mocks
             throw new NotImplementedException();
         }
 
+        public Task<List<Deck>> GetUserDecks(CancellationTokenSource cts = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Deck> GetDeckById(string deckId, CancellationTokenSource cts = null)
         {
             throw new NotImplementedException();
@@ -216,7 +221,7 @@ namespace StudyBoxUnitTest.Mocks
 
         public async Task<Deck> GetRandomDeck(CancellationTokenSource cts = null)
         {
-            string url = "http://dev.patronage2016.blstream.com:2000/decks?random=true";
+            string url = "http://private-anon-015b2f748-studybox.apiary-mock.com/decks?random=true";
             if (!string.IsNullOrEmpty(url))
             {
                 string webPageSource = "{" +
@@ -255,7 +260,7 @@ namespace StudyBoxUnitTest.Mocks
                 Match m1 = r1.Match(deckId);
                 Match m2 = r1.Match(flashcardId);
 
-                string url = "http://dev.patronage2016.blstream.com:2000/decks/" + deckId + "/flashcards/" + flashcardId + "/tips";
+                string url = "http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/" + deckId + "/flashcards/" + flashcardId + "/tips";
                 if (!string.IsNullOrEmpty(url) && m1.Success && m2.Success)
                 {
                     string webPageSource = "[" +
@@ -309,7 +314,7 @@ namespace StudyBoxUnitTest.Mocks
                 Match m2 = r1.Match(flashcardId);
                 Match m3 = r1.Match(tipId);
 
-                string url = "http://dev.patronage2016.blstream.com:2000/decks/" + deckId + "/flashcards/" + flashcardId + "/tips/" + tipId;
+                string url = "http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/" + deckId + "/flashcards/" + flashcardId + "/tips/" + tipId;
                 if (!string.IsNullOrEmpty(url) && m1.Success && m2.Success && m3.Success)
                 {
                     string webPageSource = "{" +
@@ -364,7 +369,7 @@ namespace StudyBoxUnitTest.Mocks
                 Regex r1 = new Regex(re1, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                 Match m1 = r1.Match(deckId);
 
-                string url = "http://dev.patronage2016.blstream.com:2000/decks/" + deckId + "/tags";
+                string url = "http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/" + deckId + "/tags";
                 if (!string.IsNullOrEmpty(url) && m1.Success)
                 {
                     string webPageSource = "[" +
@@ -414,7 +419,7 @@ namespace StudyBoxUnitTest.Mocks
                 Match m1 = r1.Match(deckId);
                 Match m2 = r1.Match(tagId);
 
-                string url = "http://dev.patronage2016.blstream.com:2000/decks/" + deckId + "/tags/" + tagId;
+                string url = "http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/" + deckId + "/tags/" + tagId;
                 if (!string.IsNullOrEmpty(url) && m1.Success && m2.Success)
                 {
                     string webPageSource = "{" +
@@ -471,7 +476,7 @@ namespace StudyBoxUnitTest.Mocks
                 Regex r1 = new Regex(re1, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                 Match m1 = r1.Match(deckId);
 
-                string url = "http://dev.patronage2016.blstream.com:2000/decks/" + deckId + "/results";
+                string url = "http://private-anon-7dd4d836c-studybox.apiary-mock.com/decks/" + deckId + "/results";
                 if (!string.IsNullOrEmpty(url) && m1.Success)
                 {
                     string webPageSource = "[" +
@@ -527,7 +532,7 @@ namespace StudyBoxUnitTest.Mocks
             throw new NotImplementedException();
         }
 
-        public Task<List<Deck>> GetUserDecks(CancellationTokenSource cts = null)
+        public Task<User> GetLoggedUser(CancellationTokenSource cts = null)
         {
             throw new NotImplementedException();
         }
