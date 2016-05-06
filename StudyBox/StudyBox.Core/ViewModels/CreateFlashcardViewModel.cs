@@ -426,7 +426,7 @@ namespace StudyBox.Core.ViewModels
                 List<Tip> tips = new List<Tip>();
                 foreach (TipViewModel tip in TipsCollection)
                 {
-                    tips.Add(new Tip(tip.ID, tip.Prompt.TrimEnd()));
+                    tips.Add(new Tip(tip.ID, tip.Essence.TrimEnd()));
                 }
 
                 try
@@ -458,7 +458,7 @@ namespace StudyBox.Core.ViewModels
 
                             foreach (var tip in tips)
                             {
-                                await _restService.CreateTip(tip, _deck.ID, addedFlashcard.Id);
+                                await _restService.CreateTip(tip, createdDeck.ID, addedFlashcard.Id);
                             }
 
                             break;
@@ -516,7 +516,7 @@ namespace StudyBox.Core.ViewModels
 
             foreach (var tip in TipsCollection)
             {
-                if (!tip.IsPromptValid)
+                if (!tip.IsEssenceValid)
                 {
                     IsGeneralError = true;
                     return false;
@@ -545,6 +545,7 @@ namespace StudyBox.Core.ViewModels
 
             }
             FlashcardsCollection.Clear();
+            TipsCollection.Clear();
             IsPaneVisible = false;
         }
 
@@ -563,6 +564,7 @@ namespace StudyBox.Core.ViewModels
         private async void HandleDataMessage(Deck deckInstance, Flashcard flashcardInstance)
         {
             FlashcardsCollection.Clear();
+            TipsCollection.Clear();
             IsDataLoading = false;
             if (deckInstance != null)
             {
@@ -580,7 +582,7 @@ namespace StudyBox.Core.ViewModels
                     {
                         foreach (var tip in tips)
                         {
-                            TipsCollection.Add(new TipViewModel(tip.ID, tip.Prompt));
+                            TipsCollection.Add(new TipViewModel(tip.ID, tip.Essence));
                         }
                     }
 

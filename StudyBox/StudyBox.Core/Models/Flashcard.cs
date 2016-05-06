@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace StudyBox.Core.Models
 {
@@ -22,7 +23,12 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "tipsCount")]
         public int TipsCount { get; set; }
 
-        public Flashcard() { }
+        public List<Tip> Tips { get; set; }
+
+        public Flashcard()
+        {
+            Tips = new List<Tip>();
+        }
 
         public Flashcard(string id, string deckId, string question, string answer, bool idHidden, int tipsCount)
         {
@@ -32,6 +38,7 @@ namespace StudyBox.Core.Models
             Answer = answer;
             IsHidden = IsHidden;
             TipsCount = tipsCount;
+            Tips = new List<Tip>();
         }
     }
 }

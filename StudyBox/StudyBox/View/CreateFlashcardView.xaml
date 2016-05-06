@@ -87,11 +87,15 @@
                                                FontFamily="{StaticResource LatoRegularFontFamily}"
                                                Foreground="{StaticResource Grey}" 
                                                TextTrimming="CharacterEllipsis"
+                                               TextWrapping="NoWrap"
+                                               MaxLines="1"
                                                Text="{Binding Question}"/>
                                         <TextBlock FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
                                                FontFamily="{StaticResource LatoRegularFontFamily}"
                                                Foreground="{StaticResource Grey}" 
                                                TextTrimming="CharacterEllipsis"
+                                               TextWrapping="NoWrap"
+                                               MaxLines="1"
                                                Text="{Binding Answer}"/>
 
                                     </StackPanel>
@@ -222,17 +226,17 @@
                                               HorizontalAlignment="Stretch"
                                               FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                               FontFamily="{StaticResource LatoRegularFontFamily}"
-                                              MaxLength="{Binding MaxPromptCharacters, Mode=OneTime}"
+                                              MaxLength="{Binding MaxEssenceCharacters, Mode=OneTime}"
                                               TextWrapping="Wrap" AcceptsReturn="True"
-                                              Text="{Binding Prompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                              Text="{Binding Essence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                         <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                                FontFamily="{StaticResource LatoRegularFontFamily}">
-                                    <Run Text="{Binding CurrentPromptCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         Foreground="{Binding IsPromptValid, Converter={StaticResource BoolToBrushConverter}}">                                      
+                                    <Run Text="{Binding CurrentEssenceCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Foreground="{Binding IsEssenceValid, Converter={StaticResource BoolToBrushConverter}}">                                      
                                     </Run>
                                     <Run Text="/"/>
-                                    <Run Text="{Binding MaxPromptCharacters, Mode=OneTime}"></Run>
+                                    <Run Text="{Binding MaxEssenceCharacters, Mode=OneTime}"></Run>
                                         </TextBlock>
 
                                     </StackPanel>
@@ -261,32 +265,38 @@
                                    Margin="10,15,0,10" >
                         </TextBlock>
 
-                        <Button HorizontalAlignment="Stretch"
-                        Name="SubmitForm"
-                                Margin="0,20,0,5"
+                        <Grid Margin="0,25,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                HorizontalAlignment="Stretch"                                                          
+                                Background="{StaticResource Raspberry}" 
+                                Command="{Binding Cancel}">
+                                <TextBlock TextWrapping="Wrap"
+                                       x:Uid="Cancel"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Grey}" 
+                                       Padding="0,5"/>
+                            </Button>
+
+                            <Button Grid.Column="2"
+                                HorizontalAlignment="Stretch"
+                                Name="SubmitForm"                                
                                 Background="{StaticResource DarkBlue}" 
                                 Command="{Binding SubmitForm}">
-                            <TextBlock TextWrapping="Wrap"
+                                <TextBlock TextWrapping="Wrap"
                                        Text="{Binding SubmitFormMessage, Mode=OneWay}"
                                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                        FontFamily="{StaticResource LatoRegularFontFamily}"
                                        Foreground="{StaticResource Grey}" 
                                        Padding="0,5"/>
-                        </Button>
-
-                        <Button HorizontalAlignment="Stretch"
-                                Background="Transparent" 
-                                Command="{Binding Cancel}"
-                                BorderThickness="0">
-                            <TextBlock TextWrapping="Wrap"
-                                       TextAlignment="Center"
-                                       x:Uid="Cancel"
-                                       FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Graphite}"
-                                       Padding="0,0"/>
-                        </Button>
-
+                            </Button>
+                        </Grid>
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Content>
