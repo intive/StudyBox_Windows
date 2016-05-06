@@ -8,17 +8,17 @@ namespace StudyBox.Core.Models
         public string ID { get; set; }
 
         [JsonProperty(PropertyName = "essence")]
-        public string Prompt { get; set; }
+        public string Essence { get; set; }
 
         [JsonProperty(PropertyName = "difficult")]
-        public int Difficulty { get; set; }
+        public int Difficult { get; set; }
 
         public Tip() { }
 
-        public Tip(string id, string prompt)
+        public Tip(string id, string essence)
         {
             this.ID = id;
-            this.Prompt = prompt;
+            this.Essence = essence;
         }
     }
 }

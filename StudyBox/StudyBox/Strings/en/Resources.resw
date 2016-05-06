@@ -347,7 +347,7 @@
     <value>Edit flashcard</value>
   </data>
   <data name="FillAllFieldsMessage.Text" xml:space="preserve">
-    <value>Fill all fields.</value>
+    <value>Not all fields contain correct characters number.</value>
   </data>
   <data name="OperationFailed" xml:space="preserve">
     <value>Operation failed</value>
@@ -369,5 +369,8 @@
   </data>
   <data name="IsPublic.Content" xml:space="preserve">
     <value>Is deck public?</value>
+  </data>
+  <data name="FlashcardsInDeck.Text" xml:space="preserve">
+    <value>Flashcards in deck</value>
   </data>
 </root>

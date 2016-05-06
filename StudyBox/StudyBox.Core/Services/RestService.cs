@@ -194,7 +194,7 @@ namespace StudyBox.Core.Services
             string url = _resources["DeckCreateUrl"].ToString();
 
             return await CreateHelper<Deck>(url,
-                new { name = deck.Name, publicVisible = deck.PublicVisible },
+                new { name = deck.Name, isPublic = deck.IsPublic },
                 true,
                 cts);
         }
@@ -203,7 +203,7 @@ namespace StudyBox.Core.Services
         {
             string url = String.Format(_resources["DeckUpdateUrl"].ToString(), deck.ID);
             return await UpdateHelper(url,
-                new { name = deck.Name, isPublic = deck.PublicVisible },
+                new { name = deck.Name, isPublic = deck.IsPublic },
                 cts);
         }
 
@@ -295,7 +295,7 @@ namespace StudyBox.Core.Services
             string url = String.Format(_resources["TipCreateUrl"].ToString(), deckId, flashcardId);
 
             return await CreateHelper<Tip>(url,
-                new { prompt = tip.Prompt },
+                new { essence = tip.Essence, difficult = tip.Difficult },
                 true,
                 cts);
         }
@@ -305,7 +305,7 @@ namespace StudyBox.Core.Services
             string url = String.Format(_resources["TipUpdateUrl"].ToString(), deckId, flashcardId, tip.ID);
 
             return await UpdateHelper(url,
-                new { prompt = tip.Prompt },
+                new { essence = tip.Essence, difficult = tip.Difficult },
                 cts);
         }
 
