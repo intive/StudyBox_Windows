@@ -374,4 +374,7 @@
     <value>Moje talie</value>
     <comment>DecksListView</comment>
   </data>
+  <data name="FlashcardsInDeck.Text" xml:space="preserve">
+    <value>Fiszki w talii</value>
+  </data>
 </root>
