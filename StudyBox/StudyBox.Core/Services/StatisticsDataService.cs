@@ -16,26 +16,40 @@ namespace StudyBox.Core.Services
 {
     public class StatisticsDataService : IStatisticsDataService
     {
+        public string UserId { get; set; }
         private readonly ResourceDictionary _resources = Application.Current.Resources;
+        private IUserDataStorageService _restService;
 
-        public StatisticsDataService()
+        public StatisticsDataService(IUserDataStorageService restService)
         {
-            string path1 = ApplicationData.Current.LocalFolder.Path + "/" + _resources["TestedDecksFileName"].ToString();
+            UserId = String.Empty;
+            _restService = restService;
+            InitializeFiles();
+        }
+
+        public void InitializeFiles()
+        {
+            UserId = _restService.GetUserEmail();
+            if (UserId == null)
+                UserId = String.Empty;
+            string path1 = ApplicationData.Current.LocalFolder.Path + "/" + UserId +_resources["TestedDecksFileName"].ToString();
             if (!File.Exists(path1))
                 File.Create(path1);
-            string path2 = ApplicationData.Current.LocalFolder.Path + "/" + _resources["StatisticsFileName"].ToString();
+            string path2 = ApplicationData.Current.LocalFolder.Path + "/" + UserId +_resources["StatisticsFileName"].ToString();
             if (!File.Exists(path2))
                 File.Create(path2);
-            string path3 = ApplicationData.Current.LocalFolder.Path + "/" + _resources["HistoryFileName"].ToString();
+            string path3 = ApplicationData.Current.LocalFolder.Path + "/" + UserId +_resources["HistoryFileName"].ToString();
             if (!File.Exists(path3))
                 File.Create(path3);
         }
+
+
 
         public void SaveStatistics(Statistics statistics)
         {
             try
             {
-                string path = ApplicationData.Current.LocalFolder.Path + "/" + _resources["StatisticsFileName"].ToString();
+                string path = ApplicationData.Current.LocalFolder.Path + "/" + UserId +_resources["StatisticsFileName"].ToString();
                 if (!File.Exists(path))
                     File.Create(path);
                 using (var file = File.Open(path, FileMode.Open, FileAccess.Write, FileShare.Read))
@@ -60,7 +74,7 @@ namespace StudyBox.Core.Services
             var statistics = new Statistics();
             try
             {
-                string path = ApplicationData.Current.LocalFolder.Path + "/"+_resources["StatisticsFileName"].ToString();
+                string path = ApplicationData.Current.LocalFolder.Path + "/"+ UserId + _resources["StatisticsFileName"].ToString();
                 if (!File.Exists(path))
                     SaveStatistics(new Statistics(0,0,0,0));
 
@@ -126,7 +140,7 @@ namespace StudyBox.Core.Services
         {
             try
             {
-                string path = ApplicationData.Current.LocalFolder.Path + "/" + _resources["TestedDecksFileName"].ToString();
+                string path = ApplicationData.Current.LocalFolder.Path + "/" + UserId + _resources["TestedDecksFileName"].ToString();
                 if (!File.Exists(path))
                     File.Create(path);
                 using (StreamWriter w = File.AppendText(path))
@@ -146,7 +160,7 @@ namespace StudyBox.Core.Services
             bool isTested = false;
             try
             {
-                string path = ApplicationData.Current.LocalFolder.Path + "/"+ _resources["TestedDecksFileName"].ToString();
+                string path = ApplicationData.Current.LocalFolder.Path + "/"+ UserId + _resources["TestedDecksFileName"].ToString();
                 if (!File.Exists(path))
                      SaveTestedDecks("init");
                 string fileContent = File.ReadAllText(path);
@@ -169,7 +183,7 @@ namespace StudyBox.Core.Services
             List<TestsHistory> testsHistories = new List<TestsHistory>();
             try
             {                
-                string path = ApplicationData.Current.LocalFolder.Path + "/" + _resources["HistoryFileName"].ToString();
+                string path = ApplicationData.Current.LocalFolder.Path + "/" + UserId + _resources["HistoryFileName"].ToString();
                 if (!File.Exists(path))
                     File.Create(path);
 
@@ -195,7 +209,7 @@ namespace StudyBox.Core.Services
         {
             try
             {
-                string path = ApplicationData.Current.LocalFolder.Path + "/" + _resources["HistoryFileName"].ToString();
+                string path = ApplicationData.Current.LocalFolder.Path + "/" + UserId + _resources["HistoryFileName"].ToString();
                 if (!File.Exists(path))
                     File.Create(path);                          
                 using (StreamWriter w = File.AppendText(path))

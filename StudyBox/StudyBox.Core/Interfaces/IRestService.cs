@@ -41,5 +41,6 @@ namespace StudyBox.Core.Interfaces
         Task<bool> SaveTestResults(List<TestResult> testResults, string deckId, CancellationTokenSource cts = null);
 
         Task<User> CreateUser(User user, CancellationTokenSource cts = null);
+        Task<User> GetLoggedUser(CancellationTokenSource cts = null);
     }
 }

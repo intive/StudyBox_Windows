@@ -194,6 +194,7 @@ namespace StudyBox.Core.ViewModels
             DecksCollection.Clear();
             SearchMessageVisibility = false;
             InitializeDecksCollection();
+            _statisticsService.InitializeFiles();
         }
 
         private async Task<bool> CheckInternetConnection()
