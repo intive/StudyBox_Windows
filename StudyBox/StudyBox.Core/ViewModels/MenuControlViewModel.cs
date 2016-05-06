@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Interfaces;
 using Windows.UI.Popups;
+using StudyBox.Core.Enums;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -18,6 +19,9 @@ namespace StudyBox.Core.ViewModels
         private bool _isSearchButtonEnabled = false;
         private bool _logoutButtonVisibility;
         private bool _addFlashcardVisibility;
+        private bool _searchButtonVisibility;
+        private bool _saveButtonVisibility;
+        private bool _exitButtonVisibility;
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
         private RelayCommand _cancelSearchingCommand;
@@ -29,11 +33,10 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToStatisticsCommand;
         private RelayCommand _newDeckFromFileCommand;
         private RelayCommand _goToAddDeckCommand;
+        private RelayCommand _goToUsersDecksCommand;
         private string _searchingContent;
         private string _titleBar;
-        private bool _searchButtonVisibility;
-        private bool _saveButtonVisibility;
-        private bool _exitButtonVisibility;
+
 
         public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService) : base(navigationService)
         {
@@ -46,7 +49,6 @@ namespace StudyBox.Core.ViewModels
             _restservice = restservice;
 
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
-            IsPaneOpen = false;
         }
 
         public string TitleBar
@@ -286,6 +288,37 @@ namespace StudyBox.Core.ViewModels
             get { return _goToAddDeckCommand ?? (_goToAddDeckCommand = new RelayCommand(GoToAddDeck)); }
         }
 
+        public RelayCommand GoToUsersDecksCommand
+        {
+            get
+            {
+                return _goToUsersDecksCommand ?? (_goToUsersDecksCommand = new RelayCommand(GoToUsersDecks));
+            }
+        }
+
+        private void HideSearchingContent()
+        {
+            if (IsSearchOpen)
+            {
+                IsSearchOpen = false;
+                SearchingContent = String.Empty;
+                SearchButtonVisibility = true;
+            }
+            if (IsPaneOpen)
+            {
+                IsPaneOpen = false;
+            }         
+        }
+
+        private void GoToUsersDecks()
+        {
+            NavigationService.NavigateTo("DecksListView");
+            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
+            Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
+            HideSearchingContent();
+            SearchButtonVisibility = true;
+        }
+
         private async void TestRandomDeck()
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
@@ -309,7 +342,7 @@ namespace StudyBox.Core.ViewModels
                 {
                     NavigationService.NavigateTo("ExamView");
                     Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
                 }
                 else
                 {
@@ -321,14 +354,19 @@ namespace StudyBox.Core.ViewModels
                 MessageDialog msg = new MessageDialog(ex.Message);
                 await msg.ShowAsync();
             }
+            finally
+            {
+                HideSearchingContent();
+            }
         }
 
         private void GoToDecks()
         {
             NavigationService.NavigateTo("DecksListView");
-            IsPaneOpen = false;
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
-            TitleBar = String.Empty;
+            Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
+            HideSearchingContent();
+            SearchButtonVisibility = true;
         }
 
         private void GoToAddDeck()
@@ -336,9 +374,9 @@ namespace StudyBox.Core.ViewModels
             if (_accountService.IsUserLoggedIn())
             {
                 NavigationService.NavigateTo("CreateFlashcardView");
-                IsPaneOpen = false;
                 Messenger.Default.Send<DataMessageToCreateFlashcard>(new DataMessageToCreateFlashcard(null, null));
-                TitleBar = String.Empty;
+                HideSearchingContent();
+                SearchButtonVisibility = false;
             }
         }
 
@@ -346,35 +384,39 @@ namespace StudyBox.Core.ViewModels
         {
             NavigationService.NavigateTo("StatisticsView");
             Messenger.Default.Send<ReloadMessageToStatistics>(new ReloadMessageToStatistics(true));
-            IsPaneOpen = false;
-            TitleBar = String.Empty;
+            HideSearchingContent();
+            SearchButtonVisibility = false;
         }
 
         private void GoToNewDeckFromFile()
         {
             NavigationService.NavigateTo("ImageImportView");
             Messenger.Default.Send<NewDeckMessageToImageImport>(new NewDeckMessageToImageImport(true));
-            IsPaneOpen = false;
+            HideSearchingContent();
+            SearchButtonVisibility = false;
         }
 
         private void DoSearch()
         {
             NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<SearchMessageToDeckList>(new SearchMessageToDeckList(SearchingContent.Trim()));
+            SearchingContent = String.Empty;
         }
 
         private void CancelSearching()
         {
             if (IsSearchOpen)
             {
-                IsSearchOpen = false;
                 SearchButtonVisibility = true;
+                HideSearchingContent();
             }
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
         }
         private void OpenMenu()
         {
             IsPaneOpen = IsPaneOpen != true;
+            IsSearchOpen = false;
+            SearchingContent = String.Empty;
         }
 
         private void ShowSearchPanel()
@@ -384,22 +426,24 @@ namespace StudyBox.Core.ViewModels
                 ExitButtonVisibility = true;
             else
                 SearchButtonVisibility = true;
+            if(IsPaneOpen)
+                IsPaneOpen = false;
         }
 
         private void Logout()
         {
             _accountService.LogOut();
-            IsPaneOpen = false;
             LogoutButtonVisibility = false;
             NavigationService.NavigateTo("LoginView");
-            TitleBar = String.Empty;
+            HideSearchingContent();
+            SearchButtonVisibility = true;
         }
 
         private void Login()
         {
-            IsPaneOpen = false;
             NavigationService.NavigateTo("LoginView");
-            TitleBar = String.Empty;
+            HideSearchingContent();
+            SearchButtonVisibility = true;
         }
 
         private void HandleMenuControlMessage(bool search, bool save, bool exit, string title)
@@ -417,7 +461,13 @@ namespace StudyBox.Core.ViewModels
             }
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             IsPaneOpen = false;
-            IsSearchOpen = false;
+            if(SearchButtonVisibility)
+                HideSearchingContent();
+            else
+            {
+                IsSearchOpen = false;
+                SearchingContent = String.Empty;
+            }
         }
     }
 }

@@ -132,6 +132,25 @@ namespace StudyBox.Core.Services
             }
         }
 
+        public async Task<List<Deck>> GetUserDecks(CancellationTokenSource cts = null)
+        {
+            try
+            {
+                string url = _resources["GetAllUserDecks"].ToString();
+                string webPageSource = await GetWebPageSource(url, cts);
+
+                return _deserializeJsonService.GetObjectFromJson<List<Deck>>(webPageSource);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public async Task<Deck> GetDeckById(string deckId, CancellationTokenSource cts = null)
         {
             try

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using StudyBox.Core.Enums;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
@@ -227,6 +228,7 @@ namespace StudyBox.Core.ViewModels
                             {
                                 NavigationService.NavigateTo("DecksListView");
                                 Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                                Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
                                 ClearInputs();
                             }
                             else

@@ -172,7 +172,7 @@ namespace StudyBox.Core.ViewModels
             {
                 _mainRectangleWithQuestionOrHint = value;
                 RaisePropertyChanged("MainRectangleWithQuestionOrHint");
-            }
+        }
         }
 
         public string Answer
@@ -201,7 +201,7 @@ namespace StudyBox.Core.ViewModels
             {
                 _currentlyVisibleHint = value;
                 RaisePropertyChanged("CurrentlyVisibleHint");
-            }
+        }
         }
 
         public bool AreAnyFlashcards
@@ -258,10 +258,10 @@ namespace StudyBox.Core.ViewModels
                         if (_flashcards != null && _flashcards.Count > 0)
                         {
                             string deckId = _deckInstance.ID;
-                            for(int i =0; i < _flashcards.Count; i++)
+                            for (int i = 0; i < _flashcards.Count; i++)
                             {
-                                var tips = await _restService.GetTips(deckId,_flashcards[i].Id);
-                                if(tips!=null && tips.Count>0)
+                                var tips = await _restService.GetTips(deckId, _flashcards[i].Id);
+                                if (tips != null && tips.Count > 0)
                                 {
                                     _flashcards[i].Tips = tips;
                                     _flashcards[i].TipsCount = tips.Count;
@@ -275,11 +275,11 @@ namespace StudyBox.Core.ViewModels
                     }
 
                     //MOCK
-                    /* _flashcards = new List<Flashcard>
-                     {
-                         new Flashcard {Answer="a", Question="q", TipsCount=2 },
-                         new Flashcard {Answer="a2", Question="q2", TipsCount=0 }
-                     };*/
+                   /* _flashcards = new List<Flashcard>
+                    {
+                        new Flashcard {Answer="a", Question="q", TipsCount=2 },
+                        new Flashcard {Answer="a2", Question="q2", TipsCount=0 }
+                    };*/
                 }
                 else
                 {
@@ -287,7 +287,7 @@ namespace StudyBox.Core.ViewModels
                 }
 
                 _badAnswerFlashcards = new List<Flashcard>();
-
+                
                 if (_flashcards != null && _flashcards.Count > 0)
                 {
                     if (!IsQuestionVisible)
@@ -320,9 +320,9 @@ namespace StudyBox.Core.ViewModels
         {
             if (!CurrentlyVisibleHint)
             {
-                Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowAnswer" });
-                IsQuestionVisible = false;
-            }
+            Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowAnswer" });
+            IsQuestionVisible = false;
+        }
         }
 
         private void CountGoodAnswerAndShowNextFlashcard()
@@ -331,7 +331,7 @@ namespace StudyBox.Core.ViewModels
             _statisticsService.IncrementAnswers();
             _statisticsService.IncrementGoodAnswers();
             ShowNexFlashCardOrGoToResults();
-
+            
         }
 
         private void ShowNexFlashCardOrGoToResults()
@@ -343,7 +343,7 @@ namespace StudyBox.Core.ViewModels
             }
             else
             {
-                _statisticsService.SaveTestsHistory(new TestsHistory(DateTime.Now.ToString("g"), _nameOfDeck, _numberOfCorrectAnswers, _numberOfCurrentFlashcard));
+                _statisticsService.SaveTestsHistory(new TestsHistory(DateTime.Now.ToString("g"),_nameOfDeck,_numberOfCorrectAnswers,_numberOfCurrentFlashcard));
                 NavigationService.NavigateTo("SummaryView");
                 Messenger.Default.Send<DataMessageToSummary>(new DataMessageToSummary(new Exam { CorrectAnswers = _numberOfCorrectAnswers, Questions = _flashcards.Count }));
                 Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance, _badAnswerFlashcards));

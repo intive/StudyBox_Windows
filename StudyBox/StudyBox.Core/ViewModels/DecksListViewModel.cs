@@ -10,6 +10,7 @@ using Windows.UI.Popups;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using StudyBox.Core.Enums;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
@@ -29,6 +30,7 @@ namespace StudyBox.Core.ViewModels
         private bool _isDeckSelected = false;
         private string _selectedID = "";
         private bool _isMyDeck = false;
+        private DecksType _decksType;
         #endregion
 
         #region Constructors
@@ -36,6 +38,7 @@ namespace StudyBox.Core.ViewModels
         {
             Messenger.Default.Register<ReloadMessageToDecksList>(this,x=> HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
+            Messenger.Default.Register<DecksTypeMessage>(this,x=>HandleDecksTypeMessage(x.DecksType));
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
             _accountService = accountService;
@@ -137,7 +140,10 @@ namespace StudyBox.Core.ViewModels
             {
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
-                _deckLists = await _restService.GetDecks();
+                if (_decksType == DecksType.PublicDecks)
+                    _deckLists = await _restService.GetDecks();
+                else
+                    _deckLists = await _restService.GetUserDecks();
                 if(_deckLists!=null)
                 {
                     _deckLists.Sort((x, y) => string.Compare(x.Name, y.Name));
@@ -151,6 +157,7 @@ namespace StudyBox.Core.ViewModels
         {
             if (reload)
             {
+                IsDeckSelected = false;
                 DecksCollection.Clear();
                 SearchMessageVisibility = false;
                 InitializeDecksCollection();
@@ -159,6 +166,7 @@ namespace StudyBox.Core.ViewModels
 
         private async void HandleSearchMessage(string searchingContent)
         {
+            IsDeckSelected = false;
             if (await CheckInternetConnection())
             {
                 DecksCollection.Clear();
@@ -177,6 +185,15 @@ namespace StudyBox.Core.ViewModels
                     SearchMessageVisibility = true;
                 }
             }
+        }
+
+        private void HandleDecksTypeMessage(DecksType decksType)
+        {
+            IsDeckSelected = false;
+            _decksType = decksType;
+            DecksCollection.Clear();
+            SearchMessageVisibility = false;
+            InitializeDecksCollection();
         }
 
         private async Task<bool> CheckInternetConnection()
@@ -247,7 +264,7 @@ namespace StudyBox.Core.ViewModels
             _selectedID = String.Empty;
 
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
         }
 
         private void GoToTest()
@@ -257,7 +274,7 @@ namespace StudyBox.Core.ViewModels
             Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
             _selectedID = String.Empty;
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
 
             _statisticsService.IncrementTestsCountAnswers();
             _statisticsService.IncrementCountOfDecks(deck);
@@ -272,7 +289,7 @@ namespace StudyBox.Core.ViewModels
             _selectedID = String.Empty;
 
             Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
 
         }
 
@@ -280,6 +297,7 @@ namespace StudyBox.Core.ViewModels
         {
             IsDeckSelected = false;
             _selectedID = "";
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
         }
 
         private async void TapTile(string id)
@@ -296,6 +314,7 @@ namespace StudyBox.Core.ViewModels
             }
             else
                 IsMyDeck = false;
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false));
         }
 
         #endregion

@@ -235,7 +235,7 @@
     <value>Wejdź jako niezarejestrowany użytkownik</value>
   </data>
   <data name="GoToDecksList.Content" xml:space="preserve">
-    <value>Moje talie</value>
+    <value>Publiczne talie</value>
   </data>
   <data name="ChooseLearning.Text" xml:space="preserve">
     <value>Nauka</value>
@@ -347,7 +347,7 @@
     <value>Edycja fiszki</value>
   </data>
   <data name="FillAllFieldsMessage.Text" xml:space="preserve">
-    <value>Nie wszystkie pola zawierają prawidłową liczbę znaków.</value>
+    <value>Uzupełnij pola</value>
   </data>
   <data name="OperationFailed" xml:space="preserve">
     <value>Operacja nie powiodła się</value>
@@ -370,7 +370,8 @@
   <data name="IsPublic.Content" xml:space="preserve">
     <value>Czy talia jest publiczna?</value>
   </data>
-  <data name="FlashcardsInDeck.Text" xml:space="preserve">
-    <value>Fiszki w talii</value>
+  <data name="GoToUserDecksList.Content" xml:space="preserve">
+    <value>Moje talie</value>
+    <comment>DecksListView</comment>
   </data>
 </root>

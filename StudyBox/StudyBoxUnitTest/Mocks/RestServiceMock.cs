@@ -526,5 +526,10 @@ namespace StudyBoxUnitTest.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public Task<List<Deck>> GetUserDecks(CancellationTokenSource cts = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

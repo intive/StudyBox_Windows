@@ -13,7 +13,8 @@
     <x:String x:Key="DeckCreateUrl">http://dev.patronage2016.blstream.com:2000/decks</x:String>
     <x:String x:Key="DeckGetByIdUrl">http://dev.patronage2016.blstream.com:2000/decks/{0}</x:String>
     <!--<x:String x:Key="DeckGetAllUrl">http://dev.patronage2016.blstream.com:2000/decks</x:String>-->
-    <x:String x:Key="DeckGetAllUrl">http://dev.patronage2016.blstream.com:2000/decks?includeOwn=true&amp;flashcardsCount=true</x:String>
+    <x:String x:Key="GetAllUserDecks">http://dev.patronage2016.blstream.com:2000/decks/me?flashcardsCount=true</x:String>
+    <x:String x:Key="DeckGetAllUrl">http://dev.patronage2016.blstream.com:2000/decks?includeOwn=false&amp;flashcardsCount=true</x:String>
     <x:String x:Key="DeckGetAllByNameUrl">http://dev.patronage2016.blstream.com:2000/decks?name={0}</x:String>
     <x:String x:Key="DeckUpdateUrl">http://dev.patronage2016.blstream.com:2000/decks/{0}</x:String>
     <x:String x:Key="DeckRemoveUrl">http://dev.patronage2016.blstream.com:2000/decks/{0}</x:String>

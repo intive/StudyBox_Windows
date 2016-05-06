@@ -13,16 +13,12 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "difficult")]
         public int Difficult { get; set; }
 
-        public Tip()
-        {
-            Difficult = 1;
-        }
+        public Tip() { }
 
         public Tip(string id, string essence)
         {
             this.ID = id;
             this.Essence = essence;
-            Difficult = 1;
         }
     }
 }

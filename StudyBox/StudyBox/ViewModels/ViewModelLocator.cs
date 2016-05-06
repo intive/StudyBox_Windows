@@ -114,7 +114,7 @@ namespace StudyBox.ViewModels
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MenuControlViewModel>();               
+                return ServiceLocator.Current.GetInstance<MenuControlViewModel>();  
             }
         }
 
