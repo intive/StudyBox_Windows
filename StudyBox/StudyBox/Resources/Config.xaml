@@ -12,14 +12,13 @@
 
     <x:String x:Key="DeckCreateUrl">http://dev.patronage2016.blstream.com:2000/decks</x:String>
     <x:String x:Key="DeckGetByIdUrl">http://dev.patronage2016.blstream.com:2000/decks/{0}</x:String>
-    <!--<x:String x:Key="DeckGetAllUrl">http://dev.patronage2016.blstream.com:2000/decks</x:String>-->
     <x:String x:Key="GetAllUserDecks">http://dev.patronage2016.blstream.com:2000/decks/me?flashcardsCount=true</x:String>
     <x:String x:Key="DeckGetAllUrl">http://dev.patronage2016.blstream.com:2000/decks?includeOwn=false&amp;flashcardsCount=true</x:String>
     <x:String x:Key="DeckGetAllByNameUrl">http://dev.patronage2016.blstream.com:2000/decks?name={0}</x:String>
     <x:String x:Key="DeckUpdateUrl">http://dev.patronage2016.blstream.com:2000/decks/{0}</x:String>
     <x:String x:Key="DeckRemoveUrl">http://dev.patronage2016.blstream.com:2000/decks/{0}</x:String>
     <x:String x:Key="GetAllDecksUrl">http://dev.patronage2016.blstream.com:2000/decks?includeOwn={0}&amp;flashcardsCount={1}&amp;name={2}</x:String>
-    <x:String x:Key="GetRandomDeckUrl">http://dev.patronage2016.blstream.com:2000/decks?random=true</x:String>
+    <x:String x:Key="GetRandomDeckUrl">http://dev.patronage2016.blstream.com:2000/decks/random</x:String>
 
     <x:String x:Key="TipCreateUrl">http://dev.patronage2016.blstream.com:2000/decks/{0}/flashcards/{1}/tips</x:String>
     <x:String x:Key="TipGetByIdUrl">http://dev.patronage2016.blstream.com:2000/decks/{0}/flashcards/{1}/tips/{2}</x:String>
@@ -42,6 +41,5 @@
     <x:String x:Key="StatisticsFileName">statistics.txt</x:String>
     <x:String x:Key="TestedDecksFileName">testedDecks.txt</x:String>
     <x:String x:Key="HistoryFileName">history.txt</x:String>
-    <!--<x:String x:Key="UserGetLoggedUrl">https://api.myjson.com/bins/2v4iq</x:String>-->
 
 </ResourceDictionary>
