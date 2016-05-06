@@ -417,6 +417,8 @@ namespace StudyBox.Core.ViewModels
             IsPaneOpen = IsPaneOpen != true;
             IsSearchOpen = false;
             SearchingContent = String.Empty;
+            if (ExitButtonVisibility)
+                SearchButtonVisibility = true;
         }
 
         private void ShowSearchPanel()
