@@ -264,7 +264,7 @@ namespace StudyBox.Core.ViewModels
             _selectedID = String.Empty;
 
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
         }
 
         private void GoToTest()
@@ -274,7 +274,7 @@ namespace StudyBox.Core.ViewModels
             Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
             _selectedID = String.Empty;
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
 
             _statisticsService.IncrementTestsCountAnswers();
             _statisticsService.IncrementCountOfDecks(deck);
@@ -289,7 +289,7 @@ namespace StudyBox.Core.ViewModels
             _selectedID = String.Empty;
 
             Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
 
         }
 
@@ -297,6 +297,7 @@ namespace StudyBox.Core.ViewModels
         {
             IsDeckSelected = false;
             _selectedID = "";
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
         }
 
         private async void TapTile(string id)
@@ -313,6 +314,7 @@ namespace StudyBox.Core.ViewModels
             }
             else
                 IsMyDeck = false;
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false));
         }
 
         #endregion
