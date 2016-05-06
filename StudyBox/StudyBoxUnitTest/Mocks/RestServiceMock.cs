@@ -139,6 +139,11 @@ namespace StudyBoxUnitTest.Mocks
             throw new NotImplementedException();
         }
 
+        public Task<List<Deck>> GetUserDecks(CancellationTokenSource cts = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Deck> GetDeckById(string deckId, CancellationTokenSource cts = null)
         {
             throw new NotImplementedException();
@@ -523,6 +528,11 @@ namespace StudyBoxUnitTest.Mocks
         }
 
         public Task<User> CreateUser(User user, CancellationTokenSource cts = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> GetLoggedUser(CancellationTokenSource cts = null)
         {
             throw new NotImplementedException();
         }
