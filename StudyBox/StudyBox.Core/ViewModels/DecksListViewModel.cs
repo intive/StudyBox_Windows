@@ -306,16 +306,18 @@ namespace StudyBox.Core.ViewModels
             _selectedID = id;
             IsDeckSelected = true;
             Deck deck = await _restService.GetDeckById(_selectedID);
-            //if (_decksType == DecksType.MyDecks)
-            if (_accountService.IsUserLoggedIn())
+            IsMyDeck = false;
+
+            if (deck!= null)
             {
-                if (_accountService.GetUserEmail() == deck.CreatorEmail)
-                    IsMyDeck = true;
-                else
-                    IsMyDeck = false;
+                //if (_decksType == DecksType.MyDecks) 
+                if (_accountService.IsUserLoggedIn())
+                {
+                    if (_accountService.GetUserEmail() == deck.CreatorEmail)
+                        IsMyDeck = true;
+                }
             }
-            else
-                IsMyDeck = false;
+            
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false));
         }
 

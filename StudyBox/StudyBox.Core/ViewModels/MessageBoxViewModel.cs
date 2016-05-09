@@ -119,6 +119,7 @@ namespace StudyBox.Core.ViewModels
             IsVisible = visible;
             if (IsVisible)
             {
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false));
                 IsLoginButton = false;
                 IsOkButton = false;
 
@@ -128,6 +129,7 @@ namespace StudyBox.Core.ViewModels
                     IsOkButton = true;
 
                 MessageText = message;
+                
             }
             
         }

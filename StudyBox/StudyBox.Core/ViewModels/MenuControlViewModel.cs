@@ -377,9 +377,6 @@ namespace StudyBox.Core.ViewModels
             }
             else
                 Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, true, StringResources.GetString("LoginMessage")));
-
-            if (IsPaneOpen)
-                IsPaneOpen = false;
         }
 
         private void GoToStatistics()
