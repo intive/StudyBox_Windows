@@ -147,6 +147,7 @@
     <Compile Include="Services\StatisticsDataService.cs" />
     <Compile Include="Services\UserDataStorageService.cs" />
     <Compile Include="Services\ValidationService.cs" />
+    <Compile Include="ViewModels\CreateDeckViewModel.cs" />
     <Compile Include="ViewModels\CreateFlashcardViewModel.cs" />
     <Compile Include="ViewModels\DecksListViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />

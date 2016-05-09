@@ -32,6 +32,7 @@ namespace StudyBox.ViewModels
             SimpleIoc.Default.Register<ImageImportViewModel>();
 			SimpleIoc.Default.Register<CreateFlashcardViewModel>();
             SimpleIoc.Default.Register<ManageDeckViewModel>();
+            SimpleIoc.Default.Register<CreateDeckViewModel>();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -74,6 +75,7 @@ namespace StudyBox.ViewModels
             navigationService.Configure("ImageImportView", typeof(ImageImportView));
 			navigationService.Configure("CreateFlashcardView", typeof(CreateFlashcardView));
             navigationService.Configure("ManageDeckView", typeof(ManageDeckView));
+            navigationService.Configure("CreateDeckView", typeof(CreateDeckView));
 
             return navigationService;
         }
@@ -163,11 +165,20 @@ namespace StudyBox.ViewModels
                 return ServiceLocator.Current.GetInstance<CreateFlashcardViewModel>();
             }
         }
+
         public ManageDeckViewModel ManageDeckViewModel
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<ManageDeckViewModel>();
+            }
+        }
+
+        public CreateDeckViewModel CreateDeckViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CreateDeckViewModel>();
             }
         }
 

@@ -290,9 +290,6 @@
   <data name="ImportFile.Text" xml:space="preserve">
     <value>IMPORT FILE</value>
   </data>
-  <data name="NewDeckFromFile.Content" xml:space="preserve">
-    <value>Create new deck from file</value>
-  </data>
   <data name="TakePhoto.Text" xml:space="preserve">
     <value>TAKE A PHOTO</value>
   </data>
@@ -362,7 +359,7 @@
     <value>Manage deck</value>
   </data>
   <data name="GoToAddDeck.Content" xml:space="preserve">
-    <value>Create new deck with flashcard</value>
+    <value>Create new deck</value>
   </data>
   <data name="GoToAddFlashcard.Text" xml:space="preserve">
     <value>Add new flashcard</value>
@@ -372,5 +369,17 @@
   </data>
   <data name="FlashcardsInDeck.Text" xml:space="preserve">
     <value>Flashcards in deck</value>
+  </data>
+  <data name="LogInToAddDeck" xml:space="preserve">
+    <value>You have to be logged in to add new deck.</value>
+  </data>
+  <data name="CreateDeckFromFile.Text" xml:space="preserve">
+    <value>Create new deck from file</value>
+  </data>
+  <data name="CreateDeckWithFlashcard.Text" xml:space="preserve">
+    <value>Create new deck with flashcard</value>
+  </data>
+  <data name="CreatingDeck.Text" xml:space="preserve">
+    <value>Creating new deck</value>
   </data>
 </root>
