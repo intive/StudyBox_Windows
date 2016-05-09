@@ -279,12 +279,11 @@ namespace StudyBox.Core.ViewModels
                     _image = image;
                     Thumbnail = await image.GetThumbnailAsync(ThumbnailMode.PicturesView);
                     ThumbnailVisibility = true;
-                }                    
-            }                
+                }
+            }
             else
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("CameraNotFound"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("CameraNotFound")));
             }
 
         }
@@ -350,7 +349,7 @@ namespace StudyBox.Core.ViewModels
                                 await _restService.RemoveDeck(_deckInstance.ID);
                             MessageDialog msg = new MessageDialog(StringResources.GetString("OperationFailed"));
                             await msg.ShowAsync();
-                        }                        
+                        }
                     }
                     catch
                     {
@@ -362,7 +361,7 @@ namespace StudyBox.Core.ViewModels
                         IsDataLoading = false;
                     }
                 }
-            }                    
+            }
         }
 
         private async Task<bool> IsImageToLarge(StorageFile image)

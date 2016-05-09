@@ -33,55 +33,56 @@
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <ContentControl x:Name="LabelMarginManagment" Visibility="Collapsed"/>
 
-        <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
+        <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Canvas.ZIndex="2"/>
+        <userControls:MessageBoxControlView Grid.Row="1" Canvas.ZIndex="1" VerticalAlignment="Top"/>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Margin="5" 
-                      HorizontalAlignment="Stretch"  
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Margin="5"
+                      HorizontalAlignment="Stretch"
                       VerticalScrollBarVisibility="Hidden">
 
-            <StackPanel HorizontalAlignment="Stretch" 
+            <StackPanel HorizontalAlignment="Stretch"
                     Margin="5,5,5,5" Padding="5"
                     VerticalAlignment="Stretch" >
-                <TextBlock  FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
+                <TextBlock  FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
-                                HorizontalAlignment="Center" 
+                                HorizontalAlignment="Center"
                                 Text="{Binding HeaderText}" />
 
-                <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
+                <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"
                                 FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
                                 x:Uid="DeckName" />
 
-                <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"     
+                <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                              FontFamily="{StaticResource LatoRegularFontFamily}"
-                             TextWrapping="Wrap" 
-                             Text="{Binding DeckName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             TextWrapping="Wrap"
+                             Text="{Binding DeckName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              MaxLength="{Binding MaxDeckNameCharacters, Mode=OneTime}" />
 
                 <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                    FontFamily="{StaticResource LatoRegularFontFamily}">
                             <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Foreground="{Binding IsDeckNameValid, Converter={StaticResource BoolToBrushConverter}}">                      
+                                 Foreground="{Binding IsDeckNameValid, Converter={StaticResource BoolToBrushConverter}}">
                             </Run>
                             <Run Text="/"/>
                             <Run Text="{Binding MaxDeckNameCharacters}"></Run>
                 </TextBlock>
 
-                <CheckBox  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"   
-                                   IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                <CheckBox  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"
+                                   IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    x:Uid="isPublic"
                                    FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                    FontFamily="{StaticResource LatoRegularFontFamily}"
                                    VerticalAlignment="Center"/>
 
-                <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
+                <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"
                                 FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
                                 x:Uid="Image" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 
-                    <Image Width="150" Height="150" 
+                    <Image Width="150" Height="150"
                            Source="{Binding Thumbnail, Converter={StaticResource ThumbnailToImageConverter}}" Visibility="{Binding ThumbnailVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -105,12 +106,12 @@
                     </StackPanel>
                 </StackPanel>
 
-                <TextBlock x:Name="GeneralError"  
+                <TextBlock x:Name="GeneralError"
                                    Visibility="{Binding IsGeneralError, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                   Foreground="{StaticResource Raspberry}" 
-                                   FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
+                                   Foreground="{StaticResource Raspberry}"
+                                   FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}"
                                    FontFamily="{StaticResource LatoRegularFontFamily}"
-                                   TextAlignment="Center"                                    
+                                   TextAlignment="Center"
                                    x:Uid="FillAllFieldsMessage"
                                    Margin="10,15,0,10" >
                 </TextBlock>
@@ -123,27 +124,27 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0"
-                                HorizontalAlignment="Stretch"                                                          
-                                Background="{StaticResource Raspberry}" 
+                                HorizontalAlignment="Stretch"
+                                Background="{StaticResource Raspberry}"
                                 Command="{Binding Cancel}">
                         <TextBlock TextWrapping="Wrap"
                                        x:Uid="Cancel"
                                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                        FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Grey}" 
+                                       Foreground="{StaticResource Grey}"
                                        Padding="0,5"/>
                     </Button>
 
                     <Button Grid.Column="2"
                                 HorizontalAlignment="Stretch"
-                                Name="SubmitForm"                                
-                                Background="{StaticResource DarkBlue}" 
+                                Name="SubmitForm"
+                                Background="{StaticResource DarkBlue}"
                                 Command="{Binding SubmitForm}">
                         <TextBlock TextWrapping="Wrap"
                                        Text="{Binding SubmitFormMessage, Mode=OneWay}"
                                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                        FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Grey}" 
+                                       Foreground="{StaticResource Grey}"
                                        Padding="0,5"/>
                     </Button>
                 </Grid>

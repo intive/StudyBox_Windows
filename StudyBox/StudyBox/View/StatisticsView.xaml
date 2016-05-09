@@ -29,6 +29,8 @@
         </Grid.RowDefinitions>
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
         <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2" Grid.Row="0" Grid.Column="0"/>
+        <userControls:MessageBoxControlView Grid.Row="1" Canvas.ZIndex="1" VerticalAlignment="Top"/>
+        
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
 
         <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">

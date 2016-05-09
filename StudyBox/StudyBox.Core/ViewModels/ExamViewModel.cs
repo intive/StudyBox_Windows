@@ -271,7 +271,7 @@ namespace StudyBox.Core.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        ShowErrorMessage(ex.Message);
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, ex.Message));
                     }
 
                     //MOCK
@@ -367,12 +367,12 @@ namespace StudyBox.Core.ViewModels
 
                 if (!await _internetConnectionService.IsNetworkAvailable())
                 {
-                    ShowErrorMessage(StringResources.GetString("NoInternetConnection"));
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
                     return;
                 }
                 else if (!_internetConnectionService.IsInternetAccess())
                 {
-                    ShowErrorMessage(StringResources.GetString("AccessDenied"));
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("AccessDenied")));
                     return;
                 }
                 else
@@ -384,7 +384,7 @@ namespace StudyBox.Core.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        ShowErrorMessage(ex.Message);
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, ex.Message));
                     }
                 }
             }
@@ -396,12 +396,6 @@ namespace StudyBox.Core.ViewModels
             RaisePropertyChanged("IsRightArrowVisible");
             RaisePropertyChanged("IsLeftArrowVisible");
             RaisePropertyChanged("BottomRectangleText");
-        }
-
-        private async void ShowErrorMessage(string message)
-        {
-            MessageDialog msg = new MessageDialog(message);
-            await msg.ShowAsync();
         }
 
         private void ShowQuestionView()
