@@ -386,4 +386,7 @@
   <data name="CreatingDeck.Text" xml:space="preserve">
     <value>Tworzenie talii</value>
   </data>
+  <data name="Image.Text" xml:space="preserve">
+    <value>Zdjęcie</value>
+  </data>
 </root>

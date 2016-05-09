@@ -5,75 +5,171 @@
     xmlns:local="using:StudyBox.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:userControls="using:StudyBox.UserControls"
     mc:Ignorable="d"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converters="using:StudyBox.Converters"
+    xmlns:userControls="using:StudyBox.UserControls"
+    xmlns:models="using:StudyBox.Core.Models"
     DataContext="{Binding Source={StaticResource Locator}, Path=ImageImportViewModel}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BoolToBrushConverter x:Key="BoolToBrushConverter" />
+        <converters:ThumbnailToImageConverter x:Key="ThumbnailToImageConverter" />
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="80"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" MinHeight="50" />
-            <RowDefinition x:Name="MainGridRow" Height="13*"/>
+            <RowDefinition Height="*" MinHeight="50" />
+            <RowDefinition Height="13*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border x:Name="TileManagment" Visibility="Collapsed"/>
-        <TextBlock x:Name="HeaderFontManagment" Visibility="Collapsed"/>
+        <TextBlock x:Name="SmallFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
+        <ContentControl x:Name="LabelMarginManagment" Visibility="Collapsed"/>
 
-        <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Canvas.ZIndex="2"/>
+        <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="{Binding HeaderText}"
-                       Foreground="{StaticResource Graphite}"
-                       FontSize="{Binding ElementName=HeaderFontManagment, Path=FontSize}"
-                       Style="{StaticResource SummaryTextStyle}" Margin="0,0,0,10">
-            </TextBlock>
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Margin="5" 
+                      HorizontalAlignment="Stretch"  
+                      VerticalScrollBarVisibility="Hidden">
 
-            <Button Command="{Binding ImportFileCommand}"
-                    Background="{StaticResource Raspberry}"
-                    Height="{Binding ElementName=TileManagment, Path=Height}"
-                    Style="{StaticResource SummaryButtonStyle}"
-                    Opacity="1" IsHitTestVisible="True">
-                <TextBlock x:Uid="ImportFile"
+            <StackPanel HorizontalAlignment="Stretch" 
+                    Margin="5,5,5,5" Padding="5"
+                    VerticalAlignment="Stretch" >
+                <TextBlock  FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
+                                HorizontalAlignment="Center" 
+                                Text="{Binding HeaderText}" />
+
+                <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
+                                FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
+                                x:Uid="DeckName" />
+
+                <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"     
+                             FontFamily="{StaticResource LatoRegularFontFamily}"
+                             TextWrapping="Wrap" 
+                             Text="{Binding DeckName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             MaxLength="{Binding MaxDeckNameCharacters, Mode=OneTime}" />
+
+                <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                   FontFamily="{StaticResource LatoRegularFontFamily}">
+                            <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Foreground="{Binding IsDeckNameValid, Converter={StaticResource BoolToBrushConverter}}">                      
+                            </Run>
+                            <Run Text="/"/>
+                            <Run Text="{Binding MaxDeckNameCharacters}"></Run>
+                </TextBlock>
+
+                <CheckBox  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"   
+                                   IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                   x:Uid="isPublic"
+                                   FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                   FontFamily="{StaticResource LatoRegularFontFamily}"
+                                   VerticalAlignment="Center"/>
+
+                <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
+                                FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
+                                x:Uid="Image" />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+                    <Image Width="150" Height="150" 
+                           Source="{Binding Thumbnail, Converter={StaticResource ThumbnailToImageConverter}}" Visibility="{Binding ThumbnailVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Command="{Binding ImportFileCommand}"
+                            Background="{StaticResource Raspberry}"
+                            Style="{StaticResource SummaryButtonStyle}"
+                            Opacity="1" IsHitTestVisible="True">
+                            <TextBlock x:Uid="ImportFile"
                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                            Style="{StaticResource SummaryTextInButtonStyle}"/>
-            </Button>
+                        </Button>
 
-            <Button Command="{Binding TakePhotoCommand}"
-                    Background="{StaticResource DarkBlue}"
-                    Height="{Binding ElementName=TileManagment, Path=Height}"
-                    Style="{StaticResource SummaryButtonStyle}"
-                    Opacity="1" IsHitTestVisible="True">
-                <TextBlock x:Uid="TakePhoto"
+                        <Button Command="{Binding TakePhotoCommand}"
+                            Background="{StaticResource DarkBlue}"
+                            Style="{StaticResource SummaryButtonStyle}"
+                            Opacity="1" IsHitTestVisible="True">
+                            <TextBlock x:Uid="TakePhoto"
                            FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                            Style="{StaticResource SummaryTextInButtonStyle}"/>
-            </Button>
-        </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock x:Name="GeneralError"  
+                                   Visibility="{Binding IsGeneralError, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                   Foreground="{StaticResource Raspberry}" 
+                                   FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
+                                   FontFamily="{StaticResource LatoRegularFontFamily}"
+                                   TextAlignment="Center"                                    
+                                   x:Uid="FillAllFieldsMessage"
+                                   Margin="10,15,0,10" >
+                </TextBlock>
+
+                <Grid Margin="0,25,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                                HorizontalAlignment="Stretch"                                                          
+                                Background="{StaticResource Raspberry}" 
+                                Command="{Binding Cancel}">
+                        <TextBlock TextWrapping="Wrap"
+                                       x:Uid="Cancel"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Grey}" 
+                                       Padding="0,5"/>
+                    </Button>
+
+                    <Button Grid.Column="2"
+                                HorizontalAlignment="Stretch"
+                                Name="SubmitForm"                                
+                                Background="{StaticResource DarkBlue}" 
+                                Command="{Binding SubmitForm}">
+                        <TextBlock TextWrapping="Wrap"
+                                       Text="{Binding SubmitFormMessage, Mode=OneWay}"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Grey}" 
+                                       Padding="0,5"/>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <ProgressRing x:Name="InitializeProgressRing"
+                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                      Width="80"
+                      Height="80"
+                      Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      IsActive="{Binding IsDataLoading}"
+                      Foreground="{StaticResource DarkBlue}"
+                      FontWeight="Bold"/>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">
-                <VisualState x:Name="WidePhoneState">
+                <VisualState x:Name="NarrowPhoneState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HeaderFontManagment.FontSize" Value="30"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="20"/>
-                        <Setter Target="TileManagment.Height" Value="35"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState x:Name="NarrowPhoneState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="500"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="HeaderFontManagment.FontSize" Value="34"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="24"/>
-                        <Setter Target="TileManagment.Height" Value="40"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="14"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="18"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,15,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -82,9 +178,9 @@
                         <AdaptiveTrigger MinWindowWidth="720" MinWindowHeight="500"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HeaderFontManagment.FontSize" Value="38"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="28"/>
-                        <Setter Target="TileManagment.Height" Value="55"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="16"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -93,14 +189,16 @@
                         <AdaptiveTrigger MinWindowWidth="1024" MinWindowHeight="690"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HeaderFontManagment.FontSize" Value="45"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="35"/>
-                        <Setter Target="TileManagment.Height" Value="65"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="18"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
-
             </VisualStateGroup>
+
         </VisualStateManager.VisualStateGroups>
+
+
 
     </Grid>
 </Page>

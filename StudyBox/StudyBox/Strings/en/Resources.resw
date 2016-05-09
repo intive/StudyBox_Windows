@@ -382,4 +382,7 @@
   <data name="CreatingDeck.Text" xml:space="preserve">
     <value>Creating new deck</value>
   </data>
+  <data name="Image.Text" xml:space="preserve">
+    <value>Image</value>
+  </data>
 </root>

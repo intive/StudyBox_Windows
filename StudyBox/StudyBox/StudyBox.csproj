@@ -115,6 +115,7 @@
     <Compile Include="Converters\BoolToExpandArrowSymbol.cs" />
     <Compile Include="Converters\BoolToSortingArrowConventer.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ThumbnailToImageConverter.cs" />
     <Compile Include="UserControls\MenuControlView.xaml.cs">
       <DependentUpon>MenuControlView.xaml</DependentUpon>
     </Compile>
