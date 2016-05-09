@@ -17,8 +17,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _createDeckFromFile;
 
         public CreateDeckViewModel(INavigationService navigationService) : base(navigationService)
-        {
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+        {          
         }
      
         public RelayCommand CreateDeckWithFlashcard

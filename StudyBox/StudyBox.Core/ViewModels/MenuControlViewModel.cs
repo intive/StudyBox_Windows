@@ -371,6 +371,9 @@ namespace StudyBox.Core.ViewModels
                 NavigationService.NavigateTo("CreateDeckView");
                 HideSearchingContent();
                 SearchButtonVisibility = false;
+                SaveButtonVisibility = false;
+                ExitButtonVisibility = false;
+                TitleBar = StringResources.GetString("StudyBox");
             }
             else
             {
