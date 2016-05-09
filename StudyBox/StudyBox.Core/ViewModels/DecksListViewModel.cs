@@ -201,14 +201,12 @@ namespace StudyBox.Core.ViewModels
         {
             if (! await _internetConnectionService.IsNetworkAvailable())
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("NoInternetConnection"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
                 return false;
             }
             else if (! _internetConnectionService.IsInternetAccess())
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("AccessDenied"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("AccessDenied")));
                 return false;
             }
             else
@@ -297,15 +295,18 @@ namespace StudyBox.Core.ViewModels
         private void BackToDeck()
         {
             IsDeckSelected = false;
+            IsMyDeck = false;
             _selectedID = "";
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
         }
 
         private async void TapTile(string id)
         {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             _selectedID = id;
             IsDeckSelected = true;
             Deck deck = await _restService.GetDeckById(_selectedID);
+            //if (_decksType == DecksType.MyDecks)
             if (_accountService.IsUserLoggedIn())
             {
                 if (_accountService.GetUserEmail() == deck.CreatorEmail)

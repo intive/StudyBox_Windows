@@ -386,4 +386,7 @@
   <data name="CreatingDeck.Text" xml:space="preserve">
     <value>Tworzenie talii</value>
   </data>
+  <data name="LoginMessage" xml:space="preserve">
+    <value>Zarejestruj się się, aby dodać talie i fiszki.</value>
+  </data>
 </root>

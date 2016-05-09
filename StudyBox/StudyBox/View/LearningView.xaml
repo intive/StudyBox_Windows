@@ -41,7 +41,7 @@
     <Grid Background="White">
 
         <userControls:MenuControlView Canvas.ZIndex="2"/>
-
+        <userControls:MessageBoxControlView Grid.Row="1" Canvas.ZIndex="1" VerticalAlignment="Top" Margin="0 100 0 0"/>
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
 

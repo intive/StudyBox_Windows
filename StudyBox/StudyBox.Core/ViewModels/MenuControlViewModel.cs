@@ -31,7 +31,6 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _testRandomDeckCommand;
         private RelayCommand _goToDecksCommand;
         private RelayCommand _goToStatisticsCommand;
-        private RelayCommand _newDeckFromFileCommand;
         private RelayCommand _goToAddDeckCommand;
         private RelayCommand _goToUsersDecksCommand;
         private string _searchingContent;
@@ -310,6 +309,7 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
             SearchButtonVisibility = true;
         }
@@ -318,14 +318,12 @@ namespace StudyBox.Core.ViewModels
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("NoInternetConnection"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
                 return;
             }
             else if (!_internetConnectionService.IsInternetAccess())
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("AccessDenied"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("AccessDenied")));
                 return;
             }
 
@@ -338,6 +336,7 @@ namespace StudyBox.Core.ViewModels
                     NavigationService.NavigateTo("ExamView");
                     Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
                     Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
                 }
                 else
                 {
@@ -346,8 +345,7 @@ namespace StudyBox.Core.ViewModels
             }
             catch (Exception ex)
             {
-                MessageDialog msg = new MessageDialog(ex.Message);
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, ex.Message));
             }
             finally
             {
@@ -360,14 +358,16 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
             SearchButtonVisibility = true;
         }
 
-        private async void GoToAddDeck()
+        private void GoToAddDeck()
         {          
             if (_accountService.IsUserLoggedIn())
             {
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
                 NavigationService.NavigateTo("CreateDeckView");
                 HideSearchingContent();
                 SearchButtonVisibility = false;
@@ -376,16 +376,17 @@ namespace StudyBox.Core.ViewModels
                 TitleBar = StringResources.GetString("StudyBox");
             }
             else
-            {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("LogInToAddDeck"));
-                await msg.ShowAsync();
-            }
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, true, StringResources.GetString("LoginMessage")));
+
+            if (IsPaneOpen)
+                IsPaneOpen = false;
         }
 
         private void GoToStatistics()
         {
             NavigationService.NavigateTo("StatisticsView");
             Messenger.Default.Send<ReloadMessageToStatistics>(new ReloadMessageToStatistics(true));
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
             SearchButtonVisibility = false;
         }
@@ -394,6 +395,7 @@ namespace StudyBox.Core.ViewModels
         {
             NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<SearchMessageToDeckList>(new SearchMessageToDeckList(SearchingContent.Trim()));
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             SearchingContent = String.Empty;
         }
 

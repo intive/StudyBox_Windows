@@ -382,4 +382,7 @@
   <data name="CreatingDeck.Text" xml:space="preserve">
     <value>Creating new deck</value>
   </data>
+  <data name="LoginMessage" xml:space="preserve">
+    <value>Please register to add new decks and flashcards.</value>
+  </data>
 </root>
