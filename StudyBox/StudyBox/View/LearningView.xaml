@@ -181,8 +181,7 @@
 
                 <Button x:Name="SkipButton" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
                     <Button.Content>
-                        <!--TODO : CHANGE GRAPHICS-->
-                        <Image Source="ms-appx:///Assets/cancel.png" Margin="0"/>
+                        <Image Source="ms-appx:///Assets/rightArrow.png" Margin="0"/>
                     </Button.Content>
                     <i:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="Tapped">
@@ -213,6 +212,7 @@
                         <Setter Target="BigFontManagment.FontSize" Value="24"/>
                         <Setter Target="CancelButton.Padding" Value="10"/>
                         <Setter Target="ApproveButton.Padding" Value="12"/>
+                        <Setter Target="SkipButton.Padding" Value="12"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -225,6 +225,7 @@
                         <Setter Target="BigFontManagment.FontSize" Value="26"/>
                         <Setter Target="CancelButton.Padding" Value="10"/>
                         <Setter Target="ApproveButton.Padding" Value="12"/>
+                        <Setter Target="SkipButton.Padding" Value="12"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -237,6 +238,7 @@
                         <Setter Target="BigFontManagment.FontSize" Value="35"/>
                         <Setter Target="CancelButton.Padding" Value="20"/>
                         <Setter Target="ApproveButton.Padding" Value="22"/>
+                        <Setter Target="SkipButton.Padding" Value="22"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -249,6 +251,7 @@
                         <Setter Target="BigFontManagment.FontSize" Value="35"/>
                         <Setter Target="CancelButton.Padding" Value="20"/>
                         <Setter Target="ApproveButton.Padding" Value="22"/>
+                        <Setter Target="SkipButton.Padding" Value="22"/>
                     </VisualState.Setters>
                 </VisualState>
 
