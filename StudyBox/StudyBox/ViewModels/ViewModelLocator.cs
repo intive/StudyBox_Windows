@@ -21,6 +21,7 @@ namespace StudyBox.ViewModels
 
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MenuControlViewModel>();
+            SimpleIoc.Default.Register<MessageBoxViewModel>();
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<DecksListViewModel>();
             SimpleIoc.Default.Register<ExamViewModel>();
@@ -117,6 +118,14 @@ namespace StudyBox.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<MenuControlViewModel>();  
+            }
+        }
+
+        public MessageBoxViewModel MessageBoxViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MessageBoxViewModel>();
             }
         }
 

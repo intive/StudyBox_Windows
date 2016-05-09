@@ -97,14 +97,12 @@ namespace StudyBox.Core.ViewModels
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("NoInternetConnection"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
                 return false;
             }
             else if (!_internetConnectionService.IsInternetAccess())
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("AccessDenied"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("AccessDenied")));
                 return false;
             }
             else
