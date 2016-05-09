@@ -190,6 +190,7 @@ namespace StudyBox.Core.ViewModels
         private void HandleDecksTypeMessage(DecksType decksType)
         {
             IsDeckSelected = false;
+            IsMyDeck = false;
             _decksType = decksType;
             DecksCollection.Clear();
             SearchMessageVisibility = false;
@@ -257,9 +258,9 @@ namespace StudyBox.Core.ViewModels
 
         private async void GoToLearning()
         {
-            IsDeckSelected = false;
             if (await CheckInternetConnection())
             {
+                IsDeckSelected = false;
                 NavigationService.NavigateTo("LearningView");
                 Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
                 _selectedID = String.Empty;
@@ -271,9 +272,9 @@ namespace StudyBox.Core.ViewModels
 
         private async void GoToTest()
         {
-            IsDeckSelected = false;
             if (await CheckInternetConnection())
             {
+                IsDeckSelected = false;
                 NavigationService.NavigateTo("ExamView");
                 Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
                 _selectedID = String.Empty;
@@ -287,10 +288,10 @@ namespace StudyBox.Core.ViewModels
 
         private async void GoToManageDeck()
         {
-            IsDeckSelected = false;
-            IsMyDeck = false;
             if (await CheckInternetConnection())
             {
+                IsDeckSelected = false;
+                IsMyDeck = false;
                 NavigationService.NavigateTo("ManageDeckView");
                 Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
                 _selectedID = String.Empty;

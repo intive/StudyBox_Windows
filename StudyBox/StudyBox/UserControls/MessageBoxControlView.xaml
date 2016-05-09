@@ -45,7 +45,12 @@
             Margin="10 20"
                 Text="{Binding MessageText}"></TextBlock>
 
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="{StaticResource Raspberry}" Command="{Binding Login}" Visibility="{Binding IsLoginButton, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Button HorizontalAlignment="Stretch" 
+                VerticalAlignment="Center" 
+                Background="{StaticResource Raspberry}" 
+                Command="{Binding Login}" 
+                Visibility="{Binding IsLoginButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                MaxWidth="500">
             <TextBlock Text="Zaloguj"
                         FontSize="16"
                         HorizontalAlignment="Center" 
@@ -55,7 +60,12 @@
                         Foreground="{StaticResource Grey}" />
         </Button>
 
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="{StaticResource Raspberry}" Command="{Binding CloseWindow}" Visibility="{Binding IsOkButton, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Button HorizontalAlignment="Stretch" 
+                VerticalAlignment="Center" 
+                Background="{StaticResource Raspberry}" 
+                Command="{Binding CloseWindow}" 
+                Visibility="{Binding IsOkButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                MaxWidth="500">
             <TextBlock Text="OK"
                         FontSize="16"
                         HorizontalAlignment="Center" 
