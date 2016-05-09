@@ -278,11 +278,6 @@ namespace StudyBox.Core.ViewModels
             get { return _goToStatisticsCommand ?? (_goToStatisticsCommand = new RelayCommand(GoToStatistics)); }
         }
 
-        public RelayCommand NewDeckFromFileCommand
-        {
-            get { return _newDeckFromFileCommand ?? (_newDeckFromFileCommand = new RelayCommand(GoToNewDeckFromFile)); }
-        }
-
         public RelayCommand GoToAddDeckCommand
         {
             get { return _goToAddDeckCommand ?? (_goToAddDeckCommand = new RelayCommand(GoToAddDeck)); }
@@ -369,14 +364,21 @@ namespace StudyBox.Core.ViewModels
             SearchButtonVisibility = true;
         }
 
-        private void GoToAddDeck()
-        {
+        private async void GoToAddDeck()
+        {          
             if (_accountService.IsUserLoggedIn())
             {
-                NavigationService.NavigateTo("CreateFlashcardView");
-                Messenger.Default.Send<DataMessageToCreateFlashcard>(new DataMessageToCreateFlashcard(null, null));
+                NavigationService.NavigateTo("CreateDeckView");
                 HideSearchingContent();
                 SearchButtonVisibility = false;
+                SaveButtonVisibility = false;
+                ExitButtonVisibility = false;
+                TitleBar = StringResources.GetString("StudyBox");
+            }
+            else
+            {
+                MessageDialog msg = new MessageDialog(StringResources.GetString("LogInToAddDeck"));
+                await msg.ShowAsync();
             }
         }
 
@@ -384,14 +386,6 @@ namespace StudyBox.Core.ViewModels
         {
             NavigationService.NavigateTo("StatisticsView");
             Messenger.Default.Send<ReloadMessageToStatistics>(new ReloadMessageToStatistics(true));
-            HideSearchingContent();
-            SearchButtonVisibility = false;
-        }
-
-        private void GoToNewDeckFromFile()
-        {
-            NavigationService.NavigateTo("ImageImportView");
-            Messenger.Default.Send<NewDeckMessageToImageImport>(new NewDeckMessageToImageImport(true));
             HideSearchingContent();
             SearchButtonVisibility = false;
         }
