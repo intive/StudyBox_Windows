@@ -385,4 +385,7 @@
   <data name="LoginMessage" xml:space="preserve">
     <value>Please register to add new decks and flashcards.</value>
   </data>
+  <data name="RemoveFlashcard.Text" xml:space="preserve">
+    <value>Remove falshcard</value>
+  </data>
 </root>

@@ -389,4 +389,7 @@
   <data name="LoginMessage" xml:space="preserve">
     <value>Zarejestruj się się, aby dodać talie i fiszki.</value>
   </data>
+  <data name="RemoveFlashcard.Text" xml:space="preserve">
+    <value>Usuń fiszkę</value>
+  </data>
 </root>

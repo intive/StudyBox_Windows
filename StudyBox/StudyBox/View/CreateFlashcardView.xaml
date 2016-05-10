@@ -299,6 +299,25 @@
                                        Padding="0,5"/>
                             </Button>
                         </Grid>
+
+
+                        <Grid Margin="0,25,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="1"
+                            	HorizontalAlignment="Stretch"                                                          
+                            	Background="{StaticResource Graphite}" 
+                            	Command="{Binding RemoveFlashcard}">
+                                <TextBlock TextWrapping="Wrap"
+                            		x:Uid="RemoveFlashcard"
+                            		FontSize="{Binding FontSize, ElementName=StandardFontManagment}"
+                            		FontFamily="{StaticResource LatoRegularFontFamily}"
+                            		Foreground="{StaticResource Grey}" 
+                            		Padding="0,5"/>
+                            </Button>
+                        </Grid>
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Content>
