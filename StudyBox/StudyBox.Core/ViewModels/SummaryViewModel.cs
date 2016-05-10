@@ -143,14 +143,14 @@ namespace StudyBox.Core.ViewModels
         {
             NavigationService.NavigateTo("ExamView");
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance, _badAnswerFlashcards));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, _deckInstance.Name));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, _deckInstance.Name));
         }
 
         private void TryImproveResults()
         {
             NavigationService.NavigateTo("ExamView");
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, _deckInstance.Name));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, _deckInstance.Name));
             _statisticsService.IncrementTestsCountAnswers();
         }
     }

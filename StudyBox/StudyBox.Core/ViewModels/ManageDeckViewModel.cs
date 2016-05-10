@@ -32,7 +32,7 @@ namespace StudyBox.Core.ViewModels
             FlashcardsCollection = new ObservableCollection<Flashcard>();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
         }
 
 
