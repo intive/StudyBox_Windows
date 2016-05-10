@@ -386,7 +386,16 @@
   <data name="CreatingDeck.Text" xml:space="preserve">
     <value>Tworzenie talii</value>
   </data>
+  <data name="Image.Text" xml:space="preserve">
+    <value>Zdjęcie</value>
+  </data>
   <data name="LoginMessage" xml:space="preserve">
     <value>Zarejestruj się się, aby dodać talie i fiszki.</value>
+  </data>
+  <data name="AddFlashcards" xml:space="preserve">
+    <value>Dodaj fiszki</value>
+  </data>
+  <data name="GoToAddFlashcardFromFile.Text" xml:space="preserve">
+    <value>Dodaj fiszki do talii z pliku</value>
   </data>
 </root>

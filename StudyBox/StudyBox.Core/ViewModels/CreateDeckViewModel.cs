@@ -45,7 +45,7 @@ namespace StudyBox.Core.ViewModels
         private void GoToCreateDeckFromFile()
         {
             NavigationService.NavigateTo("ImageImportView");
-            Messenger.Default.Send<NewDeckMessageToImageImport>(new NewDeckMessageToImageImport(true));
+            Messenger.Default.Send<DataMessageToCreateFlashcard>(new DataMessageToCreateFlashcard(null, null));
         }
     }
 }
