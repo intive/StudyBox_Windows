@@ -290,9 +290,6 @@
   <data name="ImportFile.Text" xml:space="preserve">
     <value>IMPORT FILE</value>
   </data>
-  <data name="NewDeckFromFile.Content" xml:space="preserve">
-    <value>Create new deck from file</value>
-  </data>
   <data name="TakePhoto.Text" xml:space="preserve">
     <value>TAKE A PHOTO</value>
   </data>
@@ -347,7 +344,7 @@
     <value>Edit flashcard</value>
   </data>
   <data name="FillAllFieldsMessage.Text" xml:space="preserve">
-    <value>Fill all fields.</value>
+    <value>Not all fields contain correct characters number.</value>
   </data>
   <data name="OperationFailed" xml:space="preserve">
     <value>Operation failed</value>
@@ -362,12 +359,30 @@
     <value>Manage deck</value>
   </data>
   <data name="GoToAddDeck.Content" xml:space="preserve">
-    <value>Create new deck with flashcard</value>
+    <value>Create new deck</value>
   </data>
   <data name="GoToAddFlashcard.Text" xml:space="preserve">
     <value>Add new flashcard</value>
   </data>
   <data name="IsPublic.Content" xml:space="preserve">
     <value>Is deck public?</value>
+  </data>
+  <data name="FlashcardsInDeck.Text" xml:space="preserve">
+    <value>Flashcards in deck</value>
+  </data>
+  <data name="LogInToAddDeck" xml:space="preserve">
+    <value>You have to be logged in to add new deck.</value>
+  </data>
+  <data name="CreateDeckFromFile.Text" xml:space="preserve">
+    <value>Create new deck from file</value>
+  </data>
+  <data name="CreateDeckWithFlashcard.Text" xml:space="preserve">
+    <value>Create new deck with flashcard</value>
+  </data>
+  <data name="CreatingDeck.Text" xml:space="preserve">
+    <value>Creating new deck</value>
+  </data>
+  <data name="LoginMessage" xml:space="preserve">
+    <value>Please register to add new decks and flashcards.</value>
   </data>
 </root>

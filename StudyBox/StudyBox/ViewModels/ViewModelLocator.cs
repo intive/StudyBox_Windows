@@ -21,6 +21,7 @@ namespace StudyBox.ViewModels
 
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MenuControlViewModel>();
+            SimpleIoc.Default.Register<MessageBoxViewModel>();
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<DecksListViewModel>();
             SimpleIoc.Default.Register<ExamViewModel>();
@@ -32,6 +33,7 @@ namespace StudyBox.ViewModels
             SimpleIoc.Default.Register<ImageImportViewModel>();
 			SimpleIoc.Default.Register<CreateFlashcardViewModel>();
             SimpleIoc.Default.Register<ManageDeckViewModel>();
+            SimpleIoc.Default.Register<CreateDeckViewModel>();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -74,6 +76,7 @@ namespace StudyBox.ViewModels
             navigationService.Configure("ImageImportView", typeof(ImageImportView));
 			navigationService.Configure("CreateFlashcardView", typeof(CreateFlashcardView));
             navigationService.Configure("ManageDeckView", typeof(ManageDeckView));
+            navigationService.Configure("CreateDeckView", typeof(CreateDeckView));
 
             return navigationService;
         }
@@ -114,7 +117,15 @@ namespace StudyBox.ViewModels
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MenuControlViewModel>();               
+                return ServiceLocator.Current.GetInstance<MenuControlViewModel>();  
+            }
+        }
+
+        public MessageBoxViewModel MessageBoxViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MessageBoxViewModel>();
             }
         }
 
@@ -163,11 +174,20 @@ namespace StudyBox.ViewModels
                 return ServiceLocator.Current.GetInstance<CreateFlashcardViewModel>();
             }
         }
+
         public ManageDeckViewModel ManageDeckViewModel
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<ManageDeckViewModel>();
+            }
+        }
+
+        public CreateDeckViewModel CreateDeckViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CreateDeckViewModel>();
             }
         }
 

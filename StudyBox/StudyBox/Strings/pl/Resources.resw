@@ -290,9 +290,6 @@
   <data name="ImportFile.Text" xml:space="preserve">
     <value>IMPORTUJ PLIK</value>
   </data>
-  <data name="NewDeckFromFile.Content" xml:space="preserve">
-    <value>Utwórz nową talię z pliku</value>
-  </data>
   <data name="TakePhoto.Text" xml:space="preserve">
     <value>ZRÓB ZDJĘCIE</value>
   </data>
@@ -362,7 +359,7 @@
     <value>Zarządzaj talią</value>
   </data>
   <data name="GoToAddDeck.Content" xml:space="preserve">
-    <value>Utwórz nową talię z fiszką</value>
+    <value>Stwórz nową talię</value>
   </data>
   <data name="GoToAddFlashcard.Text" xml:space="preserve">
     <value>Dodaj fiszkę do talii</value>
@@ -373,5 +370,23 @@
   <data name="GoToUserDecksList.Content" xml:space="preserve">
     <value>Moje talie</value>
     <comment>DecksListView</comment>
+  </data>
+  <data name="FlashcardsInDeck.Text" xml:space="preserve">
+    <value>Fiszki w talii</value>
+  </data>
+  <data name="LogInToAddDeck" xml:space="preserve">
+    <value>Aby dodać talię musisz być zalogowany</value>
+  </data>
+  <data name="CreateDeckFromFile.Text" xml:space="preserve">
+    <value>Stwórz talię z pliku</value>
+  </data>
+  <data name="CreateDeckWithFlashcard.Text" xml:space="preserve">
+    <value>Stwórz talię z fiszką</value>
+  </data>
+  <data name="CreatingDeck.Text" xml:space="preserve">
+    <value>Tworzenie talii</value>
+  </data>
+  <data name="LoginMessage" xml:space="preserve">
+    <value>Zarejestruj się się, aby dodać talie i fiszki.</value>
   </data>
 </root>

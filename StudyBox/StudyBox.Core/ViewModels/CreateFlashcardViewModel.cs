@@ -34,9 +34,11 @@ namespace StudyBox.Core.ViewModels
         private string _deckName;
         private string _headerMessage;
         private string _submitFormMessage;
-        private bool _showDeckName;
         private bool _isGeneralError;
+        private bool _isDataLoading = false;
+        private bool _isPaneVisible = true;
         private ObservableCollection<TipViewModel> _tipsCollection;
+        private ObservableCollection<Flashcard> _flashcardsCollection;
 
         private readonly int _maxQuestionCharacters = 1000;
         private readonly int _maxAnswerCharacters = 1000;
@@ -44,6 +46,8 @@ namespace StudyBox.Core.ViewModels
 
         private RelayCommand _addTip;
         private RelayCommand _submitForm;
+        private RelayCommand _cancel;
+        private RelayCommand _togglePaneVisibility;
 
         public CreateFlashcardViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService) : base(navigationService)
         {
@@ -53,6 +57,8 @@ namespace StudyBox.Core.ViewModels
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
             TipsCollection = new ObservableCollection<TipViewModel>();
+            FlashcardsCollection = new ObservableCollection<Flashcard>();
+            IsPaneVisible = false;
             Remove = new RelayCommand<string>(RemoveTip);
             Messenger.Default.Register<DataMessageToCreateFlashcard>(this, x => HandleDataMessage(x.DeckInstance, x.FlashcardIntance));
         }
@@ -72,6 +78,23 @@ namespace StudyBox.Core.ViewModels
                 return _submitForm ?? (_submitForm = new RelayCommand(CreateOrEditFlashcard));
             }
         }
+
+        public RelayCommand Cancel
+        {
+            get
+            {
+                return _cancel ?? (_cancel = new RelayCommand(LeaveForm));
+            }
+        }
+
+        public RelayCommand TogglePaneVisibility
+        {
+            get
+            {
+                return _togglePaneVisibility ?? (_togglePaneVisibility = new RelayCommand(ChangePaneVisibility));
+            }
+        }
+
 
 
         public ICommand Remove { get; set; }
@@ -93,21 +116,23 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public bool ShowDeckName
+        public ObservableCollection<Flashcard> FlashcardsCollection
         {
             get
             {
-                return _showDeckName;
+                return _flashcardsCollection;
             }
             set
             {
-                if (_showDeckName != value)
+                if (_flashcardsCollection != value)
                 {
-                    _showDeckName = value;
-                    RaisePropertyChanged("ShowDeckName");
+                    _flashcardsCollection = value;
+                    RaisePropertyChanged();
                 }
             }
         }
+
+
 
         public bool IsGeneralError
         {
@@ -138,6 +163,7 @@ namespace StudyBox.Core.ViewModels
                     _question = value;
                     RaisePropertyChanged("Question");
                     RaisePropertyChanged("CurrentQuestionCharactersNumber");
+                    RaisePropertyChanged("IsQuestionValid");
                 }
             }
         }
@@ -155,6 +181,7 @@ namespace StudyBox.Core.ViewModels
                     _answer = value;
                     RaisePropertyChanged("Answer");
                     RaisePropertyChanged("CurrentAnswerCharactersNumber");
+                    RaisePropertyChanged("IsAnswerValid");
                 }
             }
         }
@@ -188,6 +215,7 @@ namespace StudyBox.Core.ViewModels
                     _deckName = value;
                     RaisePropertyChanged("DeckName");
                     RaisePropertyChanged("CurrentDeckNameCharactersNumber");
+                    RaisePropertyChanged("IsDeckNameValid");
                 }
             }
         }
@@ -196,7 +224,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return Question.Length > _maxQuestionCharacters ? _maxAnswerCharacters : Question.Length;
+                return Question.Length;
             }
         }
 
@@ -204,7 +232,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return Answer.Length > _maxAnswerCharacters ? _maxAnswerCharacters : Answer.Length;
+                return Answer.Length;
             }
         }
 
@@ -212,7 +240,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return DeckName.Length > _maxDeckNameCharacters ? _maxDeckNameCharacters : DeckName.Length;
+                return DeckName.Length;
             }
         }
 
@@ -239,6 +267,70 @@ namespace StudyBox.Core.ViewModels
                 return _maxDeckNameCharacters;
             }
         }
+
+        public bool IsQuestionValid
+        {
+            get
+            {
+                if (CurrentQuestionCharactersNumber > MaxQuestionCharacters || CurrentQuestionCharactersNumber == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+
+        public bool IsAnswerValid
+        {
+            get
+            {
+                if (CurrentAnswerCharactersNumber > MaxAnswerCharacters || CurrentAnswerCharactersNumber == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+
+        public bool IsDeckNameValid
+        {
+            get
+            {
+                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        public bool IsPaneVisible
+        {
+            get
+            {
+                return _isPaneVisible;
+            }
+            set
+            {
+                if (_isPaneVisible != value)
+                {
+                    _isPaneVisible = value;
+                    RaisePropertyChanged("IsPaneVisible");
+                }
+            }
+        }
+
 
         public string HeaderMessage
         {
@@ -272,6 +364,23 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool IsDataLoading
+        {
+            get
+            {
+                return _isDataLoading;
+            }
+            set
+            {
+                if (_isDataLoading != value)
+                {
+                    _isDataLoading = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+
         public void RemoveTip(string id)
         {
             TipViewModel tip = TipsCollection.Where(x => x.ID == id).FirstOrDefault();
@@ -290,12 +399,12 @@ namespace StudyBox.Core.ViewModels
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
             {
-                ShowErrorMessage(StringResources.GetString("NoInternetConnection"));
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
                 return;
             }
             else if (!_internetConnectionService.IsInternetAccess())
             {
-                ShowErrorMessage(StringResources.GetString("AccessDenied"));
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("AccessDenied")));
                 return;
             }
             else
@@ -308,17 +417,31 @@ namespace StudyBox.Core.ViewModels
                 _flashcard.Answer = Answer.TrimEnd();
                 _flashcard.Question = Question.TrimEnd();
 
+                string oldDeckName = _deck.Name;
+                bool oldIsPublic = _deck.IsPublic;
+                _deck.Name = DeckName.Trim();
+                _deck.IsPublic = IsPublic;
+
+
                 List<Tip> tips = new List<Tip>();
                 foreach (TipViewModel tip in TipsCollection)
                 {
-                    tips.Add(new Tip(tip.ID, tip.Prompt.TrimEnd()));
+                    tips.Add(new Tip(tip.ID, tip.Essence.TrimEnd()));
                 }
 
                 try
                 {
+                    IsDataLoading = true;
+
                     switch (_mode)
                     {
                         case Mode.AddNewFlashcardToDeck:
+
+                            if (oldDeckName != DeckName || oldIsPublic != IsPublic)
+                            {
+                                await _restService.UpdateDeck(_deck);
+                            }
+
                             Flashcard createdFlashcard = await _restService.CreateFlashcard(_flashcard, _deck.ID);
 
                             foreach (var tip in tips)
@@ -329,17 +452,24 @@ namespace StudyBox.Core.ViewModels
                             break;
 
                         case Mode.CreateFlashcardAndDeck:
-                            Deck createdDeck = await _restService.CreateDeck(new Deck("1", DeckName, IsPublic));
+
+                            Deck createdDeck = await _restService.CreateDeck(_deck);
                             Flashcard addedFlashcard = await _restService.CreateFlashcard(_flashcard, createdDeck.ID);
 
                             foreach (var tip in tips)
                             {
-                                await _restService.CreateTip(tip, _deck.ID, addedFlashcard.Id);
+                                await _restService.CreateTip(tip, createdDeck.ID, addedFlashcard.Id);
                             }
 
                             break;
 
                         case Mode.EditFlashcard:
+
+                            if (oldDeckName != DeckName || oldIsPublic != IsPublic)
+                            {
+                                await _restService.UpdateDeck(_deck);
+                            }
+
                             string flashcardId = _flashcard.Id;
                             string deckId = _flashcard.DeckID;
 
@@ -347,7 +477,7 @@ namespace StudyBox.Core.ViewModels
 
                             var oldTips = await _restService.GetTips(deckId, flashcardId);
 
-                            if (oldTips!=null)
+                            if (oldTips != null)
                             {
                                 foreach (var oldTip in oldTips)
                                 {
@@ -365,49 +495,28 @@ namespace StudyBox.Core.ViewModels
                 }
                 catch
                 {
-                    ShowErrorMessage(StringResources.GetString("OperationFailed"));
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
                 }
-
-                switch (_mode)
+                finally
                 {
-                    case Mode.CreateFlashcardAndDeck:
-                        NavigationService.NavigateTo("DecksListView");
-                        Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
-                        Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
-                        break;
-
-                    default:
-                        NavigationService.NavigateTo("ManageDeckView");
-                        Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
-                        Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deck));
-                        break;
-
+                    IsDataLoading = false;
                 }
 
-                
+                LeaveForm();
             }
         }
 
         private bool ValidateForm()
         {
-            if (Answer.Trim().Length == 0 || Question.Length == 0)
+            if (!IsQuestionValid || !IsAnswerValid || !IsDeckNameValid)
             {
                 IsGeneralError = true;
                 return false;
             }
 
-            if (_mode == Mode.CreateFlashcardAndDeck)
-            {
-                if (DeckName.Trim().Length == 0)
-                {
-                    IsGeneralError = true;
-                    return false;
-                }
-            }
-
             foreach (var tip in TipsCollection)
             {
-                if (tip.Prompt.Trim().Length == 0)
+                if (!tip.IsEssenceValid)
                 {
                     IsGeneralError = true;
                     return false;
@@ -418,14 +527,38 @@ namespace StudyBox.Core.ViewModels
             return true;
         }
 
-        private async void ShowErrorMessage(string message)
+        private void LeaveForm()
         {
-            MessageDialog msg = new MessageDialog(message);
-            await msg.ShowAsync();
+            switch (_mode)
+            {
+                case Mode.CreateFlashcardAndDeck:
+                    NavigationService.NavigateTo("DecksListView");
+                    Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                    break;
+
+                default:
+                    NavigationService.NavigateTo("ManageDeckView");
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                    Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deck));
+                    break;
+
+            }
+            FlashcardsCollection.Clear();
+            TipsCollection.Clear();
+            IsPaneVisible = false;
+        }
+
+        public void ChangePaneVisibility()
+        {
+            IsPaneVisible = !IsPaneVisible;
         }
 
         private async void HandleDataMessage(Deck deckInstance, Flashcard flashcardInstance)
         {
+            FlashcardsCollection.Clear();
+            TipsCollection.Clear();
+            IsDataLoading = false;
             if (deckInstance != null)
             {
                 if (flashcardInstance != null)
@@ -442,10 +575,9 @@ namespace StudyBox.Core.ViewModels
                     {
                         foreach (var tip in tips)
                         {
-                            TipsCollection.Add(new TipViewModel(tip.ID, tip.Prompt));
+                            TipsCollection.Add(new TipViewModel(tip.ID, tip.Essence));
                         }
                     }
-
 
                     _flashcard = flashcardInstance;
                 }
@@ -458,14 +590,27 @@ namespace StudyBox.Core.ViewModels
                     _flashcard = new Flashcard();
                     HeaderMessage = StringResources.GetString("AddFlashcard");
                     SubmitFormMessage = StringResources.GetString("AddFlashcard");
+                    TipsCollection = new ObservableCollection<TipViewModel>();
                 }
 
+                try
+                {
+                    var flashcards = await _restService.GetFlashcards(deckInstance.ID);
+                    if (flashcards != null && flashcards.Count > 0)
+                    {
+                        foreach (var f in flashcards)
+                        {
+                            FlashcardsCollection.Add(f);
+                        }
+                    }
+                }
+                catch
+                {
+                    FlashcardsCollection = new ObservableCollection<Flashcard>();
+                }
+
+                DeckName = deckInstance.Name;
                 _deck = deckInstance;
-
-                
-                ShowDeckName = false;
-
-                TipsCollection = new ObservableCollection<TipViewModel>();
             }
             else
             {
@@ -475,13 +620,15 @@ namespace StudyBox.Core.ViewModels
                 DeckName = "";
                 _deck = new Deck();
                 _flashcard = new Flashcard();
+
                 HeaderMessage = StringResources.GetString("CreateNewDeck");
                 SubmitFormMessage = StringResources.GetString("CreateNewDeck");
-                ShowDeckName = true;
-
+                FlashcardsCollection = new ObservableCollection<Flashcard>();
                 TipsCollection = new ObservableCollection<TipViewModel>();
             }
+
             IsGeneralError = false;
+            IsPaneVisible = false;
         }
     }
 }

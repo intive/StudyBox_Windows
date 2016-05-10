@@ -254,11 +254,24 @@ namespace StudyBox.Core.ViewModels
                 {
                     try
                     {
-                    _flashcards = await _restService.GetFlashcardsWithTipsCount(_deckInstance.ID);
+                        _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+                        if (_flashcards != null && _flashcards.Count > 0)
+                        {
+                            string deckId = _deckInstance.ID;
+                            for (int i = 0; i < _flashcards.Count; i++)
+                            {
+                                var tips = await _restService.GetTips(deckId, _flashcards[i].Id);
+                                if (tips != null && tips.Count > 0)
+                                {
+                                    _flashcards[i].Tips = tips;
+                                    _flashcards[i].TipsCount = tips.Count;
+                                }
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
-                        ShowErrorMessage(ex.Message);
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, ex.Message));
                     }
 
                     //MOCK
@@ -354,12 +367,12 @@ namespace StudyBox.Core.ViewModels
 
                 if (!await _internetConnectionService.IsNetworkAvailable())
                 {
-                    ShowErrorMessage(StringResources.GetString("NoInternetConnection"));
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
                     return;
                 }
                 else if (!_internetConnectionService.IsInternetAccess())
                 {
-                    ShowErrorMessage(StringResources.GetString("AccessDenied"));
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("AccessDenied")));
                     return;
                 }
                 else
@@ -371,7 +384,7 @@ namespace StudyBox.Core.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        ShowErrorMessage(ex.Message);
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, ex.Message));
                     }
                 }
             }
@@ -383,12 +396,6 @@ namespace StudyBox.Core.ViewModels
             RaisePropertyChanged("IsRightArrowVisible");
             RaisePropertyChanged("IsLeftArrowVisible");
             RaisePropertyChanged("BottomRectangleText");
-        }
-
-        private async void ShowErrorMessage(string message)
-        {
-            MessageDialog msg = new MessageDialog(message);
-            await msg.ShowAsync();
         }
 
         private void ShowQuestionView()
@@ -419,7 +426,7 @@ namespace StudyBox.Core.ViewModels
 
         private void ShowNewHint()
         {
-            MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint].Prompt;
+            MainRectangleWithQuestionOrHint = Hints[_numberOfCurrentHint].Essence;
             RaisePropertyChanged("IsLeftArrowVisible");
             RaisePropertyChanged("IsRightArrowVisible");
         }

@@ -10,8 +10,8 @@ namespace StudyBox.Core.ViewModels
     public class TipViewModel : ViewModelBase
     {
         private string _id;
-        private string _prompt;
-        private readonly int _maxPromptCharacters = 500;
+        private string _essence;
+        private readonly int _maxEssenceCharacters = 500;
 
         public string ID
         {
@@ -29,45 +29,61 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public string Prompt
+        public string Essence
         {
             get
             {
-                return _prompt;
+                return _essence;
             }
             set
             {
-                if (_prompt != value)
+                if (_essence != value)
                 {
-                    _prompt = value;
-                    RaisePropertyChanged("Prompt");
-                    RaisePropertyChanged("CurrentPromptCharactersNumber");
+                    _essence = value;
+                    RaisePropertyChanged("Essence");
+                    RaisePropertyChanged("CurrentEssenceCharactersNumber");
+                    RaisePropertyChanged("IsEssenceValid");
                 }
             }
         }
 
-        public int CurrentPromptCharactersNumber
+        public int CurrentEssenceCharactersNumber
         {
             get
             {
-                return Prompt.Length > _maxPromptCharacters ? _maxPromptCharacters : Prompt.Length;
+                return Essence.Length;
             }
         }
 
-        public int MaxPromptCharacters
+        public int MaxEssenceCharacters
         {
             get
             {
-                return _maxPromptCharacters;
+                return _maxEssenceCharacters;
+            }
+        }
+
+        public bool IsEssenceValid
+        {
+            get
+            {
+                if (CurrentEssenceCharactersNumber > MaxEssenceCharacters || CurrentEssenceCharactersNumber == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
         public TipViewModel() { }
 
-        public TipViewModel(string id, string prompt)
+        public TipViewModel(string id, string essence)
         {
             this.ID = id;
-            this.Prompt = prompt;
+            this.Essence = essence;
         }
     }
 }

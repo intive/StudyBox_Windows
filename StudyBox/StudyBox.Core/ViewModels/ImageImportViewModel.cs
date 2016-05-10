@@ -90,8 +90,7 @@ namespace StudyBox.Core.ViewModels
             }                
             else
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("CameraNotFound"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("CameraNotFound")));
             }
 
         }
@@ -100,8 +99,7 @@ namespace StudyBox.Core.ViewModels
         {
             if (await IsImageToLarge(image))
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("ImageTooLarge"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ImageTooLarge")));
                 return;
             }
 

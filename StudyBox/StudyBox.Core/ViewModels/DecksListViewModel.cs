@@ -25,7 +25,7 @@ namespace StudyBox.Core.ViewModels
         private IInternetConnectionService _internetConnectionService;
         private IStatisticsDataService _statisticsService;
         private IAccountService _accountService;
-        private bool _isDataLoading=false;
+        private bool _isDataLoading = false;
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
         private string _selectedID = "";
@@ -36,9 +36,9 @@ namespace StudyBox.Core.ViewModels
         #region Constructors
         public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService, IAccountService accountService) : base(navigationService)
         {
-            Messenger.Default.Register<ReloadMessageToDecksList>(this,x=> HandleReloadMessage(x.Reload));
+            Messenger.Default.Register<ReloadMessageToDecksList>(this, x => HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
-            Messenger.Default.Register<DecksTypeMessage>(this,x=>HandleDecksTypeMessage(x.DecksType));
+            Messenger.Default.Register<DecksTypeMessage>(this, x => HandleDecksTypeMessage(x.DecksType));
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
             _accountService = accountService;
@@ -136,7 +136,7 @@ namespace StudyBox.Core.ViewModels
         #region Methods
         private async void InitializeDecksCollection()
         {
-            if (await CheckInternetConnection())
+            if (await CheckInternetConnection() && _accountService.IsUserLoggedIn())
             {
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
@@ -144,7 +144,7 @@ namespace StudyBox.Core.ViewModels
                     _deckLists = await _restService.GetDecks();
                 else
                     _deckLists = await _restService.GetUserDecks();
-                if(_deckLists!=null)
+                if (_deckLists != null)
                 {
                     _deckLists.Sort((x, y) => string.Compare(x.Name, y.Name));
                     _deckLists.ForEach(x => DecksCollection.Add(x));
@@ -190,24 +190,24 @@ namespace StudyBox.Core.ViewModels
         private void HandleDecksTypeMessage(DecksType decksType)
         {
             IsDeckSelected = false;
+            IsMyDeck = false;
             _decksType = decksType;
             DecksCollection.Clear();
             SearchMessageVisibility = false;
             InitializeDecksCollection();
+            _statisticsService.InitializeFiles();
         }
 
         private async Task<bool> CheckInternetConnection()
         {
-            if (! await _internetConnectionService.IsNetworkAvailable())
+            if (!await _internetConnectionService.IsNetworkAvailable())
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("NoInternetConnection"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
                 return false;
             }
-            else if (! _internetConnectionService.IsInternetAccess())
+            else if (!_internetConnectionService.IsInternetAccess())
             {
-                MessageDialog msg = new MessageDialog(StringResources.GetString("AccessDenied"));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("AccessDenied")));
                 return false;
             }
             else
@@ -256,63 +256,82 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        private void GoToLearning()
+        private async void GoToLearning()
         {
-            IsDeckSelected = false;
-            NavigationService.NavigateTo("LearningView");
-            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
-            _selectedID = String.Empty;
+            if (await CheckInternetConnection())
+            {
+                IsDeckSelected = false;
+                NavigationService.NavigateTo("LearningView");
+                Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
+                _selectedID = String.Empty;
 
-            Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+                Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
+            }
         }
 
-        private void GoToTest()
+        private async void GoToTest()
         {
-            IsDeckSelected = false;
-            NavigationService.NavigateTo("ExamView");
-            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
-            _selectedID = String.Empty;
-            Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+            if (await CheckInternetConnection())
+            {
+                IsDeckSelected = false;
+                NavigationService.NavigateTo("ExamView");
+                Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
+                _selectedID = String.Empty;
+                Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
 
-            _statisticsService.IncrementTestsCountAnswers();
-            _statisticsService.IncrementCountOfDecks(deck);
+                _statisticsService.IncrementTestsCountAnswers();
+                _statisticsService.IncrementCountOfDecks(deck);
+            }
         }
 
-        private void GoToManageDeck()
+        private async void GoToManageDeck()
         {
-            IsDeckSelected = false;
-            IsMyDeck = false;
-            NavigationService.NavigateTo("ManageDeckView");
-            Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
-            _selectedID = String.Empty;
+            if (await CheckInternetConnection())
+            {
+                IsDeckSelected = false;
+                IsMyDeck = false;
+                NavigationService.NavigateTo("ManageDeckView");
+                Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
+                _selectedID = String.Empty;
 
-            Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(deck));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false, deck.Name));
+                Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(deck));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
+            }
 
         }
 
         private void BackToDeck()
         {
             IsDeckSelected = false;
+            IsMyDeck = false;
             _selectedID = "";
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
         }
 
         private async void TapTile(string id)
         {
-            _selectedID = id;
-            IsDeckSelected = true;
-            Deck deck = await _restService.GetDeckById(_selectedID);
-            if (_accountService.IsUserLoggedIn())
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
+            if (await CheckInternetConnection())
             {
-                if (_accountService.GetUserEmail() == deck.CreatorEmail)
-                    IsMyDeck = true;
-                else
-                    IsMyDeck = false;
-            }
-            else
+                _selectedID = id;
+                IsDeckSelected = true;
+                Deck deck = await _restService.GetDeckById(_selectedID);
                 IsMyDeck = false;
+
+                if (deck != null)
+                {
+                    //if (_decksType == DecksType.MyDecks) 
+                    if (_accountService.IsUserLoggedIn())
+                    {
+                        if (_accountService.GetUserEmail() == deck.CreatorEmail)
+                            IsMyDeck = true;
+                    }
+                }
+
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false));
+            }
         }
 
         #endregion

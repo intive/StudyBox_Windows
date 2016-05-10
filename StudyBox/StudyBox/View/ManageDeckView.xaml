@@ -31,13 +31,14 @@
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
 
         <userControls:MenuControlView Grid.RowSpan="4" Canvas.ZIndex="2"/>
+        <userControls:MessageBoxControlView Grid.Row="2" Canvas.ZIndex="1" VerticalAlignment="Top"/>
         <Button  Grid.Row="1" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcard}">
             <TextBlock x:Uid="GoToAddFlashcard"
                         FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         FontFamily="{StaticResource LatoRegularFontFamily}" 
-                               Padding="0 10"
+                        Padding="0 10"
                         Foreground="{StaticResource Grey}" />
         </Button>
         <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="2" Grid.Column="0" Margin="5">
@@ -59,9 +60,12 @@
                                         VerticalAlignment="Top"
                                         Margin="0"
                                         >
+                                        
                                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <TextBlock Text="{Binding Question}" 
                                                        TextTrimming="CharacterEllipsis"
+                                                       TextWrapping="NoWrap"
+                                                       MaxLines="1"
                                                        TextAlignment="Center"
                                                        Foreground="{StaticResource Grey}" 
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
@@ -69,6 +73,8 @@
                                             <TextBlock Text="{Binding Answer}" 
                                                        Foreground="{StaticResource Grey}" 
                                                        TextTrimming="CharacterEllipsis"
+                                                       TextWrapping="NoWrap"
+                                                       MaxLines="1"
                                                        TextAlignment="Center"
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        HorizontalAlignment="Center"

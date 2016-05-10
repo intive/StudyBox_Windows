@@ -123,6 +123,7 @@
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\DecksTypeMessage.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
+    <Compile Include="Messages\MessageToMessageBoxControl.cs" />
     <Compile Include="Messages\NewDeckMessageToImageImport.cs" />
     <Compile Include="Messages\ReloadMessageToDecksList.cs" />
     <Compile Include="Messages\ReloadMessageToStatistics.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Services\StatisticsDataService.cs" />
     <Compile Include="Services\UserDataStorageService.cs" />
     <Compile Include="Services\ValidationService.cs" />
+    <Compile Include="ViewModels\CreateDeckViewModel.cs" />
     <Compile Include="ViewModels\CreateFlashcardViewModel.cs" />
     <Compile Include="ViewModels\DecksListViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\ManageDeckViewModel.cs" />
     <Compile Include="ViewModels\MenuControlViewModel.cs" />
+    <Compile Include="ViewModels\MessageBoxViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />

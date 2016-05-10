@@ -111,12 +111,20 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToBrushConverter.cs" />
+    <Compile Include="Converters\BoolToExpandArrowSymbol.cs" />
     <Compile Include="Converters\BoolToSortingArrowConventer.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
     <Compile Include="UserControls\MenuControlView.xaml.cs">
       <DependentUpon>MenuControlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MessageBoxControlView.xaml.cs">
+      <DependentUpon>MessageBoxControlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="View\CreateDeckView.xaml.cs">
+      <DependentUpon>CreateDeckView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CreateFlashcardView.xaml.cs">
       <DependentUpon>CreateFlashcardView.xaml</DependentUpon>
     </Compile>
@@ -195,6 +203,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="UserControls\MenuControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MessageBoxControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CreateDeckView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

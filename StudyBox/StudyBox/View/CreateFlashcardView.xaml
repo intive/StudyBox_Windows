@@ -16,6 +16,8 @@
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter" />
+        <converters:BoolToBrushConverter x:Key="BoolToBrushConverter" />
+        <converters:BoolToExpandArrowSymbol x:Key="BoolToExpandArrowSymbol" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch">
@@ -23,7 +25,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" MinHeight="50" />
+            <RowDefinition Height="*" MinHeight="50" />
             <RowDefinition Height="13*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -31,170 +33,276 @@
         <TextBlock x:Name="SmallFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
+        <ContentControl x:Name="LabelMarginManagment" Visibility="Collapsed"/>
 
         <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
+        <SplitView  Grid.Row="1" 
+                    Grid.Column="0" 
+                    DisplayMode="CompactInline"  
+                    HorizontalAlignment="Stretch" 
+                    IsPaneOpen="{Binding IsPaneVisible, Mode=TwoWay}"
+                    OpenPaneLength="296"
+                    CompactPaneLength="60"
+                    Name="MainSplitView"
+                   >
+            <SplitView.Pane>
+                <ScrollViewer  VerticalScrollBarVisibility="Hidden" Margin="10,5,0,5">
+                    <StackPanel>
+                        <Grid Grid.Row="2" Margin="0,24,0,24" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Background="Transparent" Command="{Binding TogglePaneVisibility}" Grid.Column="0">
+                                <SymbolIcon  Symbol="{Binding ElementName=MainSplitView, Path=IsPaneOpen, Converter={StaticResource BoolToExpandArrowSymbol},UpdateSourceTrigger=PropertyChanged}" />
+                            </Button>
+                            <TextBlock Margin="20,0,0,0" 
+                                       VerticalAlignment="Center" 
+                                       Grid.Column="1"
+                                       x:Uid="FlashcardsInDeck"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"/>
+                        </Grid>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Margin="5" 
+                        <ListView Name="Flashcards"  
+                          Visibility="{Binding ElementName=MainSplitView, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          ItemsSource="{Binding FlashcardsCollection}" 
+                          HorizontalAlignment="Stretch" 
+                          IsItemClickEnabled="False" 
+                          Margin="5,0,5,0"
+                          Padding="0">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,0,0,10" 
+                                                HorizontalAlignment="Stretch"  
+                                                Background="{StaticResource Graphite}"
+                                                Padding="5">
+
+                                        <TextBlock FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
+                                               FontFamily="{StaticResource LatoRegularFontFamily}"
+                                               Foreground="{StaticResource Grey}" 
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="NoWrap"
+                                               MaxLines="1"
+                                               Text="{Binding Question}"/>
+                                        <TextBlock FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
+                                               FontFamily="{StaticResource LatoRegularFontFamily}"
+                                               Foreground="{StaticResource Grey}" 
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="NoWrap"
+                                               MaxLines="1"
+                                               Text="{Binding Answer}"/>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <ScrollViewer Grid.Column="1" Margin="5" 
                       HorizontalAlignment="Stretch"  
-                      VerticalScrollBarVisibility="Hidden" >
+                      VerticalScrollBarVisibility="Hidden">
 
-            <StackPanel Margin="5,5,5,5" Padding="5" 
+                    <StackPanel Margin="5,5,5,5" Padding="5" 
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" >
-                <TextBlock  FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
-                            HorizontalAlignment="Center" 
-                            Text="{Binding HeaderMessage}" />
+                        <TextBlock  FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
+                                HorizontalAlignment="Center" 
+                                Text="{Binding HeaderMessage}" />
 
-                <StackPanel  Visibility="{Binding ShowDeckName, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <TextBlock  Margin="0,20,0,5"  
+                        <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
                                 FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
                                 x:Uid="DeckName" />
-                    <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
+                        
+                        <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"     
+                             FontFamily="{StaticResource LatoRegularFontFamily}"
                              TextWrapping="Wrap" 
                              Text="{Binding DeckName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                              MaxLength="{Binding MaxDeckNameCharacters, Mode=OneTime}" />
-                    <CheckBox IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Uid="isPublic"/>
-                    <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
-                    <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
-                    <Run Text="/"/>
-                    <Run Text="{Binding MaxDeckNameCharacters}"></Run>
-                    </TextBlock>
 
-                </StackPanel>
+                        <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                   FontFamily="{StaticResource LatoRegularFontFamily}">
+                            <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Foreground="{Binding IsDeckNameValid, Converter={StaticResource BoolToBrushConverter}}">                      
+                            </Run>
+                            <Run Text="/"/>
+                            <Run Text="{Binding MaxDeckNameCharacters}"></Run>
+                        </TextBlock>
 
-                <TextBlock  Margin="0,20,0,5" 
+                        <CheckBox  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"   
+                                   IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                   x:Uid="isPublic"
+                                   FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                   FontFamily="{StaticResource LatoRegularFontFamily}"
+                                   VerticalAlignment="Center"/>
+
+
+                        <TextBlock  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
                             FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                            FontFamily="{StaticResource LatoRegularFontFamily}"    
                             x:Uid="QuestionLabel"/>
-                <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
-                         Height="250" 
+                        <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
+                         FontFamily="{StaticResource LatoRegularFontFamily}"
                          TextWrapping="Wrap" 
                          AcceptsReturn="True" 
                          Text="{Binding Question, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                          MaxLength="{Binding MaxQuestionCharacters, Mode=OneTime}" />
 
-                <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
-                    <Run Text="{Binding CurrentQuestionCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
-                    <Run Text="/"/>
-                    <Run Text="{Binding MaxQuestionCharacters}"></Run>
-                </TextBlock>
+                        <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                             FontFamily="{StaticResource LatoRegularFontFamily}">
+                            <Run Text="{Binding CurrentQuestionCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Foreground="{Binding IsQuestionValid, Converter={StaticResource BoolToBrushConverter}}">                      
+                            </Run>
+                            <Run Text="/"/>
+                            <Run Text="{Binding MaxQuestionCharacters}"></Run>
+                        </TextBlock>
 
-                <TextBlock Margin="0,20,0,5" 
+                        <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
                            FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                           FontFamily="{StaticResource LatoRegularFontFamily}"
                            x:Uid="Answer"/>
-                <TextBox Name="Answer"
+                        <TextBox Name="Answer"
                          FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}" 
-                         Height="250" 
+                         FontFamily="{StaticResource LatoRegularFontFamily}"
                          TextWrapping="Wrap" 
                          AcceptsReturn="True" 
                          Text="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                          MaxLength="{Binding MaxAnswerCharacters, Mode=OneTime}"/>
 
-                <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
-                    <Run Text="{Binding CurrentAnswerCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
-                    <Run Text="/"/>
-                    <Run Text="{Binding MaxAnswerCharacters}"></Run>
-                </TextBlock>
+                        <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                   FontFamily="{StaticResource LatoRegularFontFamily}">
+                            <Run Text="{Binding CurrentAnswerCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Foreground="{Binding IsAnswerValid, Converter={StaticResource BoolToBrushConverter}}">                       
+                            </Run>
+                            <Run Text="/"/>
+                            <Run Text="{Binding MaxAnswerCharacters}"></Run>
+                        </TextBlock>
 
-                <TextBlock Margin="0,20,0,5" 
+                        <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"  
                            FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                            x:Uid="Tips"/>
+                           FontFamily="{StaticResource LatoRegularFontFamily}"
+                           x:Uid="Tips"/>
 
-                <ListView Name="Tips"  
+                        <ListView Name="Tips"  
                           ItemsSource="{Binding TipsCollection}" 
                           HorizontalAlignment="Stretch" 
                           IsItemClickEnabled="False" 
                           Margin="0"
                           Padding="0">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Padding="0" Margin="0" HorizontalAlignment="Stretch">
-                                
-                                <Button Background="Transparent"                                        
-                                    Command="{Binding ElementName=Tips, Path=DataContext.Remove}" 
-                                    CommandParameter="{Binding ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    BorderThickness="0">
-                                    <TextBlock TextWrapping="Wrap"                                       
-                                       x:Uid="DeleteTip"  
-                                       TextAlignment="DetectFromContent"   
-                                       HorizontalAlignment="Stretch"
-                                       FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Graphite}"
-                                       Padding="0,0"
-                                       />
-                                </Button>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Padding="0" Margin="0,0,0,5" HorizontalAlignment="Stretch">
 
-                                <TextBox  Height="200" Name="Content"      
-                                         
-                                          HorizontalAlignment="Stretch"
-                                          FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                          MaxLength="{Binding MaxPromptCharacters, Mode=OneTime}"
-                                          TextWrapping="Wrap" AcceptsReturn="True"
-                                          Text="{Binding Prompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <Button Background="Transparent"
+                                            Command="{Binding ElementName=Tips, Path=DataContext.Remove}" 
+                                            CommandParameter="{Binding ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            BorderThickness="0">
+                                            <TextBlock TextWrapping="Wrap"
+                                                   x:Uid="DeleteTip"  
+                                                   TextAlignment="DetectFromContent"   
+                                                   HorizontalAlignment="Stretch"
+                                                   FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                                   FontFamily="{StaticResource LatoRegularFontFamily}"
+                                                   Foreground="{StaticResource Graphite}"
+                                                   Padding="0,0"/>
+                                        </Button>
 
-                                <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}">
-                                    <Run Text="{Binding CurrentPromptCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run>
+                                        <TextBox  Name="Content"
+                                              HorizontalAlignment="Stretch"
+                                              FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                              FontFamily="{StaticResource LatoRegularFontFamily}"
+                                              MaxLength="{Binding MaxEssenceCharacters, Mode=OneTime}"
+                                              TextWrapping="Wrap" AcceptsReturn="True"
+                                              Text="{Binding Essence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                        <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                               FontFamily="{StaticResource LatoRegularFontFamily}">
+                                    <Run Text="{Binding CurrentEssenceCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Foreground="{Binding IsEssenceValid, Converter={StaticResource BoolToBrushConverter}}">                                      
+                                    </Run>
                                     <Run Text="/"/>
-                                    <Run Text="{Binding MaxPromptCharacters, Mode=OneTime}"></Run>
-                                </TextBlock>
+                                    <Run Text="{Binding MaxEssenceCharacters, Mode=OneTime}"></Run>
+                                        </TextBlock>
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-              
-                <Button  Margin="0,20,0,5"
-                                Background="{StaticResource DarkBlue}" 
-                                Command="{Binding AddTip}">
-                    <TextBlock TextWrapping="Wrap"
-                                       x:Uid="AddTip"
-                                       FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Grey}" 
-                                       Padding="0,5"
-                                       />
-                </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
-                <TextBlock x:Name="GeneralError"  
+                        <Button
+                            Background="{StaticResource DarkBlue}" 
+                            Command="{Binding AddTip}">
+                            <TextBlock TextWrapping="Wrap"
+                                   x:Uid="AddTip"
+                                   FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                   FontFamily="{StaticResource LatoRegularFontFamily}"
+                                   Foreground="{StaticResource Grey}" 
+                                   Padding="0,5" />
+                        </Button>
+
+                        <TextBlock x:Name="GeneralError"  
+                                   Visibility="{Binding IsGeneralError, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Foreground="{StaticResource Raspberry}" 
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
-                                   TextAlignment="Center"  
-                                   Style="{StaticResource ValidationErrorStyle}" 
+                                   FontFamily="{StaticResource LatoRegularFontFamily}"
+                                   TextAlignment="Center"                                    
                                    x:Uid="FillAllFieldsMessage"
                                    Margin="10,15,0,10" >
-                            <i:Interaction.Behaviors>
-                                <core:DataTriggerBehavior Binding="{Binding Path=IsGeneralError}" Value="True">
-                                    <core:GoToStateAction StateName="GeneralErrorState"/>
-                                </core:DataTriggerBehavior>
-                        
-                                 <core:DataTriggerBehavior Binding="{Binding Path=IsGeneralError}" Value="False">
-                                    <core:GoToStateAction StateName="NoGeneralErrorState"/>
-                                </core:DataTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                </TextBlock>
+                        </TextBlock>
 
-                <Button HorizontalAlignment="Stretch"
-                        Name="SubmitForm"
-                                Margin="0,20,0,5"
+                        <Grid Margin="0,25,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                HorizontalAlignment="Stretch"                                                          
+                                Background="{StaticResource Raspberry}" 
+                                Command="{Binding Cancel}">
+                                <TextBlock TextWrapping="Wrap"
+                                       x:Uid="Cancel"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Grey}" 
+                                       Padding="0,5"/>
+                            </Button>
+
+                            <Button Grid.Column="2"
+                                HorizontalAlignment="Stretch"
+                                Name="SubmitForm"                                
                                 Background="{StaticResource DarkBlue}" 
                                 Command="{Binding SubmitForm}">
-                    <TextBlock TextWrapping="Wrap"
+                                <TextBlock TextWrapping="Wrap"
                                        Text="{Binding SubmitFormMessage, Mode=OneWay}"
                                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                                        FontFamily="{StaticResource LatoRegularFontFamily}"
                                        Foreground="{StaticResource Grey}" 
-                                       Padding="0,5"
-                                       />
-                </Button>
-            </StackPanel>
-        </ScrollViewer>
-
+                                       Padding="0,5"/>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </SplitView.Content>
+        </SplitView>
         <ProgressRing x:Name="InitializeProgressRing"
                       Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
                       Width="80"
@@ -204,8 +312,7 @@
                       VerticalAlignment="Center"
                       IsActive="{Binding IsDataLoading}"
                       Foreground="{StaticResource DarkBlue}"
-                      FontWeight="Bold"
-                      />
+                      FontWeight="Bold"/>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">
@@ -215,8 +322,11 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SmallFontManagment.FontSize" Value="11"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="11"/>
                         <Setter Target="BigFontManagment.FontSize" Value="24"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,10,0,0"/>
+                        <Setter Target="MainSplitView.OpenPaneLength" Value="300"/>
+                        <Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -228,6 +338,9 @@
                         <Setter Target="SmallFontManagment.FontSize" Value="14"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="18"/>
                         <Setter Target="BigFontManagment.FontSize" Value="26"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,15,0,0"/>
+                        <Setter Target="MainSplitView.OpenPaneLength" Value="430"/>
+                        <Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -239,6 +352,9 @@
                         <Setter Target="SmallFontManagment.FontSize" Value="18"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="25"/>
                         <Setter Target="BigFontManagment.FontSize" Value="35"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
+                        <Setter Target="MainSplitView.OpenPaneLength" Value="250"/>
+                        <Setter Target="MainSplitView.DisplayMode" Value="CompactInline"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -250,32 +366,16 @@
                         <Setter Target="SmallFontManagment.FontSize" Value="16"/>
                         <Setter Target="StandardFontManagment.FontSize" Value="25"/>
                         <Setter Target="BigFontManagment.FontSize" Value="35"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
+                        <Setter Target="MainSplitView.OpenPaneLength" Value="350"/>
+                        <Setter Target="MainSplitView.DisplayMode" Value="CompactInline"/>
                     </VisualState.Setters>
                 </VisualState>
-
             </VisualStateGroup>
 
-            <VisualStateGroup x:Name="GeneralErrorStates">
-                <VisualState x:Name="GeneralErrorState">
-                    <Storyboard>
-                        <DoubleAnimation
-                                    Storyboard.TargetName="GeneralError"
-                                    Storyboard.TargetProperty="Opacity"
-                                    From="0.0" To="1.0" Duration="0:0:0.5" />
-                    </Storyboard>
-                    <VisualState.Setters>
-                        <Setter Target="GeneralError.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState x:Name="NoGeneralErrorState">
-                    <VisualState.Setters>
-                        <Setter Target="GeneralError.Visibility" Value="Collapsed"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        
+
 
     </Grid>
 </Page>
