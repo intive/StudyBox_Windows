@@ -16,7 +16,6 @@
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BoolToBrushConverter x:Key="BoolToBrushConverter" />
-        <converters:ThumbnailToImageConverter x:Key="ThumbnailToImageConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch">
@@ -79,20 +78,22 @@
                                 FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
                                 x:Uid="Image" />
+                
+                <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"
+                                FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                FontFamily="{StaticResource LatoRegularFontFamily}"
+                                Text="{Binding ImageName}"
+                                Foreground="DarkBlue"
+                                Visibility="{Binding ImageNameVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" TextWrapping="Wrap"/>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-
-                    <Image Width="150" Height="150"
-                           Source="{Binding Thumbnail, Converter={StaticResource ThumbnailToImageConverter}}" Visibility="{Binding ThumbnailVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <Button Command="{Binding ImportFileCommand}"
                             Background="{StaticResource Raspberry}"
                             Style="{StaticResource SummaryButtonStyle}"
                             Opacity="1" IsHitTestVisible="True">
                             <TextBlock x:Uid="ImportFile"
-                           FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                           Style="{StaticResource SummaryTextInButtonStyle}"/>
+                                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                        Style="{StaticResource SummaryTextInButtonStyle}"/>
                         </Button>
 
                         <Button Command="{Binding TakePhotoCommand}"
@@ -100,16 +101,15 @@
                             Style="{StaticResource SummaryButtonStyle}"
                             Opacity="1" IsHitTestVisible="True">
                             <TextBlock x:Uid="TakePhoto"
-                           FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                           Style="{StaticResource SummaryTextInButtonStyle}"/>
+                                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                        Style="{StaticResource SummaryTextInButtonStyle}"/>
                         </Button>
                     </StackPanel>
-                </StackPanel>
 
                 <TextBlock x:Name="GeneralError"
                                    Visibility="{Binding IsGeneralError, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Foreground="{StaticResource Raspberry}"
-                                   FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}"
+                                   FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                    FontFamily="{StaticResource LatoRegularFontFamily}"
                                    TextAlignment="Center"
                                    x:Uid="FillAllFieldsMessage"
@@ -198,8 +198,5 @@
             </VisualStateGroup>
 
         </VisualStateManager.VisualStateGroups>
-
-
-
     </Grid>
 </Page>

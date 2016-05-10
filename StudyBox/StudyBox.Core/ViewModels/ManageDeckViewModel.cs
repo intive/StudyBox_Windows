@@ -129,9 +129,25 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        private RelayCommand _addNewFlashcardFromFile;
+
+        public RelayCommand AddNewFlashcardFromFile
+        {
+            get
+            {
+                return _addNewFlashcardFromFile ?? (_addNewFlashcardFromFile = new RelayCommand(GoToAddNewFlashcardFromFile));
+            }
+        }
+
         private void GoToAddNewFlashcard()
         {
             NavigationService.NavigateTo("CreateFlashcardView");
+            Messenger.Default.Send<DataMessageToCreateFlashcard>(new DataMessageToCreateFlashcard(_deckInstance, null));
+        }
+
+        private void GoToAddNewFlashcardFromFile()
+        {
+            NavigationService.NavigateTo("ImageImportView");
             Messenger.Default.Send<DataMessageToCreateFlashcard>(new DataMessageToCreateFlashcard(_deckInstance, null));
         }
     }

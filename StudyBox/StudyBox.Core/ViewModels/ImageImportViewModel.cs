@@ -6,7 +6,6 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Command;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
-using Windows.UI.Popups;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 
@@ -17,12 +16,12 @@ namespace StudyBox.Core.ViewModels
         private string _headerText;
         private string _deckName;
         private string _submitFormMessage;
+        private string _imageName;
         private bool _isPublic;
         private bool _isGeneralError;
         private bool _isDataLoading = false;
-        private bool _thumbnailVisibility = false;
+        private bool _imageNamelVisibility = false;
         private Deck _deckInstance;
-        private StorageItemThumbnail _thumbnail;
         private StorageFile _image;
 
         private const ulong _maxImageSize = 62914560; //60 MB
@@ -173,33 +172,33 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public StorageItemThumbnail Thumbnail
+        public string ImageName 
         {
             get
             {
-                return _thumbnail;
+                return _imageName;
             }
             set
             {
-                if(_thumbnail != value)
+                if(_imageName != value)
                 {
-                    _thumbnail = value;
+                    _imageName = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        public bool ThumbnailVisibility
+        public bool ImageNameVisibility
         {
             get
             {
-                return _thumbnailVisibility;
+                return _imageNamelVisibility;
             }
             set
             {
-                if (_thumbnailVisibility != value)
+                if (_imageNamelVisibility != value)
                 {
-                    _thumbnailVisibility = value;
+                    _imageNamelVisibility = value;
                     RaisePropertyChanged();
                 }
             }
@@ -239,21 +238,23 @@ namespace StudyBox.Core.ViewModels
 
         private void HandleDataMessage(Deck deck)
         {
-            ThumbnailVisibility = false;
-            Thumbnail = null;
+            ImageNameVisibility = false;
+            ImageName = "";
             _image = null;
-            if (deck == null)
+            _deckInstance = deck;
+            if (_deckInstance == null)
             {
                 HeaderText = StringResources.GetString("CreateNewDeckFromFile");
                 SubmitFormMessage = StringResources.GetString("CreateNewDeck");
                 DeckName = "";
+                IsPublic = true;
             }
             else
             {
                 HeaderText = StringResources.GetString("AddFlashcardsFromFile");
-                SubmitFormMessage = StringResources.GetString("AddFlashcard");
+                SubmitFormMessage = StringResources.GetString("AddFlashcards");
                 DeckName = deck.Name;
-                _deckInstance = deck;
+                IsPublic = deck.IsPublic;
             }
         }
 
@@ -263,8 +264,8 @@ namespace StudyBox.Core.ViewModels
             if (image != null)
             {
                 _image = image;
-                Thumbnail = await image.GetThumbnailAsync(ThumbnailMode.PicturesView);
-                ThumbnailVisibility = true;
+                ImageName = _image.Name;
+                ImageNameVisibility = true;
             }
         }
 
@@ -277,8 +278,8 @@ namespace StudyBox.Core.ViewModels
                 if (image != null)
                 {
                     _image = image;
-                    Thumbnail = await image.GetThumbnailAsync(ThumbnailMode.PicturesView);
-                    ThumbnailVisibility = true;
+                    ImageName = _image.Name;
+                    ImageNameVisibility = true;
                 }
             }
             else
@@ -292,14 +293,12 @@ namespace StudyBox.Core.ViewModels
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
             {
-                MessageDialog msg = new MessageDialog((StringResources.GetString("NoInternetConnection")));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
                 return;
             }
             else if (!_internetConnectionService.IsInternetAccess())
             {
-                MessageDialog msg = new MessageDialog((StringResources.GetString("AccessDenied")));
-                await msg.ShowAsync();
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("AccessDenied")));
                 return;
             }
             else
@@ -308,58 +307,54 @@ namespace StudyBox.Core.ViewModels
                 {
                     return;
                 }
-                if (_image != null)
+                if (await IsImageToLarge(_image))
                 {
-                    if (await IsImageToLarge(_image))
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ImageTooLarge")));
+                    return;
+                }
+                bool deckCreated = false;
+                IsDataLoading = true;
+                try
+                {
+                    if (_deckInstance == null)
                     {
-                        MessageDialog msg = new MessageDialog(StringResources.GetString("ImageTooLarge"));
-                        await msg.ShowAsync();
-                        return;
+                        _deckInstance = await _restService.CreateDeck(new Deck { Name = DeckName.Trim(), IsPublic = IsPublic });
+                        deckCreated = true;
                     }
-
-                    bool deckCreated = false;
-                    IsDataLoading = true;
+                    else
+                    {
+                        string oldDeckName = _deckInstance.Name;
+                        bool oldIsPublic = _deckInstance.IsPublic;
+                        _deckInstance.Name = DeckName.Trim();
+                        _deckInstance.IsPublic = IsPublic;
+                        if (oldDeckName != _deckInstance.Name || oldIsPublic != _deckInstance.IsPublic)
+                        {
+                            await _restService.UpdateDeck(_deckInstance);
+                        }
+                    }
                     try
                     {
-                        if (_deckInstance == null)
-                        {
-                            _deckInstance = await _restService.CreateDeck(new Deck { Name = DeckName.Trim(), IsPublic = IsPublic });
-                            deckCreated = true;
-                        }
-                        else
-                        {
-                            string oldDeckName = _deckInstance.Name;
-                            bool oldIsPublic = _deckInstance.IsPublic;
-                            _deckInstance.Name = DeckName.Trim();
-                            _deckInstance.IsPublic = IsPublic;
-                            if (oldDeckName != _deckInstance.Name || oldIsPublic != _deckInstance.IsPublic)
-                            {
-                                await _restService.UpdateDeck(_deckInstance);
-                            }
-                        }
-
-                        try
-                        {
-                            //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
-                            throw new NotImplementedException();
-                        }
-                        catch
-                        {
-                            if (deckCreated)
-                                await _restService.RemoveDeck(_deckInstance.ID);
-                            MessageDialog msg = new MessageDialog(StringResources.GetString("OperationFailed"));
-                            await msg.ShowAsync();
-                        }
+                        //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
+                        throw new NotImplementedException();
                     }
                     catch
                     {
-                        MessageDialog msg = new MessageDialog(StringResources.GetString("OperationFailed"));
-                        await msg.ShowAsync();
+                        if (deckCreated)
+                        {
+                            _deckInstance = null;
+                            deckCreated = false;
+                            await _restService.RemoveDeck(_deckInstance.ID);
+                        }
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
                     }
-                    finally
-                    {
-                        IsDataLoading = false;
-                    }
+                }
+                catch
+                {
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
+                }
+                finally
+                {
+                    IsDataLoading = false;
                 }
             }
         }
@@ -387,9 +382,18 @@ namespace StudyBox.Core.ViewModels
 
         private void LeaveForm()
         {
-            NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+            if (_deckInstance == null)
+            {
+                NavigationService.NavigateTo("DecksListView");
+                Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+            }
+            else
+            {
+                NavigationService.NavigateTo("ManageDeckView");
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deckInstance));
+            }
         }
     }
 }
