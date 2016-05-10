@@ -386,6 +386,9 @@
     <value>Please register to add new decks and flashcards.</value>
   </data>
   <data name="RemoveFlashcard.Text" xml:space="preserve">
-    <value>Remove falshcard</value>
+    <value>Remove flashcard</value>
+  </data>
+  <data name="RemoveFlashcardOrDeck" xml:space="preserve">
+    <value>Removal flashcard</value>
   </data>
 </root>
