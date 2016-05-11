@@ -47,7 +47,6 @@ namespace StudyBox.Core.ViewModels
             InitializeDecksCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
         }
         #endregion
 
@@ -317,16 +316,20 @@ namespace StudyBox.Core.ViewModels
             {
                 _selectedID = id;
                 IsDeckSelected = true;
-                Deck deck = await _restService.GetDeckById(_selectedID);
                 IsMyDeck = false;
 
-                if (deck != null)
+                if (_decksType == DecksType.MyDecks)
+                    IsMyDeck = true;
+                else
                 {
-                    //if (_decksType == DecksType.MyDecks) 
-                    if (_accountService.IsUserLoggedIn())
+                    Deck deck = await _restService.GetDeckById(_selectedID);
+                    if (deck != null)
                     {
-                        if (_accountService.GetUserEmail() == deck.CreatorEmail)
-                            IsMyDeck = true;
+                        if (_accountService.IsUserLoggedIn())
+                        {
+                            if (_accountService.GetUserEmail() == deck.CreatorEmail)
+                                IsMyDeck = true;
+                        }
                     }
                 }
 

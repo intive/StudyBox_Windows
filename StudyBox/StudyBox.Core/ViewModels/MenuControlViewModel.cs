@@ -47,6 +47,7 @@ namespace StudyBox.Core.ViewModels
             _restservice = restservice;
 
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
+            SearchVisibility = false;
         }
 
         public string TitleBar
@@ -310,11 +311,10 @@ namespace StudyBox.Core.ViewModels
         private void GoToUsersDecks()
         {
             NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
-            SearchVisibility = true;
+            SearchVisibility = false;
         }
 
         private async void TestRandomDeck()
@@ -359,7 +359,6 @@ namespace StudyBox.Core.ViewModels
         private void GoToDecks()
         {
             NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
