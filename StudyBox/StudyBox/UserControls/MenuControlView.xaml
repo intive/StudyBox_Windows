@@ -37,7 +37,8 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition  Width="3*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition  Width="2*"/>
                         <ColumnDefinition />
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
@@ -57,15 +58,12 @@
                     </Button>
                     <TextBlock
                             Grid.Column="1"
-                            Grid.ColumnSpan="2"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center" 
+                            Grid.ColumnSpan="3"
                             FontSize="18" 
                             FontStretch="UltraExpanded" 
                             Foreground="{StaticResource Grey}" 
                             FontFamily="{StaticResource LatoBlackFontFamily}"
-                            Text="{Binding TitleBar, UpdateSourceTrigger=PropertyChanged}" Margin="133.333,14,85,14"
-                        />
+                            Text="{Binding TitleBar, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                     <AutoSuggestBox x:Name="SearchBox"
                                     Style="{StaticResource AutoSuggestBoxStyle}" 
@@ -89,7 +87,7 @@
                     </AutoSuggestBox>
 
                     <Button x:Name="MenuSearchButton"
-                            Grid.Column="3" 
+                            Grid.Column="4" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center"
                             Padding="0" FontSize="12"
@@ -109,7 +107,7 @@
                     </Button>
 
                     <Button x:Uid="MenuSaveButton"
-                            Grid.Column="3" 
+                            Grid.Column="4" 
                             Visibility="{Binding SaveButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center"
@@ -204,7 +202,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SearchBox.(Grid.Column)" Value="1"/>
-                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="3"/>
+                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="4"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -214,7 +212,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SearchBox.(Grid.Column)" Value="1"/>
-                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="3"/>
+                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="4"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -223,7 +221,7 @@
                         <AdaptiveTrigger MinWindowWidth="720" MinWindowHeight="500"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SearchBox.(Grid.Column)" Value="2"/>
+                        <Setter Target="SearchBox.(Grid.Column)" Value="3"/>
                         <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="2"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -233,7 +231,7 @@
                         <AdaptiveTrigger MinWindowWidth="1024" MinWindowHeight="690"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SearchBox.(Grid.Column)" Value="2"/>
+                        <Setter Target="SearchBox.(Grid.Column)" Value="3"/>
                         <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="2"/>
                     </VisualState.Setters>
                 </VisualState>
