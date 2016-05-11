@@ -168,7 +168,7 @@ namespace StudyBox.Core.ViewModels
                         if (isLogged)
                         {
                             NavigationService.NavigateTo("DecksListView");
-                            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true,false,false));
+                            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true,false));
                             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
                             ClearInputs();
                         }

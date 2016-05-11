@@ -22,6 +22,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" MinHeight="50" />
             <RowDefinition Height="1*" />
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1*" />
             <RowDefinition x:Name="MainGridRow" Height="13*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -30,8 +32,8 @@
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
 
-        <userControls:MenuControlView Grid.RowSpan="4" Canvas.ZIndex="2"/>
-        <userControls:MessageBoxControlView Grid.Row="2" Canvas.ZIndex="1" VerticalAlignment="Top"/>
+        <userControls:MenuControlView Grid.RowSpan="6" Canvas.ZIndex="2"/>
+        <userControls:MessageBoxControlView Grid.Row="4" Canvas.ZIndex="1" VerticalAlignment="Top"/>
         <Button  Grid.Row="1" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcard}">
             <TextBlock x:Uid="GoToAddFlashcard"
                         FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
@@ -41,7 +43,16 @@
                         Padding="0 10"
                         Foreground="{StaticResource Grey}" />
         </Button>
-        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="2" Grid.Column="0" Margin="5">
+        <Button  Grid.Row="3" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcardFromFile}">
+            <TextBlock x:Uid="GoToAddFlashcardFromFile"
+                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Padding="0 10"
+                        Foreground="{StaticResource Grey}" />
+        </Button>
+        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="4" Grid.Column="0" Margin="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
                 <GridView x:Name="GridView" ItemsSource="{Binding FlashcardsCollection}" 
                           IsItemClickEnabled="False"

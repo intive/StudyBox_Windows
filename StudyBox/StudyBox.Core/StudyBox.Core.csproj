@@ -124,7 +124,6 @@
     <Compile Include="Messages\DecksTypeMessage.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
     <Compile Include="Messages\MessageToMessageBoxControl.cs" />
-    <Compile Include="Messages\NewDeckMessageToImageImport.cs" />
     <Compile Include="Messages\ReloadMessageToDecksList.cs" />
     <Compile Include="Messages\ReloadMessageToStatistics.cs" />
     <Compile Include="Messages\SearchMessageToDeckList.cs" />
@@ -170,7 +169,7 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
