@@ -47,6 +47,7 @@ namespace StudyBox.Core.ViewModels
             _restservice = restservice;
 
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
+            SearchVisibility = false;
         }
 
         public string TitleBar
@@ -314,7 +315,7 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
-            SearchVisibility = true;
+            SearchVisibility = false;
         }
 
         private async void TestRandomDeck()

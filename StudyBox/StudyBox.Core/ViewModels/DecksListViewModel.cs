@@ -47,7 +47,6 @@ namespace StudyBox.Core.ViewModels
             InitializeDecksCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
         }
         #endregion
 
