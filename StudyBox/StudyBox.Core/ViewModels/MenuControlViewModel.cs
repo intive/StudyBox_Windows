@@ -14,17 +14,16 @@ namespace StudyBox.Core.ViewModels
         private readonly IAccountService _accountService;
         private readonly IRestService _restservice;
         private readonly IInternetConnectionService _internetConnectionService;
-        private bool _isSearchOpen = false;
+        private bool _searchVisibility = true;
+        private int _searchOpacity = 0;
         private bool _isPaneOpen = false;
         private bool _isSearchButtonEnabled = false;
         private bool _logoutButtonVisibility;
         private bool _addFlashcardVisibility;
-        private bool _searchButtonVisibility;
         private bool _saveButtonVisibility;
         private bool _exitButtonVisibility;
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
-        private RelayCommand _cancelSearchingCommand;
         private RelayCommand _doSearchCommand;
         private RelayCommand _logoutCommand;
         private RelayCommand _loginCommand;
@@ -33,21 +32,22 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToStatisticsCommand;
         private RelayCommand _goToAddDeckCommand;
         private RelayCommand _goToUsersDecksCommand;
-        private string _searchingContent;
+        private RelayCommand _lostFocusCommand;
+        private string _searchingContent = String.Empty;
         private string _titleBar;
 
 
         public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService) : base(navigationService)
         {
-            Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.SaveButton,x.ExitButton,x.TitleString));
-
-            SearchButtonVisibility = true;
+            Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.SaveButton,x.TitleString));
+            
 
             _accountService = accountService;
             _internetConnectionService = internetConnectionService;
             _restservice = restservice;
 
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
+            SearchVisibility = false;
         }
 
         public string TitleBar
@@ -66,6 +66,14 @@ namespace StudyBox.Core.ViewModels
                     _titleBar = value;
                     RaisePropertyChanged();
                 }
+            }
+        }
+
+        public string SearchDecks
+        {
+            get
+            {
+                return StringResources.GetString("SearchDecks");
             }
         }
 
@@ -89,17 +97,33 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public bool IsSearchOpen
+        public int SearchOpacity
         {
             get
             {
-                return _isSearchOpen;
+                return _searchOpacity;
             }
             set
             {
-                if (_isSearchOpen != value)
+                if(_searchOpacity != value)
                 {
-                    _isSearchOpen = value;
+                    _searchOpacity = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool SearchVisibility
+        {
+            get
+            {
+                return _searchVisibility;
+            }
+            set
+            {
+                if(_searchVisibility != value)
+                {
+                    _searchVisibility = value;
                     RaisePropertyChanged();
                 }
             }
@@ -137,27 +161,6 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public bool SearchButtonVisibility
-        {
-            get
-            {
-                return _searchButtonVisibility; 
-            }
-            private set
-            {
-                if (_searchButtonVisibility != value)
-                {
-                    _searchButtonVisibility = value;
-                    if (_searchButtonVisibility == true)
-                    {
-                        SaveButtonVisibility = false;
-                        ExitButtonVisibility = false;
-                    }
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public bool SaveButtonVisibility
         {
             get
@@ -171,7 +174,6 @@ namespace StudyBox.Core.ViewModels
                     _saveButtonVisibility = value;
                     if (_saveButtonVisibility == true)
                     {
-                        SearchButtonVisibility = false;
                         ExitButtonVisibility = false;
                     }
                     RaisePropertyChanged();
@@ -192,7 +194,6 @@ namespace StudyBox.Core.ViewModels
                     _exitButtonVisibility = value;
                     if (_exitButtonVisibility == true)
                     {
-                        SearchButtonVisibility = false;
                         SaveButtonVisibility = false;
                     }
                     RaisePropertyChanged();
@@ -242,11 +243,6 @@ namespace StudyBox.Core.ViewModels
             get { return _showSearchPanelCommand ?? (_showSearchPanelCommand = new RelayCommand(ShowSearchPanel)); }
         }
 
-        public RelayCommand CancelSearchingCommand
-        {
-            get { return _cancelSearchingCommand ?? (_cancelSearchingCommand = new RelayCommand(CancelSearching)); }
-        }
-
         public RelayCommand DoSearchCommand
         {
             get { return _doSearchCommand ?? (_doSearchCommand = new RelayCommand(DoSearch)); }
@@ -290,13 +286,21 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public RelayCommand LostFocusCommand
+        {
+            get
+            {
+                return _lostFocusCommand ?? (_lostFocusCommand = new RelayCommand(LostFocus));
+            }
+        }
+
         private void HideSearchingContent()
         {
-            if (IsSearchOpen)
+            if(SearchOpacity == 1)
             {
-                IsSearchOpen = false;
+                SearchOpacity = 0;
+                SearchVisibility = true;
                 SearchingContent = String.Empty;
-                SearchButtonVisibility = true;
             }
             if (IsPaneOpen)
             {
@@ -307,11 +311,10 @@ namespace StudyBox.Core.ViewModels
         private void GoToUsersDecks()
         {
             NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
-            SearchButtonVisibility = true;
+            SearchVisibility = false;
         }
 
         private async void TestRandomDeck()
@@ -335,7 +338,7 @@ namespace StudyBox.Core.ViewModels
                 {
                     NavigationService.NavigateTo("ExamView");
                     Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, deck.Name));
                     Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
                 }
                 else
@@ -356,11 +359,10 @@ namespace StudyBox.Core.ViewModels
         private void GoToDecks()
         {
             NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
-            SearchButtonVisibility = true;
+            SearchVisibility = true;
         }
 
         private void GoToAddDeck()
@@ -370,7 +372,7 @@ namespace StudyBox.Core.ViewModels
                 Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
                 NavigationService.NavigateTo("CreateDeckView");
                 HideSearchingContent();
-                SearchButtonVisibility = false;
+                SearchVisibility = false;
                 SaveButtonVisibility = false;
                 ExitButtonVisibility = false;
                 TitleBar = StringResources.GetString("StudyBox");
@@ -385,44 +387,37 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Send<ReloadMessageToStatistics>(new ReloadMessageToStatistics(true));
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
-            SearchButtonVisibility = false;
+            SearchVisibility = false;
         }
 
         private void DoSearch()
         {
-            NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<SearchMessageToDeckList>(new SearchMessageToDeckList(SearchingContent.Trim()));
-            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
-            SearchingContent = String.Empty;
+            if (!String.IsNullOrEmpty(SearchingContent.Trim()))
+            {
+                NavigationService.NavigateTo("DecksListView");
+                Messenger.Default.Send<SearchMessageToDeckList>(new SearchMessageToDeckList(SearchingContent.Trim()));
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
+                SearchingContent = String.Empty;
+            }
         }
 
-        private void CancelSearching()
-        {
-            if (IsSearchOpen)
-            {
-                SearchButtonVisibility = true;
-                HideSearchingContent();
-            }
-            Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
-        }
         private void OpenMenu()
         {
             IsPaneOpen = IsPaneOpen != true;
-            IsSearchOpen = false;
+            SearchOpacity = 0;
             SearchingContent = String.Empty;
-            if (ExitButtonVisibility)
-                SearchButtonVisibility = true;
         }
 
         private void ShowSearchPanel()
         {
-            IsSearchOpen = IsSearchOpen != true;
-            if (IsSearchOpen)
-                ExitButtonVisibility = true;
-            else
-                SearchButtonVisibility = true;
-            if(IsPaneOpen)
-                IsPaneOpen = false;
+            SearchOpacity = 1;
+            SearchVisibility = false;
+        }
+
+        private void LostFocus()
+        {
+            SearchOpacity = 0;
+            SearchVisibility = true;
         }
 
         private void Logout()
@@ -431,21 +426,20 @@ namespace StudyBox.Core.ViewModels
             LogoutButtonVisibility = false;
             NavigationService.NavigateTo("LoginView");
             HideSearchingContent();
-            SearchButtonVisibility = true;
+            SearchVisibility = true;
         }
 
         private void Login()
         {
             NavigationService.NavigateTo("LoginView");
             HideSearchingContent();
-            SearchButtonVisibility = true;
+            SearchVisibility = true;
         }
 
-        private void HandleMenuControlMessage(bool search, bool save, bool exit, string title)
+        private void HandleMenuControlMessage(bool search, bool save, string title)
         {
-            SearchButtonVisibility = search;
+            SearchVisibility = search;
             SaveButtonVisibility = save;
-            ExitButtonVisibility = exit;
             if (String.IsNullOrEmpty(title))
             {
                 TitleBar = StringResources.GetString("StudyBox");
@@ -456,11 +450,11 @@ namespace StudyBox.Core.ViewModels
             }
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             IsPaneOpen = false;
-            if(SearchButtonVisibility)
+            if (SearchVisibility)
                 HideSearchingContent();
             else
             {
-                IsSearchOpen = false;
+                SearchOpacity = 0;
                 SearchingContent = String.Empty;
             }
         }

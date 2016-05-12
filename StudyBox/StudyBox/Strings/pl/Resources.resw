@@ -398,4 +398,7 @@
   <data name="GoToAddFlashcardFromFile.Text" xml:space="preserve">
     <value>Dodaj fiszki do talii z pliku</value>
   </data>
+  <data name="SearchDecks" xml:space="preserve">
+    <value>Wyszukaj talie...</value>
+  </data>
 </root>

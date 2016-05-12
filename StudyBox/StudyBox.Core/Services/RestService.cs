@@ -137,7 +137,7 @@ namespace StudyBox.Core.Services
             try
             {
                 string url = _resources["GetAllUserDecks"].ToString();
-                string webPageSource = await GetWebPageSource(url, cts);
+                string webPageSource = await GetWebPageSource(url, cts, true);
 
                 return _deserializeJsonService.GetObjectFromJson<List<Deck>>(webPageSource);
             }
@@ -488,10 +488,15 @@ namespace StudyBox.Core.Services
             return jsonString;
         }
 
-        private async Task<string> GetWebPageSource(string url, CancellationTokenSource cts)
+        private async Task<string> GetWebPageSource(string url, CancellationTokenSource cts, bool authorize = false)
         {
             using (HttpClient httpClient = new HttpClient())
             {
+                if (authorize)
+                {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
+                }
+
                 HttpResponseMessage response;
                 if (cts == null)
                 {

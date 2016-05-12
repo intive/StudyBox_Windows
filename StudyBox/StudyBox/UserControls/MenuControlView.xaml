@@ -36,9 +36,11 @@
                     >
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition  Width="*"/>
-                        <ColumnDefinition  Width="4*"/>
-                        <ColumnDefinition  Width="*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition  Width="2*"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0"
                             HorizontalAlignment="Left"
@@ -47,7 +49,7 @@
                             FontSize="12"
                             Foreground="{StaticResource Grey}" 
                             Background="{StaticResource DarkBlue}"
-                            Margin="10,0,0,0"
+                            Margin="10,9,0,9"
                             Command="{Binding OpenMenuCommand}"
                             MaxWidth="32" MaxHeight="32">
                         <Button.Content>
@@ -56,62 +58,66 @@
                     </Button>
                     <TextBlock
                             Grid.Column="1"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center" 
+                            Grid.ColumnSpan="3"
                             FontSize="18" 
                             FontStretch="UltraExpanded" 
                             Foreground="{StaticResource Grey}" 
                             FontFamily="{StaticResource LatoBlackFontFamily}"
-                            Text="{Binding TitleBar, UpdateSourceTrigger=PropertyChanged}"
-                        />
+                            Text="{Binding TitleBar, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                    <Button x:Uid="MenuSearchButton"
-                            Grid.Column="2" 
-                            Visibility="{Binding SearchButtonVisibility,Converter={StaticResource BooleanToVisibilityConverter}}"
+                    <AutoSuggestBox x:Name="SearchBox"
+                                    Style="{StaticResource AutoSuggestBoxStyle}" 
+                                    Grid.Row="0" 
+                                    VerticalAlignment="Stretch" 
+                                    BorderBrush="{StaticResource Graphite}" 
+                                    Foreground="{StaticResource Graphite}" 
+                                    Margin="0.333,1,2,1" QueryIcon="Find"
+                                    Opacity="{Binding SearchOpacity}"
+                                    Text ="{Binding SearchingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    PlaceholderText="{Binding SearchDecks}"
+                                    >
+                        <i:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="LostFocus">
+                                <core:InvokeCommandAction Command="{Binding LostFocusCommand}" />
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="QuerySubmitted">
+                                <core:InvokeCommandAction Command="{Binding DoSearchCommand}" />
+                            </core:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </AutoSuggestBox>
+
+                    <Button x:Name="MenuSearchButton"
+                            Grid.Column="4" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center"
                             Padding="0" FontSize="12"
                             Foreground="{StaticResource Grey}" 
                             Background="{StaticResource DarkBlue}"
-                            Margin="0,0,10,0"
+                            Margin="0,13,10,13"
                             MaxWidth="32" 
                             MaxHeight="32"
+                            BorderThickness="0"
                             Command="{Binding ShowSearchPanelCommand}"
+                            Click="SearchButton_Click"
+                            Visibility="{Binding SearchVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
                             >
                         <Button.Content>
-                            <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0"/>
+                            <SymbolIcon Symbol="Find"/>
                         </Button.Content>
                     </Button>
 
                     <Button x:Uid="MenuSaveButton"
-                            Grid.Column="2" 
+                            Grid.Column="4" 
                             Visibility="{Binding SaveButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center"
                             Padding="0" FontSize="12"
                             Foreground="{StaticResource Grey}" 
                             Background="{StaticResource DarkBlue}"
-                            Margin="0,0,10,0"
+                            Margin="0,23,9.999,23"
                             MaxWidth="50" 
                             MaxHeight="32"
                             />
-                    <Button x:Uid="ExitMenuButton"
-                            Grid.Column="2" 
-                            Visibility="{Binding ExitButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            HorizontalAlignment="Right" 
-                            VerticalAlignment="Center"
-                            Padding="0" FontSize="12"
-                            Foreground="{StaticResource Grey}" 
-                            Background="{StaticResource DarkBlue}"
-                            Margin="0,0,10,0"
-                            MaxWidth="32" 
-                            MaxHeight="32"
-                            Command="{Binding CancelSearchingCommand}"
-                            >
-                        <Button.Content>
-                            <Image Source="ms-appx:///Assets/Delete-64.png" Stretch="Fill" Margin="0"/>
-                        </Button.Content>
-                    </Button>
 
                 </Grid>
             </Border>
@@ -142,7 +148,7 @@
                                 </core:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </Button>
-                        
+
                         <Button x:Uid="GoToAddDeck" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
@@ -186,42 +192,52 @@
                     </StackPanel>
                 </SplitView.Pane>
             </SplitView>
-
-            <StackPanel x:Name="Searching" 
-                       Grid.Row="1"
-                       Visibility="{Binding IsSearchOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
-                       MaxHeight="40"
-                       VerticalAlignment="Top"
-                       Grid.ColumnSpan="10"
-                       >
-                <Grid Background="{StaticResource Graphite}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" 
-                                Margin="5,3,5,10" 
-                                 Background="{StaticResource Grey}" 
-                                 Padding="5"
-                                 MaxHeight="30"
-                                 Text="{Binding SearchingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 />
-                    <Button Grid.Column="1" 
-                                Margin="5,3,5,10"
-                                Padding="0" 
-                                VerticalAlignment="Stretch" 
-                                HorizontalAlignment="Stretch"
-                                Background="{StaticResource DarkBlue}"
-                                MaxHeight="30"
-                                Command="{Binding DoSearchCommand}" 
-                                IsEnabled="{Binding SearchButtonEnabled}"
-                                >
-                        <Button.Content>
-                            <Image Source="ms-appx:///Assets/Search-64.png" Stretch="Fill" Margin="0" MaxHeight="24" MaxWidth="24"/>
-                        </Button.Content>
-                    </Button>
-                </Grid>
-            </StackPanel>
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Phone">
+                <VisualState x:Name="WidePhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.(Grid.Column)" Value="1"/>
+                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="4"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NarrowPhoneState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="500"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.(Grid.Column)" Value="1"/>
+                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="4"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideTabletState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" MinWindowHeight="500"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.(Grid.Column)" Value="3"/>
+                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024" MinWindowHeight="690"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchBox.(Grid.Column)" Value="3"/>
+                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
     </Grid>
 </UserControl>

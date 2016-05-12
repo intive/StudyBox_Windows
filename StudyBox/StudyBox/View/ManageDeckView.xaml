@@ -32,7 +32,7 @@
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
 
-        <userControls:MenuControlView Grid.RowSpan="4" Canvas.ZIndex="2"/>
+        <userControls:MenuControlView Grid.RowSpan="6" Canvas.ZIndex="2"/>
         <userControls:MessageBoxControlView Grid.Row="4" Canvas.ZIndex="1" VerticalAlignment="Top"/>
         <Button  Grid.Row="1" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcard}">
             <TextBlock x:Uid="GoToAddFlashcard"
