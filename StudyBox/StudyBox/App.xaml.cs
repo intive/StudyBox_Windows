@@ -7,6 +7,9 @@ using Windows.UI.Xaml.Navigation;
 using StudyBox.View;
 using StudyBox.Core.Interfaces;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
+using StudyBox.Core.Messages;
+using StudyBox.Core.Enums;
 
 namespace StudyBox
 {
@@ -65,6 +68,7 @@ namespace StudyBox
                 if (service.IsUserLoggedIn())
                 {
                     rootFrame.Navigate(typeof(DecksListView), e.Arguments);
+                    Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
                 }
                 else
                 {
