@@ -315,6 +315,7 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
             SearchVisibility = false;
+            TitleBar = StringResources.GetString("StudyBox");
         }
 
         private async void TestRandomDeck()
@@ -363,6 +364,7 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
             SearchVisibility = true;
+            TitleBar = StringResources.GetString("StudyBox");
         }
 
         private void GoToAddDeck()
@@ -388,6 +390,7 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
             SearchVisibility = false;
+            TitleBar = StringResources.GetString("StudyBox");
         }
 
         private void DoSearch()
