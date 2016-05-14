@@ -144,6 +144,7 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("ExamView");
             Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(_deckInstance, _badAnswerFlashcards));
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, _deckInstance.Name));
+            _statisticsService.IncrementTestsCountAnswers();
         }
 
         private void TryImproveResults()
