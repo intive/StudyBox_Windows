@@ -382,6 +382,9 @@
   <data name="CreatingDeck.Text" xml:space="preserve">
     <value>Creating new deck</value>
   </data>
+  <data name="Image.Text" xml:space="preserve">
+    <value>Image</value>
+  </data>
   <data name="LoginMessage" xml:space="preserve">
     <value>Please register to add new decks and flashcards.</value>
   </data>
@@ -393,5 +396,14 @@
   </data>
   <data name="RemoveMessage" xml:space="preserve">
     <value>Are you sure you want to remove a flashcard?</value>
+  </data>
+  <data name="AddFlashcards" xml:space="preserve">
+    <value>Add flashcards</value>
+  </data>
+  <data name="GoToAddFlashcardFromFile.Text" xml:space="preserve">
+    <value>Add new flashcards from file</value>
+  </data>
+  <data name="SearchDecks" xml:space="preserve">
+    <value>Search decks...</value>
   </data>
 </root>

@@ -569,12 +569,12 @@ namespace StudyBox.Core.ViewModels
                 case Mode.CreateFlashcardAndDeck:
                     NavigationService.NavigateTo("DecksListView");
                     Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
-                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
                     break;
 
                 default:
                     NavigationService.NavigateTo("ManageDeckView");
-                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
                     Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deck));
                     break;
 

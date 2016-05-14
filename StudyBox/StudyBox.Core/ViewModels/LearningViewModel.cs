@@ -305,7 +305,7 @@ namespace StudyBox.Core.ViewModels
         private void LeaveLearning()
         {
             NavigationService.NavigateTo("DecksListView");
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
         }
     }
 }

@@ -44,10 +44,9 @@ namespace StudyBox.Core.ViewModels
             _accountService = accountService;
             DecksCollection = new ObservableCollection<Deck>();
             _statisticsService = statisticsService;
-            InitializeDecksCollection();
+            //InitializeDecksCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
         }
         #endregion
 
@@ -266,7 +265,7 @@ namespace StudyBox.Core.ViewModels
                 _selectedID = String.Empty;
 
                 Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, deck.Name));
             }
         }
 
@@ -279,7 +278,7 @@ namespace StudyBox.Core.ViewModels
                 Deck deck = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault();
                 _selectedID = String.Empty;
                 Messenger.Default.Send<DataMessageToExam>(new DataMessageToExam(deck));
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, deck.Name));
 
                 _statisticsService.IncrementTestsCountAnswers();
                 _statisticsService.IncrementCountOfDecks(deck);
@@ -297,7 +296,7 @@ namespace StudyBox.Core.ViewModels
                 _selectedID = String.Empty;
 
                 Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(deck));
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false, deck.Name));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, deck.Name));
             }
 
         }
@@ -307,7 +306,7 @@ namespace StudyBox.Core.ViewModels
             IsDeckSelected = false;
             IsMyDeck = false;
             _selectedID = "";
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false, false));
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
         }
 
         private async void TapTile(string id)
@@ -317,20 +316,24 @@ namespace StudyBox.Core.ViewModels
             {
                 _selectedID = id;
                 IsDeckSelected = true;
-                Deck deck = await _restService.GetDeckById(_selectedID);
                 IsMyDeck = false;
 
-                if (deck != null)
+                if (_decksType == DecksType.MyDecks)
+                    IsMyDeck = true;
+                else
                 {
-                    //if (_decksType == DecksType.MyDecks) 
-                    if (_accountService.IsUserLoggedIn())
+                    Deck deck = await _restService.GetDeckById(_selectedID);
+                    if (deck != null)
                     {
-                        if (_accountService.GetUserEmail() == deck.CreatorEmail)
-                            IsMyDeck = true;
+                        if (_accountService.IsUserLoggedIn())
+                        {
+                            if (_accountService.GetUserEmail() == deck.CreatorEmail)
+                                IsMyDeck = true;
+                        }
                     }
                 }
 
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
             }
         }
 

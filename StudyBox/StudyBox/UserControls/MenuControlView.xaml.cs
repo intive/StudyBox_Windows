@@ -23,5 +23,10 @@ namespace StudyBox.UserControls
         {
             this.InitializeComponent();
         }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            SearchBox.Focus(FocusState.Pointer);
+        }
     }
 }

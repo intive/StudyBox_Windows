@@ -175,7 +175,7 @@ namespace StudyBox.Core.ViewModels
             
             if (IsVisible)
             {
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, false));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
                 IsLoginButton = false;
                 IsOkButton = false;
                 IsRemoveButton = false;
