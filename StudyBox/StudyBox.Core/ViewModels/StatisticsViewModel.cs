@@ -188,7 +188,6 @@ namespace StudyBox.Core.ViewModels
             {
                 _howMuchToShow = 1;
                 GetStatistics();
-                IsMoreAvailable = true;
             }
         }
 

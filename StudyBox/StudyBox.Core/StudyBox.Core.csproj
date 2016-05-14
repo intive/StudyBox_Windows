@@ -117,6 +117,7 @@
     <Compile Include="Interfaces\IStatisticsDataService.cs" />
     <Compile Include="Interfaces\IUserDataStorageService.cs" />
     <Compile Include="Interfaces\IValidationService.cs" />
+    <Compile Include="Messages\ConfirmMessageToRemove.cs" />
     <Compile Include="Messages\DataMessageToCreateFlashcard.cs" />
     <Compile Include="Messages\DataMessageToExam.cs" />
     <Compile Include="Messages\DataMessageToMenageDeck.cs" />

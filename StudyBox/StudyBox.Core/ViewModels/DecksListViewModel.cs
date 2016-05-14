@@ -44,7 +44,7 @@ namespace StudyBox.Core.ViewModels
             _accountService = accountService;
             DecksCollection = new ObservableCollection<Deck>();
             _statisticsService = statisticsService;
-            InitializeDecksCollection();
+            //InitializeDecksCollection();
 
             TapTileCommand = new RelayCommand<string>(TapTile);
         }
