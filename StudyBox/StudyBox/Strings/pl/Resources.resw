@@ -401,4 +401,10 @@
   <data name="SearchDecks" xml:space="preserve">
     <value>Wyszukaj talie...</value>
   </data>
+  <data name="DeckNameError" xml:space="preserve">
+    <value>Nie wpisano nazwy talii</value>
+  </data>
+  <data name="ImageError" xml:space="preserve">
+    <value>Nie wybrano zdjęcia</value>
+  </data>
 </root>

@@ -112,7 +112,7 @@
                                    FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                    FontFamily="{StaticResource LatoRegularFontFamily}"
                                    TextAlignment="Center"
-                                   x:Uid="FillAllFieldsMessage"
+                                   Text="{Binding ErrorMessage}"
                                    Margin="10,15,0,10" >
                 </TextBlock>
 

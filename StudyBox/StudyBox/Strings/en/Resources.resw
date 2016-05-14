@@ -397,4 +397,10 @@
   <data name="SearchDecks" xml:space="preserve">
     <value>Search decks...</value>
   </data>
+  <data name="DeckNameError" xml:space="preserve">
+    <value>Deck name is empty</value>
+  </data>
+  <data name="ImageError" xml:space="preserve">
+    <value>Photo is not selected</value>
+  </data>
 </root>
