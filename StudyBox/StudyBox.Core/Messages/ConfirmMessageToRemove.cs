@@ -9,7 +9,7 @@ namespace StudyBox.Core.Messages
 {
     public class ConfirmMessageToRemove : MessageBase
     {
-        public bool IsConfirmed { get; set; }
+        public bool IsConfirmed { get; private set; }
 
         public ConfirmMessageToRemove(bool shouldBeRemoved)
         {

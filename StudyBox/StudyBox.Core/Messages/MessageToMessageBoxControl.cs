@@ -11,12 +11,25 @@ namespace StudyBox.Core.Messages
     {
         public bool Visibility { get; set; }
         public bool LoginButton { get; set; }
+        public bool RemoveButton { get; private set; }
+        public bool NoRemoveButton { get; private set; }
         public string Message { get; set; }
+
+
+
         public MessageToMessageBoxControl(bool visiblity, bool loginButton = false, string message = "")
         {
             Visibility = visiblity;
             Message = message;
             LoginButton = loginButton;
+        }
+
+        public MessageToMessageBoxControl(bool visiblity, bool removeButton, bool noRemoveButton, string message = "")
+        {
+            Visibility = visiblity;
+            Message = message;
+            RemoveButton = removeButton;
+            NoRemoveButton = noRemoveButton;
         }
     }
 }
