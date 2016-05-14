@@ -1,0 +1,114 @@
+﻿<Page
+    x:Class="StudyBox.View.AboutView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StudyBox.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:userControls="using:StudyBox.UserControls"
+    >
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="50"/>
+            <RowDefinition Height="18*" x:Name="MainContent"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        
+        <userControls:MenuControlView Grid.Column="0" Grid.Row="0" Canvas.ZIndex="2" Grid.RowSpan="3"/>
+        <ScrollViewer Grid.Column="0" Grid.Row="1" Margin="0,0,0,15" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top">
+            <StackPanel>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" MinHeight="50"/>
+                        <RowDefinition Height="65" MinHeight="65"/>
+                        <RowDefinition Height="35" MinHeight="35"/>
+                        <RowDefinition Height="9*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Grid.Row="0"
+                            Grid.Column="0" 
+                            BorderThickness="0"
+                            Background="{StaticResource Graphite}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            >
+                        <TextBlock x:Uid="AboutShortInfoRow1"
+                                   FontFamily="{StaticResource LatoBlackFontFamily}"
+                                   FontWeight="Light"
+                                   Foreground="{StaticResource Grey}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="24"
+                        />
+                    </Border>
+
+                    <Border Grid.Row="1" BorderThickness="0,6" BorderBrush="{StaticResource Raspberry}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Source="../Assets/patronageLogo.png" Width="44" Height="44" Margin="5"/>
+                            <Image Source="../Assets/win10Logo_44x44.png" Width="44" Height="44" Margin="5"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Row="2"
+                            Grid.Column="0" 
+                            BorderThickness="0"
+                            Background="{StaticResource Graphite}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            >
+                        <TextBlock x:Uid="AboutShortInfoRow2"
+                                   FontFamily="{StaticResource LatoBlackFontFamily}"
+                                   FontWeight="Light"
+                                   Foreground="{StaticResource Grey}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   />
+                    </Border>
+
+                    <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" MinHeight="25" Margin="0,10">
+                            <Image Source="../Assets/UserFemale.png" Height="24" Width="24" Margin="0,0,10,0"/>
+                            <TextBlock x:Uid="Author1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" MinHeight="25" Margin="0,10">
+                            <Image Source="../Assets/UserFemale.png" Height="24" Width="24" Margin="0,0,10,0"/>
+                            <TextBlock x:Uid="Author2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" MinHeight="25" Margin="0,10">
+                            <Image Source="../Assets/UserMale.png" Height="24" Width="24" Margin="0,0,10,0"/>
+                            <TextBlock x:Uid="Author3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" MinHeight="25" Margin="0,10">
+                            <Image Source="../Assets/UserMale.png" Height="24" Width="24" Margin="0,0,10,0"/>
+                            <TextBlock x:Uid="Author4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" MinHeight="25" Margin="0,10">
+                            <Image Source="../Assets/UserMale.png" Height="24" Width="24" Margin="0,0,10,0"/>
+                            <TextBlock x:Uid="Author5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" MinHeight="25" Margin="0,10">
+                            <Image Source="../Assets/UserMale.png" Height="24" Width="24" Margin="0,0,10,0"/>
+                            <TextBlock x:Uid="Author6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Light"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <Border Grid.Row="2" Background="{StaticResource DarkBlue}"/>
+    </Grid>
+</Page>

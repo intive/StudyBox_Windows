@@ -77,6 +77,7 @@ namespace StudyBox.ViewModels
 			navigationService.Configure("CreateFlashcardView", typeof(CreateFlashcardView));
             navigationService.Configure("ManageDeckView", typeof(ManageDeckView));
             navigationService.Configure("CreateDeckView", typeof(CreateDeckView));
+            navigationService.Configure("AboutView",typeof(AboutView));
 
             return navigationService;
         }
