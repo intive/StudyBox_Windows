@@ -395,4 +395,7 @@
   <data name="RemoveFlashcardOrDeck" xml:space="preserve">
     <value>Usuwanie fiszki</value>
   </data>
+  <data name="RemoveMessage" xml:space="preserve">
+    <value>Czy aby na pewno chcesz usunąć daną fiszkę?</value>
+  </data>
 </root>

@@ -391,4 +391,7 @@
   <data name="RemoveFlashcardOrDeck" xml:space="preserve">
     <value>Removal flashcard</value>
   </data>
+  <data name="RemoveMessage" xml:space="preserve">
+    <value>Are you sure you want to remove a flashcard?</value>
+  </data>
 </root>
