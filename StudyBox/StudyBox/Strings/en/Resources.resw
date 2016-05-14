@@ -322,9 +322,6 @@
   <data name="AddFlashcard" xml:space="preserve">
     <value>Add flashcard</value>
   </data>
-  <data name="AddTip.Text" xml:space="preserve">
-    <value>Add new tip</value>
-  </data>
   <data name="Answer.Text" xml:space="preserve">
     <value>Answer</value>
   </data>
@@ -405,5 +402,14 @@
   </data>
   <data name="SearchDecks" xml:space="preserve">
     <value>Search decks...</value>
+  </data>
+  <data name="AddNextTip" xml:space="preserve">
+    <value>Add next tip</value>
+  </data>
+  <data name="AddTip" xml:space="preserve">
+    <value>Add a tip</value>
+  </data>
+  <data name="MaxTipsWarning.Text" xml:space="preserve">
+    <value>You can't add more tips than </value>
   </data>
 </root>
