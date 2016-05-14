@@ -48,6 +48,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _submitForm;
         private RelayCommand _cancel;
         private RelayCommand _togglePaneVisibility;
+        private RelayCommand _removeFlashcard;
 
         public CreateFlashcardViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService) : base(navigationService)
         {
@@ -61,6 +62,7 @@ namespace StudyBox.Core.ViewModels
             IsPaneVisible = false;
             Remove = new RelayCommand<string>(RemoveTip);
             Messenger.Default.Register<DataMessageToCreateFlashcard>(this, x => HandleDataMessage(x.DeckInstance, x.FlashcardIntance));
+            Messenger.Default.Register<ConfirmMessageToRemove>(this, x => HandleConfirmMessage(x.IsConfirmed));
         }
 
         public RelayCommand AddTip
@@ -92,6 +94,15 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _togglePaneVisibility ?? (_togglePaneVisibility = new RelayCommand(ChangePaneVisibility));
+            }
+        }
+
+
+        public RelayCommand RemoveFlashcard
+        {
+            get
+            {
+                return _removeFlashcard ?? (_removeFlashcard = new RelayCommand(RemoveFlashcardOrDeck));
             }
         }
 
@@ -395,6 +406,30 @@ namespace StudyBox.Core.ViewModels
             TipsCollection.Add(new TipViewModel(System.Guid.NewGuid().ToString(), ""));
         }
 
+
+        public async void RemoveFlashcardOrDeck()
+        {
+            if (!await _internetConnectionService.IsNetworkAvailable())
+            {
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false,
+                    StringResources.GetString("NoInternetConnection")));
+                return;
+            }
+            else if (!_internetConnectionService.IsInternetAccess())
+            {
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false,
+                    StringResources.GetString("AccessDenied")));
+                return;
+            }
+            else
+            {
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, true, true,
+                    StringResources.GetString("RemoveMessage")));
+                return;    
+            }
+        }
+
+
         public async void CreateOrEditFlashcard()
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
@@ -629,6 +664,66 @@ namespace StudyBox.Core.ViewModels
 
             IsGeneralError = false;
             IsPaneVisible = false;
+        }
+
+        private async void HandleConfirmMessage(bool shouldBeRemoved)
+        {
+            IsDataLoading = true;
+
+            if (shouldBeRemoved)
+            {
+                if (!ValidateForm())
+                {
+                    return;
+                }
+
+                _flashcard.Answer = Answer.TrimEnd();
+                _flashcard.Question = Question.TrimEnd();
+
+                List<Tip> tips = new List<Tip>();
+                foreach (TipViewModel tip in TipsCollection)
+                {
+                    tips.Add(new Tip(tip.ID, tip.Essence.TrimEnd()));
+                }
+
+                try
+                {
+                    IsDataLoading = true;
+
+                    switch (_mode)
+                    {
+                        case Mode.EditFlashcard:
+
+                            string flashcardId = _flashcard.Id;
+                            string deckId = _flashcard.DeckID;
+
+                            bool result = await _restService.RemoveFlashcard(deckId, flashcardId);
+
+                            var oldTips = await _restService.GetTips(deckId, flashcardId);
+
+                            if (oldTips != null)
+                            {
+                                foreach (var oldTip in oldTips)
+                                {
+                                    await _restService.RemoveTip(deckId, flashcardId, oldTip.ID);
+                                }
+                            }
+
+                            break;
+                    }
+                }
+                catch
+                {
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, false,
+                        StringResources.GetString("OperationFailed")));
+                }
+                finally
+                {
+                    IsDataLoading = false;
+                }
+
+                LeaveForm();
+            }
         }
     }
 }

@@ -74,6 +74,44 @@
                         Padding="0 5"
                         Foreground="{StaticResource Grey}" />
         </Button>
+        
+                <Grid Margin="0,25,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="2" HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Center" 
+                    Background="{StaticResource Raspberry}" 
+                    Command="{Binding Remove}" 
+                    Visibility="{Binding IsRemoveButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    MaxWidth="500">
+                <TextBlock Text="Usuń"
+                            FontSize="16"
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            FontFamily="{StaticResource LatoRegularFontFamily}" 
+                            Padding="0 5"
+                            Foreground="{StaticResource Grey}" />
+            </Button>
+
+            <Button Grid.Column="0" HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Center" 
+                        Background="{StaticResource Raspberry}" 
+                        Command="{Binding CloseWindow}" 
+                        Visibility="{Binding IsNoRemoveButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        MaxWidth="500">
+                <TextBlock Text="Nie"
+                                FontSize="16"
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center" 
+                                FontFamily="{StaticResource LatoRegularFontFamily}" 
+                                Padding="0 5"
+                                Foreground="{StaticResource Grey}" />
+            </Button>
+        </Grid>
 
     </StackPanel>
 
