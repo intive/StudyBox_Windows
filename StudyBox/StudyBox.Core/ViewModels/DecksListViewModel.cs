@@ -168,10 +168,18 @@ namespace StudyBox.Core.ViewModels
             IsDeckSelected = false;
             if (await CheckInternetConnection())
             {
+                List<Deck> searchList;
                 DecksCollection.Clear();
                 SearchMessageVisibility = false;
                 IsDataLoading = true;
-                List<Deck> searchList = await _restService.GetAllDecks(false, true, searchingContent);
+                if (_accountService.IsUserLoggedIn())
+                {
+                    searchList = await _restService.GetAllDecks(true, false, true, searchingContent);
+                }
+                else
+                {
+                    searchList = await _restService.GetAllDecks(false, false, true, searchingContent);
+                }
                 if (searchList != null && searchList.Count > 0)
                 {
                     searchList.Sort((x, y) => DateTime.Compare(y.CreationDate, x.CreationDate));
