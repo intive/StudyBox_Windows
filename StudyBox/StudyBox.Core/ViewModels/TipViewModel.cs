@@ -11,7 +11,8 @@ namespace StudyBox.Core.ViewModels
     {
         private string _id;
         private string _essence;
-        private readonly int _maxEssenceCharacters = 500;
+        private readonly int _maxEssenceCharacters = 1000;
+        private readonly int _minEssenceCharacters = 2;
 
         public string ID
         {
@@ -67,7 +68,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                if (CurrentEssenceCharactersNumber > MaxEssenceCharacters || CurrentEssenceCharactersNumber == 0)
+                if (CurrentEssenceCharactersNumber > MaxEssenceCharacters || CurrentEssenceCharactersNumber < _minEssenceCharacters)
                 {
                     return false;
                 }
