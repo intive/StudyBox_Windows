@@ -136,7 +136,7 @@ namespace StudyBox.Core.ViewModels
 
         public async void Login()
         {
-            bool isInternet = _internetConnectionService.CheckConnection();
+            bool isInternet = _internetConnectionService.IsInternetAccess();
 
             if (isInternet)
             {

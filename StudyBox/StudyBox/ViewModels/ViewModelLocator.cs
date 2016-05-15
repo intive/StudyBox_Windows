@@ -46,6 +46,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService,StatisticsDataService>();
                 SimpleIoc.Default.Register<ICameraService, CameraService>();
+                SimpleIoc.Default.Register<IGravatarService, GravatarService>();
             }
             else
             {
@@ -58,7 +59,8 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService, StatisticsDataService>();
                 SimpleIoc.Default.Register<ICameraService, CameraService>();
-                
+                SimpleIoc.Default.Register<IGravatarService, GravatarService>();
+
             }
         }
 

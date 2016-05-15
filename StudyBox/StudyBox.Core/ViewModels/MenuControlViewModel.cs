@@ -6,6 +6,10 @@ using StudyBox.Core.Messages;
 using StudyBox.Core.Interfaces;
 using Windows.UI.Popups;
 using StudyBox.Core.Enums;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -14,6 +18,8 @@ namespace StudyBox.Core.ViewModels
         private readonly IAccountService _accountService;
         private readonly IRestService _restservice;
         private readonly IInternetConnectionService _internetConnectionService;
+        private readonly IGravatarService _gravatarService;
+        private readonly ResourceDictionary _resources = Application.Current.Resources;
         private bool _searchVisibility = true;
         private int _searchOpacity = 0;
         private bool _isPaneOpen = false;
@@ -36,9 +42,10 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToAboutCommand;
         private string _searchingContent = String.Empty;
         private string _titleBar;
+        private string _email;
+        private BitmapImage _gravatar;
 
-
-        public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService) : base(navigationService)
+        public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService, IGravatarService gravatarService) : base(navigationService)
         {
             Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.SaveButton,x.TitleString));
             
@@ -46,9 +53,11 @@ namespace StudyBox.Core.ViewModels
             _accountService = accountService;
             _internetConnectionService = internetConnectionService;
             _restservice = restservice;
+            _gravatarService = gravatarService;
 
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             SearchVisibility = false;
+            GetGravatar();
         }
 
         public string TitleBar
@@ -229,6 +238,38 @@ namespace StudyBox.Core.ViewModels
                 if (_addFlashcardVisibility != value)
                 {
                     _addFlashcardVisibility = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public BitmapImage Gravatar
+        {
+            get
+            {
+                return _gravatar;
+            }
+            set
+            {
+                if(_gravatar != value)
+                {
+                    _gravatar = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string Email
+        {
+            get
+            {
+                return _email;
+            }
+            set
+            {
+                if(_email != value)
+                {
+                    _email = value;
                     RaisePropertyChanged();
                 }
             }
@@ -477,6 +518,28 @@ namespace StudyBox.Core.ViewModels
                 SearchOpacity = 0;
                 SearchingContent = String.Empty;
             }
+            GetGravatar();
+        }
+
+        private void GetGravatar()
+        {
+            if (_accountService.IsUserLoggedIn())
+            {
+                Email = _accountService.GetUserEmail();
+                Gravatar = new BitmapImage(new Uri(_gravatarService.GetUserGravatarUrl(_accountService.GetUserEmail())));
+            }
+            else
+            {
+                Gravatar = new BitmapImage(new Uri(_gravatarService.GetDefaultGravatarUrl()));
+            }
+
+            Gravatar.ImageFailed += Gravatar_ImageFailed;
+            
+        }
+
+        private void Gravatar_ImageFailed(object sender, Windows.UI.Xaml.ExceptionRoutedEventArgs e)
+        {
+            Gravatar = new BitmapImage(new Uri(_resources["GravatarPng"].ToString()));
         }
     }
 }

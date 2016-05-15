@@ -97,6 +97,7 @@
     <Content Include="Assets\arrow.png" />
     <Content Include="Assets\cancel.png" />
     <Content Include="Assets\Delete-64.png" />
+    <Content Include="Assets\gravatar.png" />
     <Content Include="Assets\leftArrow.png" />
     <Content Include="Assets\Menu-64.png" />
     <Content Include="Assets\patronageLogo.png" />
