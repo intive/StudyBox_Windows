@@ -645,6 +645,7 @@ namespace StudyBox.Core.ViewModels
                 }
 
                 DeckName = deckInstance.Name;
+                IsPublic = deckInstance.IsPublic;
                 _deck = deckInstance;
             }
             else
