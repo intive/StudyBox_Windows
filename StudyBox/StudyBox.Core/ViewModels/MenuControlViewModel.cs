@@ -40,6 +40,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _goToUsersDecksCommand;
         private RelayCommand _lostFocusCommand;
         private RelayCommand _goToAboutCommand;
+        private RelayCommand _settingsCommand;
         private string _searchingContent = String.Empty;
         private string _titleBar;
         private string _email;
@@ -344,12 +345,27 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public RelayCommand SettingsCommand
+        {
+            get
+            {
+                return _settingsCommand ?? (_settingsCommand = new RelayCommand(GoToSettings));
+            }
+        }
+
         private void GoToAbout()
         {
             NavigationService.NavigateTo("AboutView");
             HideSearchingContent();
             SearchVisibility = false;
             TitleBar = StringResources.GetString("AboutTitle");
+        }
+
+        private void GoToSettings()
+        {
+            NavigationService.NavigateTo("SettingsView");
+            HideSearchingContent();
+            SearchVisibility = false;
         }
 
         private void HideSearchingContent()
