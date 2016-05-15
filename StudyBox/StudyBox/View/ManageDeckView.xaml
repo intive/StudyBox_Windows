@@ -24,6 +24,8 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="1*" />
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1*" />
             <RowDefinition x:Name="MainGridRow" Height="13*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -34,7 +36,17 @@
 
         <userControls:MenuControlView Grid.RowSpan="6" Canvas.ZIndex="2"/>
         <userControls:MessageBoxControlView Grid.Row="4" Canvas.ZIndex="1" VerticalAlignment="Top"/>
-        <Button  Grid.Row="1" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcard}">
+        <Button  Grid.Row="1" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding ChangeStatus}">
+            <TextBlock Text="{Binding ChangeDeckStatus}"
+                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Padding="0 10"
+                        Foreground="{StaticResource Grey}" />
+        </Button>
+
+        <Button  Grid.Row="3" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcard}">
             <TextBlock x:Uid="GoToAddFlashcard"
                         FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                         HorizontalAlignment="Center" 
@@ -43,7 +55,7 @@
                         Padding="0 10"
                         Foreground="{StaticResource Grey}" />
         </Button>
-        <Button  Grid.Row="3" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcardFromFile}">
+        <Button  Grid.Row="5" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcardFromFile}">
             <TextBlock x:Uid="GoToAddFlashcardFromFile"
                         FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                         HorizontalAlignment="Center" 
@@ -52,7 +64,7 @@
                         Padding="0 10"
                         Foreground="{StaticResource Grey}" />
         </Button>
-        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="4" Grid.Column="0" Margin="5">
+        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="6" Grid.Column="0" Margin="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
                 <GridView x:Name="GridView" ItemsSource="{Binding FlashcardsCollection}" 
                           IsItemClickEnabled="False"
@@ -101,7 +113,7 @@
         </ScrollViewer>
 
         <ProgressRing x:Name="InitializeProgressRing"
-                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="5"
                       Width="80"
                       Height="80"
                       Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
