@@ -99,8 +99,12 @@
     <Content Include="Assets\Delete-64.png" />
     <Content Include="Assets\leftArrow.png" />
     <Content Include="Assets\Menu-64.png" />
+    <Content Include="Assets\patronageLogo.png" />
     <Content Include="Assets\rightArrow.png" />
     <Content Include="Assets\Search-64.png" />
+    <Content Include="Assets\UserFemale.png" />
+    <Content Include="Assets\UserMale.png" />
+    <Content Include="Assets\win10Logo_44x44.png" />
     <Content Include="Resources\Themes\Fonts\Lato-Regular.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -122,6 +126,9 @@
       <DependentUpon>MessageBoxControlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="View\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CreateDeckView.xaml.cs">
       <DependentUpon>CreateDeckView.xaml</DependentUpon>
     </Compile>
@@ -207,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MessageBoxControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

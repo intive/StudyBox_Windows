@@ -403,6 +403,46 @@
   <data name="SearchDecks" xml:space="preserve">
     <value>Search decks...</value>
   </data>
+  <data name="AboutBtn.Content" xml:space="preserve">
+    <value>About...</value>
+    <comment>MenuControlView</comment>
+  </data>
+  <data name="AboutShortInfoRow1.Text" xml:space="preserve">
+    <value>BLStream Patronage'16</value>
+    <comment>AboutView</comment>
+  </data>
+  <data name="AboutShortInfoRow2.Text" xml:space="preserve">
+    <value>Application created by Windows team:</value>
+    <comment>AboutView</comment>
+  </data>
+  <data name="AboutTitle" xml:space="preserve">
+    <value>About</value>
+    <comment>AboutView</comment>
+  </data>
+  <data name="Author1.Text" xml:space="preserve">
+    <value>Agata Bornińska</value>
+    <comment>AboutView</comment>
+  </data>
+  <data name="Author2.Text" xml:space="preserve">
+    <value>Karolina Dub</value>
+    <comment>AboutView</comment>
+  </data>
+  <data name="Author3.Text" xml:space="preserve">
+    <value>Krzysztof Młynarski</value>
+    <comment>AboutView</comment>
+  </data>
+  <data name="Author4.Text" xml:space="preserve">
+    <value>Konrad Oporski</value>
+    <comment>AboutView</comment>
+  </data>
+  <data name="Author5.Text" xml:space="preserve">
+    <value>Łukasz Sielewicz</value>
+    <comment>AboutView</comment>
+  </data>
+  <data name="Author6.Text" xml:space="preserve">
+    <value>Mateusz Szczepański</value>
+    <comment>AboutView</comment>
+  </data>
   <data name="AddNextTip" xml:space="preserve">
     <value>Add next tip</value>
   </data>

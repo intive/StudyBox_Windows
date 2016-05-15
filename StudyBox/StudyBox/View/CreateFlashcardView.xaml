@@ -268,9 +268,9 @@
                             <TextBlock Visibility="{Binding IsAddingTipsEnabled, Converter={StaticResource NegativeBooleanToVisibilityConverter}}"
                                        VerticalAlignment="Center"
                                        Margin="5,0,0,0"
-                                       FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Grey}" >
+                                        FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}">
+                                       
                             <Run x:Uid="MaxTipsWarning"/>
                             <Run Text="{Binding MaxTipsCount, Mode=OneTime}"></Run>
                             </TextBlock>
