@@ -34,8 +34,8 @@
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
 
-        <userControls:MenuControlView Grid.RowSpan="7" Canvas.ZIndex="2"/>
-        <userControls:MessageBoxControlView Grid.Row="4" Canvas.ZIndex="1" VerticalAlignment="Top"/>
+        <userControls:MenuControlView Grid.RowSpan="8" Canvas.ZIndex="2" />
+        <userControls:MessageBoxControlView Margin="0 10 0 0" Grid.Row="6" Canvas.ZIndex="1" VerticalAlignment="Top"/>
         <Button  Grid.Row="1" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding ChangeStatus}">
             <TextBlock Text="{Binding ChangeDeckStatus}"
                         FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
@@ -113,7 +113,7 @@
         </ScrollViewer>
 
         <ProgressRing x:Name="InitializeProgressRing"
-                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="5"
+                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"
                       Width="80"
                       Height="80"
                       Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
