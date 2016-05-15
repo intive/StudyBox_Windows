@@ -446,4 +446,13 @@
     <value>Mateusz Szczepański</value>
     <comment>AboutView</comment>
   </data>
+  <data name="ChangeDeckStatus" xml:space="preserve">
+    <value>Change status of the deck</value>
+  </data>
+  <data name="ToPrivate" xml:space="preserve">
+    <value>to private</value>
+  </data>
+  <data name="ToPublic" xml:space="preserve">
+    <value>to public</value>
+  </data>
 </root>

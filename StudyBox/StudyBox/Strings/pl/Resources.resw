@@ -450,4 +450,13 @@
     <value>Mateusz Szczepański</value>
     <comment>AboutView</comment>
   </data>
+  <data name="ChangeDeckStatus" xml:space="preserve">
+    <value>Zmień status talii</value>
+  </data>
+  <data name="ToPrivate" xml:space="preserve">
+    <value>na prywatny</value>
+  </data>
+  <data name="ToPublic" xml:space="preserve">
+    <value>na publiczny</value>
+  </data>
 </root>
