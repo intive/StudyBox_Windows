@@ -26,6 +26,7 @@ namespace StudyBox.Core.ViewModels
 
         private const ulong _maxImageSize = 62914560; //60 MB
         private readonly int _maxDeckNameCharacters = 50;
+        private readonly int _minDeckNameCharacters = 1;
 
         private RelayCommand _importFileCommand;
         private RelayCommand _takePhotoCommand;
@@ -113,7 +114,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber == 0)
+                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber < _minDeckNameCharacters)
                 {
                     return false;
                 }

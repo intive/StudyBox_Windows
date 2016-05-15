@@ -69,9 +69,15 @@
                           Visibility="{Binding ElementName=MainSplitView, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
                           ItemsSource="{Binding FlashcardsCollection}" 
                           HorizontalAlignment="Stretch" 
-                          IsItemClickEnabled="False" 
+                          IsItemClickEnabled="True" 
+                          SelectedItem="{Binding SelectedFlashcard, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                           Margin="5,0,5,0"
                           Padding="0">
+                            <i:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding FlashcardSelected}"/>
+                                </core:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Padding" Value="0"/>
@@ -247,17 +253,29 @@
                             </ListView.ItemTemplate>
                         </ListView>
 
-                        <Button
-                            Background="{StaticResource DarkBlue}" 
-                            Command="{Binding AddTip}">
-                            <TextBlock TextWrapping="Wrap"
-                                   x:Uid="AddTip"
-                                   FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                   FontFamily="{StaticResource LatoRegularFontFamily}"
-                                   Foreground="{StaticResource Grey}" 
-                                   Padding="0,5" />
-                        </Button>
-
+                        <StackPanel Orientation="Horizontal">
+                            <Button
+                                IsEnabled="{Binding IsAddingTipsEnabled}"
+                                Background="{StaticResource DarkBlue}" 
+                                Command="{Binding AddTip}">
+                                <TextBlock TextWrapping="Wrap"
+                                       Text="{Binding AddTipMessage}"
+                                       FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Grey}" 
+                                       Padding="0,5" />
+                            </Button>
+                            <TextBlock Visibility="{Binding IsAddingTipsEnabled, Converter={StaticResource NegativeBooleanToVisibilityConverter}}"
+                                       VerticalAlignment="Center"
+                                       Margin="5,0,0,0"
+                                        FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}">
+                                       
+                            <Run x:Uid="MaxTipsWarning"/>
+                            <Run Text="{Binding MaxTipsCount, Mode=OneTime}"></Run>
+                            </TextBlock>
+                        </StackPanel>
+                        
                         <TextBlock x:Name="GeneralError"  
                                    Visibility="{Binding IsGeneralError, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Foreground="{StaticResource Raspberry}" 
@@ -310,7 +328,8 @@
                             <Button Grid.Column="1"
                             	HorizontalAlignment="Stretch"                                                          
                             	Background="{StaticResource Graphite}" 
-                            	Command="{Binding RemoveFlashcard}">
+                            	Command="{Binding RemoveFlashcard}"
+                                Visibility="{Binding IsRemoveButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <TextBlock TextWrapping="Wrap"
                             		x:Uid="RemoveFlashcard"
                             		FontSize="{Binding FontSize, ElementName=StandardFontManagment}"

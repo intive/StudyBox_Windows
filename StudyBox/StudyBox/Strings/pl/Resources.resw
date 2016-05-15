@@ -322,9 +322,6 @@
   <data name="AddFlashcard" xml:space="preserve">
     <value>Dodaj fiszkę</value>
   </data>
-  <data name="AddTip.Text" xml:space="preserve">
-    <value>Dodaj podpowiedź</value>
-  </data>
   <data name="Answer.Text" xml:space="preserve">
     <value>Odpowiedź</value>
   </data>
@@ -449,5 +446,14 @@
   <data name="Author6.Text" xml:space="preserve">
     <value>Mateusz Szczepański</value>
     <comment>AboutView</comment>
+  </data>
+  <data name="AddNextTip" xml:space="preserve">
+    <value>Dodaj kolejną podpowiedź</value>
+  </data>
+  <data name="AddTip" xml:space="preserve">
+    <value>Dodaj podpowiedź</value>
+  </data>
+  <data name="MaxTipsWarning.Text" xml:space="preserve">
+    <value>Nie możesz dodać więcej podpowiedzi niż </value>
   </data>
 </root>
