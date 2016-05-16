@@ -169,7 +169,7 @@ namespace StudyBoxUnitTest.Mocks
             throw new NotImplementedException();
         }
 
-        public async Task<List<Deck>> GetAllDecks(bool includeOwn, bool flashcardsCount, string name, CancellationTokenSource cts = null)
+        public async Task<List<Deck>> GetAllDecks(bool authorize,  bool includeOwn, bool flashcardsCount, string name, CancellationTokenSource cts = null)
         {
             if (includeOwn && flashcardsCount && !string.IsNullOrEmpty(name))
             {

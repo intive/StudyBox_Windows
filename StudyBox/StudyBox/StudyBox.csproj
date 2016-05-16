@@ -97,6 +97,7 @@
     <Content Include="Assets\arrow.png" />
     <Content Include="Assets\cancel.png" />
     <Content Include="Assets\Delete-64.png" />
+    <Content Include="Assets\gravatar.png" />
     <Content Include="Assets\leftArrow.png" />
     <Content Include="Assets\Menu-64.png" />
     <Content Include="Assets\patronageLogo.png" />
@@ -159,6 +160,9 @@
     </Compile>
     <Compile Include="View\RegisterView.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
@@ -258,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RegisterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

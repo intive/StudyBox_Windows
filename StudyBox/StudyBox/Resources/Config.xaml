@@ -42,4 +42,8 @@
     <x:String x:Key="TestedDecksFileName">testedDecks.txt</x:String>
     <x:String x:Key="HistoryFileName">history.txt</x:String>
 
+    <x:String x:Key="GravatarHomePage">http://pl.gravatar.com</x:String>
+    <x:String x:Key="GravatarUrl">http://www.gravatar.com/avatar/{0}?d=mm&amp;r=x</x:String>
+    <x:String x:Key="GravatarPng">ms-appx:///Assets/gravatar.png</x:String>
+
 </ResourceDictionary>

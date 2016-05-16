@@ -130,6 +130,12 @@
                            >
                 <SplitView.Pane>
                     <StackPanel Background="{StaticResource Graphite}" Opacity="0.8">
+                        <Border BorderBrush="{StaticResource DarkBlue}" BorderThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
+                            <Image  Width="80" Height="80" Source="{Binding Gravatar}" />
+                        </Border>
+                        <TextBlock FontFamily="{StaticResource LatoRegularFontFamily}" Foreground="{StaticResource Grey}" Text="{Binding Email}" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"
+                                   Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <Button x:Uid="GoToUserDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
                                 Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
                                 >
@@ -171,6 +177,14 @@
                                 </core:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </Button>
+                        <Button x:Uid="Settings" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <i:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding SettingsCommand}" />
+                                </core:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </Button>
                         <Button x:Uid="LogoutMenuButton" 
                                     Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
                                     Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -207,7 +221,7 @@
             <VisualStateGroup x:Name="Phone">
                 <VisualState x:Name="WidePhoneState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="0"/>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SearchBox.(Grid.Column)" Value="1"/>
@@ -217,7 +231,7 @@
 
                 <VisualState x:Name="NarrowPhoneState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="500"/>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SearchBox.(Grid.Column)" Value="1"/>
@@ -227,7 +241,7 @@
 
                 <VisualState x:Name="WideTabletState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" MinWindowHeight="500"/>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SearchBox.(Grid.Column)" Value="3"/>
@@ -237,7 +251,7 @@
 
                 <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1024" MinWindowHeight="690"/>
+                        <AdaptiveTrigger MinWindowWidth="1024"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SearchBox.(Grid.Column)" Value="3"/>

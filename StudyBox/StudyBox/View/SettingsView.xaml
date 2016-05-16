@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="StudyBox.View.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StudyBox.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:userControls="using:StudyBox.UserControls"
+    DataContext="{Binding Source={StaticResource Locator}, Path=SettingsViewModel}"
+    >
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MinHeight="50"/>
+            <RowDefinition Height="18*" x:Name="MainContent"/>
+        </Grid.RowDefinitions>
+
+        <userControls:MenuControlView Grid.Column="0" Grid.Row="0" Canvas.ZIndex="2" Grid.RowSpan="4"/>
+
+        <Button Grid.Row="2" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                 Background="{StaticResource DarkBlue}" Command="{Binding ChangeGravatarCommand}">
+            <Viewbox MaxHeight="35">
+                <TextBlock x:Uid="ChangeGravatar" FontFamily="{StaticResource LatoRegularFontFamily}" Foreground="{StaticResource Grey}"/>
+            </Viewbox>            
+        </Button>
+
+    </Grid>
+</Page>

@@ -70,13 +70,14 @@ namespace StudyBoxUnitTest.Tests
         [TestCategory("Decks")]
         public void GetAllDecksTest()
         {
+            bool authorize = false;
             bool includeOwn = true;
             bool flashcardsCount = false;
             string name = "Second name";
 
             Task.Run(async () =>
             {
-                await _restService.GetAllDecks(includeOwn, flashcardsCount, name);
+                await _restService.GetAllDecks(authorize, includeOwn, flashcardsCount, name);
             }).GetAwaiter().GetResult();
         }
 

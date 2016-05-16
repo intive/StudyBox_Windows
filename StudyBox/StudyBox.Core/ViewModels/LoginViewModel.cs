@@ -136,7 +136,7 @@ namespace StudyBox.Core.ViewModels
 
         public async void Login()
         {
-            bool isInternet = _internetConnectionService.CheckConnection();
+            bool isInternet = _internetConnectionService.IsInternetAccess();
 
             if (isInternet)
             {
@@ -201,6 +201,7 @@ namespace StudyBox.Core.ViewModels
         public void ContinueWithoutLoggingIn()
         {
             NavigationService.NavigateTo("DecksListView");
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
         }
 
