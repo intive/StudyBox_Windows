@@ -9,6 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using System.Net.Http.Headers;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using System.Diagnostics;
 
 namespace StudyBox.Core.Services
 {
@@ -466,6 +469,54 @@ namespace StudyBox.Core.Services
                 return null;
             }
         }
+
+        public async Task<bool> UploadFile(StorageFile file, CancellationTokenSource cts = null)
+        {
+            string url = String.Format(_resources["FileUploadUrl"].ToString(), "image");
+            try
+            {
+                byte[] byteArray = await GetFileBytesAsync(file);
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
+                    client.DefaultRequestHeaders.TransferEncoding.Add(new TransferCodingHeaderValue("base64"));
+                    MultipartFormDataContent form = new MultipartFormDataContent("---BOUNDARY");
+                    
+                    HttpContent content = new ByteArrayContent(byteArray);
+                    content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+                    content.Headers.Add("Content-Transfer-Encoding", "base64");
+                    form.Add(content, file.DisplayName, file.Name);
+
+                    HttpResponseMessage response; 
+
+                    if (cts != null)
+                    {
+                        response = await client.PostAsync(url, form, cts.Token);
+                    }
+                    else
+                    {
+                        response = await client.PostAsync(url, form);
+                    }
+
+                    if (response.StatusCode != System.Net.HttpStatusCode.Created && response.StatusCode != System.Net.HttpStatusCode.OK)
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
 
@@ -630,6 +681,24 @@ namespace StudyBox.Core.Services
             {
                 return false;
             }
+        }
+
+
+
+        private async Task<byte[]> GetFileBytesAsync(StorageFile file)
+        {
+            byte[] fileBytes = null;
+            using (IRandomAccessStreamWithContentType stream = await file.OpenReadAsync())
+            {
+                fileBytes = new byte[stream.Size];
+                using (DataReader reader = new DataReader(stream))
+                {
+                    await reader.LoadAsync((uint)stream.Size);
+                    reader.ReadBytes(fileBytes);
+                }
+            }
+
+            return fileBytes;
         }
 
         #endregion

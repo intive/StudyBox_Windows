@@ -483,6 +483,7 @@ namespace StudyBox.Core.ViewModels
             IsPaneOpen = IsPaneOpen != true;
             SearchOpacity = 0;
             SearchingContent = String.Empty;
+            GetGravatar();
         }
 
         private void ShowSearchPanel()
@@ -534,7 +535,6 @@ namespace StudyBox.Core.ViewModels
                 SearchOpacity = 0;
                 SearchingContent = String.Empty;
             }
-            GetGravatar();
         }
 
         private void GetGravatar()

@@ -42,6 +42,7 @@ namespace StudyBox.Core.Services
             openPicker.FileTypeFilter.Add(".jpg");
             openPicker.FileTypeFilter.Add(".jpeg");
             openPicker.FileTypeFilter.Add(".png");
+            openPicker.FileTypeFilter.Add(".txt");
             return await openPicker.PickSingleFileAsync();
         }
     }

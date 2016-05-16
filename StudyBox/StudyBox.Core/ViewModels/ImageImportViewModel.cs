@@ -336,6 +336,7 @@ namespace StudyBox.Core.ViewModels
                 IsDataLoading = true;
                 try
                 {
+                    await _restService.UploadFile(_image);
                     //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
                     throw new NotImplementedException();
 

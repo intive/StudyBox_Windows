@@ -42,6 +42,8 @@
     <x:String x:Key="TestedDecksFileName">testedDecks.txt</x:String>
     <x:String x:Key="HistoryFileName">history.txt</x:String>
 
+    <x:String x:Key="FileUploadUrl">http://dev.patronage2016.blstream.com:2000/decks/cv?filetype={0}</x:String>
+
     <x:String x:Key="GravatarHomePage">http://pl.gravatar.com</x:String>
     <x:String x:Key="GravatarUrl">http://www.gravatar.com/avatar/{0}?d=mm&amp;r=x</x:String>
     <x:String x:Key="GravatarPng">ms-appx:///Assets/gravatar.png</x:String>
