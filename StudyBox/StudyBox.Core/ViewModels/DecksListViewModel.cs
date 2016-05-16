@@ -42,6 +42,7 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Register<ReloadMessageToDecksList>(this, x => HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
             Messenger.Default.Register<DecksTypeMessage>(this, x => HandleDecksTypeMessage(x.DecksType));
+            Messenger.Default.Register<ConfirmMessageToRemove>(this, x => HandleConfirmMessage(x.IsConfirmed));
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
             _accountService = accountService;
@@ -303,6 +304,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _chooseLearning;
         private RelayCommand _chooseTest;
         private RelayCommand _chooseManageDeck;
+        private RelayCommand _removeDeck;
         private RelayCommand _cancel;
 
         public RelayCommand ChooseLearning
@@ -326,6 +328,14 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _chooseManageDeck ?? (_chooseManageDeck = new RelayCommand(GoToManageDeck));
+            }
+        }
+
+        public RelayCommand RemoveDeck
+        {
+            get
+            {
+                return _removeDeck ?? (_removeDeck = new RelayCommand(ConfirmRemoveDeck));
             }
         }
 
@@ -423,6 +433,37 @@ namespace StudyBox.Core.ViewModels
                 Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, deck.Name));
             }
 
+        }
+
+        private async void ConfirmRemoveDeck()
+        {
+            if (await CheckInternetConnection())
+            {
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, true, true,
+                    StringResources.GetString("RemoveDeckMessage")));
+            }
+        }
+
+        private async void HandleConfirmMessage(bool shouldBeRemoved)
+        {
+            if (shouldBeRemoved)
+            {
+                if (await CheckInternetConnection())
+                {
+                    IsDataLoading = true;
+                    try
+                    {
+                        bool success = await _restService.RemoveDeck(_selectedID);
+                        if (success)
+                        {
+                            DecksCollection.Remove(DecksCollection.Where(x => x.ID == _selectedID).First());
+                        }
+                    }
+                    catch { }
+                    IsDataLoading = false;
+                    BackToDeck();
+                }
+            }
         }
 
         private void BackToDeck()

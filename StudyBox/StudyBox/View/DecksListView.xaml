@@ -81,6 +81,22 @@
 
             <Button HorizontalAlignment="Stretch"
                                 Background="Transparent" 
+                                Command="{Binding RemoveDeck}"
+                                BorderThickness="0"
+                                Visibility="{Binding IsMyDeck, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            >
+                <TextBlock TextWrapping="Wrap"
+                                       TextAlignment="Center"
+                                       x:Uid="RemoveDeck"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Graphite}"
+                                       Padding="0,0"
+                                       />
+            </Button>
+
+            <Button HorizontalAlignment="Stretch"
+                                Background="Transparent" 
                                 Command="{Binding Cancel}"
                                 BorderThickness="0"
                             >
