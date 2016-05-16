@@ -154,15 +154,19 @@ namespace StudyBox.Core.ViewModels
         #endregion
         private void CheckIfDeckIsFavourite()
         {
-            foreach (Deck deck in _favouriteDecks)
+            if (_favouriteDecks!=null)
             {
-                Deck favouriteDeck = DecksCollection.Where(x => x.ID == deck.ID).FirstOrDefault();
-                if (favouriteDeck != null)
+                foreach (Deck deck in _favouriteDecks)
                 {
-                    favouriteDeck.ViewModel.IsFavourite = true;
-                    favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
+                    Deck favouriteDeck = DecksCollection.Where(x => x.ID == deck.ID).FirstOrDefault();
+                    if (favouriteDeck != null)
+                    {
+                        favouriteDeck.ViewModel.IsFavourite = true;
+                        favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
+                    }
                 }
             }
+            
         }
         #region Methods
         private async void InitializeDecksCollection()
