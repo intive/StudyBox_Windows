@@ -480,4 +480,7 @@
     <value>Delete</value>
     <comment>MessageBoxControl</comment>
   </data>
+  <data name="FavouriteDecks.Content" xml:space="preserve">
+    <value>Favourite decks</value>
+  </data>
 </root>

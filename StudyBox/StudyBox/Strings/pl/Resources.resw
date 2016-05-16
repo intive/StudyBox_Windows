@@ -484,4 +484,7 @@
     <value>Usuń</value>
     <comment>MessageBoxControl</comment>
   </data>
+  <data name="FavouriteDecks.Content" xml:space="preserve">
+    <value>Ulubione talie</value>
+  </data>
 </root>

@@ -3,6 +3,7 @@
     public enum DecksType
     {
         MyDecks,
-        PublicDecks
+        PublicDecks,
+        Favourite
     }
 }
