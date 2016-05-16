@@ -233,6 +233,7 @@ namespace StudyBox.Core.ViewModels
                 List<Deck> searchList;
                 DecksCollection.Clear();
                 _favouriteDecks.Clear();
+                
                 SearchMessageVisibility = false;
                 IsDataLoading = true;
                 if (_accountService.IsUserLoggedIn())
@@ -250,7 +251,11 @@ namespace StudyBox.Core.ViewModels
                     searchList.Sort((x, y) => DateTime.Compare(y.CreationDate, x.CreationDate));
                     searchList.ForEach(x => DecksCollection.Add(x));
                     if (IsUser)
+                    {
+                        _favouriteDecks = _favouriteService.GetFavouriteDecks();
                         CheckIfDeckIsFavourite();
+                    }
+                        
                     IsDataLoading = false;
                 }
                 else
