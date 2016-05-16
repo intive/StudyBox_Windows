@@ -21,7 +21,7 @@ namespace StudyBox.Core.Services
         {
             UserId = String.Empty;
             _userDataStorageService = userDataStorageService;
-            
+            InitializeFile();
         }
 
         public void InitializeFile()
@@ -36,28 +36,51 @@ namespace StudyBox.Core.Services
 
         public void SaveFavouriteDecks(List<Deck> favouriteDekcs)
         {
-            InitializeFile();
+            
             try
             {
+                UserId = _userDataStorageService.GetUserEmail();
+                if (UserId == null)
+                    UserId = String.Empty;
+
                 string path = ApplicationData.Current.LocalFolder.Path + "/" + UserId + _resources["FavouriteDecksFileName"].ToString();
 
-                List<string> decksToSave = new List<string>();
-                foreach (Deck deck in favouriteDekcs)
-                    decksToSave.Add(String.Format("{0};{1}", deck.ID, deck.ViewModel.AddToFavouriteDecksDate));
+                if (!File.Exists(path))
+                {
+                    var createdFile = File.Create(path);
+                    createdFile.Dispose();
+                }
 
-                File.WriteAllLines(path, decksToSave);
+                string decksToSave = String.Empty;
+                foreach (Deck deck in favouriteDekcs)
+                    decksToSave+=String.Format("{0};{1}", deck.ID, deck.ViewModel.AddToFavouriteDecksDate)+"\n";
+
+                using (var file = File.Open(path, FileMode.Open, FileAccess.Write, FileShare.Read))
+                {
+                    file.SetLength(0);
+                    string fileContent = decksToSave;
+                    byte[] toBytes = Encoding.ASCII.GetBytes(fileContent);
+                    if (file.CanWrite)
+                    {
+                        file.Write(toBytes, 0, fileContent.Length);
+                    }
+                }
             }
             catch (Exception)
             {
+                
             }
         }
 
         public List<Deck> GetFavouriteDecks()
         {
-            InitializeFile();
             var favouriteDecks = new List<Deck>();
             try
             {
+                UserId = _userDataStorageService.GetUserEmail();
+                if (UserId == null)
+                    UserId = String.Empty;
+
                 string path = ApplicationData.Current.LocalFolder.Path + "/" + UserId + _resources["FavouriteDecksFileName"].ToString();
                 if (!File.Exists(path))
                     SaveFavouriteDecks(new List<Deck>());

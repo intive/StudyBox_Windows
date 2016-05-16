@@ -174,6 +174,7 @@ namespace StudyBox.Core.ViewModels
             if (await CheckInternetConnection() && _accountService.IsUserLoggedIn())
             {
                 IsUser = true;
+                _favouriteDecks.Clear();
                 _favouriteDecks = _favouriteService.GetFavouriteDecks();
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
@@ -185,7 +186,7 @@ namespace StudyBox.Core.ViewModels
                     List<Deck> _deckList2 = await _restService.GetUserDecks();
                     _deckLists = _deckLists.Union(_deckList2).ToList();
 
-                    if (_deckLists != null)
+                    if (_deckLists != null && _favouriteDecks!=null)
                     {
                         _favouriteDecks.Sort((x, y) => DateTime.Compare(y.ViewModel.AddToFavouriteDecksDate, x.ViewModel.AddToFavouriteDecksDate));
                         foreach (Deck deck in _favouriteDecks)
@@ -231,6 +232,7 @@ namespace StudyBox.Core.ViewModels
             {
                 List<Deck> searchList;
                 DecksCollection.Clear();
+                _favouriteDecks.Clear();
                 SearchMessageVisibility = false;
                 IsDataLoading = true;
                 if (_accountService.IsUserLoggedIn())
@@ -341,6 +343,9 @@ namespace StudyBox.Core.ViewModels
                 deck.ViewModel.IsFavourite = true;
                 deck.ViewModel.AddToFavouriteDecksDate = DateTime.Now;
 
+                if (_favouriteDecks == null)
+                    _favouriteDecks = new List<Deck>();
+
                 _favouriteDecks.Add(deck);
                 _favouriteService.SaveFavouriteDecks(_favouriteDecks);
             }
@@ -358,9 +363,13 @@ namespace StudyBox.Core.ViewModels
                 deck.ViewModel.IsFavourite = false;
                 deck.ViewModel.AddToFavouriteDecksDate = default(DateTime);
 
-                Deck deckToRemove = _favouriteDecks.Where(x => x.ID == id).FirstOrDefault();
-                _favouriteDecks.Remove(deckToRemove);
-                _favouriteService.SaveFavouriteDecks(_favouriteDecks);
+                if (_favouriteDecks!= null)
+                {
+                    Deck deckToRemove = _favouriteDecks.Where(x => x.ID == id).FirstOrDefault();
+                    _favouriteDecks.Remove(deckToRemove);
+                    _favouriteService.SaveFavouriteDecks(_favouriteDecks);
+                }
+                
             }
 
         }
