@@ -464,4 +464,23 @@
   <data name="MaxTipsWarning.Text" xml:space="preserve">
     <value>You can't add more tips than </value>
   </data>
+  <data name="DontRemoveButton.Text" xml:space="preserve">
+    <value>No</value>
+    <comment>MessageBoxControl</comment>
+  </data>
+  <data name="LoginButton.Text" xml:space="preserve">
+    <value>Login</value>
+    <comment>MessageBoxControl</comment>
+  </data>
+  <data name="OkButton.Text" xml:space="preserve">
+    <value>Ok</value>
+    <comment>MessageBoxControl</comment>
+  </data>
+  <data name="RemoveButton.Text" xml:space="preserve">
+    <value>Delete</value>
+    <comment>MessageBoxControl</comment>
+  </data>
+  <data name="FavouriteDecks.Content" xml:space="preserve">
+    <value>Favourite decks</value>
+  </data>
 </root>

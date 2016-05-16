@@ -25,16 +25,19 @@ namespace StudyBox.Core.ViewModels
         private IInternetConnectionService _internetConnectionService;
         private IStatisticsDataService _statisticsService;
         private IAccountService _accountService;
+        private IFavouriteDecksService _favouriteService;
         private bool _isDataLoading = false;
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
         private string _selectedID = "";
+        private bool isUser = false;
         private bool _isMyDeck = false;
         private DecksType _decksType;
+        private List<Deck> _favouriteDecks;
         #endregion
 
         #region Constructors
-        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService, IAccountService accountService) : base(navigationService)
+        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService, IAccountService accountService, IFavouriteDecksService favouriteService) : base(navigationService)
         {
             Messenger.Default.Register<ReloadMessageToDecksList>(this, x => HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
@@ -44,9 +47,11 @@ namespace StudyBox.Core.ViewModels
             _accountService = accountService;
             DecksCollection = new ObservableCollection<Deck>();
             _statisticsService = statisticsService;
-            //InitializeDecksCollection();
-
+            _favouriteService = favouriteService;
+            _favouriteDecks = new List<Deck>();
             TapTileCommand = new RelayCommand<string>(TapTile);
+            AddToFavouriteCommand = new RelayCommand<string>(AddToFavourite);
+            RemoveFromFavouriteCommand = new RelayCommand<string>(RemoveFromFavourite);
         }
         #endregion
 
@@ -115,6 +120,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool IsUser
+        {
+            get
+            {
+                return isUser;
+            }
+            set
+            {
+                if (isUser != value)
+                {
+                    isUser = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public bool SearchMessageVisibility
         {
             get
@@ -131,22 +152,63 @@ namespace StudyBox.Core.ViewModels
             }
         }
         #endregion
-
+        private void CheckIfDeckIsFavourite()
+        {
+            if (_favouriteDecks!=null)
+            {
+                foreach (Deck deck in _favouriteDecks)
+                {
+                    Deck favouriteDeck = DecksCollection.Where(x => x.ID == deck.ID).FirstOrDefault();
+                    if (favouriteDeck != null)
+                    {
+                        favouriteDeck.ViewModel.IsFavourite = true;
+                        favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
+                    }
+                }
+            }
+            
+        }
         #region Methods
         private async void InitializeDecksCollection()
         {
             if (await CheckInternetConnection() && _accountService.IsUserLoggedIn())
             {
+                IsUser = true;
+                _favouriteDecks.Clear();
+                _favouriteDecks = _favouriteService.GetFavouriteDecks();
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
                 if (_decksType == DecksType.PublicDecks)
                     _deckLists = await _restService.GetDecks();
+                else if (_decksType == DecksType.Favourite)
+                {
+                    _deckLists = await _restService.GetDecks();
+                    List<Deck> _deckList2 = await _restService.GetUserDecks();
+                    _deckLists = _deckLists.Union(_deckList2).ToList();
+
+                    if (_deckLists != null && _favouriteDecks!=null)
+                    {
+                        _favouriteDecks.Sort((x, y) => DateTime.Compare(y.ViewModel.AddToFavouriteDecksDate, x.ViewModel.AddToFavouriteDecksDate));
+                        foreach (Deck deck in _favouriteDecks)
+                        {
+                            Deck favouriteDeck = _deckLists.Where(x => x.ID == deck.ID).FirstOrDefault();
+                            if (favouriteDeck != null)
+                            {
+                                favouriteDeck.ViewModel.IsFavourite = true;
+                                favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
+                                DecksCollection.Add(favouriteDeck);
+                            }
+                        }
+
+                    }
+                }
                 else
                     _deckLists = await _restService.GetUserDecks();
-                if (_deckLists != null)
+                if (_deckLists != null && _decksType != DecksType.Favourite)
                 {
                     _deckLists.Sort((x, y) => string.Compare(x.Name, y.Name));
                     _deckLists.ForEach(x => DecksCollection.Add(x));
+                    CheckIfDeckIsFavourite();
                 }
                 IsDataLoading = false;
             }
@@ -170,20 +232,30 @@ namespace StudyBox.Core.ViewModels
             {
                 List<Deck> searchList;
                 DecksCollection.Clear();
+                _favouriteDecks.Clear();
+                
                 SearchMessageVisibility = false;
                 IsDataLoading = true;
                 if (_accountService.IsUserLoggedIn())
                 {
                     searchList = await _restService.GetAllDecks(true, false, true, searchingContent);
+                    IsUser = true;
                 }
                 else
                 {
                     searchList = await _restService.GetAllDecks(false, false, true, searchingContent);
+                    IsUser = false;
                 }
                 if (searchList != null && searchList.Count > 0)
                 {
                     searchList.Sort((x, y) => DateTime.Compare(y.CreationDate, x.CreationDate));
                     searchList.ForEach(x => DecksCollection.Add(x));
+                    if (IsUser)
+                    {
+                        _favouriteDecks = _favouriteService.GetFavouriteDecks();
+                        CheckIfDeckIsFavourite();
+                    }
+                        
                     IsDataLoading = false;
                 }
                 else
@@ -226,6 +298,8 @@ namespace StudyBox.Core.ViewModels
         #region Buttons
 
         public ICommand TapTileCommand { get; set; }
+        public ICommand AddToFavouriteCommand { get; set; }
+        public ICommand RemoveFromFavouriteCommand { get; set; }
         private RelayCommand _chooseLearning;
         private RelayCommand _chooseTest;
         private RelayCommand _chooseManageDeck;
@@ -261,6 +335,48 @@ namespace StudyBox.Core.ViewModels
             {
                 return _cancel ?? (_cancel = new RelayCommand(BackToDeck));
             }
+        }
+
+        private void AddToFavourite(string id)
+        {
+            if (IsUser)
+            {
+                Deck deck = DecksCollection.Where(x => x.ID == id).FirstOrDefault();
+                if (deck.ViewModel == null)
+                    deck.ViewModel = new DeckViewModel();
+
+                deck.ViewModel.IsFavourite = true;
+                deck.ViewModel.AddToFavouriteDecksDate = DateTime.Now;
+
+                if (_favouriteDecks == null)
+                    _favouriteDecks = new List<Deck>();
+
+                _favouriteDecks.Add(deck);
+                _favouriteService.SaveFavouriteDecks(_favouriteDecks);
+            }
+
+        }
+
+        private void RemoveFromFavourite(string id)
+        {
+            if (IsUser)
+            {
+                Deck deck = DecksCollection.Where(x => x.ID == id).FirstOrDefault();
+                if (deck.ViewModel == null)
+                    deck.ViewModel = new DeckViewModel();
+
+                deck.ViewModel.IsFavourite = false;
+                deck.ViewModel.AddToFavouriteDecksDate = default(DateTime);
+
+                if (_favouriteDecks!= null)
+                {
+                    Deck deckToRemove = _favouriteDecks.Where(x => x.ID == id).FirstOrDefault();
+                    _favouriteDecks.Remove(deckToRemove);
+                    _favouriteService.SaveFavouriteDecks(_favouriteDecks);
+                }
+                
+            }
+
         }
 
         private async void GoToLearning()

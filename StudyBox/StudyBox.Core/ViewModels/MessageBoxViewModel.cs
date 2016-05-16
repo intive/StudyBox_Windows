@@ -31,10 +31,7 @@ namespace StudyBox.Core.ViewModels
         {
             Messenger.Default.Register<MessageToMessageBoxControl>(this, x => HandleMessageBoxControlMessage(x.Visibility, x.LoginButton, x.RemoveButton, x.NoRemoveButton, x.Message));
             _accountService = accountService;
-            IsLoginButton = false;
-            IsOkButton = true;
-            IsRemoveButton = false;
-            IsNoRemoveButton = false;
+            ClearButtonsVisibility();
         }
 
         public bool IsVisible
@@ -168,6 +165,13 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Send<ConfirmMessageToRemove>(new ConfirmMessageToRemove(true));
         }
 
+        private void ClearButtonsVisibility()
+        {
+            IsLoginButton = false;
+            IsOkButton = false;
+            IsRemoveButton = false;
+            IsNoRemoveButton = false;
+        }
 
         private void HandleMessageBoxControlMessage(bool visible, bool loginButton = false, bool removeButton = false, bool noRemoveButton = false, string message = "")
         {
@@ -176,9 +180,8 @@ namespace StudyBox.Core.ViewModels
             if (IsVisible)
             {
                 Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
-                IsLoginButton = false;
-                IsOkButton = false;
-                IsRemoveButton = false;
+
+                ClearButtonsVisibility();
 
                 if (loginButton)
                     IsLoginButton = true;
@@ -192,12 +195,9 @@ namespace StudyBox.Core.ViewModels
                     IsOkButton = true;
                     IsNoRemoveButton = false;
                 }
-
-
-                MessageText = message;
                 
+                MessageText = message;
             }
-            
         }
     }
 }

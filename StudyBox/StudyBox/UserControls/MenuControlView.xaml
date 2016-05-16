@@ -155,6 +155,15 @@
                             </i:Interaction.Behaviors>
                         </Button>
 
+                        <Button x:Uid="FavouriteDecks" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <i:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding FavouriteDecksCommand}" />
+                                </core:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </Button>
+
                         <Button x:Uid="GoToAddDeck" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">

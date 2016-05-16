@@ -477,4 +477,23 @@
   <data name="ToPublic" xml:space="preserve">
     <value>na publiczny</value>
   </data>
+  <data name="DontRemoveButton.Text" xml:space="preserve">
+    <value>Nie</value>
+    <comment>MessageBoxControl</comment>
+  </data>
+  <data name="LoginButton.Text" xml:space="preserve">
+    <value>Zaloguj się</value>
+    <comment>MessageBoxControl</comment>
+  </data>
+  <data name="OkButton.Text" xml:space="preserve">
+    <value>Ok</value>
+    <comment>MessageBoxControl</comment>
+  </data>
+  <data name="RemoveButton.Text" xml:space="preserve">
+    <value>Usuń</value>
+    <comment>MessageBoxControl</comment>
+  </data>
+  <data name="FavouriteDecks.Content" xml:space="preserve">
+    <value>Ulubione talie</value>
+  </data>
 </root>

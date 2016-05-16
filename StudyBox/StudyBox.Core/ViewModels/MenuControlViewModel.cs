@@ -41,6 +41,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _lostFocusCommand;
         private RelayCommand _goToAboutCommand;
         private RelayCommand _settingsCommand;
+        private RelayCommand _favouriteDecksCommand;
         private string _searchingContent = String.Empty;
         private string _titleBar;
         private string _email;
@@ -329,6 +330,14 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public RelayCommand FavouriteDecksCommand
+        {
+            get
+            {
+                return _favouriteDecksCommand ?? (_favouriteDecksCommand = new RelayCommand(GoToFavouriteDecks));
+            }
+        }
+
         public RelayCommand LostFocusCommand
         {
             get
@@ -386,6 +395,16 @@ namespace StudyBox.Core.ViewModels
         {
             NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
+            HideSearchingContent();
+            SearchVisibility = false;
+            TitleBar = StringResources.GetString("StudyBox");
+        }
+
+        private void GoToFavouriteDecks()
+        {
+            NavigationService.NavigateTo("DecksListView");
+            Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.Favourite));
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             HideSearchingContent();
             SearchVisibility = false;
