@@ -17,7 +17,6 @@ using Windows.UI.Popups;
 namespace StudyBox.Core.ViewModels
 {
 
-
     public class CreateFlashcardViewModel : ExtendedViewModelBase
     {
         private enum Mode { EditFlashcard, CreateFlashcardAndDeck, AddNewFlashcardToDeck, None }
@@ -34,15 +33,23 @@ namespace StudyBox.Core.ViewModels
         private string _deckName;
         private string _headerMessage;
         private string _submitFormMessage;
+        private string _addTipMessage;
         private bool _isGeneralError;
         private bool _isDataLoading = false;
         private bool _isPaneVisible = true;
+        private bool _isRemoveButtonVisible = false;
+        private bool _isAddingTipsEnabled;
         private ObservableCollection<TipViewModel> _tipsCollection;
         private ObservableCollection<Flashcard> _flashcardsCollection;
+        private Flashcard _selectedFlashcard;
 
         private readonly int _maxQuestionCharacters = 1000;
         private readonly int _maxAnswerCharacters = 1000;
         private readonly int _maxDeckNameCharacters = 50;
+        private readonly int _minQuestionCharacters = 1;
+        private readonly int _minAnswerCharacters = 1;
+        private readonly int _minDeckNameCharacters = 1;
+        private readonly int _maxTipsCount = 5;
 
         private RelayCommand _addTip;
         private RelayCommand _submitForm;
@@ -61,8 +68,18 @@ namespace StudyBox.Core.ViewModels
             FlashcardsCollection = new ObservableCollection<Flashcard>();
             IsPaneVisible = false;
             Remove = new RelayCommand<string>(RemoveTip);
+            FlashcardSelected = new RelayCommand(EditSelectedFlashcard);
             Messenger.Default.Register<DataMessageToCreateFlashcard>(this, x => HandleDataMessage(x.DeckInstance, x.FlashcardIntance));
             Messenger.Default.Register<ConfirmMessageToRemove>(this, x => HandleConfirmMessage(x.IsConfirmed));
+        }
+
+        private void EditSelectedFlashcard()
+        {
+            if(SelectedFlashcard!=null)
+            {
+                HandleDataMessage(_deck, SelectedFlashcard);
+                SelectedFlashcard = null;
+            }
         }
 
         public RelayCommand AddTip
@@ -109,7 +126,7 @@ namespace StudyBox.Core.ViewModels
 
 
         public ICommand Remove { get; set; }
-
+        public ICommand FlashcardSelected { get; set; }
 
         public ObservableCollection<TipViewModel> TipsCollection
         {
@@ -122,10 +139,12 @@ namespace StudyBox.Core.ViewModels
                 if (_tipsCollection != value)
                 {
                     _tipsCollection = value;
-                    RaisePropertyChanged();
+                    RaisePropertyChanged();                                     
                 }
             }
         }
+
+      
 
         public ObservableCollection<Flashcard> FlashcardsCollection
         {
@@ -231,6 +250,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public Flashcard SelectedFlashcard
+        {
+            get
+            {
+                return _selectedFlashcard;
+            }
+            set
+            {
+                if (_selectedFlashcard != value)
+                {
+                    _selectedFlashcard = value;
+                    RaisePropertyChanged("SelectedFlashcard");
+                }
+            }
+        }
+
         public int CurrentQuestionCharactersNumber
         {
             get
@@ -279,11 +314,19 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public int MaxTipsCount
+        {
+            get
+            {
+                return _maxTipsCount;
+            }
+        }
+
         public bool IsQuestionValid
         {
             get
             {
-                if (CurrentQuestionCharactersNumber > MaxQuestionCharacters || CurrentQuestionCharactersNumber == 0)
+                if (CurrentQuestionCharactersNumber > MaxQuestionCharacters || CurrentQuestionCharactersNumber < _minQuestionCharacters)
                 {
                     return false;
                 }
@@ -299,7 +342,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                if (CurrentAnswerCharactersNumber > MaxAnswerCharacters || CurrentAnswerCharactersNumber == 0)
+                if (CurrentAnswerCharactersNumber > MaxAnswerCharacters || CurrentAnswerCharactersNumber < _minAnswerCharacters)
                 {
                     return false;
                 }
@@ -315,7 +358,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber == 0)
+                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber < _minDeckNameCharacters)
                 {
                     return false;
                 }
@@ -342,6 +385,38 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool IsRemoveButtonVisible
+        {
+            get
+            {
+                return _isRemoveButtonVisible;
+            }
+            set
+            {
+                if (_isRemoveButtonVisible != value)
+                {
+                    _isRemoveButtonVisible = value;
+                    RaisePropertyChanged("IsRemoveButtonVisible");
+                }
+            }
+        }
+
+        public bool IsAddingTipsEnabled
+        {
+            get
+            {
+                return _isAddingTipsEnabled;
+            }
+            set
+            {
+                if (_isAddingTipsEnabled != value)
+                {
+                    _isAddingTipsEnabled = value;
+                    RaisePropertyChanged("IsAddingTipsEnabled");
+                }
+            }
+        }
+        
 
         public string HeaderMessage
         {
@@ -375,6 +450,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public string AddTipMessage
+        {
+            get
+            {
+                return _addTipMessage;
+            }
+            set
+            {
+                if (_addTipMessage != value)
+                {
+                    _addTipMessage = value;
+                    RaisePropertyChanged("AddTipMessage");
+                }
+            }
+        }
+
         public bool IsDataLoading
         {
             get
@@ -399,11 +490,13 @@ namespace StudyBox.Core.ViewModels
             {
                 TipsCollection.Remove(tip);
             }
+            HandleTipsCountChanged();
         }
 
         public void AddNewTip()
         {
             TipsCollection.Add(new TipViewModel(System.Guid.NewGuid().ToString(), ""));
+            HandleTipsCountChanged();
         }
 
 
@@ -461,7 +554,7 @@ namespace StudyBox.Core.ViewModels
                 List<Tip> tips = new List<Tip>();
                 foreach (TipViewModel tip in TipsCollection)
                 {
-                    tips.Add(new Tip(tip.ID, tip.Essence.TrimEnd()));
+                    tips.Add(new Tip(tip.ID, tip.Essence.Trim()));
                 }
 
                 try
@@ -581,12 +674,32 @@ namespace StudyBox.Core.ViewModels
             }
             FlashcardsCollection.Clear();
             TipsCollection.Clear();
+            IsRemoveButtonVisible = false;
             IsPaneVisible = false;
         }
 
         public void ChangePaneVisibility()
         {
             IsPaneVisible = !IsPaneVisible;
+        }
+
+        private void HandleTipsCountChanged()
+        {
+            int tipsCount = TipsCollection.Count;
+            if (tipsCount >= _maxTipsCount)
+            {
+                IsAddingTipsEnabled = false;
+            }
+            else if (tipsCount == 0)
+            {
+                IsAddingTipsEnabled = true;
+                AddTipMessage = StringResources.GetString("AddTip");
+            }
+            else
+            {
+                IsAddingTipsEnabled = true;
+                AddTipMessage = StringResources.GetString("AddNextTip");
+            }
         }
 
         private async void HandleDataMessage(Deck deckInstance, Flashcard flashcardInstance)
@@ -601,6 +714,8 @@ namespace StudyBox.Core.ViewModels
                     _mode = Mode.EditFlashcard;
                     Question = flashcardInstance.Question;
                     Answer = flashcardInstance.Answer;
+                    IsPublic = deckInstance.IsPublic;
+                    IsRemoveButtonVisible = true;
 
                     HeaderMessage = StringResources.GetString("EditFlashcard");
                     SubmitFormMessage = StringResources.GetString("Edit"); ;
@@ -621,6 +736,7 @@ namespace StudyBox.Core.ViewModels
                     _mode = Mode.AddNewFlashcardToDeck;
                     Question = "";
                     Answer = "";
+                    IsRemoveButtonVisible = false;
 
                     _flashcard = new Flashcard();
                     HeaderMessage = StringResources.GetString("AddFlashcard");
@@ -643,7 +759,7 @@ namespace StudyBox.Core.ViewModels
                 {
                     FlashcardsCollection = new ObservableCollection<Flashcard>();
                 }
-
+                HandleTipsCountChanged();
                 DeckName = deckInstance.Name;
                 IsPublic = deckInstance.IsPublic;
                 _deck = deckInstance;
@@ -654,6 +770,7 @@ namespace StudyBox.Core.ViewModels
                 Question = "";
                 Answer = "";
                 DeckName = "";
+                IsRemoveButtonVisible = false;
                 _deck = new Deck();
                 _flashcard = new Flashcard();
 
@@ -661,6 +778,7 @@ namespace StudyBox.Core.ViewModels
                 SubmitFormMessage = StringResources.GetString("CreateNewDeck");
                 FlashcardsCollection = new ObservableCollection<Flashcard>();
                 TipsCollection = new ObservableCollection<TipViewModel>();
+                HandleTipsCountChanged();
             }
 
             IsGeneralError = false;

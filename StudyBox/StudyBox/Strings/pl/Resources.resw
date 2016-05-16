@@ -322,9 +322,6 @@
   <data name="AddFlashcard" xml:space="preserve">
     <value>Dodaj fiszkę</value>
   </data>
-  <data name="AddTip.Text" xml:space="preserve">
-    <value>Dodaj podpowiedź</value>
-  </data>
   <data name="Answer.Text" xml:space="preserve">
     <value>Odpowiedź</value>
   </data>
@@ -410,6 +407,12 @@
   <data name="SearchDecks" xml:space="preserve">
     <value>Wyszukaj talie...</value>
   </data>
+  <data name="DeckNameError" xml:space="preserve">
+    <value>Nie wpisano nazwy talii</value>
+  </data>
+  <data name="ImageError" xml:space="preserve">
+    <value>Nie wybrano zdjęcia</value>
+  </data>
   <data name="AboutBtn.Content" xml:space="preserve">
     <value>O programie...</value>
     <comment>MenuControlView</comment>
@@ -449,6 +452,21 @@
   <data name="Author6.Text" xml:space="preserve">
     <value>Mateusz Szczepański</value>
     <comment>AboutView</comment>
+  </data>
+  <data name="Settings.Content" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="ChangeGravatar.Text" xml:space="preserve">
+    <value>Zmień gravatar</value>
+  </data>
+  <data name="AddNextTip" xml:space="preserve">
+    <value>Dodaj kolejną podpowiedź</value>
+  </data>
+  <data name="AddTip" xml:space="preserve">
+    <value>Dodaj podpowiedź</value>
+  </data>
+  <data name="MaxTipsWarning.Text" xml:space="preserve">
+    <value>Nie możesz dodać więcej podpowiedzi niż </value>
   </data>
   <data name="ChangeDeckStatus" xml:space="preserve">
     <value>Zmień status talii</value>

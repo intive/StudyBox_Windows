@@ -17,6 +17,7 @@ namespace StudyBox.Core.ViewModels
         private string _deckName;
         private string _submitFormMessage;
         private string _imageName;
+        private string _errorMessage;
         private bool _isPublic;
         private bool _isGeneralError;
         private bool _isDataLoading = false;
@@ -26,6 +27,7 @@ namespace StudyBox.Core.ViewModels
 
         private const ulong _maxImageSize = 62914560; //60 MB
         private readonly int _maxDeckNameCharacters = 50;
+        private readonly int _minDeckNameCharacters = 1;
 
         private RelayCommand _importFileCommand;
         private RelayCommand _takePhotoCommand;
@@ -77,6 +79,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+            set
+            {
+                if(_errorMessage != value)
+                {
+                    _errorMessage = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public bool IsPublic
         {
             get
@@ -113,7 +131,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber == 0)
+                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber < _minDeckNameCharacters)
                 {
                     return false;
                 }
@@ -238,8 +256,10 @@ namespace StudyBox.Core.ViewModels
 
         private void HandleDataMessage(Deck deck)
         {
+            ErrorMessage = String.Empty;
+            IsGeneralError = false;
             ImageNameVisibility = false;
-            ImageName = "";
+            ImageName = String.Empty;
             _image = null;
             _deckInstance = deck;
             if (_deckInstance == null)
@@ -316,42 +336,37 @@ namespace StudyBox.Core.ViewModels
                 IsDataLoading = true;
                 try
                 {
-                    if (_deckInstance == null)
-                    {
-                        _deckInstance = await _restService.CreateDeck(new Deck { Name = DeckName.Trim(), IsPublic = IsPublic });
-                        deckCreated = true;
-                    }
-                    else
-                    {
-                        string oldDeckName = _deckInstance.Name;
-                        bool oldIsPublic = _deckInstance.IsPublic;
-                        _deckInstance.Name = DeckName.Trim();
-                        _deckInstance.IsPublic = IsPublic;
-                        if (oldDeckName != _deckInstance.Name || oldIsPublic != _deckInstance.IsPublic)
-                        {
-                            await _restService.UpdateDeck(_deckInstance);
-                        }
-                    }
-                    try
-                    {
-                        //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
-                        throw new NotImplementedException();
-                    }
-                    catch
-                    {
-                        if (deckCreated)
-                        {
-                            _deckInstance = null;
-                            deckCreated = false;
-                            await _restService.RemoveDeck(_deckInstance.ID);
-                        }
-                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
-                    }
+                    //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
+                    throw new NotImplementedException();
+
+                    //if (_deckInstance == null)
+                    //{
+                    //    _deckInstance = await _restService.CreateDeck(new Deck { Name = DeckName.Trim(), IsPublic = IsPublic });
+                    //    deckCreated = true;
+                    //}
+                    //else
+                    //{
+                    //    string oldDeckName = _deckInstance.Name;
+                    //    bool oldIsPublic = _deckInstance.IsPublic;
+                    //    _deckInstance.Name = DeckName.Trim();
+                    //    _deckInstance.IsPublic = IsPublic;
+                    //    if (oldDeckName != _deckInstance.Name || oldIsPublic != _deckInstance.IsPublic)
+                    //    {
+                    //        await _restService.UpdateDeck(_deckInstance);
+                    //    }
+                    //}
                 }
                 catch
                 {
+                    //if (deckCreated)
+                    //{
+                    //    _deckInstance = null;
+                    //    deckCreated = false;
+                    //    await _restService.RemoveDeck(_deckInstance.ID);
+                    //}
                     Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
                 }
+
                 finally
                 {
                     IsDataLoading = false;
@@ -370,8 +385,15 @@ namespace StudyBox.Core.ViewModels
 
         private bool ValidateForm()
         {
-            if (!IsDeckNameValid || _image == null)
+            if (!IsDeckNameValid || String.IsNullOrEmpty(DeckName.Trim()))
             {
+                ErrorMessage = StringResources.GetString("DeckNameError");
+                IsGeneralError = true;
+                return false;
+            }
+            else if (_image == null)
+            {
+                ErrorMessage = StringResources.GetString("ImageError");
                 IsGeneralError = true;
                 return false;
             }

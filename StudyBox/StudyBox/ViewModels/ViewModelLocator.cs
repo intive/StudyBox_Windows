@@ -34,6 +34,7 @@ namespace StudyBox.ViewModels
 			SimpleIoc.Default.Register<CreateFlashcardViewModel>();
             SimpleIoc.Default.Register<ManageDeckViewModel>();
             SimpleIoc.Default.Register<CreateDeckViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -46,6 +47,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService,StatisticsDataService>();
                 SimpleIoc.Default.Register<ICameraService, CameraService>();
+                SimpleIoc.Default.Register<IGravatarService, GravatarService>();
             }
             else
             {
@@ -58,7 +60,8 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService, StatisticsDataService>();
                 SimpleIoc.Default.Register<ICameraService, CameraService>();
-                
+                SimpleIoc.Default.Register<IGravatarService, GravatarService>();
+
             }
         }
 
@@ -78,6 +81,7 @@ namespace StudyBox.ViewModels
             navigationService.Configure("ManageDeckView", typeof(ManageDeckView));
             navigationService.Configure("CreateDeckView", typeof(CreateDeckView));
             navigationService.Configure("AboutView",typeof(AboutView));
+            navigationService.Configure("SettingsView", typeof(SettingsView));
 
             return navigationService;
         }
@@ -189,6 +193,14 @@ namespace StudyBox.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<CreateDeckViewModel>();
+            }
+        }
+
+        public SettingsViewModel SettingsViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SettingsViewModel>();
             }
         }
 
