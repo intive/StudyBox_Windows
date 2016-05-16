@@ -468,6 +468,15 @@
   <data name="MaxTipsWarning.Text" xml:space="preserve">
     <value>Nie możesz dodać więcej podpowiedzi niż </value>
   </data>
+  <data name="ChangeDeckStatus" xml:space="preserve">
+    <value>Zmień status talii</value>
+  </data>
+  <data name="ToPrivate" xml:space="preserve">
+    <value>na prywatny</value>
+  </data>
+  <data name="ToPublic" xml:space="preserve">
+    <value>na publiczny</value>
+  </data>
   <data name="DontRemoveButton.Text" xml:space="preserve">
     <value>Nie</value>
     <comment>MessageBoxControl</comment>

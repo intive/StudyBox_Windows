@@ -68,6 +68,21 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public string ChangeDeckStatus
+        {
+            get
+            {
+                if (_deckInstance != null)
+                {
+                    return StringResources.GetString("ChangeDeckStatus") + " " + (_deckInstance.IsPublic ? StringResources.GetString("ToPrivate") : StringResources.GetString("ToPublic"));
+                }
+                else
+                {
+                    return StringResources.GetString("ChangeDeckStatus");
+                }
+            }
+        }
+
         private async void InitializeFlashcardsCollection()
         {
             if (await CheckInternetConnection())
@@ -90,6 +105,7 @@ namespace StudyBox.Core.ViewModels
             {
                 _deckInstance = deckInstance;
                 InitializeFlashcardsCollection();
+                RaisePropertyChanged("ChangeDeckStatus");
             }
         }
 
@@ -136,6 +152,26 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _addNewFlashcardFromFile ?? (_addNewFlashcardFromFile = new RelayCommand(GoToAddNewFlashcardFromFile));
+            }
+        }
+
+        private RelayCommand _changeStatus;
+
+        public RelayCommand ChangeStatus
+        {
+            get
+            {
+                return _changeStatus ?? (_changeStatus = new RelayCommand(ChangeStatusOfDeck));
+            }
+        }
+
+        private async void ChangeStatusOfDeck()
+        {
+            if (await CheckInternetConnection())
+            {
+                _deckInstance.IsPublic = !_deckInstance.IsPublic;
+                await _restService.UpdateDeck(_deckInstance);
+                RaisePropertyChanged("ChangeDeckStatus");
             }
         }
 

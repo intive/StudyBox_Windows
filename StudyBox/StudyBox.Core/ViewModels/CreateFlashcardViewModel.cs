@@ -761,6 +761,7 @@ namespace StudyBox.Core.ViewModels
                 }
                 HandleTipsCountChanged();
                 DeckName = deckInstance.Name;
+                IsPublic = deckInstance.IsPublic;
                 _deck = deckInstance;
             }
             else

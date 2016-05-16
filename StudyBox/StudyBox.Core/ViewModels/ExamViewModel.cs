@@ -216,7 +216,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return _flashcards != null && _flashcards.Count > 0 && _currentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint > 0;
+                return _flashcards != null && _flashcards.Count > 0 && CurrentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint > 0;
             }
         }
 
@@ -224,7 +224,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return _flashcards != null && _flashcards.Count > 0 && _currentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint < Hints.Count - 1;
+                return _flashcards != null && _flashcards.Count > 0 && CurrentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint < Hints.Count - 1;
             }
         }
 
@@ -314,6 +314,9 @@ namespace StudyBox.Core.ViewModels
             RaisePropertyChanged("Hint");
             RaisePropertyChanged("IsHintAvailable");
             RaisePropertyChanged("NumberOfFlashcard");
+            RaisePropertyChanged("IsRightArrowVisible");
+            RaisePropertyChanged("IsLeftArrowVisible");
+            RaisePropertyChanged("BottomRectangleText");
         }
 
         private void SwipeAndShowAnswer()
