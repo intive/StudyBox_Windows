@@ -63,7 +63,7 @@
                 <RowDefinition Height="1.2*"/>
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
-            
+
             <Border 
                 x:Name="AnswerCard" 
                 UseLayoutRounding="True" 
@@ -71,11 +71,15 @@
                 Grid.Column="1" 
                 Grid.Row="1" 
                 Background="{StaticResource DarkBlue}">
-                <TextBlock Text="{Binding Answer}" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            FontFamily="{StaticResource LatoRegularFontFamily}" 
-                            Foreground="{StaticResource Grey}"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="60 10 60 10">
+                    <TextBlock 
+                        Text="{Binding Answer}" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        TextWrapping="Wrap"
+                        Foreground="{StaticResource Grey}"/>
+                </ScrollViewer>
                 <Border.Projection>
                     <PlaneProjection RotationY="90" />
                 </Border.Projection>
@@ -109,15 +113,18 @@
                             </core:EventTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </Button>
-                    <TextBlock 
-                        Grid.Column="1" 
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Margin="0 10 0 10">
+                        <TextBlock 
                         Text="{Binding MainRectangleWithQuestionOrHint}" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        TextWrapping="Wrap"
                         Foreground="{StaticResource Grey}"/>
+                    </ScrollViewer>
+                    
                     <Button 
-                        Margin="0,0,5,0"
+                        Margin="0,0,0,0"
                         Width="60" 
                         Height="60" 
                         VerticalAlignment="Center" 
