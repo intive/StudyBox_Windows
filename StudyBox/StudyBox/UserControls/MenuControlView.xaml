@@ -73,6 +73,7 @@
                                     Foreground="{StaticResource Graphite}" 
                                     Margin="0.333,1,2,1" QueryIcon="Find"
                                     Opacity="{Binding SearchOpacity}"
+                                    IsHitTestVisible="{Binding IsSearchVisible}"
                                     Text ="{Binding SearchingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     PlaceholderText="{Binding SearchDecks}"
                                     >
