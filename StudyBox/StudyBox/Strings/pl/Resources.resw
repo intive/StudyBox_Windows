@@ -496,4 +496,10 @@
   <data name="FavouriteDecks.Content" xml:space="preserve">
     <value>Ulubione talie</value>
   </data>
+  <data name="RemoveDeck.Text" xml:space="preserve">
+    <value>Usuń talię</value>
+  </data>
+  <data name="RemoveDeckMessage" xml:space="preserve">
+    <value>Czy aby na pewno chcesz usunąć daną talię?</value>
+  </data>
 </root>

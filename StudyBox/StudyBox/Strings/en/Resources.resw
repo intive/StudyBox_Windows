@@ -483,4 +483,10 @@
   <data name="FavouriteDecks.Content" xml:space="preserve">
     <value>Favourite decks</value>
   </data>
+  <data name="RemoveDeck.Text" xml:space="preserve">
+    <value>Remove this deck</value>
+  </data>
+  <data name="RemoveDeckMessage" xml:space="preserve">
+    <value>Are you sure you want to remove a deck?</value>
+  </data>
 </root>
