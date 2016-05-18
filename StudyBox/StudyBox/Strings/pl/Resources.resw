@@ -505,4 +505,8 @@
   <data name="RemoveLastFlashcardMessage" xml:space="preserve">
     <value>Wraz z usunięciem tej fiszki, usunięta zostanie również obecna talia, czy aby na pewno chcesz usunąć daną fiszkę?</value>
   </data>
+  <data name="SettingsButton.Text" xml:space="preserve">
+    <value>Ustawienia</value>
+    <comment>MessageBoxControl</comment>
+  </data>
 </root>
