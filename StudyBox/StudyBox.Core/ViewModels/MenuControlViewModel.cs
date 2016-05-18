@@ -22,6 +22,7 @@ namespace StudyBox.Core.ViewModels
         private readonly ResourceDictionary _resources = Application.Current.Resources;
         private bool _searchVisibility = true;
         private int _searchOpacity = 0;
+        private bool _isSearchVisible = false;
         private bool _isPaneOpen = false;
         private bool _isSearchButtonEnabled = false;
         private bool _logoutButtonVisibility;
@@ -120,6 +121,22 @@ namespace StudyBox.Core.ViewModels
                 if(_searchOpacity != value)
                 {
                     _searchOpacity = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsSearchVisible
+        {
+            get
+            {
+                return _isSearchVisible;
+            }
+            set
+            {
+                if(_isSearchVisible != value)
+                {
+                    _isSearchVisible = value;
                     RaisePropertyChanged();
                 }
             }
@@ -382,6 +399,7 @@ namespace StudyBox.Core.ViewModels
             if(SearchOpacity == 1)
             {
                 SearchOpacity = 0;
+                IsSearchVisible = false;
                 SearchVisibility = true;
                 SearchingContent = String.Empty;
             }
@@ -502,18 +520,21 @@ namespace StudyBox.Core.ViewModels
         {
             IsPaneOpen = IsPaneOpen != true;
             SearchOpacity = 0;
+            IsSearchVisible = false;
             SearchingContent = String.Empty;
         }
 
         private void ShowSearchPanel()
         {
             SearchOpacity = 1;
+            IsSearchVisible = true;
             SearchVisibility = false;
         }
 
         private void LostFocus()
         {
             SearchOpacity = 0;
+            IsSearchVisible = false;
             SearchVisibility = true;
         }
 
@@ -552,6 +573,7 @@ namespace StudyBox.Core.ViewModels
             else
             {
                 SearchOpacity = 0;
+                IsSearchVisible = false;
                 SearchingContent = String.Empty;
             }
             GetGravatar();

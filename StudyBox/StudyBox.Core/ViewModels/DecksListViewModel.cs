@@ -180,7 +180,10 @@ namespace StudyBox.Core.ViewModels
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
                 if (_decksType == DecksType.PublicDecks)
+                {
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
                     _deckLists = await _restService.GetDecks();
+                }
                 else if (_decksType == DecksType.Favourite)
                 {
                     _deckLists = await _restService.GetDecks();
@@ -204,7 +207,10 @@ namespace StudyBox.Core.ViewModels
                     }
                 }
                 else
+                {
+                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
                     _deckLists = await _restService.GetUserDecks();
+                }
                 if (_deckLists != null && _decksType != DecksType.Favourite)
                 {
                     _deckLists.Sort((x, y) => string.Compare(x.Name, y.Name));
@@ -472,7 +478,10 @@ namespace StudyBox.Core.ViewModels
             IsDeckSelected = false;
             IsMyDeck = false;
             _selectedID = "";
-            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
+            if (_decksType == DecksType.PublicDecks)
+            {
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
+            }
         }
 
         private async void TapTile(string id)
