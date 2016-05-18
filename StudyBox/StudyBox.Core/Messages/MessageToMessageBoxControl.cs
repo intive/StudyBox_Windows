@@ -13,6 +13,8 @@ namespace StudyBox.Core.Messages
         public bool LoginButton { get; set; }
         public bool RemoveButton { get; private set; }
         public bool NoRemoveButton { get; private set; }
+        public bool SettingsButton { get; private set; }
+        public bool OkButton { get; private set; }
         public string Message { get; set; }
 
 
@@ -30,6 +32,15 @@ namespace StudyBox.Core.Messages
             Message = message;
             RemoveButton = removeButton;
             NoRemoveButton = noRemoveButton;
+        }
+
+        public MessageToMessageBoxControl(bool visiblity, bool loginButton, bool okButton = false, bool settingsButton = false, string message = "")
+        {
+            Visibility = visiblity;
+            Message = message;
+            LoginButton = loginButton;
+            SettingsButton = settingsButton;
+            OkButton = okButton;
         }
     }
 }

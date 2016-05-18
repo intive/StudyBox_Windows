@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.System;
 using Windows.UI.Popups;
 using StudyBox.Core.Models;
 using static StudyBox.Core.ViewModels.CreateFlashcardViewModel;
@@ -17,20 +18,20 @@ namespace StudyBox.Core.ViewModels
     public class MessageBoxViewModel : ExtendedViewModelBase
     {
         private bool _isVisible = false;
-        private IAccountService _accountService;
         private RelayCommand _login;
         private RelayCommand _closeWindow;
         private RelayCommand _remove;
+        private RelayCommand _settingsCommand;
         private string _messageText;
         private bool _isLoginButton;
         private bool _isOkButton;
         private bool _isRemoveButton;
         private bool _isNoRemoveButton;
+        private bool _isSettingsButton;
 
         public MessageBoxViewModel(INavigationService navigationService, IAccountService accountService) : base(navigationService)
         {
-            Messenger.Default.Register<MessageToMessageBoxControl>(this, x => HandleMessageBoxControlMessage(x.Visibility, x.LoginButton, x.RemoveButton, x.NoRemoveButton, x.Message));
-            _accountService = accountService;
+            Messenger.Default.Register<MessageToMessageBoxControl>(this, x => HandleMessageBoxControlMessage(x.Visibility, x.LoginButton, x.RemoveButton, x.SettingsButton, x.NoRemoveButton, x.Message));
             ClearButtonsVisibility();
         }
 
@@ -114,6 +115,22 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public bool IsSettingsButton
+        {
+            get
+            {
+                return _isSettingsButton;
+            }
+            set
+            {
+                if (_isSettingsButton != value)
+                {
+                    _isSettingsButton = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public string MessageText
         {
             get
@@ -148,6 +165,20 @@ namespace StudyBox.Core.ViewModels
             get { return _closeWindow ?? (_closeWindow = new RelayCommand(GoToCloseWindow)); }
         }
 
+        public RelayCommand Settings
+        {
+            get
+            {
+                return _settingsCommand ?? (_settingsCommand = new RelayCommand(GoToSettings));               
+            }
+        }
+
+        private async void GoToSettings()
+        {
+            IsVisible = false;
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:network-wifi"));
+        }
+
         private void GoToLogin()
         {
             IsVisible = false;
@@ -171,9 +202,10 @@ namespace StudyBox.Core.ViewModels
             IsOkButton = false;
             IsRemoveButton = false;
             IsNoRemoveButton = false;
+            IsSettingsButton = false;
         }
 
-        private void HandleMessageBoxControlMessage(bool visible, bool loginButton = false, bool removeButton = false, bool noRemoveButton = false, string message = "")
+        private void HandleMessageBoxControlMessage(bool visible, bool loginButton = false, bool removeButton = false, bool settingsButton = false, bool noRemoveButton = false, string message = "")
         {
             IsVisible = visible;
             
@@ -192,8 +224,9 @@ namespace StudyBox.Core.ViewModels
                 }
                 else
                 {
-                    IsOkButton = true;
-                    IsNoRemoveButton = false;
+                    IsOkButton = false;
+                    //IsNoRemoveButton = false;
+                    IsSettingsButton = true;
                 }
                 
                 MessageText = message;
