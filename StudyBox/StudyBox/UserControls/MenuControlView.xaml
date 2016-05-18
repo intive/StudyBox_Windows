@@ -28,11 +28,9 @@
                     Grid.ColumnSpan="3" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Top" 
-                    Background="{StaticResource DarkBlue}" 
-                    Padding="0,0" 
+                    Background="{StaticResource DarkBlue}"
                     MinHeight="50" 
                     MaxHeight="60"
-                    Margin="0"
                     >
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -68,10 +66,10 @@
                     <AutoSuggestBox x:Name="SearchBox"
                                     Style="{StaticResource AutoSuggestBoxStyle}" 
                                     Grid.Row="0" 
-                                    VerticalAlignment="Stretch" 
+                                    VerticalAlignment="Center" 
                                     BorderBrush="{StaticResource Graphite}" 
                                     Foreground="{StaticResource Graphite}" 
-                                    Margin="0.333,1,2,1" QueryIcon="Find"
+                                    QueryIcon="Find"
                                     Opacity="{Binding SearchOpacity}"
                                     IsHitTestVisible="{Binding IsSearchVisible}"
                                     Text ="{Binding SearchingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
