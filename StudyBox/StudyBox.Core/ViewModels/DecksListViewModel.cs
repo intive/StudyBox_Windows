@@ -282,7 +282,8 @@ namespace StudyBox.Core.ViewModels
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
             {
-                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, true, true,
+                    StringResources.GetString("NoInternetConnection")));
                 return false;
             }
             else if (!_internetConnectionService.IsInternetAccess())
