@@ -387,7 +387,7 @@
     <value>Zdjęcie</value>
   </data>
   <data name="LoginMessage" xml:space="preserve">
-    <value>Zarejestruj się, aby dodać talie i fiszki.</value>
+    <value>Zaloguj się, aby dodać talie i fiszki.</value>
   </data>
   <data name="RemoveFlashcard.Text" xml:space="preserve">
     <value>Usuń fiszkę</value>
