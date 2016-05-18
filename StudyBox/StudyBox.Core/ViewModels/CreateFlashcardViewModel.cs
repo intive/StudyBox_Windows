@@ -516,9 +516,19 @@ namespace StudyBox.Core.ViewModels
             }
             else
             {
-                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, true, true,
-                    StringResources.GetString("RemoveMessage")));
-                return;    
+                int flashcardsCount = FlashcardsCollection.Count;
+                if (flashcardsCount == 1)
+                {
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, true, true,
+                        StringResources.GetString("RemoveLastFlashcardMessage")));
+                    return;
+                }
+                else
+                {
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, true, true,
+                        StringResources.GetString("RemoveMessage")));
+                    return;
+                }
             }
         }
 
@@ -788,6 +798,7 @@ namespace StudyBox.Core.ViewModels
         private async void HandleConfirmMessage(bool shouldBeRemoved)
         {
             IsDataLoading = true;
+            int flashcardsCount = FlashcardsCollection.Count;
 
             if (shouldBeRemoved)
             {
@@ -816,7 +827,7 @@ namespace StudyBox.Core.ViewModels
                             string flashcardId = _flashcard.Id;
                             string deckId = _flashcard.DeckID;
 
-                            bool result = await _restService.RemoveFlashcard(deckId, flashcardId);
+                            await _restService.RemoveFlashcard(deckId, flashcardId);
 
                             var oldTips = await _restService.GetTips(deckId, flashcardId);
 
@@ -826,6 +837,16 @@ namespace StudyBox.Core.ViewModels
                                 {
                                     await _restService.RemoveTip(deckId, flashcardId, oldTip.ID);
                                 }
+                                LeaveForm();
+                            }
+
+                            if (flashcardsCount == 1)
+                            {
+                                await _restService.RemoveDeck(deckId);
+                                LeaveForm();
+                                NavigationService.NavigateTo("DecksListView");
+                                Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
+                                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
                             }
 
                             break;
@@ -840,8 +861,6 @@ namespace StudyBox.Core.ViewModels
                 {
                     IsDataLoading = false;
                 }
-
-                LeaveForm();
             }
         }
     }

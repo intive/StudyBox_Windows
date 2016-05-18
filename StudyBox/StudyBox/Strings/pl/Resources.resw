@@ -502,4 +502,7 @@
   <data name="RemoveDeckMessage" xml:space="preserve">
     <value>Czy aby na pewno chcesz usunąć daną talię?</value>
   </data>
+  <data name="RemoveLastFlashcardMessage" xml:space="preserve">
+    <value>Wraz z usunięciem tej fiszki, usunięta zostanie również obecna talia, czy aby na pewno chcesz usunąć daną fiszkę?</value>
+  </data>
 </root>

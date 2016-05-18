@@ -489,4 +489,7 @@
   <data name="RemoveDeckMessage" xml:space="preserve">
     <value>Are you sure you want to remove a deck?</value>
   </data>
+  <data name="RemoveLastFlashcardMessage" xml:space="preserve">
+    <value>With the removal of the index cards, deleted, will also be present waist, are you sure you want to remove a flashcard?</value>
+  </data>
 </root>
