@@ -153,22 +153,7 @@ namespace StudyBox.Core.ViewModels
             }
         }
         #endregion
-        private void CheckIfDeckIsFavourite()
-        {
-            if (_favouriteDecks!=null)
-            {
-                foreach (Deck deck in _favouriteDecks)
-                {
-                    Deck favouriteDeck = DecksCollection.Where(x => x.ID == deck.ID).FirstOrDefault();
-                    if (favouriteDeck != null)
-                    {
-                        favouriteDeck.ViewModel.IsFavourite = true;
-                        favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
-                    }
-                }
-            }
-            
-        }
+        
         #region Methods
         private async void InitializeDecksCollection()
         {
@@ -300,8 +285,24 @@ namespace StudyBox.Core.ViewModels
             else
                 return true;
         }
-        #endregion
 
+        private void CheckIfDeckIsFavourite()
+        {
+            if (_favouriteDecks != null)
+            {
+                foreach (Deck deck in _favouriteDecks)
+                {
+                    Deck favouriteDeck = DecksCollection.Where(x => x.ID == deck.ID).FirstOrDefault();
+                    if (favouriteDeck != null)
+                    {
+                        favouriteDeck.ViewModel.IsFavourite = true;
+                        favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
+                    }
+                }
+            }
+
+        }
+        #endregion
 
         #region Buttons
 
@@ -482,6 +483,10 @@ namespace StudyBox.Core.ViewModels
             {
                 Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
             }
+            else
+            {
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
+            }
         }
 
         private async void TapTile(string id)
@@ -492,6 +497,9 @@ namespace StudyBox.Core.ViewModels
                 _selectedID = id;
                 IsDeckSelected = true;
                 IsMyDeck = false;
+
+                string name = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault().Name;
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, name));
 
                 if (_decksType == DecksType.MyDecks)
                     IsMyDeck = true;
@@ -508,7 +516,7 @@ namespace StudyBox.Core.ViewModels
                     }
                 }
 
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
+                
             }
         }
 
