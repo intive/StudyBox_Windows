@@ -184,10 +184,12 @@
                                                 HorizontalAlignment="Center"
                                                 >
                                                 <TextBlock Text="{Binding Name}" 
+                                                           TextWrapping="Wrap"
                                                        Foreground="{StaticResource Grey}" 
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        />
                                                 <TextBlock Text="{Binding CountOfFlashcards}" 
+                                                           TextWrapping="Wrap"
                                                        Foreground="{StaticResource Grey}" 
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        HorizontalAlignment="Center"
