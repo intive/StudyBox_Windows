@@ -153,22 +153,7 @@ namespace StudyBox.Core.ViewModels
             }
         }
         #endregion
-        private void CheckIfDeckIsFavourite()
-        {
-            if (_favouriteDecks!=null)
-            {
-                foreach (Deck deck in _favouriteDecks)
-                {
-                    Deck favouriteDeck = DecksCollection.Where(x => x.ID == deck.ID).FirstOrDefault();
-                    if (favouriteDeck != null)
-                    {
-                        favouriteDeck.ViewModel.IsFavourite = true;
-                        favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
-                    }
-                }
-            }
-            
-        }
+        
         #region Methods
         private async void InitializeDecksCollection()
         {
@@ -179,45 +164,56 @@ namespace StudyBox.Core.ViewModels
                 _favouriteDecks = _favouriteService.GetFavouriteDecks();
                 List<Deck> _deckLists = new List<Deck>();
                 IsDataLoading = true;
-                if (_decksType == DecksType.PublicDecks)
+                try
                 {
-                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
-                    _deckLists = await _restService.GetDecks();
-                }
-                else if (_decksType == DecksType.Favourite)
-                {
-                    _deckLists = await _restService.GetDecks();
-                    List<Deck> _deckList2 = await _restService.GetUserDecks();
-                    _deckLists = _deckLists.Union(_deckList2).ToList();
-
-                    if (_deckLists != null && _favouriteDecks!=null)
+                    if (_decksType == DecksType.PublicDecks)
                     {
-                        _favouriteDecks.Sort((x, y) => DateTime.Compare(y.ViewModel.AddToFavouriteDecksDate, x.ViewModel.AddToFavouriteDecksDate));
-                        foreach (Deck deck in _favouriteDecks)
+                        Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
+                        _deckLists = await _restService.GetDecks();
+                    }
+                    else if (_decksType == DecksType.Favourite)
+                    {
+                        _deckLists = await _restService.GetDecks();
+                        List<Deck> _deckList2 = await _restService.GetUserDecks();
+                        _deckLists = _deckLists.Union(_deckList2).ToList();
+
+                        if (_deckLists != null && _favouriteDecks != null)
                         {
-                            Deck favouriteDeck = _deckLists.Where(x => x.ID == deck.ID).FirstOrDefault();
-                            if (favouriteDeck != null)
+                            _favouriteDecks.Sort((x, y) => DateTime.Compare(y.ViewModel.AddToFavouriteDecksDate, x.ViewModel.AddToFavouriteDecksDate));
+                            foreach (Deck deck in _favouriteDecks)
                             {
-                                favouriteDeck.ViewModel.IsFavourite = true;
-                                favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
-                                DecksCollection.Add(favouriteDeck);
+                                Deck favouriteDeck = _deckLists.Where(x => x.ID == deck.ID).FirstOrDefault();
+                                if (favouriteDeck != null)
+                                {
+                                    favouriteDeck.ViewModel.IsFavourite = true;
+                                    favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
+                                    DecksCollection.Add(favouriteDeck);
+                                }
                             }
+
                         }
+                    }
+                    else
+                    {
+                        Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
+                        _deckLists = await _restService.GetUserDecks();
 
                     }
+                    if (_deckLists != null && _decksType != DecksType.Favourite)
+                    {
+                        _deckLists.Sort((x, y) => string.Compare(x.Name, y.Name));
+                        _deckLists.ForEach(x => DecksCollection.Add(x));
+                        CheckIfDeckIsFavourite();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
-                    _deckLists = await _restService.GetUserDecks();
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, true, false, ex.Message));
                 }
-                if (_deckLists != null && _decksType != DecksType.Favourite)
+                finally
                 {
-                    _deckLists.Sort((x, y) => string.Compare(x.Name, y.Name));
-                    _deckLists.ForEach(x => DecksCollection.Add(x));
-                    CheckIfDeckIsFavourite();
+                    IsDataLoading = false;
                 }
-                IsDataLoading = false;
             }
         }
 
@@ -243,29 +239,36 @@ namespace StudyBox.Core.ViewModels
                 
                 SearchMessageVisibility = false;
                 IsDataLoading = true;
-                if (_accountService.IsUserLoggedIn())
+                try
                 {
-                    searchList = await _restService.GetAllDecks(true, false, true, searchingContent);
-                    IsUser = true;
-                }
-                else
-                {
-                    searchList = await _restService.GetAllDecks(false, false, true, searchingContent);
-                    IsUser = false;
-                }
-                if (searchList != null && searchList.Count > 0)
-                {
-                    searchList.Sort((x, y) => DateTime.Compare(y.CreationDate, x.CreationDate));
-                    searchList.ForEach(x => DecksCollection.Add(x));
-                    if (IsUser)
+                    if (_accountService.IsUserLoggedIn())
                     {
-                        _favouriteDecks = _favouriteService.GetFavouriteDecks();
-                        CheckIfDeckIsFavourite();
+                        searchList = await _restService.GetAllDecks(true, false, true, searchingContent);
+                        IsUser = true;
                     }
-                        
-                    IsDataLoading = false;
+                    else
+                    {
+                        searchList = await _restService.GetAllDecks(false, false, true, searchingContent);
+                        IsUser = false;
+                    }
+                    if (searchList != null && searchList.Count > 0)
+                    {
+                        searchList.Sort((x, y) => DateTime.Compare(y.CreationDate, x.CreationDate));
+                        searchList.ForEach(x => DecksCollection.Add(x));
+                        if (IsUser)
+                        {
+                            _favouriteDecks = _favouriteService.GetFavouriteDecks();
+                            CheckIfDeckIsFavourite();
+                        }
+
+                        IsDataLoading = false;
+                    }
                 }
-                else
+                catch (Exception ex)
+                {
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, true, false, ex.Message));
+                }
+                finally
                 {
                     IsDataLoading = false;
                     SearchMessageVisibility = true;
@@ -300,8 +303,24 @@ namespace StudyBox.Core.ViewModels
             else
                 return true;
         }
-        #endregion
 
+        private void CheckIfDeckIsFavourite()
+        {
+            if (_favouriteDecks != null)
+            {
+                foreach (Deck deck in _favouriteDecks)
+                {
+                    Deck favouriteDeck = DecksCollection.Where(x => x.ID == deck.ID).FirstOrDefault();
+                    if (favouriteDeck != null)
+                    {
+                        favouriteDeck.ViewModel.IsFavourite = true;
+                        favouriteDeck.ViewModel.AddToFavouriteDecksDate = deck.ViewModel.AddToFavouriteDecksDate;
+                    }
+                }
+            }
+
+        }
+        #endregion
 
         #region Buttons
 
@@ -482,6 +501,10 @@ namespace StudyBox.Core.ViewModels
             {
                 Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
             }
+            else
+            {
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
+            }
         }
 
         private async void TapTile(string id)
@@ -493,22 +516,32 @@ namespace StudyBox.Core.ViewModels
                 IsDeckSelected = true;
                 IsMyDeck = false;
 
+                string name = DecksCollection.Where(x => x.ID == _selectedID).FirstOrDefault().Name;
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false, name));
+
                 if (_decksType == DecksType.MyDecks)
                     IsMyDeck = true;
                 else
                 {
-                    Deck deck = await _restService.GetDeckById(_selectedID);
-                    if (deck != null)
+                    try
                     {
-                        if (_accountService.IsUserLoggedIn())
+                        Deck deck = await _restService.GetDeckById(_selectedID);
+                        if (deck != null)
                         {
-                            if (_accountService.GetUserEmail() == deck.CreatorEmail)
-                                IsMyDeck = true;
+                            if (_accountService.IsUserLoggedIn())
+                            {
+                                if (_accountService.GetUserEmail() == deck.CreatorEmail)
+                                    IsMyDeck = true;
+                            }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, true, false, ex.Message));
                     }
                 }
 
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
+                
             }
         }
 
