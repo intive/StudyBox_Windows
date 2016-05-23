@@ -42,5 +42,18 @@
                 <TextBlock x:Uid="ChangePassword" FontFamily="{StaticResource LatoRegularFontFamily}" Foreground="{StaticResource Grey}"/>
             </Viewbox>
         </Button>
+
+        <ProgressRing x:Name="InitializeProgressRing"
+                      Grid.Column="0" Grid.Row="5" 
+                      Width="80"
+                      Height="80"
+                      Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      IsActive="{Binding IsDataLoading}"
+                      Foreground="{StaticResource DarkBlue}"
+                      FontWeight="Bold"
+                      />
+
     </Grid>
 </Page>
