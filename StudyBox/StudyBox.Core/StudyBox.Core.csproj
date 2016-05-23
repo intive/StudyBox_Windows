@@ -117,6 +117,7 @@
     <Compile Include="Interfaces\IInternetConnectionService.cs" />
     <Compile Include="Interfaces\IRestService.cs" />
     <Compile Include="Interfaces\IStatisticsDataService.cs" />
+    <Compile Include="Interfaces\ITokenService.cs" />
     <Compile Include="Interfaces\IUserDataStorageService.cs" />
     <Compile Include="Interfaces\IValidationService.cs" />
     <Compile Include="Messages\ConfirmMessageToRemove.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Messages\DataMessageToMenageDeck.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\DecksTypeMessage.cs" />
+    <Compile Include="Messages\MessageToChangePassword.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
     <Compile Include="Messages\MessageToMessageBoxControl.cs" />
     <Compile Include="Messages\ReloadMessageToDecksList.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Exam.cs" />
     <Compile Include="Models\Flashcard.cs" />
+    <Compile Include="Models\ResetPassword.cs" />
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TestResult.cs" />
@@ -150,6 +153,7 @@
     <Compile Include="Services\InternetConnectionService.cs" />
     <Compile Include="Services\RestService.cs" />
     <Compile Include="Services\StatisticsDataService.cs" />
+    <Compile Include="Services\TokenService.cs" />
     <Compile Include="Services\UserDataStorageService.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="ViewModels\CreateDeckViewModel.cs" />
@@ -158,6 +162,7 @@
     <Compile Include="ViewModels\DeckViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
     <Compile Include="ViewModels\ExtendedViewModelBase.cs" />
+    <Compile Include="ViewModels\ForgottenPasswordViewModel.cs" />
     <Compile Include="ViewModels\ImageImportViewModel.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

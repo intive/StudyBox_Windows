@@ -509,4 +509,28 @@
     <value>Ustawienia</value>
     <comment>MessageBoxControl</comment>
   </data>
+  <data name="ForgottenPassword.Text" xml:space="preserve">
+    <value>Zapomniałem hasła.</value>
+  </data>
+  <data name="ResetPassword.Text" xml:space="preserve">
+    <value>Resetuj hasło</value>
+  </data>
+  <data name="ChangePassword.Text" xml:space="preserve">
+    <value>Zmień hasło</value>
+  </data>
+  <data name="ChangePasswordError" xml:space="preserve">
+    <value>Zmiana hasła nie powiodła się!</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Hasło poprawnie zmienione!</value>
+  </data>
+  <data name="ResetPassword400" xml:space="preserve">
+    <value>Token dla podanego adresu został już wygenerowany, albo nie znaleziono meila w bazie!</value>
+  </data>
+  <data name="ResetPassword500" xml:space="preserve">
+    <value>Nie udało się wysłać meila z wiadomością!</value>
+  </data>
+  <data name="NoDecks.Text" xml:space="preserve">
+    <value>Nie znaleziono żadnych talii w wybranej kategorii!</value>
+  </data>
 </root>

@@ -17,7 +17,8 @@ namespace StudyBox.Core.ViewModels
         private readonly IAccountService _accountService;
         private RelayCommand _loginAction;
         private RelayCommand _createAccountAction;
-        private RelayCommand _continueWithoutLogin;      
+        private RelayCommand _continueWithoutLogin;
+        private RelayCommand _forgottenPasswordAction;
         private string _generalErrorMessage;
         private bool _isEmailNotValid;
         private bool _isPasswordNotValid;
@@ -53,6 +54,14 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _continueWithoutLogin ?? (_continueWithoutLogin = new RelayCommand(ContinueWithoutLoggingIn));
+            }
+        }
+
+        public RelayCommand ForgottenPasswordAction
+        {
+            get
+            {
+                return _forgottenPasswordAction ?? (_forgottenPasswordAction = new RelayCommand(ForgottenPassword));
             }
         }
 
@@ -136,6 +145,7 @@ namespace StudyBox.Core.ViewModels
 
         public async void Login()
         {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             bool isInternet = _internetConnectionService.IsInternetAccess();
 
             if (isInternet)
@@ -194,15 +204,25 @@ namespace StudyBox.Core.ViewModels
 
         public void CreateAccount()
         {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             NavigationService.NavigateTo("RegisterView");
             ClearInputs();
         }
 
         public void ContinueWithoutLoggingIn()
         {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             NavigationService.NavigateTo("DecksListView");
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
             Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.PublicDecks));
+        }
+
+        public void ForgottenPassword()
+        {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
+            Messenger.Default.Send<MessageToChangePassword>(new MessageToChangePassword(false, null, String.Empty));
+            NavigationService.NavigateTo("ForgottenPasswordView");
+            Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
         }
 
         private void ClearInputs()

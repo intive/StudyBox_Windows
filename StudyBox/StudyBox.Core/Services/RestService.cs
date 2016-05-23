@@ -374,7 +374,7 @@ namespace StudyBox.Core.Services
                 cts);
         }
 
-        public async Task<bool> RemoveTag(string deckId, string tagId, CancellationTokenSource cts = null) 
+        public async Task<bool> RemoveTag(string deckId, string tagId, CancellationTokenSource cts = null)
         {
             string url = String.Format(_resources["TagRemoveUrl"].ToString(), deckId, tagId);
             return await RemoveHelper(url, cts);
@@ -419,7 +419,7 @@ namespace StudyBox.Core.Services
                     {
                         response = await client.PostAsJsonAsync(url, testResults);
                     }
-                    
+
                     if (response.StatusCode != System.Net.HttpStatusCode.Created && response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
                         return false;
@@ -465,6 +465,26 @@ namespace StudyBox.Core.Services
             {
                 return null;
             }
+        }
+
+        public async Task<ResetPassword> ResetPassword(string email, CancellationTokenSource cts = null)
+        {
+            string url = _resources["ResetPasswordUrl"].ToString();
+
+            return await CreateHelper<ResetPassword>(url,
+                new { email = email },
+                false,
+                cts,
+                true);
+        }
+
+        public async Task<bool> ChangePassword(User user, string token, CancellationTokenSource cts = null)
+        {
+            string url = _resources["ChangePasswordUrl"].ToString();
+
+            return await CreateHelper<bool>(url,
+                new { password = user.Password, token = token, email = user.Email },
+                false, cts);
         }
         #endregion
 
@@ -518,7 +538,7 @@ namespace StudyBox.Core.Services
 
 
 
-        private async Task<T> CreateHelper<T>(string url, object apiCreateObject, bool authorize , CancellationTokenSource cts)
+        private async Task<T> CreateHelper<T>(string url, object apiCreateObject, bool authorize, CancellationTokenSource cts, bool decodeError = false)
         {
             try
             {
@@ -541,8 +561,17 @@ namespace StudyBox.Core.Services
 
                     if (response.StatusCode != System.Net.HttpStatusCode.Created && response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
-                        throw new HttpRequestException();
+                        if (!decodeError)
+                            throw new HttpRequestException();
+                        else
+                        {
+                            string errorDecode = await DecodeResponseContent(response);
+                            return _deserializeJsonService.GetObjectFromJson<T>(errorDecode);
+                        }
                     }
+
+                    if (typeof(T) == typeof(bool))
+                        return (T)(object)true;
 
                     string json = await DecodeResponseContent(response);
                     return _deserializeJsonService.GetObjectFromJson<T>(json);
