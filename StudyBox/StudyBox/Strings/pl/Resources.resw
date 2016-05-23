@@ -530,4 +530,7 @@
   <data name="ResetPassword500" xml:space="preserve">
     <value>Nie udało się wysłać meila z wiadomością!</value>
   </data>
+  <data name="NoDecks.Text" xml:space="preserve">
+    <value>Nie znaleziono żadnych talii w wybranej kategorii!</value>
+  </data>
 </root>

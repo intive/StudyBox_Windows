@@ -220,6 +220,7 @@ namespace StudyBox.Core.ViewModels
         public void ForgottenPassword()
         {
             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
+            Messenger.Default.Send<MessageToChangePassword>(new MessageToChangePassword(false));
             NavigationService.NavigateTo("ForgottenPasswordView");
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
         }

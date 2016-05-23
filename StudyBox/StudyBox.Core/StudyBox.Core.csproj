@@ -125,6 +125,7 @@
     <Compile Include="Messages\DataMessageToMenageDeck.cs" />
     <Compile Include="Messages\DataMessageToSummary.cs" />
     <Compile Include="Messages\DecksTypeMessage.cs" />
+    <Compile Include="Messages\MessageToChangePassword.cs" />
     <Compile Include="Messages\MessageToMenuControl.cs" />
     <Compile Include="Messages\MessageToMessageBoxControl.cs" />
     <Compile Include="Messages\ReloadMessageToDecksList.cs" />

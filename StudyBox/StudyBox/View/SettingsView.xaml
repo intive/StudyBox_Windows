@@ -18,16 +18,26 @@
             <RowDefinition Height="*" MinHeight="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*" MinHeight="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MinHeight="50"/>
             <RowDefinition Height="18*" x:Name="MainContent"/>
         </Grid.RowDefinitions>
 
-        <userControls:MenuControlView Grid.Column="0" Grid.Row="0" Canvas.ZIndex="2" Grid.RowSpan="4"/>
-
+        <userControls:MenuControlView Grid.Column="0" Grid.Row="0" Canvas.ZIndex="2" Grid.RowSpan="6"/>
+        <userControls:MessageBoxControlView Grid.Row="5" Grid.ColumnSpan="3" Canvas.ZIndex="1" VerticalAlignment="Top"/>
+        
         <Button Grid.Row="2" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                  Background="{StaticResource DarkBlue}" Command="{Binding ChangeGravatarCommand}">
             <Viewbox MaxHeight="35">
                 <TextBlock x:Uid="ChangeGravatar" FontFamily="{StaticResource LatoRegularFontFamily}" Foreground="{StaticResource Grey}"/>
             </Viewbox>            
+        </Button>
+
+        <Button Grid.Row="4" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                 Background="{StaticResource DarkBlue}" Command="{Binding ChangePasswordCommand}">
+            <Viewbox MaxHeight="35">
+                <TextBlock x:Uid="ChangePassword" FontFamily="{StaticResource LatoRegularFontFamily}" Foreground="{StaticResource Grey}"/>
+            </Viewbox>
         </Button>
 
     </Grid>

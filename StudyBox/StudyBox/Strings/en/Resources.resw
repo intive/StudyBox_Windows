@@ -517,4 +517,7 @@
   <data name="ResetPassword500" xml:space="preserve">
     <value>Unable to send email message!</value>
   </data>
+  <data name="NoDecks.Text" xml:space="preserve">
+    <value>There is no decks in this category!</value>
+  </data>
 </root>

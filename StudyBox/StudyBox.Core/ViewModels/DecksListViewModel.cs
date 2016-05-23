@@ -29,6 +29,7 @@ namespace StudyBox.Core.ViewModels
         private bool _isDataLoading = false;
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
+        private bool _isNoDecks = false;
         private string _selectedID = "";
         private bool isUser = false;
         private bool _isMyDeck = false;
@@ -88,6 +89,23 @@ namespace StudyBox.Core.ViewModels
                 }
             }
         }
+
+        public bool IsNoDecks
+        {
+            get
+            {
+                return _isNoDecks;
+            }
+            set
+            {
+                if (_isNoDecks != value)
+                {
+                    _isNoDecks = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
 
         public bool IsMyDeck
         {
@@ -153,13 +171,14 @@ namespace StudyBox.Core.ViewModels
             }
         }
         #endregion
-        
+
         #region Methods
         private async void InitializeDecksCollection()
         {
             if (await CheckInternetConnection() && _accountService.IsUserLoggedIn())
             {
                 IsUser = true;
+
                 _favouriteDecks.Clear();
                 _favouriteDecks = _favouriteService.GetFavouriteDecks();
                 List<Deck> _deckLists = new List<Deck>();
@@ -199,12 +218,15 @@ namespace StudyBox.Core.ViewModels
                         _deckLists = await _restService.GetUserDecks();
 
                     }
+
                     if (_deckLists != null && _decksType != DecksType.Favourite)
                     {
                         _deckLists.Sort((x, y) => string.Compare(x.Name, y.Name));
                         _deckLists.ForEach(x => DecksCollection.Add(x));
                         CheckIfDeckIsFavourite();
                     }
+
+
                 }
                 catch (Exception ex)
                 {
@@ -212,6 +234,9 @@ namespace StudyBox.Core.ViewModels
                 }
                 finally
                 {
+                    if (DecksCollection != null && DecksCollection.Count == 0)
+                        IsNoDecks = true;
+
                     IsDataLoading = false;
                 }
             }
@@ -224,19 +249,21 @@ namespace StudyBox.Core.ViewModels
                 IsDeckSelected = false;
                 DecksCollection.Clear();
                 SearchMessageVisibility = false;
+                IsNoDecks = false;
                 InitializeDecksCollection();
             }
         }
 
         private async void HandleSearchMessage(string searchingContent)
         {
+            IsNoDecks = false;
             IsDeckSelected = false;
             if (await CheckInternetConnection())
             {
                 List<Deck> searchList;
                 DecksCollection.Clear();
                 _favouriteDecks.Clear();
-                
+
                 SearchMessageVisibility = false;
                 IsDataLoading = true;
                 try
@@ -270,8 +297,10 @@ namespace StudyBox.Core.ViewModels
                 }
                 finally
                 {
+
                     IsDataLoading = false;
-                    SearchMessageVisibility = true;
+                    if (DecksCollection != null && DecksCollection.Count == 0)
+                        SearchMessageVisibility = true;
                 }
             }
         }
@@ -280,6 +309,7 @@ namespace StudyBox.Core.ViewModels
         {
             IsDeckSelected = false;
             IsMyDeck = false;
+            IsNoDecks = false;
             _decksType = decksType;
             DecksCollection.Clear();
             SearchMessageVisibility = false;
@@ -404,13 +434,13 @@ namespace StudyBox.Core.ViewModels
                 deck.ViewModel.IsFavourite = false;
                 deck.ViewModel.AddToFavouriteDecksDate = default(DateTime);
 
-                if (_favouriteDecks!= null)
+                if (_favouriteDecks != null)
                 {
                     Deck deckToRemove = _favouriteDecks.Where(x => x.ID == id).FirstOrDefault();
                     _favouriteDecks.Remove(deckToRemove);
                     _favouriteService.SaveFavouriteDecks(_favouriteDecks);
                 }
-                
+
             }
 
         }
@@ -541,7 +571,7 @@ namespace StudyBox.Core.ViewModels
                     }
                 }
 
-                
+
             }
         }
 
