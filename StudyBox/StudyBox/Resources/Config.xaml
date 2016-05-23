@@ -38,6 +38,9 @@
     <x:String x:Key="UserCreateUrl">http://dev.patronage2016.blstream.com:2000/users</x:String>
     <x:String x:Key="UserGetByIdUrl">http://dev.patronage2016.blstream.com:2000/users/{0}</x:String>
     <x:String x:Key="UserGetLoggedUrl">http://dev.patronage2016.blstream.com:2000/users/me</x:String>
+    <x:String x:Key="ResetPasswordUrl">http://dev.patronage2016.blstream.com:2000/users/password/recovery</x:String>
+    <x:String x:Key="ChangePasswordUrl">http://dev.patronage2016.blstream.com:2000/users/password/change</x:String>
+
     <x:String x:Key="StatisticsFileName">statistics.txt</x:String>
     <x:String x:Key="TestedDecksFileName">testedDecks.txt</x:String>
     <x:String x:Key="HistoryFileName">history.txt</x:String>

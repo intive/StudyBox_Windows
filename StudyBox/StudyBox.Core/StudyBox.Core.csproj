@@ -134,6 +134,7 @@
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Exam.cs" />
     <Compile Include="Models\Flashcard.cs" />
+    <Compile Include="Models\ResetPassword.cs" />
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TestResult.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="ViewModels\DeckViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
     <Compile Include="ViewModels\ExtendedViewModelBase.cs" />
+    <Compile Include="ViewModels\ForgottenPasswordViewModel.cs" />
     <Compile Include="ViewModels\ImageImportViewModel.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

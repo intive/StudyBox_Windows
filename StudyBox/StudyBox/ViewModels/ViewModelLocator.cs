@@ -28,6 +28,7 @@ namespace StudyBox.ViewModels
             SimpleIoc.Default.Register<SummaryViewModel>();
             SimpleIoc.Default.Register<RegisterViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<ForgottenPasswordViewModel>();
             SimpleIoc.Default.Register<LearningViewModel>();
             SimpleIoc.Default.Register<StatisticsViewModel>();
             SimpleIoc.Default.Register<ImageImportViewModel>();
@@ -76,6 +77,7 @@ namespace StudyBox.ViewModels
             navigationService.Configure("SummaryView", typeof(SummaryView));
             navigationService.Configure("RegisterView", typeof(RegisterView));
             navigationService.Configure("LoginView", typeof(LoginView));
+            navigationService.Configure("ForgottenPasswordView", typeof(ForgottenPasswordView));
             navigationService.Configure("LearningView", typeof(LearningView));
             navigationService.Configure("StatisticsView",typeof(StatisticsView));
             navigationService.Configure("ImageImportView", typeof(ImageImportView));
@@ -149,6 +151,14 @@ namespace StudyBox.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<LoginViewModel>();
+            }
+        }
+
+        public ForgottenPasswordViewModel ForgottenPasswordViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ForgottenPasswordViewModel>();
             }
         }
 
