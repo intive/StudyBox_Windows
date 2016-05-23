@@ -6,10 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:converters="using:StudyBox.Converters"
     xmlns:userControls="using:StudyBox.UserControls"
     DataContext="{Binding Source={StaticResource Locator}, Path=SettingsViewModel}"
     >
-
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -39,6 +42,5 @@
                 <TextBlock x:Uid="ChangePassword" FontFamily="{StaticResource LatoRegularFontFamily}" Foreground="{StaticResource Grey}"/>
             </Viewbox>
         </Button>
-
     </Grid>
 </Page>

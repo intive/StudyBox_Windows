@@ -15,6 +15,7 @@ namespace StudyBox.Core.ViewModels
     public class ForgottenPasswordViewModel : ExtendedViewModelBase
     {
         private IInternetConnectionService _internetConnectionService;
+        private ITokenService _tockenService;
         private IValidationService _validationService;
         private IAccountService _accountService;
         private IRestService _restService;
@@ -36,13 +37,14 @@ namespace StudyBox.Core.ViewModels
         private string _passwordErrorMessage;
         private bool _changePassword = false;
 
-        public ForgottenPasswordViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, IRestService restService, IAccountService accountService) : base(navigationService)
+        public ForgottenPasswordViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, ITokenService tockenService, IValidationService validationService, IRestService restService, IAccountService accountService) : base(navigationService)
         {
-            Messenger.Default.Register<MessageToChangePassword>(this, x => HandleChangePasswordMessage(x.ChangePassword));
+            Messenger.Default.Register<MessageToChangePassword>(this, x => HandleChangePasswordMessage(x.ChangePassword, x.ReturnToken, x.Email));
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;
             _restService = restService;
             _accountService = accountService;
+            _tockenService = tockenService;
 
         }
 
@@ -195,35 +197,44 @@ namespace StudyBox.Core.ViewModels
 
         private async void GetToken(string email)
         {
-            email = email.Trim();
-            IsEmailNotValid = !_validationService.CheckEmail(email);
-            if (!IsEmailNotValid)
+            bool isInternet = _internetConnectionService.CheckConnection();
+            if (isInternet)
             {
-                IsDataLoading = true;
-                ResetPassword returnToken = await _restService.ResetPassword(email);
-                IsDataLoading = false;
-
-                if (returnToken != null && !string.IsNullOrWhiteSpace(returnToken.Token))
+                email = email.Trim();
+                IsEmailNotValid = !_validationService.CheckEmail(email);
+                if (!IsEmailNotValid)
                 {
-                    _token = returnToken.Token;
-                    IsEmailVisible = false;
-                }
-                else
-                {
-                    if (returnToken.Code == 400)
-                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ResetPassword400")));
-                    else if (returnToken.Code == 500)
-                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ResetPassword500")));
-                    else
-                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ResetPassword400")));
+                    IsDataLoading = true;
+                    ResetPassword returnToken = await _tockenService.GetToken(Email);
+                    IsDataLoading = false;
 
-                    if (_changePassword)
+                    if (returnToken != null && !string.IsNullOrWhiteSpace(returnToken.Token))
                     {
-                        NavigationService.NavigateTo("SettingsView");
-                        ClearInputs();
+                        _token = returnToken.Token;
+                        IsEmailVisible = false;
                     }
-                        
+                    else
+                    {
+                        if (returnToken.Code == 400)
+                            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ResetPassword400")));
+                        else if (returnToken.Code == 500)
+                            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ResetPassword500")));
+                        else
+                            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ResetPassword400")));
+
+                        if (_changePassword)
+                        {
+                            NavigationService.NavigateTo("SettingsView");
+                            ClearInputs();
+                        }
+
+                    }
                 }
+            }
+            else
+            {
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, true, true,
+                    StringResources.GetString("NoInternetConnection")));
             }
         }
 
@@ -234,41 +245,55 @@ namespace StudyBox.Core.ViewModels
 
         public async void ChangePassword()
         {
-
-            IsPasswordNotValid = !_validationService.CheckIfPasswordIsToShort(Password);
-            if (IsPasswordNotValid)
+            bool isInternet = _internetConnectionService.CheckConnection();
+            if (isInternet)
             {
-                PasswordErrorMessage = StringResources.GetString("PasswordTooShort");
+                IsPasswordNotValid = !_validationService.CheckIfPasswordIsToShort(Password);
+                if (IsPasswordNotValid)
+                {
+                    PasswordErrorMessage = StringResources.GetString("PasswordTooShort");
+                }
+                else
+                {
+                    IsPasswordNotValid = !_validationService.CheckIfPasswordContainsWhitespaces(Password);
+                    if (IsPasswordNotValid)
+                    {
+                        PasswordErrorMessage = StringResources.GetString("PasswordCannotHaveWhitespaces");
+                    }
+                }
+                IsRepeatPasswordNotValid = !_validationService.CheckIfPasswordsAreEqual(Password, RepeatPassword);
+                if (!IsRepeatPasswordNotValid && !IsPasswordNotValid)
+                {
+                    User user = new User();
+                    user.Email = Email;
+                    user.Password = Password;
+                    IsDataLoading = true;
+                    bool passwordChangeOK = await _restService.ChangePassword(user, _token);
+                    IsDataLoading = false;
+                    if (passwordChangeOK)
+                    {
+                        if (_accountService.IsUserLoggedIn())
+                        {
+                            _accountService.LogOut();
+                            await _accountService.Login(user);
+                        }
+
+                        if (_changePassword)
+                            NavigationService.NavigateTo("SettingsView");
+                        else
+                            NavigationService.NavigateTo("LoginView");
+
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("PasswordChanged")));
+                        ClearInputs();
+                    }
+                    else
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ChangePasswordError")));
+                }
             }
             else
             {
-                IsPasswordNotValid = !_validationService.CheckIfPasswordContainsWhitespaces(Password);
-                if (IsPasswordNotValid)
-                {
-                    PasswordErrorMessage = StringResources.GetString("PasswordCannotHaveWhitespaces");
-                }
-            }
-            IsRepeatPasswordNotValid = !_validationService.CheckIfPasswordsAreEqual(Password, RepeatPassword);
-            if (!IsRepeatPasswordNotValid)
-            {
-                User user = new User();
-                user.Email = Email;
-                user.Password = Password;
-                IsDataLoading = true;
-                bool passwordChangeOK = await _restService.ChangePassword(user, _token);
-                IsDataLoading = false;
-                if (passwordChangeOK)
-                {
-                    if (_changePassword)
-                        NavigationService.NavigateTo("SettingsView");
-                    else
-                        NavigationService.NavigateTo("LoginView");
-
-                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("PasswordChanged")));
-                    ClearInputs();
-                }
-                else
-                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ChangePasswordError")));
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, true, true,
+                    StringResources.GetString("NoInternetConnection")));
             }
 
         }
@@ -293,14 +318,16 @@ namespace StudyBox.Core.ViewModels
             IsEmailVisible = true;
         }
 
-        private void HandleChangePasswordMessage(bool changePassword)
+        private void HandleChangePasswordMessage(bool changePassword, ResetPassword returnToken, string email)
         {
             _changePassword = changePassword;
-            if (_changePassword)
+            if (_changePassword && returnToken!=null && !string.IsNullOrWhiteSpace(returnToken.Token) && !string.IsNullOrWhiteSpace(email))
             {
-                Email = _accountService.GetUserEmail();
-                GetToken(Email);
+                Email = email;
+                _token = returnToken.Token;
+                IsEmailVisible = false;
             }
+
         }
     }
 }

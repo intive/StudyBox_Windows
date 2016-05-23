@@ -50,6 +50,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IFavouriteDecksService, FavouriteDecksService>();
                 SimpleIoc.Default.Register<ICameraService, CameraService>();
                 SimpleIoc.Default.Register<IGravatarService, GravatarService>();
+                SimpleIoc.Default.Register<ITokenService, TokenService>();
             }
             else
             {
@@ -64,6 +65,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IFavouriteDecksService, FavouriteDecksService>();
                 SimpleIoc.Default.Register<ICameraService, CameraService>();
                 SimpleIoc.Default.Register<IGravatarService, GravatarService>();
+                SimpleIoc.Default.Register<ITokenService, TokenService>();
 
             }
         }

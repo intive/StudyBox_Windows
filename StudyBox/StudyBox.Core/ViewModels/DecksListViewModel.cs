@@ -194,7 +194,8 @@ namespace StudyBox.Core.ViewModels
                     {
                         _deckLists = await _restService.GetDecks();
                         List<Deck> _deckList2 = await _restService.GetUserDecks();
-                        _deckLists = _deckLists.Union(_deckList2).ToList();
+                        if (_deckList2!= null)
+                            _deckLists = _deckLists.Union(_deckList2).ToList();
 
                         if (_deckLists != null && _favouriteDecks != null)
                         {
