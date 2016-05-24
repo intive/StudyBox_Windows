@@ -480,15 +480,15 @@ namespace StudyBox.Core.Services
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
-                    client.DefaultRequestHeaders.TransferEncoding.Add(new TransferCodingHeaderValue("base64"));
+
                     MultipartFormDataContent form = new MultipartFormDataContent("---BOUNDARY");
-                    
                     HttpContent content = new ByteArrayContent(byteArray);
+                    content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { Name = file.DisplayName, FileName = file.Name };
                     content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
                     content.Headers.Add("Content-Transfer-Encoding", "base64");
-                    form.Add(content, file.DisplayName, file.Name);
+                    form.Add(content);
 
-                    HttpResponseMessage response; 
+                    HttpResponseMessage response;
 
                     if (cts != null)
                     {
@@ -499,7 +499,7 @@ namespace StudyBox.Core.Services
                         response = await client.PostAsync(url, form);
                     }
 
-                    if (response.StatusCode != System.Net.HttpStatusCode.Created && response.StatusCode != System.Net.HttpStatusCode.OK)
+                    if (response.StatusCode != System.Net.HttpStatusCode.Created)
                     {
                         return false;
                     }
