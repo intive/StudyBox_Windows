@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StudyBox.Resources">
 
@@ -44,6 +44,8 @@
 
     <x:String x:Key="FileUploadUrl">http://dev.patronage2016.blstream.com:2000/decks/cv?fileType={0}</x:String>
 
+    <x:String x:Key="FavouriteDecksFileName">favouriteDeck.txt</x:String>
+    
     <x:String x:Key="GravatarHomePage">http://pl.gravatar.com</x:String>
     <x:String x:Key="GravatarUrl">http://www.gravatar.com/avatar/{0}?d=mm&amp;r=x</x:String>
     <x:String x:Key="GravatarPng">ms-appx:///Assets/gravatar.png</x:String>

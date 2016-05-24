@@ -8,6 +8,7 @@ using StudyBox.Core.Models;
 using StudyBox.Core.Services;
 using System;
 using Windows.UI.Popups;
+using System.Threading.Tasks;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -216,7 +217,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return _flashcards != null && _flashcards.Count > 0 && _currentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint > 0;
+                return _flashcards != null && _flashcards.Count > 0 && CurrentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint > 0;
             }
         }
 
@@ -224,7 +225,7 @@ namespace StudyBox.Core.ViewModels
         {
             get
             {
-                return _flashcards != null && _flashcards.Count > 0 && _currentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint < Hints.Count - 1;
+                return _flashcards != null && _flashcards.Count > 0 && CurrentlyVisibleHint && Hints != null && Hints.Count > 0 && _numberOfCurrentHint < Hints.Count - 1;
             }
         }
 
@@ -273,13 +274,6 @@ namespace StudyBox.Core.ViewModels
                     {
                         Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, ex.Message));
                     }
-
-                    //MOCK
-                   /* _flashcards = new List<Flashcard>
-                    {
-                        new Flashcard {Answer="a", Question="q", TipsCount=2 },
-                        new Flashcard {Answer="a2", Question="q2", TipsCount=0 }
-                    };*/
                 }
                 else
                 {
@@ -290,15 +284,15 @@ namespace StudyBox.Core.ViewModels
                 
                 if (_flashcards != null && _flashcards.Count > 0)
                 {
-                    if (!IsQuestionVisible)
-                    {
-                        ShowQuestionView();
-                    }
-                    else
-                    {
+                    //if (!IsQuestionVisible)
+                    //{
+                    //    ShowQuestionView();
+                    //}
+                    //else
+                    //{
                         ShowQuestionInMainRectangle();
                         RaiseAllPropertiesChanged();
-                    }
+                    //}
                 }
 
                 IsDataLoading = false;
@@ -314,15 +308,19 @@ namespace StudyBox.Core.ViewModels
             RaisePropertyChanged("Hint");
             RaisePropertyChanged("IsHintAvailable");
             RaisePropertyChanged("NumberOfFlashcard");
+            RaisePropertyChanged("IsRightArrowVisible");
+            RaisePropertyChanged("IsLeftArrowVisible");
+            RaisePropertyChanged("BottomRectangleText");
         }
 
-        private void SwipeAndShowAnswer()
+        private async void SwipeAndShowAnswer()
         {
             if (!CurrentlyVisibleHint)
             {
-            Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowAnswer" });
-            IsQuestionVisible = false;
-        }
+                Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowAnswer" });
+                await Task.Delay(TimeSpan.FromMilliseconds(450));
+                IsQuestionVisible = false;
+            }
         }
 
         private void CountGoodAnswerAndShowNextFlashcard()
@@ -343,6 +341,7 @@ namespace StudyBox.Core.ViewModels
             }
             else
             {
+                MainRectangleWithQuestionOrHint = string.Empty;
                 _statisticsService.SaveTestsHistory(new TestsHistory(DateTime.Now.ToString("g"),_nameOfDeck,_numberOfCorrectAnswers,_numberOfCurrentFlashcard));
                 NavigationService.NavigateTo("SummaryView");
                 Messenger.Default.Send<DataMessageToSummary>(new DataMessageToSummary(new Exam { CorrectAnswers = _numberOfCorrectAnswers, Questions = _flashcards.Count }));
@@ -367,7 +366,8 @@ namespace StudyBox.Core.ViewModels
 
                 if (!await _internetConnectionService.IsNetworkAvailable())
                 {
-                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, true, true,
+                        StringResources.GetString("NoInternetConnection")));
                     return;
                 }
                 else if (!_internetConnectionService.IsInternetAccess())
@@ -398,9 +398,10 @@ namespace StudyBox.Core.ViewModels
             RaisePropertyChanged("BottomRectangleText");
         }
 
-        private void ShowQuestionView()
+        private async void ShowQuestionView()
         {
             Messenger.Default.Send(new StartStoryboardMessage { StoryboardName = "TurnFlashcardToShowQuestion" });
+            await Task.Delay(TimeSpan.FromMilliseconds(200));
             ShowQuestionInMainRectangle();
             RaiseAllPropertiesChanged();
         }

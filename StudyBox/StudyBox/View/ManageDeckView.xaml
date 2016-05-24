@@ -21,9 +21,12 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" MinHeight="50" />
-            <RowDefinition Height="1*" />
             <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1.5*" />
             <RowDefinition x:Name="MainGridRow" Height="13*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -32,9 +35,19 @@
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
 
-        <userControls:MenuControlView Grid.RowSpan="6" Canvas.ZIndex="2"/>
-        <userControls:MessageBoxControlView Grid.Row="4" Canvas.ZIndex="1" VerticalAlignment="Top"/>
-        <Button  Grid.Row="1" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcard}">
+        <userControls:MenuControlView Grid.RowSpan="9" Canvas.ZIndex="2" />
+        <userControls:MessageBoxControlView Grid.Row="6" Canvas.ZIndex="1" VerticalAlignment="Top"/>
+        <Button Grid.Row="2" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding ChangeStatus}">
+            <TextBlock Text="{Binding ChangeDeckStatus}"
+                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        FontFamily="{StaticResource LatoRegularFontFamily}" 
+                        Padding="0 10"
+                        Foreground="{StaticResource Grey}" />
+        </Button>
+
+        <Button  Grid.Row="4" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcard}">
             <TextBlock x:Uid="GoToAddFlashcard"
                         FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                         HorizontalAlignment="Center" 
@@ -43,7 +56,7 @@
                         Padding="0 10"
                         Foreground="{StaticResource Grey}" />
         </Button>
-        <Button  Grid.Row="3" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcardFromFile}">
+        <Button  Grid.Row="6" Margin="5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding AddNewFlashcardFromFile}">
             <TextBlock x:Uid="GoToAddFlashcardFromFile"
                         FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
                         HorizontalAlignment="Center" 
@@ -52,7 +65,7 @@
                         Padding="0 10"
                         Foreground="{StaticResource Grey}" />
         </Button>
-        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="4" Grid.Column="0" Margin="5">
+        <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="7" Grid.Column="0" Margin="5 10 5 5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
                 <GridView x:Name="GridView" ItemsSource="{Binding FlashcardsCollection}" 
                           IsItemClickEnabled="False"
@@ -101,7 +114,7 @@
         </ScrollViewer>
 
         <ProgressRing x:Name="InitializeProgressRing"
-                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="9"
                       Width="80"
                       Height="80"
                       Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -133,7 +146,7 @@
                     <VisualState.Setters>
                         <Setter Target="TileManagment.Width" Value="220"/>
                         <Setter Target="TileManagment.Height" Value="220"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="18"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
                         <Setter Target="BigFontManagment.FontSize" Value="26"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -145,7 +158,7 @@
                     <VisualState.Setters>
                         <Setter Target="TileManagment.Width" Value="240"/>
                         <Setter Target="TileManagment.Height" Value="240"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="20"/>
                         <Setter Target="BigFontManagment.FontSize" Value="35"/>
                     </VisualState.Setters>
                 </VisualState>

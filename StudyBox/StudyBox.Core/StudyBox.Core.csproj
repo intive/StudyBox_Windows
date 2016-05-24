@@ -111,6 +111,7 @@
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\ICameraService.cs" />
     <Compile Include="Interfaces\IDeserializeJsonService.cs" />
+    <Compile Include="Interfaces\IFavouriteDecksService.cs" />
     <Compile Include="Interfaces\IGravatarService.cs" />
     <Compile Include="Interfaces\IHttpService.cs" />
     <Compile Include="Interfaces\IInternetConnectionService.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\CameraService.cs" />
     <Compile Include="Services\DeserializeJsonService.cs" />
+    <Compile Include="Services\FavouriteDecksService.cs" />
     <Compile Include="Services\GravatarService.cs" />
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\InternetConnectionService.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="ViewModels\CreateDeckViewModel.cs" />
     <Compile Include="ViewModels\CreateFlashcardViewModel.cs" />
     <Compile Include="ViewModels\DecksListViewModel.cs" />
+    <Compile Include="ViewModels\DeckViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
     <Compile Include="ViewModels\ExtendedViewModelBase.cs" />
     <Compile Include="ViewModels\ImageImportViewModel.cs" />

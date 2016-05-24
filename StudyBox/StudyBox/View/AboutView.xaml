@@ -20,6 +20,8 @@
         </Grid.RowDefinitions>
         
         <userControls:MenuControlView Grid.Column="0" Grid.Row="0" Canvas.ZIndex="2" Grid.RowSpan="3"/>
+        <userControls:MessageBoxControlView Grid.Row="1" Canvas.ZIndex="1" VerticalAlignment="Top"/>
+        
         <ScrollViewer Grid.Column="0" Grid.Row="1" Margin="0,0,0,15" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top">
             <StackPanel>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,15">

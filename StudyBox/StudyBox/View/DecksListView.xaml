@@ -7,7 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:StudyBox.Converters"
+    xmlns:Images="using:WinRTXamlToolkit.Controls"
     mc:Ignorable="d"
+    
     DataContext="{Binding Source={StaticResource Locator}, Path=DecksViewModel}"
     >
     <Page.Resources>
@@ -24,11 +26,11 @@
             <RowDefinition x:Name="MainGridRow" Height="13*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Border x:Name="TileManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="BigFontManagment" Visibility="Collapsed"/>
-        
+
         <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
         <userControls:MessageBoxControlView Grid.Row="1" Canvas.ZIndex="1" VerticalAlignment="Top"/>
 
@@ -79,6 +81,22 @@
 
             <Button HorizontalAlignment="Stretch"
                                 Background="Transparent" 
+                                Command="{Binding RemoveDeck}"
+                                BorderThickness="0"
+                                Visibility="{Binding IsMyDeck, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            >
+                <TextBlock TextWrapping="Wrap"
+                                       TextAlignment="Center"
+                                       x:Uid="RemoveDeck"
+                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                                       FontFamily="{StaticResource LatoRegularFontFamily}"
+                                       Foreground="{StaticResource Graphite}"
+                                       Padding="0,0"
+                                       />
+            </Button>
+
+            <Button HorizontalAlignment="Stretch"
+                                Background="Transparent" 
                                 Command="{Binding Cancel}"
                                 BorderThickness="0"
                             >
@@ -114,17 +132,69 @@
                                         VerticalAlignment="Top"
                                         Margin="0"
                                         >
-                                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <TextBlock Text="{Binding Name}" 
+                                        <Grid 
+                                            HorizontalAlignment="Stretch" 
+                                            VerticalAlignment="Stretch" 
+                                            Width="{Binding ElementName=TileManagment, Path=Width}" 
+                                            Height="{Binding ElementName=TileManagment, Path=Height}"
+                                            >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                <ColumnDefinition Width="5*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                                <RowDefinition Height="5*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+
+                                            <StackPanel
+                                                Grid.Column="0" 
+                                                Grid.Row="0"
+                                                Visibility="{Binding ElementName=GridView, Path=DataContext.IsUser, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                >
+                                                <Images:ImageButton Visibility="{Binding ViewModel.IsFavourite, Converter={StaticResource NegativeBooleanToVisibilityConverter}}"
+                                                Command="{Binding ElementName=GridView, Path=DataContext.AddToFavouriteCommand}"
+                                                CommandParameter="{Binding ID}"
+
+                                                Stretch="Fill" 
+                                                Padding="5"
+                                                NormalStateImageSource="ms-appx:///Assets/emptystar.png"
+                                                HoverStateImageSource="ms-appx:///Assets/emptystar.png"
+                                                PressedStateImageSource="ms-appx:///Assets/emptystar.png"/>
+
+                                                <Images:ImageButton Visibility="{Binding ViewModel.IsFavourite, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                Command="{Binding ElementName=GridView, Path=DataContext.RemoveFromFavouriteCommand}"
+                                                CommandParameter="{Binding ID}"
+                                                
+                                                Stretch="Fill" 
+                                                Padding="5"
+                                                NormalStateImageSource="ms-appx:///Assets/fullstar.png"
+                                                HoverStateImageSource="ms-appx:///Assets/fullstar.png"
+                                                PressedStateImageSource="ms-appx:///Assets/fullstar.png"/>
+                                            </StackPanel>
+                                            
+
+                                            <StackPanel 
+                                                Grid.Row="0" 
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2" 
+                                                VerticalAlignment="Center" 
+                                                HorizontalAlignment="Center"
+                                                >
+                                                <TextBlock Text="{Binding Name}" 
                                                        Foreground="{StaticResource Grey}" 
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        />
-                                            <TextBlock Text="{Binding CountOfFlashcards}" 
+                                                <TextBlock Text="{Binding CountOfFlashcards}" 
                                                        Foreground="{StaticResource Grey}" 
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        HorizontalAlignment="Center"
                                                        />
-                                        </StackPanel>
+                                            </StackPanel>
+
+                                        </Grid>
                                     </Button>
                                 </StackPanel>
                             </StackPanel>

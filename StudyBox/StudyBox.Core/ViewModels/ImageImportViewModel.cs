@@ -313,7 +313,8 @@ namespace StudyBox.Core.ViewModels
         {
             if (!await _internetConnectionService.IsNetworkAvailable())
             {
-                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("NoInternetConnection")));
+                Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, true, true,
+                    StringResources.GetString("NoInternetConnection")));
                 return;
             }
             else if (!_internetConnectionService.IsInternetAccess())
@@ -409,13 +410,11 @@ namespace StudyBox.Core.ViewModels
             {
                 NavigationService.NavigateTo("DecksListView");
                 Messenger.Default.Send<ReloadMessageToDecksList>(new ReloadMessageToDecksList(true));
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
             }
             else
             {
                 NavigationService.NavigateTo("ManageDeckView");
-                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
-                Messenger.Default.Send<DataMessageToMenageDeck>(new DataMessageToMenageDeck(_deckInstance));
+                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(false, false));
             }
         }
     }

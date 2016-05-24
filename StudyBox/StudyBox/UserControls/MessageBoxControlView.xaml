@@ -51,7 +51,7 @@
                 Command="{Binding Login}" 
                 Visibility="{Binding IsLoginButton, Converter={StaticResource BooleanToVisibilityConverter}}"
                 MaxWidth="500">
-            <TextBlock Text="Zaloguj"
+            <TextBlock x:Uid="LoginButton"
                         FontSize="16"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
@@ -66,7 +66,7 @@
                 Command="{Binding CloseWindow}" 
                 Visibility="{Binding IsOkButton, Converter={StaticResource BooleanToVisibilityConverter}}"
                 MaxWidth="500">
-            <TextBlock Text="OK"
+            <TextBlock x:Uid="OkButton"
                         FontSize="16"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
@@ -74,8 +74,8 @@
                         Padding="0 5"
                         Foreground="{StaticResource Grey}" />
         </Button>
-        
-                <Grid Margin="0,25,0,5">
+
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="15"/>
@@ -88,7 +88,7 @@
                     Command="{Binding Remove}" 
                     Visibility="{Binding IsRemoveButton, Converter={StaticResource BooleanToVisibilityConverter}}"
                     MaxWidth="500">
-                <TextBlock Text="Usuń"
+                <TextBlock x:Uid="RemoveButton"
                             FontSize="16"
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
@@ -103,13 +103,36 @@
                         Command="{Binding CloseWindow}" 
                         Visibility="{Binding IsNoRemoveButton, Converter={StaticResource BooleanToVisibilityConverter}}"
                         MaxWidth="500">
-                <TextBlock Text="Nie"
+                <TextBlock x:Uid="DontRemoveButton"
                                 FontSize="16"
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center" 
                                 FontFamily="{StaticResource LatoRegularFontFamily}" 
                                 Padding="0 5"
                                 Foreground="{StaticResource Grey}" />
+            </Button>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Center" 
+                    Background="{StaticResource Raspberry}" 
+                    Command="{Binding Settings}" 
+                    Visibility="{Binding IsSettingsButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    MaxWidth="500">
+                <TextBlock x:Uid="SettingsButton"
+                            FontSize="16"
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            FontFamily="{StaticResource LatoRegularFontFamily}" 
+                            Padding="0 5"
+                            Foreground="{StaticResource Grey}" />
             </Button>
         </Grid>
 

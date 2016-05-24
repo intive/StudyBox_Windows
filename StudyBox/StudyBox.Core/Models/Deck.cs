@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using StudyBox.Core.ViewModels;
 using System;
 
 namespace StudyBox.Core.Models
@@ -23,15 +24,19 @@ namespace StudyBox.Core.Models
         [JsonProperty(PropertyName = "creatorEmail")]
         public string CreatorEmail { get; set; }
 
+        public DeckViewModel ViewModel { get; set; }
+
         public Deck()
         {
             this.CountOfFlashcards = 0;
+            this.ViewModel = new DeckViewModel();
         }
 
         public Deck(string id)
         {
             this.ID = id;
             this.CountOfFlashcards = 0;
+            this.ViewModel = new DeckViewModel();
         }
 
         public Deck(string id, string name)
@@ -39,6 +44,7 @@ namespace StudyBox.Core.Models
             this.ID = id;
             this.Name = name;
             this.CountOfFlashcards = 0;
+            this.ViewModel = new DeckViewModel();
         }
 
         public Deck(string id, string name, bool isPublic)
@@ -47,6 +53,7 @@ namespace StudyBox.Core.Models
             this.Name = name;
             this.CountOfFlashcards = 0;
             this.IsPublic = isPublic;
+            this.ViewModel = new DeckViewModel();
         }
 
         public Deck(string id, string name, int countOfFlashCards)
@@ -54,6 +61,7 @@ namespace StudyBox.Core.Models
             this.ID = id;
             this.Name = name;
             this.CountOfFlashcards = countOfFlashCards;
+            this.ViewModel = new DeckViewModel();
         }
     }
 }

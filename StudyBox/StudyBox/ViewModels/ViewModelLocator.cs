@@ -46,6 +46,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService,StatisticsDataService>();
+                SimpleIoc.Default.Register<IFavouriteDecksService, FavouriteDecksService>();
                 SimpleIoc.Default.Register<ICameraService, CameraService>();
                 SimpleIoc.Default.Register<IGravatarService, GravatarService>();
             }
@@ -59,6 +60,7 @@ namespace StudyBox.ViewModels
                 SimpleIoc.Default.Register<IDeserializeJsonService, DeserializeJsonService>();
                 SimpleIoc.Default.Register<IRestService, RestService>();
                 SimpleIoc.Default.Register<IStatisticsDataService, StatisticsDataService>();
+                SimpleIoc.Default.Register<IFavouriteDecksService, FavouriteDecksService>();
                 SimpleIoc.Default.Register<ICameraService, CameraService>();
                 SimpleIoc.Default.Register<IGravatarService, GravatarService>();
 

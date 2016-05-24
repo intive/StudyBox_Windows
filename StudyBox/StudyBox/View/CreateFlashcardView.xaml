@@ -36,7 +36,7 @@
         <ContentControl x:Name="LabelMarginManagment" Visibility="Collapsed"/>
 
         <userControls:MenuControlView Grid.RowSpan="3" Canvas.ZIndex="2"/>
-        <userControls:MessageBoxControlView Grid.RowSpan="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Canvas.ZIndex="2" Height="200" Width="400"/>
+        <userControls:MessageBoxControlView Grid.RowSpan="2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Canvas.ZIndex="2" Height="250" Width="400"/>
         <SplitView  Grid.Row="1" 
                     Grid.Column="0" 
                     DisplayMode="CompactInline"  
@@ -147,7 +147,7 @@
                             <Run Text="{Binding MaxDeckNameCharacters}"></Run>
                         </TextBlock>
 
-                        <CheckBox  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"   
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"   
                                    IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                    x:Uid="isPublic"
                                    FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
