@@ -731,15 +731,22 @@ namespace StudyBox.Core.ViewModels
                     HeaderMessage = StringResources.GetString("EditFlashcard");
                     SubmitFormMessage = StringResources.GetString("Edit"); ;
 
-                    var tips = await _restService.GetTips(deckInstance.ID, flashcardInstance.Id);
-                    if (tips != null)
+                    try
                     {
-                        foreach (var tip in tips)
+                        var tips = await _restService.GetTips(deckInstance.ID, flashcardInstance.Id);
+                        if (tips != null)
                         {
-                            TipsCollection.Add(new TipViewModel(tip.ID, tip.Essence));
+                            foreach (var tip in tips)
+                            {
+                                TipsCollection.Add(new TipViewModel(tip.ID, tip.Essence));
+                            }
                         }
                     }
-
+                    catch (Exception ex)
+                    {
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
+                    }
+                    
                     _flashcard = flashcardInstance;
                 }
                 else

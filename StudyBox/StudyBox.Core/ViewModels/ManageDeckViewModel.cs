@@ -90,12 +90,23 @@ namespace StudyBox.Core.ViewModels
                 FlashcardsCollection.Clear();
                 List<Flashcard> _flashcardLists = new List<Flashcard>();
                 IsDataLoading = true;
-                _flashcardLists = await _restService.GetFlashcards(_deckInstance.ID);
-                if (_flashcardLists != null)
+
+                try
                 {
-                    _flashcardLists.ForEach(x => FlashcardsCollection.Add(x));
+                    _flashcardLists = await _restService.GetFlashcards(_deckInstance.ID);
+                    if (_flashcardLists != null)
+                    {
+                        _flashcardLists.ForEach(x => FlashcardsCollection.Add(x));
+                    }
                 }
-                IsDataLoading = false;
+                catch (Exception ex)
+                {
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
+                }
+                finally
+                {
+                    IsDataLoading = false;
+                }
             }
         }
 
@@ -171,7 +182,17 @@ namespace StudyBox.Core.ViewModels
             if (await CheckInternetConnection())
             {
                 _deckInstance.IsPublic = !_deckInstance.IsPublic;
-                await _restService.UpdateDeck(_deckInstance);
+
+                try
+                {
+                    await _restService.UpdateDeck(_deckInstance);
+                }
+                catch (Exception ex)
+                {
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
+                    _deckInstance.IsPublic = !_deckInstance.IsPublic;
+                }
+                
                 RaisePropertyChanged("ChangeDeckStatus");
             }
         }

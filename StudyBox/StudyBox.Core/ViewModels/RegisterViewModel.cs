@@ -5,6 +5,7 @@ using StudyBox.Core.Enums;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
+using System;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -217,27 +218,40 @@ namespace StudyBox.Core.ViewModels
                         user.Email = Email;
                         user.Name = Email;
                         user.Password = Password;
-                        user = await _restService.CreateUser(user);
 
-                        if (user != null)
+                        try
                         {
-                            user.Password = Password;
-                            bool isLogged = await _accountService.Login(user);
-                            IsDataLoading = false;
-                            if (isLogged)
+                            user = await _restService.CreateUser(user);
+                            if (user != null)
                             {
-                                NavigationService.NavigateTo("DecksListView");
-                                Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
-                                Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
-                                ClearInputs();
+                                user.Password = Password;
+                                bool isLogged = await _accountService.Login(user);
+                                IsDataLoading = false;
+                                if (isLogged)
+                                {
+                                    NavigationService.NavigateTo("DecksListView");
+                                    Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
+                                    Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
+                                    ClearInputs();
+                                }
+                                else
+                                {
+                                    IsGeneralError = true;
+                                    GeneralErrorMessage = StringResources.GetString("AbsenceUserInDatabase");
+                                }
                             }
                             else
                             {
+                                IsDataLoading = false;
                                 IsGeneralError = true;
-                                GeneralErrorMessage = StringResources.GetString("AbsenceUserInDatabase");
+                                GeneralErrorMessage = StringResources.GetString("RegistrationFailed");
                             }
                         }
-                        else
+                        catch (Exception ex)
+                        {
+                            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
+                        }
+                        finally
                         {
                             IsDataLoading = false;
                             IsGeneralError = true;

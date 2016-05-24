@@ -35,7 +35,7 @@
         <userControls:MessageBoxControlView Grid.Row="1" Canvas.ZIndex="1" VerticalAlignment="Top"/>
 
         <StackPanel Grid.Row="1" Grid.Column="0" MaxWidth="500" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDeckSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <TextBlock Margin="10 20" x:Uid="ChooseLearningOrTest"
+           <TextBlock Margin="10 20" x:Uid="ChooseLearningOrTest"
                        TextWrapping="WrapWholeWords"
                        FontSize="{Binding ElementName=BigFontManagment, Path=FontSize}"
                        HorizontalAlignment="Center" 
@@ -114,6 +114,7 @@
         <ScrollViewer x:Name="GalleryScrollViewer" Grid.Row="1" Grid.Column="0" Margin="5" Visibility="{Binding IsDeckSelected, Converter={StaticResource NegativeBooleanToVisibilityConverter}}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
                 <TextBlock x:Uid="SearchMessage" Visibility="{Binding SearchMessageVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWholeWords" Margin="0,30,0,0"/>
+                <TextBlock x:Uid="NoDecks" Visibility="{Binding IsNoDecks, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWholeWords" Margin="0,30,0,0"/>
                 <GridView x:Name="GridView" ItemsSource="{Binding DecksCollection}" 
                           IsItemClickEnabled="False"
                           Margin="0"
@@ -184,10 +185,12 @@
                                                 HorizontalAlignment="Center"
                                                 >
                                                 <TextBlock Text="{Binding Name}" 
+                                                           TextWrapping="Wrap"
                                                        Foreground="{StaticResource Grey}" 
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        />
                                                 <TextBlock Text="{Binding CountOfFlashcards}" 
+                                                           TextWrapping="Wrap"
                                                        Foreground="{StaticResource Grey}" 
                                                        FontFamily="{StaticResource LatoBlackFontFamily}"
                                                        HorizontalAlignment="Center"

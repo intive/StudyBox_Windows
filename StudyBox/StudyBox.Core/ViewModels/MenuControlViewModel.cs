@@ -381,6 +381,7 @@ namespace StudyBox.Core.ViewModels
 
         private void GoToAbout()
         {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             NavigationService.NavigateTo("AboutView");
             HideSearchingContent();
             SearchVisibility = false;
@@ -389,6 +390,7 @@ namespace StudyBox.Core.ViewModels
 
         private void GoToSettings()
         {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             NavigationService.NavigateTo("SettingsView");
             HideSearchingContent();
             SearchVisibility = false;
@@ -541,6 +543,7 @@ namespace StudyBox.Core.ViewModels
 
         private void Logout()
         {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             _accountService.LogOut();
             LogoutButtonVisibility = false;
             NavigationService.NavigateTo("LoginView");
@@ -550,6 +553,7 @@ namespace StudyBox.Core.ViewModels
 
         private void Login()
         {
+            Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
             NavigationService.NavigateTo("LoginView");
             HideSearchingContent();
             SearchVisibility = true;

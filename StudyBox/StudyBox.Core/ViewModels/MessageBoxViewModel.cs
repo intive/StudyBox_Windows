@@ -222,11 +222,15 @@ namespace StudyBox.Core.ViewModels
                     IsRemoveButton = true;
                     IsNoRemoveButton = true;
                 }
-                else
+                else if (settingsButton)
                 {
                     IsOkButton = false;
                     //IsNoRemoveButton = false;
                     IsSettingsButton = true;
+                }
+                else
+                {
+                    IsOkButton = true;
                 }
                 
                 MessageText = message;

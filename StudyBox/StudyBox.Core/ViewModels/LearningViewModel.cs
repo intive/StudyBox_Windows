@@ -201,7 +201,14 @@ namespace StudyBox.Core.ViewModels
 
                 IsDataLoading = true;
 
-                _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+                try
+                {
+                    _flashcards = await _restService.GetFlashcards(_deckInstance.ID);
+                }
+                catch (Exception)
+                {
+                    Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
+                }
 
                 //MOCK-UP:
                 //_flashcards = new List<Flashcard>()

@@ -121,6 +121,7 @@
     <Compile Include="Converters\BoolToBrushConverter.cs" />
     <Compile Include="Converters\BoolToExpandArrowSymbol.cs" />
     <Compile Include="Converters\BoolToSortingArrowConventer.cs" />
+    <Compile Include="Converters\NegativeBooleanToEnabledConverter.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
     <Compile Include="UserControls\MenuControlView.xaml.cs">
       <DependentUpon>MenuControlView.xaml</DependentUpon>
@@ -143,6 +144,9 @@
     </Compile>
     <Compile Include="View\ExamView.xaml.cs">
       <DependentUpon>ExamView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ForgottenPasswordView.xaml.cs">
+      <DependentUpon>ForgottenPasswordView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ImageImportView.xaml.cs">
       <DependentUpon>ImageImportView.xaml</DependentUpon>
@@ -240,6 +244,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ExamView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ForgottenPasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -536,5 +536,15 @@ namespace StudyBoxUnitTest.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public Task<ResetPassword> ResetPassword(string email, CancellationTokenSource cts = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ChangePassword(User user, string token, CancellationTokenSource cts = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

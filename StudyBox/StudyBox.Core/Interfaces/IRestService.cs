@@ -45,5 +45,8 @@ namespace StudyBox.Core.Interfaces
         Task<User> GetLoggedUser(CancellationTokenSource cts = null);
 
         Task<bool> UploadFile(StorageFile file, CancellationTokenSource cts = null);
+
+        Task<ResetPassword> ResetPassword(string email, CancellationTokenSource cts = null);
+        Task<bool> ChangePassword(User user, string token, CancellationTokenSource cts = null);
     }
 }
