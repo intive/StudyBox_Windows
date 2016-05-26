@@ -394,6 +394,7 @@ namespace StudyBox.Core.ViewModels
             NavigationService.NavigateTo("SettingsView");
             HideSearchingContent();
             SearchVisibility = false;
+            TitleBar = StringResources.GetString("StudyBox");
         }
 
         private void HideSearchingContent()
