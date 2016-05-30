@@ -482,10 +482,9 @@ namespace StudyBox.Core.Services
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
 
                     MultipartFormDataContent form = new MultipartFormDataContent("---BOUNDARY");
-                    HttpContent content = new ByteArrayContent(byteArray);
-                    content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { Name = file.DisplayName, FileName = file.Name };
+                    HttpContent content = new StringContent(Convert.ToBase64String(byteArray));
+                    content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { Name = "file", FileName = file.Name };
                     content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-                    content.Headers.Add("Content-Transfer-Encoding", "base64");
                     form.Add(content);
 
                     HttpResponseMessage response;
