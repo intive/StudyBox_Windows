@@ -333,39 +333,21 @@ namespace StudyBox.Core.ViewModels
                     Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ImageTooLarge")));
                     return;
                 }
-                bool deckCreated = false;
                 IsDataLoading = true;
                 try
                 {
-                    await _restService.UploadFile(_image);
-                    //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
-                    throw new NotImplementedException();
-
-                    //if (_deckInstance == null)
-                    //{
-                    //    _deckInstance = await _restService.CreateDeck(new Deck { Name = DeckName.Trim(), IsPublic = IsPublic });
-                    //    deckCreated = true;
-                    //}
-                    //else
-                    //{
-                    //    string oldDeckName = _deckInstance.Name;
-                    //    bool oldIsPublic = _deckInstance.IsPublic;
-                    //    _deckInstance.Name = DeckName.Trim();
-                    //    _deckInstance.IsPublic = IsPublic;
-                    //    if (oldDeckName != _deckInstance.Name || oldIsPublic != _deckInstance.IsPublic)
-                    //    {
-                    //        await _restService.UpdateDeck(_deckInstance);
-                    //    }
-                    //}
+                   bool deckCreated = await _restService.UploadFile(_image);
+                   if (deckCreated)
+                    {
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("DeckCreated")));
+                    }
+                   else
+                    {
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
+                    }
                 }
                 catch
                 {
-                    //if (deckCreated)
-                    //{
-                    //    _deckInstance = null;
-                    //    deckCreated = false;
-                    //    await _restService.RemoveDeck(_deckInstance.ID);
-                    //}
                     Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
                 }
 
