@@ -518,6 +518,8 @@ namespace StudyBox.Core.ViewModels
                     }
                     catch { }
                     IsDataLoading = false;
+                    if (DecksCollection != null && DecksCollection.Count == 0)
+                        IsNoDecks = true;
                     BackToDeck();
                 }
             }

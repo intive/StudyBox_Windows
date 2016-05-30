@@ -71,14 +71,14 @@
                 Grid.Column="1" 
                 Grid.Row="1" 
                 Background="{StaticResource DarkBlue}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="60 10 60 10">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="60 10 60 10">
                     <TextBlock 
                         Text="{Binding Answer}" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         FontFamily="{StaticResource LatoRegularFontFamily}" 
                         TextWrapping="WrapWholeWords"
-                        Margin="0 0 2 0"
+                        Margin="0 0 0 0"
                         Foreground="{StaticResource Grey}"/>
                 </ScrollViewer>
                 <Border.Projection>
@@ -114,14 +114,14 @@
                             </core:EventTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </Button>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Margin="0 10 0 10">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Column="1" Margin="0 10 0 10">
                         <TextBlock 
                         Text="{Binding MainRectangleWithQuestionOrHint}" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         FontFamily="{StaticResource LatoRegularFontFamily}" 
                         TextWrapping="WrapWholeWords"
-                        Margin="0 0 2 0"
+                        Margin="0 0 0 0"
                         Foreground="{StaticResource Grey}"/>
                     </ScrollViewer>
                     
