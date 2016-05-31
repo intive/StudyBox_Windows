@@ -12,6 +12,7 @@ using Windows.System;
 using Windows.UI.Popups;
 using StudyBox.Core.Models;
 using static StudyBox.Core.ViewModels.CreateFlashcardViewModel;
+using StudyBox.Core.Enums;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -188,6 +189,12 @@ namespace StudyBox.Core.ViewModels
         private void GoToCloseWindow()
         {
             IsVisible = false;
+
+            if (MessageText == StringResources.GetString("DeckCreated"))
+            {
+                NavigationService.NavigateTo("DecksListView");
+                Messenger.Default.Send<DecksTypeMessage>(new DecksTypeMessage(DecksType.MyDecks));
+            }
         }
 
         private void GoToRemove()

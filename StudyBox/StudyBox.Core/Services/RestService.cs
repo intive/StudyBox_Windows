@@ -472,7 +472,13 @@ namespace StudyBox.Core.Services
 
         public async Task<bool> UploadFile(StorageFile file, CancellationTokenSource cts = null)
         {
-            string url = String.Format(_resources["FileUploadUrl"].ToString(), "image");
+            string url;
+
+            if (file.ContentType.Contains("image"))
+                url = String.Format(_resources["FileUploadUrl"].ToString(), "image");
+            else
+                url = String.Format(_resources["FileUploadUrl"].ToString(), "text");
+
             try
             {
                 byte[] byteArray = await GetFileBytesAsync(file);
@@ -482,7 +488,7 @@ namespace StudyBox.Core.Services
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
 
                     MultipartFormDataContent form = new MultipartFormDataContent("---BOUNDARY");
-                    HttpContent content = new StringContent(Convert.ToBase64String(byteArray));
+                    HttpContent content = new ByteArrayContent(byteArray);
                     content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { Name = "file", FileName = file.Name };
                     content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
                     form.Add(content);
