@@ -9,6 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using System.Net.Http.Headers;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using System.Diagnostics;
 
 namespace StudyBox.Core.Services
 {
@@ -467,6 +470,58 @@ namespace StudyBox.Core.Services
             }
         }
 
+        public async Task<bool> UploadFile(StorageFile file, CancellationTokenSource cts = null)
+        {
+            string url;
+
+            if (file.ContentType.Contains("image"))
+                url = String.Format(_resources["FileUploadUrl"].ToString(), "image");
+            else
+                url = String.Format(_resources["FileUploadUrl"].ToString(), "text");
+
+            try
+            {
+                byte[] byteArray = await GetFileBytesAsync(file);
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(String.Format("{0}:{1}", _accountService.GetUserEmail(), _accountService.GetUserPassword()))));
+
+                    MultipartFormDataContent form = new MultipartFormDataContent("---BOUNDARY");
+                    HttpContent content = new ByteArrayContent(byteArray);
+                    content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { Name = "file", FileName = file.Name };
+                    content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+                    form.Add(content);
+
+                    HttpResponseMessage response;
+
+                    if (cts != null)
+                    {
+                        response = await client.PostAsync(url, form, cts.Token);
+                    }
+                    else
+                    {
+                        response = await client.PostAsync(url, form);
+                    }
+
+                    if (response.StatusCode != System.Net.HttpStatusCode.Created)
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public async Task<ResetPassword> ResetPassword(string email, CancellationTokenSource cts = null)
         {
             string url = _resources["ResetPasswordUrl"].ToString();
@@ -659,6 +714,24 @@ namespace StudyBox.Core.Services
             {
                 return false;
             }
+        }
+
+
+
+        private async Task<byte[]> GetFileBytesAsync(StorageFile file)
+        {
+            byte[] fileBytes = null;
+            using (IRandomAccessStreamWithContentType stream = await file.OpenReadAsync())
+            {
+                fileBytes = new byte[stream.Size];
+                using (DataReader reader = new DataReader(stream))
+                {
+                    await reader.LoadAsync((uint)stream.Size);
+                    reader.ReadBytes(fileBytes);
+                }
+            }
+
+            return fileBytes;
         }
 
         #endregion

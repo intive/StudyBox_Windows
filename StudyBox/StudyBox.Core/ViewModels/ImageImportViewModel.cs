@@ -61,24 +61,6 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public string DeckName
-        {
-            get
-            {
-                return _deckName;
-            }
-            set
-            {
-                if (_deckName != value)
-                {
-                    _deckName = value;
-                    RaisePropertyChanged("DeckName");
-                    RaisePropertyChanged("CurrentDeckNameCharactersNumber");
-                    RaisePropertyChanged("IsDeckNameValid");
-                }
-            }
-        }
-
         public string ErrorMessage
         {
             get
@@ -95,50 +77,11 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public bool IsPublic
-        {
-            get
-            {
-                return _isPublic;
-            }
-            set
-            {
-                if (_isPublic != value)
-                {
-                    _isPublic = value;
-                    RaisePropertyChanged("IsPublic");
-                }
-            }
-        }
-
         public int MaxDeckNameCharacters
         {
             get
             {
                 return _maxDeckNameCharacters;
-            }
-        }
-
-        public int CurrentDeckNameCharactersNumber
-        {
-            get
-            {
-                return DeckName.Length;
-            }
-        }
-
-        public bool IsDeckNameValid
-        {
-            get
-            {
-                if (CurrentDeckNameCharactersNumber > MaxDeckNameCharacters || CurrentDeckNameCharactersNumber < _minDeckNameCharacters)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
             }
         }
 
@@ -266,15 +209,11 @@ namespace StudyBox.Core.ViewModels
             {
                 HeaderText = StringResources.GetString("CreateNewDeckFromFile");
                 SubmitFormMessage = StringResources.GetString("CreateNewDeck");
-                DeckName = "";
-                IsPublic = true;
             }
             else
             {
                 HeaderText = StringResources.GetString("AddFlashcardsFromFile");
                 SubmitFormMessage = StringResources.GetString("AddFlashcards");
-                DeckName = deck.Name;
-                IsPublic = deck.IsPublic;
             }
         }
 
@@ -333,38 +272,21 @@ namespace StudyBox.Core.ViewModels
                     Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("ImageTooLarge")));
                     return;
                 }
-                bool deckCreated = false;
                 IsDataLoading = true;
                 try
                 {
-                    //TODO komunikacja z serwerem (dodanie fiszek ze zdjęcia do nowej talii lub do już istniejącej talii na podstawie jej id)
-                    throw new NotImplementedException();
-
-                    //if (_deckInstance == null)
-                    //{
-                    //    _deckInstance = await _restService.CreateDeck(new Deck { Name = DeckName.Trim(), IsPublic = IsPublic });
-                    //    deckCreated = true;
-                    //}
-                    //else
-                    //{
-                    //    string oldDeckName = _deckInstance.Name;
-                    //    bool oldIsPublic = _deckInstance.IsPublic;
-                    //    _deckInstance.Name = DeckName.Trim();
-                    //    _deckInstance.IsPublic = IsPublic;
-                    //    if (oldDeckName != _deckInstance.Name || oldIsPublic != _deckInstance.IsPublic)
-                    //    {
-                    //        await _restService.UpdateDeck(_deckInstance);
-                    //    }
-                    //}
+                   bool deckCreated = await _restService.UploadFile(_image);
+                   if (deckCreated)
+                    {
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("DeckCreated")));
+                    }
+                   else
+                    {
+                        Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
+                    }
                 }
                 catch
                 {
-                    //if (deckCreated)
-                    //{
-                    //    _deckInstance = null;
-                    //    deckCreated = false;
-                    //    await _restService.RemoveDeck(_deckInstance.ID);
-                    //}
                     Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
                 }
 
@@ -386,13 +308,7 @@ namespace StudyBox.Core.ViewModels
 
         private bool ValidateForm()
         {
-            if (!IsDeckNameValid || String.IsNullOrEmpty(DeckName.Trim()))
-            {
-                ErrorMessage = StringResources.GetString("DeckNameError");
-                IsGeneralError = true;
-                return false;
-            }
-            else if (_image == null)
+            if (_image == null)
             {
                 ErrorMessage = StringResources.GetString("ImageError");
                 IsGeneralError = true;

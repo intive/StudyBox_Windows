@@ -533,4 +533,7 @@
   <data name="NoDecks.Text" xml:space="preserve">
     <value>Nie znaleziono żadnych talii w wybranej kategorii!</value>
   </data>
+  <data name="DeckCreated" xml:space="preserve">
+    <value>Talia utworzona</value>
+  </data>
 </root>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace StudyBox.Core.Interfaces
 {
@@ -42,6 +43,9 @@ namespace StudyBox.Core.Interfaces
 
         Task<User> CreateUser(User user, CancellationTokenSource cts = null);
         Task<User> GetLoggedUser(CancellationTokenSource cts = null);
+
+        Task<bool> UploadFile(StorageFile file, CancellationTokenSource cts = null);
+
         Task<ResetPassword> ResetPassword(string email, CancellationTokenSource cts = null);
         Task<bool> ChangePassword(User user, string token, CancellationTokenSource cts = null);
     }

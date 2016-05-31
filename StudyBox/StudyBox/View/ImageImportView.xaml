@@ -50,33 +50,6 @@
                 <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"
                                 FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
                                 FontFamily="{StaticResource LatoRegularFontFamily}"
-                                x:Uid="DeckName" />
-
-                <TextBox FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                             FontFamily="{StaticResource LatoRegularFontFamily}"
-                             TextWrapping="Wrap"
-                             Text="{Binding DeckName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             MaxLength="{Binding MaxDeckNameCharacters, Mode=OneTime}" />
-
-                <TextBlock FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                   FontFamily="{StaticResource LatoRegularFontFamily}">
-                            <Run Text="{Binding CurrentDeckNameCharactersNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Foreground="{Binding IsDeckNameValid, Converter={StaticResource BoolToBrushConverter}}">
-                            </Run>
-                            <Run Text="/"/>
-                            <Run Text="{Binding MaxDeckNameCharacters}"></Run>
-                </TextBlock>
-
-                <CheckBox  Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"
-                                   IsChecked="{Binding IsPublic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   x:Uid="isPublic"
-                                   FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                   FontFamily="{StaticResource LatoRegularFontFamily}"
-                                   VerticalAlignment="Center"/>
-
-                <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"
-                                FontSize="{Binding ElementName=SmallFontManagment, Path=FontSize}"
-                                FontFamily="{StaticResource LatoRegularFontFamily}"
                                 x:Uid="Image" />
                 
                 <TextBlock Margin="{Binding ElementName=LabelMarginManagment, Path=Margin}"

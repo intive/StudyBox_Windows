@@ -520,4 +520,7 @@
   <data name="NoDecks.Text" xml:space="preserve">
     <value>There is no decks in this category!</value>
   </data>
+  <data name="DeckCreated" xml:space="preserve">
+    <value>Deck created</value>
+  </data>
 </root>

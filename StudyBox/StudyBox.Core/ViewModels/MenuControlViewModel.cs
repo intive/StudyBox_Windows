@@ -525,6 +525,7 @@ namespace StudyBox.Core.ViewModels
             SearchOpacity = 0;
             IsSearchVisible = false;
             SearchingContent = String.Empty;
+            GetGravatar();
         }
 
         private void ShowSearchPanel()
@@ -581,7 +582,6 @@ namespace StudyBox.Core.ViewModels
                 IsSearchVisible = false;
                 SearchingContent = String.Empty;
             }
-            GetGravatar();
         }
 
         private void GetGravatar()
