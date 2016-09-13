@@ -183,7 +183,9 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <PRIResource Include="Strings\en\Resources.resw" />
-    <PRIResource Include="Strings\pl\Resources.resw" />
+    <PRIResource Include="Strings\pl\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
     <None Include="StudyBox_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +221,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Resources\Themes\TvSafeColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\MenuControlView.xaml">
       <SubType>Designer</SubType>
