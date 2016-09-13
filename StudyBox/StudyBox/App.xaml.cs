@@ -12,6 +12,7 @@ using GalaSoft.MvvmLight.Messaging;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Enums;
 using Windows.System.Profile;
+using Windows.UI.Core;
 
 namespace StudyBox
 {
@@ -64,6 +65,8 @@ namespace StudyBox
 
                 // remove TV Safe areas
                 ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+                //CoreWindow.GetForCurrentThread().PointerCursor = null;
             }
 
             Frame rootFrame = Window.Current.Content as Frame;

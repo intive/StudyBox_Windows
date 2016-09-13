@@ -247,7 +247,7 @@ namespace StudyBox.Core.ViewModels
                                 GeneralErrorMessage = StringResources.GetString("RegistrationFailed");
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(true, false, StringResources.GetString("OperationFailed")));
                         }

@@ -252,7 +252,7 @@
                         <loc:IsXboxTrigger />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="grid.Margin" Value="100, 100, 0, 0"/>
+                        <Setter Target="grid.Padding" Value="48, 27, 48, 27"/>
                         <!--<Setter Target="splitView.DisplayMode" Value="CompactInline"/>
                         <Setter Target="splitView.IsPaneOpen" Value="False"/>
                         <Setter Target="NavPaneDivider.Visibility" Value="Collapsed"/>

@@ -14,11 +14,11 @@ namespace StudyBox.Core.ViewModels
     public class ImageImportViewModel : ExtendedViewModelBase
     {
         private string _headerText;
-        private string _deckName;
+        //private string _deckName;
         private string _submitFormMessage;
         private string _imageName;
         private string _errorMessage;
-        private bool _isPublic;
+        //private bool _isPublic;
         private bool _isGeneralError;
         private bool _isDataLoading = false;
         private bool _imageNamelVisibility = false;
@@ -27,7 +27,7 @@ namespace StudyBox.Core.ViewModels
 
         private const ulong _maxImageSize = 62914560; //60 MB
         private readonly int _maxDeckNameCharacters = 50;
-        private readonly int _minDeckNameCharacters = 1;
+        //private readonly int _minDeckNameCharacters = 1;
 
         private RelayCommand _importFileCommand;
         private RelayCommand _takePhotoCommand;
