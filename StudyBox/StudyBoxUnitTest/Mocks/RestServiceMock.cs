@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
 
@@ -533,6 +534,11 @@ namespace StudyBoxUnitTest.Mocks
         }
 
         public Task<User> GetLoggedUser(CancellationTokenSource cts = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UploadFile(StorageFile file, CancellationTokenSource cts = null)
         {
             throw new NotImplementedException();
         }
