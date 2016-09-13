@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
                 <ResourceDictionary Source="Resources/Themes/Fonts.xaml"/>
                 <ResourceDictionary Source="Resources/Themes/Styles.xaml"/>
+                <!--<ResourceDictionary Source="Resources/Themes/TvSafeColors.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

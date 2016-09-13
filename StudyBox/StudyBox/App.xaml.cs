@@ -59,14 +59,12 @@ namespace StudyBox
                 // use TV colorsafe values
                 this.Resources.MergedDictionaries.Add(new ResourceDictionary
                 {
-                    Source = new Uri("ms-appx:///TvSafeColors.xaml")
+                    Source = new Uri("ms-appx:///Resources/Themes/TvSafeColors.xaml")
                 });
 
                 // remove TV Safe areas
                 ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
             }
-
-            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -103,7 +101,7 @@ namespace StudyBox
 
         public static bool IsXbox()
         {
-
+            return true;
             if (deviceFamily == null)
                 deviceFamily = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
 
