@@ -13,10 +13,10 @@ namespace StudyBox
         {
             SetActive(App.IsXbox);
 
-            App.IsXboxModeChanged += App_TenFootModeChanged;
+            App.IsXboxModeChanged += App_XboxModeChanged;
         }
 
-        private void App_TenFootModeChanged(object sender, EventArgs e)
+        private void App_XboxModeChanged(object sender, EventArgs e)
         {
             SetActive(App.IsXbox);
         }
