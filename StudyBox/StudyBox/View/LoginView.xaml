@@ -8,10 +8,11 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:userControls="using:StudyBox.UserControls"
+    xmlns:loc="using:StudyBox"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=LoginViewModel}">
 
-    <Grid Background="White">
+    <Grid Background="White" Name="grid">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -24,6 +25,7 @@
                 <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
             <userControls:MessageBoxControlView Grid.Row="1" Grid.ColumnSpan="3" Canvas.ZIndex="1" VerticalAlignment="Top"/>
+            
             <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
             <TextBlock x:Name="MessageFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
             <TextBlock x:Name="SmallFontManagment" Visibility="Collapsed" Grid.Row="0" Grid.Column="0"/>
@@ -244,6 +246,28 @@
                 </VisualState>
             </VisualStateGroup>
 
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <loc:IsXboxTrigger />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="grid.Margin" Value="100, 100, 0, 0"/>
+                        <!--<Setter Target="splitView.DisplayMode" Value="CompactInline"/>
+                        <Setter Target="splitView.IsPaneOpen" Value="False"/>
+                        <Setter Target="NavPaneDivider.Visibility" Value="Collapsed"/>
+                        <Setter Target="splitView.CompactPaneLength" Value="96"/>
+                        <Setter Target="splitView.OpenPaneLength" Value="266"/>
+                        <Setter Target="NavMenuList.ItemContainerStyle" Value="{StaticResource NavMenuItemContainerXboxStyle}"/>
+                        <Setter Target="FeedbackButton.Style" Value="{StaticResource SplitViewPaneButtonXboxStyle}"/>
+                        <Setter Target="SettingsButton.Style" Value="{StaticResource SplitViewPaneButtonXboxStyle}"/>
+                        <Setter Target="TenFootModeToggle.Style" Value="{StaticResource SplitViewPaneButtonXboxStyle}"/>
+                        <Setter Target="TogglePaneButton.Style" Value="{StaticResource SplitViewTogglePaneButtonXboxStyle}"/>
+                        <Setter Target="TogglePaneButton.Margin" Value="48, 27, 0, 0"/>
+                        <Setter Target="TogglePaneButton.IsChecked" Value="false"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
             <VisualStateGroup x:Name="EmailErrorStates">
                 <VisualState x:Name="EmailNotValid">
                     <Storyboard>

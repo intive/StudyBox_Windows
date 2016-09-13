@@ -11,7 +11,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Enums;
-
+using Windows.System.Profile;
 
 namespace StudyBox
 {
@@ -54,13 +54,13 @@ namespace StudyBox
 #endif
 
 
-            if (App.IsXbox())
+            if (App.IsXbox)
             {
                 // use TV colorsafe values
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary
-                {
-                    Source = new Uri("ms-appx:///TvSafeColors.xaml")
-                });
+                //this.Resources.MergedDictionaries.Add(new ResourceDictionary
+                //{
+                //    Source = new Uri("ms-appx:///TvSafeColors.xaml")
+                //});
 
                 // remove TV Safe areas
                 ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
@@ -100,23 +100,41 @@ namespace StudyBox
 
             Window.Current.Activate();
         }
+        public static event EventHandler IsXboxModeChanged;
+        //public static bool IsXbox()
+        //{
 
-        public static bool IsXbox()
+        //    if (deviceFamily == null)
+        //        deviceFamily = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
+
+        //    return deviceFamily == "Windows.Xbox";
+
+        //}
+
+        public static bool IsXbox
         {
-
-            if (deviceFamily == null)
-                deviceFamily = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
-
-            return deviceFamily == "Windows.Xbox";
-
+            get
+            {
+                return true;
+                //return AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox" || IsXboxPC;
+            }
+            set
+            {
+                if (value != IsXboxPC)
+                {
+                    IsXboxPC = value;
+                    IsXboxModeChanged?.Invoke(null, null);
+                }
+            }
         }
 
+        public static bool IsXboxPC { get; private set; } = IsXbox;
         /// <summary>
-            /// Invoked when Navigation to a certain page fails
-            /// </summary>
-            /// <param name="sender">The Frame which failed navigation</param>
-            /// <param name="e">Details about the navigation failure</param>
-            void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        /// Invoked when Navigation to a certain page fails
+        /// </summary>
+        /// <param name="sender">The Frame which failed navigation</param>
+        /// <param name="e">Details about the navigation failure</param>
+        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }

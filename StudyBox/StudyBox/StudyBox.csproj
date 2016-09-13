@@ -123,6 +123,7 @@
     <Compile Include="Converters\BoolToSortingArrowConventer.cs" />
     <Compile Include="Converters\NegativeBooleanToEnabledConverter.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
+    <Compile Include="IsXboxTrigger.cs" />
     <Compile Include="UserControls\MenuControlView.xaml.cs">
       <DependentUpon>MenuControlView.xaml</DependentUpon>
     </Compile>
