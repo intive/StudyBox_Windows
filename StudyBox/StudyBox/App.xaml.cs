@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -11,6 +12,7 @@ using GalaSoft.MvvmLight.Messaging;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Enums;
 
+
 namespace StudyBox
 {
     /// <summary>
@@ -18,6 +20,8 @@ namespace StudyBox
     /// </summary>
     sealed partial class App : Application
     {
+        static string deviceFamily;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -29,6 +33,9 @@ namespace StudyBox
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            
+            //Change the pointer mode to support selected mode rather than pointer mode
+            App.Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
         }
 
         /// <summary>
@@ -45,6 +52,21 @@ namespace StudyBox
                 this.DebugSettings.EnableFrameRateCounter = false;
             }
 #endif
+
+
+            if (App.IsXbox())
+            {
+                // use TV colorsafe values
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary
+                {
+                    Source = new Uri("ms-appx:///TvSafeColors.xaml")
+                });
+
+                // remove TV Safe areas
+                ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+            }
+
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -79,12 +101,22 @@ namespace StudyBox
             Window.Current.Activate();
         }
 
+        public static bool IsXbox()
+        {
+
+            if (deviceFamily == null)
+                deviceFamily = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
+
+            return deviceFamily == "Windows.Xbox";
+
+        }
+
         /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+            /// Invoked when Navigation to a certain page fails
+            /// </summary>
+            /// <param name="sender">The Frame which failed navigation</param>
+            /// <param name="e">Details about the navigation failure</param>
+            void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
