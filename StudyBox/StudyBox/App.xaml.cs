@@ -104,7 +104,7 @@ namespace StudyBox
 
         //    if (deviceFamily == null)
         //        deviceFamily = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
-            return true;
+        //    return true;
         //    return deviceFamily == "Windows.Xbox";
 
         //}
