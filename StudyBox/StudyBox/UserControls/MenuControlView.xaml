@@ -18,13 +18,13 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    
+
     <i:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="KeyUp">
             <core:InvokeCommandAction Command="{Binding DetectKeyUpCommand}" />
         </core:EventTriggerBehavior>
     </i:Interaction.Behaviors>
-    
+
     <Grid >
         <Grid>
             <Grid.RowDefinitions>
@@ -88,9 +88,6 @@
                             <core:EventTriggerBehavior EventName="QuerySubmitted">
                                 <core:InvokeCommandAction Command="{Binding DoSearchCommand}" />
                             </core:EventTriggerBehavior>
-                            <core:EventTriggerBehavior EventName="KeyUp">
-                                <core:InvokeCommandAction Command="{Binding DoSearchCommand2}" />
-                            </core:EventTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </AutoSuggestBox>
 
@@ -107,6 +104,7 @@
                             BorderThickness="0"
                             Command="{Binding ShowSearchPanelCommand}"
                             Click="SearchButton_Click"
+                            
                             Visibility="{Binding SearchVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
                             >
                         <Button.Content>
@@ -146,6 +144,7 @@
                                    Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <Button x:Uid="GoToUserDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
                                 Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                
                                 >
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
@@ -195,7 +194,8 @@
                             </i:Interaction.Behaviors>
                         </Button>
                         <Button x:Uid="Settings" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
-                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                >
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding SettingsCommand}" />
@@ -222,6 +222,7 @@
                         </Button>
                         <Button x:Uid="AboutBtn" 
                                     Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
+                                loc:FocusExtension.IsFocused="{Binding IsPaneOpen}"
                                     >
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">

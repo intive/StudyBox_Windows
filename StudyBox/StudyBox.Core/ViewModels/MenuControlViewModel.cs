@@ -317,9 +317,17 @@ namespace StudyBox.Core.ViewModels
             get { return _detectKeyUpCommand ?? (_detectKeyUpCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyUp)); }
         }
 
-        private void DetectKeyUp(KeyRoutedEventArgs obj)
+        private void DetectKeyUp(KeyRoutedEventArgs e)
         {
-            //throw new NotImplementedException();
+            switch (e.OriginalKey)
+            {
+                case Windows.System.VirtualKey.F:
+                case Windows.System.VirtualKey.Control:
+                case Windows.System.VirtualKey.GamepadA:
+                    OpenMenu();
+                    //FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
+                    break;
+            }
         }
 
 

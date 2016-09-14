@@ -7,6 +7,9 @@ using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 using Windows.Security.Credentials;
 using StudyBox.Core.Enums;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml;
+using Windows.ApplicationModel.Core;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -19,6 +22,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _createAccountAction;
         private RelayCommand _continueWithoutLogin;
         private RelayCommand _forgottenPasswordAction;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyUpCommand;
         private string _generalErrorMessage;
         private bool _isEmailNotValid;
         private bool _isPasswordNotValid;
@@ -62,6 +66,32 @@ namespace StudyBox.Core.ViewModels
             get
             {
                 return _forgottenPasswordAction ?? (_forgottenPasswordAction = new RelayCommand(ForgottenPassword));
+            }
+        }
+
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyUpCommand
+        {
+            get { return _detectKeyUpCommand ?? (_detectKeyUpCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyUp)); }
+        }
+
+        private void DetectKeyUp(KeyRoutedEventArgs e)
+        {
+            switch (e.OriginalKey)
+            {
+                case Windows.System.VirtualKey.Down:
+                case Windows.System.VirtualKey.GamepadDPadDown:
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Down);
+                    break;
+
+                case Windows.System.VirtualKey.Up:
+                case Windows.System.VirtualKey.GamepadDPadUp:
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
+                    break;
+
+                case Windows.System.VirtualKey.Escape:
+                case Windows.System.VirtualKey.GamepadMenu:
+                    CoreApplication.Exit();
+                    break;
             }
         }
 

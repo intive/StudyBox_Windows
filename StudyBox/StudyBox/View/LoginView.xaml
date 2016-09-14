@@ -11,7 +11,11 @@
     xmlns:loc="using:StudyBox"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=LoginViewModel}">
-
+    <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="KeyUp">
+            <core:InvokeCommandAction Command="{Binding DetectKeyUpCommand}" />
+        </core:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
     <Grid Background="White" Name="grid">
         <Grid>
             <Grid.ColumnDefinitions>
