@@ -20,8 +20,8 @@
     </UserControl.Resources>
 
     <i:Interaction.Behaviors>
-        <core:EventTriggerBehavior EventName="KeyUp">
-            <core:InvokeCommandAction Command="{Binding DetectKeyUpCommand}" />
+        <core:EventTriggerBehavior EventName="KeyDown">
+            <core:InvokeCommandAction Command="{Binding DetectKeyDownCommand}" />
         </core:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 

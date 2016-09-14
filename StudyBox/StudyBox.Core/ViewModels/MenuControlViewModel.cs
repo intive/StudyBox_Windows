@@ -34,7 +34,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
         private RelayCommand _doSearchCommand;
-        private RelayCommand<KeyRoutedEventArgs> _detectKeyUpCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
         private RelayCommand _logoutCommand;
         private RelayCommand _loginCommand;
         private RelayCommand _testRandomDeckCommand;
@@ -312,12 +312,12 @@ namespace StudyBox.Core.ViewModels
             get { return _doSearchCommand ?? (_doSearchCommand = new RelayCommand(DoSearch)); }
         }
 
-        public RelayCommand<KeyRoutedEventArgs> DetectKeyUpCommand
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
         {
-            get { return _detectKeyUpCommand ?? (_detectKeyUpCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyUp)); }
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyDown)); }
         }
 
-        private void DetectKeyUp(KeyRoutedEventArgs e)
+        private void DetectKeyDown(KeyRoutedEventArgs e)
         {
             switch (e.OriginalKey)
             {

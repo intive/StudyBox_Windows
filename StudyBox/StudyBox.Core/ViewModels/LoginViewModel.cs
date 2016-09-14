@@ -22,7 +22,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _createAccountAction;
         private RelayCommand _continueWithoutLogin;
         private RelayCommand _forgottenPasswordAction;
-        private RelayCommand<KeyRoutedEventArgs> _detectKeyUpCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
         private string _generalErrorMessage;
         private bool _isEmailNotValid;
         private bool _isPasswordNotValid;
@@ -69,12 +69,12 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
-        public RelayCommand<KeyRoutedEventArgs> DetectKeyUpCommand
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
         {
-            get { return _detectKeyUpCommand ?? (_detectKeyUpCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyUp)); }
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyDown)); }
         }
 
-        private void DetectKeyUp(KeyRoutedEventArgs e)
+        private void DetectKeyDown(KeyRoutedEventArgs e)
         {
             switch (e.OriginalKey)
             {
