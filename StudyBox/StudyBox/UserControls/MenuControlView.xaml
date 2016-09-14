@@ -12,6 +12,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
+    xmlns:behaviors="using:StudyBox.Behaviors"
     DataContext="{Binding Source={StaticResource Locator}, Path=MenuViewModel}"
     >
     <UserControl.Resources>
@@ -222,12 +223,14 @@
                         </Button>
                         <Button x:Uid="AboutBtn" 
                                     Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
-                                loc:FocusExtension.IsFocused="{Binding IsPaneOpen}"
+                                loc:FocusExtension.IsFocused="{Binding IsPaneOpen}" Command="{Binding GoToAboutCommand}" 
                                     >
                             <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
+                                <!--<core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding GoToAboutCommand}" />
-                                </core:EventTriggerBehavior>
+                                </core:EventTriggerBehavior>-->
+
+                                <!--<behaviors:EnterKeyBehavior Command="{Binding Path=GoToAboutCommand, Mode=OneWay}" />-->
                             </i:Interaction.Behaviors>
                         </Button>
                     </StackPanel>

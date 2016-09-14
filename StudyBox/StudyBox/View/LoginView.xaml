@@ -9,6 +9,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:userControls="using:StudyBox.UserControls"
     xmlns:loc="using:StudyBox"
+    xmlns:behaviors="using:StudyBox.Behaviors"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=LoginViewModel}">
     <i:Interaction.Behaviors>
@@ -70,7 +71,11 @@
                             x:Uid="Email" 
                             FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"  
                             Text="{Binding Email, Mode=TwoWay}"                           
-                            Margin="0 5 0 5"/>
+                            Margin="0 5 0 5">
+                            <i:Interaction.Behaviors>
+                                <behaviors:EnterKeyBehavior Command="{Binding Path=LoginAction, Mode=OneWay}" />
+                            </i:Interaction.Behaviors>
+                        </TextBox>
                         <TextBlock x:Name="EmailError" 
                                    x:Uid="EmailError" 
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}"
@@ -89,7 +94,14 @@
                         <PasswordBox x:Uid="Password" 
                                      FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
                                      Password="{Binding Password, Mode=TwoWay}" 
-                                     Margin="0 5 0 5"/>
+                                     Margin="0 5 0 5">
+                            
+                            <i:Interaction.Behaviors>
+                                <behaviors:EnterKeyBehavior Command="{Binding Path=LoginAction, Mode=OneWay}" />
+                            </i:Interaction.Behaviors>
+                            
+                            
+                        </PasswordBox>
                         <TextBlock x:Name="PasswordError" 
                                    x:Uid="PasswordError" 
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 

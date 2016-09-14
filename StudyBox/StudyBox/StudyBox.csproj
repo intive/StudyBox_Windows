@@ -117,6 +117,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\EnterKeyBehavior.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToBrushConverter.cs" />
     <Compile Include="Converters\BoolToExpandArrowSymbol.cs" />
@@ -297,11 +298,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
-      <Name>Behaviors SDK %28XAML%29</Name>
-    </SDKReference>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StudyBox.Core\StudyBox.Core.csproj">
       <Project>{5cb8a73e-8520-4d20-bdb0-90aa135d1a9e}</Project>

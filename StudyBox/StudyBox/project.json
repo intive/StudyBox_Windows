@@ -5,6 +5,7 @@
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
     "Microsoft.AspNet.WebApi.Client": "5.2.3",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
     "mvvmlight": "5.2.0",
     "MyToolkit.Extended": "2.5.12",
     "Newtonsoft.Json": "8.0.2",
