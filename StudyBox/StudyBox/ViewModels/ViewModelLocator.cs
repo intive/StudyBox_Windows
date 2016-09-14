@@ -16,6 +16,8 @@ namespace StudyBox.ViewModels
         /// </summary>
         public ViewModelLocator()
         {
+            //SimpleIoc.Default.Unregister<INavigationService>();
+
             var navigationService = CreateNavigationService();
             SimpleIoc.Default.Register(() => navigationService);
 

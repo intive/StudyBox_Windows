@@ -30,7 +30,7 @@
         <TextBlock x:Name="HeaderFontManagment" Visibility="Collapsed"/>
         <TextBlock x:Name="StandardFontManagment" Visibility="Collapsed"/>
         <Viewbox x:Name="ViewboxManagment" Visibility="Collapsed"/>
-
+        
         <userControls:MenuControlView Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Canvas.ZIndex="2"/>
         <userControls:MessageBoxControlView Grid.Row="1" Canvas.ZIndex="1" VerticalAlignment="Top"/>
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">

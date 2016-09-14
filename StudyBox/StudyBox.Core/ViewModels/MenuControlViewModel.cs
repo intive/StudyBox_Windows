@@ -10,6 +10,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -32,6 +34,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _openMenuCommand;
         private RelayCommand _showSearchPanelCommand;
         private RelayCommand _doSearchCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyUpCommand;
         private RelayCommand _logoutCommand;
         private RelayCommand _loginCommand;
         private RelayCommand _testRandomDeckCommand;
@@ -308,6 +311,17 @@ namespace StudyBox.Core.ViewModels
         {
             get { return _doSearchCommand ?? (_doSearchCommand = new RelayCommand(DoSearch)); }
         }
+
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyUpCommand
+        {
+            get { return _detectKeyUpCommand ?? (_detectKeyUpCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyUp)); }
+        }
+
+        private void DetectKeyUp(KeyRoutedEventArgs obj)
+        {
+            //throw new NotImplementedException();
+        }
+
 
         public RelayCommand LogoutCommand
         {
