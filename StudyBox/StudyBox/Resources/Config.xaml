@@ -53,4 +53,17 @@
     <x:String x:Key="GravatarUrl">http://www.gravatar.com/avatar/{0}?d=mm&amp;r=x</x:String>
     <x:String x:Key="GravatarPng">ms-appx:///Assets/gravatar.png</x:String>
 
+
+    <!--Snap points for responsive design-->
+    <x:Double x:Key="SnapPoint27">2560</x:Double>
+    <x:Double x:Key="SnapPoint23">1920</x:Double>
+    <x:Double x:Key="SnapPoint13">1366</x:Double>
+    <x:Double x:Key="SnapPoint8Landscape">1024</x:Double>
+    <x:Double x:Key="SnapPoint8Portrait">640</x:Double>
+    <x:Double x:Key="SnapPoint6">450</x:Double>
+    <x:Double x:Key="SnapPoint5">0</x:Double>
+
+
+
+
 </ResourceDictionary>
