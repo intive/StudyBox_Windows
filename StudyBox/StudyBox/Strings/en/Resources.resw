@@ -235,7 +235,7 @@
     <value>Continue without login</value>
   </data>
   <data name="GoToDecksList.Content" xml:space="preserve">
-    <value>Back to my decks</value>
+    <value>Public decks</value>
   </data>
   <data name="ChooseLearning.Text" xml:space="preserve">
     <value>Learning</value>
@@ -522,5 +522,9 @@
   </data>
   <data name="DeckCreated" xml:space="preserve">
     <value>Deck created</value>
+  </data>
+  <data name="GoToUserDecksList.Content" xml:space="preserve">
+    <value>Back to my decks</value>
+    <comment>DecksListView</comment>
   </data>
 </root>
