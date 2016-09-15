@@ -10,7 +10,7 @@
     xmlns:userControls="using:StudyBox.UserControls"
     xmlns:loc="using:StudyBox"
     xmlns:behaviors="using:StudyBox.Behaviors"
-    mc:Ignorable="d"
+    mc:Ignorable="d" 
     DataContext="{Binding Source={StaticResource Locator}, Path=LoginViewModel}">
     <i:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="KeyDown">

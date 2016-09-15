@@ -22,6 +22,7 @@ namespace StudyBox.Core.ViewModels
         private readonly IRestService _restservice;
         private readonly IInternetConnectionService _internetConnectionService;
         private readonly IGravatarService _gravatarService;
+        private IDetectKeysService _detectKeysService;
         private readonly ResourceDictionary _resources = Application.Current.Resources;
         private bool _searchVisibility = true;
         private int _searchOpacity = 0;
@@ -53,7 +54,8 @@ namespace StudyBox.Core.ViewModels
         private string _email;
         private BitmapImage _gravatar;
 
-        public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService, IGravatarService gravatarService) : base(navigationService)
+        public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, 
+            IInternetConnectionService internetConnectionService, IGravatarService gravatarService, IDetectKeysService detectKeysService) : base(navigationService)
         {
             Messenger.Default.Register<MessageToMenuControl>(this, x => HandleMenuControlMessage(x.SearchButton, x.SaveButton, x.TitleString));
 
@@ -62,7 +64,7 @@ namespace StudyBox.Core.ViewModels
             _internetConnectionService = internetConnectionService;
             _restservice = restservice;
             _gravatarService = gravatarService;
-
+            _detectKeysService = detectKeysService;
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             SearchVisibility = false;
             GetGravatar();
@@ -316,60 +318,13 @@ namespace StudyBox.Core.ViewModels
 
         public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
         {
-            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyDown)); }
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(_detectKeysService.DetectKeyDown)); }
         }
 
         public RelayCommand<object> GotFocusCommand
         {
-            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(GotFocus)); }
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(_detectKeysService.GotFocus)); }
         }
-
-        private void GotFocus(object obj)
-        {
-            FrameworkElement focus = FocusManager.GetFocusedElement() as FrameworkElement;
-            if (focus != null)
-            {
-                Debug.WriteLine("got focus: " + focus.Name + " (" +
-                    focus.GetType().ToString() + ")" + "(" + IsSearchVisible + ")");
-
-                if (focus.GetType() == typeof(TextBox))
-                {
-                    TextBox a = (TextBox)focus;
-                    Debug.WriteLine("IF TEXTBOX: " + a.Text);
-                }
-            }
-        }
-
-        private void DetectKeyDown(KeyRoutedEventArgs e)
-        {
-            if (IsPaneOpen)
-            {
-                switch (e.OriginalKey)
-                {
-                    case Windows.System.VirtualKey.Down:
-                    case Windows.System.VirtualKey.GamepadDPadDown:
-                        FocusManager.TryMoveFocus(FocusNavigationDirection.Down);
-                        break;
-
-                    case Windows.System.VirtualKey.Up:
-                    case Windows.System.VirtualKey.GamepadDPadUp:
-                        FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
-                        break;
-                }
-            }
-
-            switch (e.OriginalKey)
-            {
-                case Windows.System.VirtualKey.F:
-                case Windows.System.VirtualKey.Control:
-                case Windows.System.VirtualKey.GamepadA:
-                    OpenMenu();
-                    //FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
-                    break;
-            }
-
-        }
-
 
         public RelayCommand LogoutCommand
         {

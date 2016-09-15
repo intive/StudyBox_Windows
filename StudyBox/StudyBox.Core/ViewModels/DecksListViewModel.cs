@@ -14,6 +14,9 @@ using StudyBox.Core.Enums;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
+using Windows.UI.Xaml;
+using System.Diagnostics;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -26,6 +29,7 @@ namespace StudyBox.Core.ViewModels
         private IStatisticsDataService _statisticsService;
         private IAccountService _accountService;
         private IFavouriteDecksService _favouriteService;
+        private IDetectKeysService _detectKeysService;
         private bool _isDataLoading = false;
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
@@ -35,10 +39,12 @@ namespace StudyBox.Core.ViewModels
         private bool _isMyDeck = false;
         private DecksType _decksType;
         private List<Deck> _favouriteDecks;
+        private RelayCommand<object> _gotFocusCommand;
         #endregion
 
         #region Constructors
-        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IStatisticsDataService statisticsService, IAccountService accountService, IFavouriteDecksService favouriteService) : base(navigationService)
+        public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, 
+            IStatisticsDataService statisticsService, IAccountService accountService, IFavouriteDecksService favouriteService, IDetectKeysService detectKeysService) : base(navigationService)
         {
             Messenger.Default.Register<ReloadMessageToDecksList>(this, x => HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
@@ -46,6 +52,7 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Register<ConfirmMessageToRemove>(this, x => HandleConfirmMessage(x.IsConfirmed));
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
+            _detectKeysService = detectKeysService;
             _accountService = accountService;
             DecksCollection = new ObservableCollection<Deck>();
             _statisticsService = statisticsService;
@@ -173,6 +180,12 @@ namespace StudyBox.Core.ViewModels
         #endregion
 
         #region Methods
+
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(_detectKeysService.GotFocus)); }
+        }
+
         private async void InitializeDecksCollection()
         {
             if (await CheckInternetConnection() && _accountService.IsUserLoggedIn())
