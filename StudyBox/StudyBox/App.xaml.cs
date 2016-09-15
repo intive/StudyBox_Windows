@@ -34,10 +34,13 @@ namespace StudyBox
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            
-            //Change the pointer mode to support selected mode rather than pointer mode
-            App.Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
-        }
+
+            if (App.IsXbox)
+            { 
+                //Change the pointer mode to support selected mode rather than pointer mode
+                App.Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
+            }
+    }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

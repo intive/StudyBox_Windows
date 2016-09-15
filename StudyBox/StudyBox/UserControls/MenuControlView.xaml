@@ -143,9 +143,8 @@
                         <TextBlock FontFamily="{StaticResource LatoRegularFontFamily}" Foreground="{StaticResource Grey}" Text="{Binding Email}" 
                                    HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"
                                    Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                        <Button x:Uid="GoToUserDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                        <Button x:Uid="GoToUserDecksList2" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
                                 Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                
                                 >
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
