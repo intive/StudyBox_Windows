@@ -29,13 +29,17 @@ namespace StudyBox.Core.ViewModels
         private bool _isDataLoading = false;
         private IInternetConnectionService _internetConnectionService;
         private IValidationService _validationService;
+        private IDetectKeysService _detectKeysService;
 
-        public RegisterViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, IRestService restService, IAccountService accountService) : base(navigationService)
+        public RegisterViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, 
+            IValidationService validationService, IRestService restService, IAccountService accountService,
+            IDetectKeysService detectKeysService) : base(navigationService)
         {
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;
             _restService = restService;
             _accountService = accountService;
+            _detectKeysService = detectKeysService;
         }
 
 
@@ -57,29 +61,9 @@ namespace StudyBox.Core.ViewModels
 
         public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
         {
-            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyDown)); }
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(_detectKeysService.DetectKeyDown)); }
         }
 
-        private void DetectKeyDown(KeyRoutedEventArgs e)
-        {
-            switch (e.OriginalKey)
-            {
-                case Windows.System.VirtualKey.Down:
-                case Windows.System.VirtualKey.GamepadDPadDown:
-                    FocusManager.TryMoveFocus(FocusNavigationDirection.Down);
-                    break;
-
-                case Windows.System.VirtualKey.Up:
-                case Windows.System.VirtualKey.GamepadDPadUp:
-                    FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
-                    break;
-
-                case Windows.System.VirtualKey.Escape:
-                case Windows.System.VirtualKey.GamepadMenu:
-                    Cancel();
-                    break;
-            }
-        }
         public string GeneralErrorMessage
         {
             get { return _generalErrorMessage; }

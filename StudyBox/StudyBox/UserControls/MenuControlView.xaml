@@ -151,7 +151,7 @@
                                    HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"
                                    Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-                        <Button x:Uid="GoToUserDecksList2" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                        <Button x:Uid="GoToUserDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
                                 Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
                                 Command="{Binding GoToUsersDecksCommand}" IsTabStop="{Binding IsPaneOpen}"/>
 

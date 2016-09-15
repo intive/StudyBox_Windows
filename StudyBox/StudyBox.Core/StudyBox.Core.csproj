@@ -108,9 +108,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\DecksType.cs" />
+    <Compile Include="Services\DetectKeysService.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\ICameraService.cs" />
     <Compile Include="Interfaces\IDeserializeJsonService.cs" />
+    <Compile Include="Interfaces\IDetectKeysService.cs" />
     <Compile Include="Interfaces\IFavouriteDecksService.cs" />
     <Compile Include="Interfaces\IGravatarService.cs" />
     <Compile Include="Interfaces\IHttpService.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="ViewModels\TipViewModel.cs" />
     <EmbeddedResource Include="Properties\StudyBox.Core.rd.xml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

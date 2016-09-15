@@ -10,13 +10,14 @@ using StudyBox.Core.Enums;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml;
 using Windows.ApplicationModel.Core;
-
 namespace StudyBox.Core.ViewModels
 {
     public class LoginViewModel : ExtendedViewModelBase
     {
         private IInternetConnectionService _internetConnectionService;
         private IValidationService _validationService;
+        private IDetectKeysService _detectKeysService;
+
         private readonly IAccountService _accountService;
         private RelayCommand _loginAction;
         private RelayCommand _createAccountAction;
@@ -30,11 +31,13 @@ namespace StudyBox.Core.ViewModels
         private string _password;
         private bool _isGeneralError;
 
-        public LoginViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, IAccountService accountService) : base(navigationService)
+        public LoginViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, 
+            IAccountService accountService, IDetectKeysService detectKeysService) : base(navigationService)
         {
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;
             _accountService = accountService;
+            _detectKeysService = detectKeysService;
         }
 
         public RelayCommand LoginAction
@@ -71,28 +74,7 @@ namespace StudyBox.Core.ViewModels
 
         public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
         {
-            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyDown)); }
-        }
-
-        private void DetectKeyDown(KeyRoutedEventArgs e)
-        {
-            switch (e.OriginalKey)
-            {
-                case Windows.System.VirtualKey.Down:
-                case Windows.System.VirtualKey.GamepadDPadDown:
-                    FocusManager.TryMoveFocus(FocusNavigationDirection.Down);
-                    break;
-
-                case Windows.System.VirtualKey.Up:
-                case Windows.System.VirtualKey.GamepadDPadUp:
-                    FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
-                    break;
-
-                case Windows.System.VirtualKey.Escape:
-                case Windows.System.VirtualKey.GamepadMenu:
-                    CoreApplication.Exit();
-                    break;
-            }
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(_detectKeysService.DetectKeyDown)); }
         }
 
         public string GeneralErrorMessage
