@@ -9,10 +9,18 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:converters="using:StudyBox.Converters"
     mc:Ignorable="d"
+    xmlns:behaviors="using:StudyBox.Behaviors"
     DataContext="{Binding Source={StaticResource Locator}, Path=RegisterViewModel}">
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Page.Resources>
+
+    <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="KeyDown">
+            <core:InvokeCommandAction Command="{Binding DetectKeyDownCommand}" />
+        </core:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    
     <Grid Background="White">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -65,7 +73,11 @@
                         <TextBox x:Uid="Email" 
                                  FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"  
                                  Text="{Binding Email, Mode=TwoWay}"                           
-                                 Margin="0,5,0,5"/>
+                                 Margin="0,5,0,5">
+                            <i:Interaction.Behaviors>
+                                <behaviors:EnterKeyBehavior Command="{Binding Path=RegisterAction, Mode=OneWay}" />
+                            </i:Interaction.Behaviors>
+                        </TextBox>
                         <TextBlock x:Name="EmailError" 
                                    x:Uid="EmailError" 
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}"
@@ -84,7 +96,11 @@
                         <PasswordBox x:Uid="Password" 
                                      FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}" 
                                      Password="{Binding Password, Mode=TwoWay}" 
-                                     Margin="0 5 0 5"/>  
+                                     Margin="0 5 0 5">
+                            <i:Interaction.Behaviors>
+                                <behaviors:EnterKeyBehavior Command="{Binding Path=RegisterAction, Mode=OneWay}" />
+                            </i:Interaction.Behaviors>
+                        </PasswordBox>
                         <TextBlock x:Name="PasswordError" 
                                    Text="{Binding PasswordErrorMessage}"
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 
@@ -103,7 +119,11 @@
                         <PasswordBox x:Uid="RepeatPassword" 
                                      FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"                            
                                      Password="{Binding RepeatPassword, Mode=TwoWay}" 
-                                     Margin="0 5 0 5"/>
+                                     Margin="0 5 0 5">
+                            <i:Interaction.Behaviors>
+                                <behaviors:EnterKeyBehavior Command="{Binding Path=RegisterAction, Mode=OneWay}" />
+                            </i:Interaction.Behaviors>
+                        </PasswordBox>
                         <TextBlock x:Name="RepeatPasswordError" 
                                    x:Uid="RepeatPasswordError" 
                                    FontSize="{Binding ElementName=MessageFontManagment, Path=FontSize}" 

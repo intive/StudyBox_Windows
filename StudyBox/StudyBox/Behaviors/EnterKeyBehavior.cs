@@ -1,11 +1,12 @@
-﻿using System.Windows.Input;
+﻿using Microsoft.Xaml.Interactivity;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Behaviors
 {
-    public class EnterKeyBehavior : Microsoft.Xaml.Interactivity.Behavior<Control>
+    public class EnterKeyBehavior : Behavior<Control>
     {
         protected override void OnAttached()
         {

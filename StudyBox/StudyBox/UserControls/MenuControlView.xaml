@@ -13,8 +13,8 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     xmlns:behaviors="using:StudyBox.Behaviors"
-    DataContext="{Binding Source={StaticResource Locator}, Path=MenuViewModel}"
-    >
+    DataContext="{Binding Source={StaticResource Locator}, Path=MenuViewModel}">
+
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter"/>
@@ -24,9 +24,13 @@
         <core:EventTriggerBehavior EventName="KeyDown">
             <core:InvokeCommandAction Command="{Binding DetectKeyDownCommand}" />
         </core:EventTriggerBehavior>
+
+        <core:EventTriggerBehavior EventName="GotFocus">
+            <core:InvokeCommandAction Command="{Binding GotFocusCommand}" />
+        </core:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <Grid >
+    <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
@@ -69,7 +73,8 @@
                             FontStretch="UltraExpanded" 
                             Foreground="{StaticResource Grey}" 
                             FontFamily="{StaticResource LatoBlackFontFamily}"
-                            Text="{Binding TitleBar, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            Text="{Binding TitleBar, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        />
                     <AutoSuggestBox x:Name="SearchBox"
                                     Style="{StaticResource AutoSuggestBoxStyle}" 
                                     Grid.Row="0" 
@@ -81,6 +86,7 @@
                                     IsHitTestVisible="{Binding IsSearchVisible}"
                                     Text ="{Binding SearchingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     PlaceholderText="{Binding SearchDecks}"
+                                    IsTabStop="False"
                                     >
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="LostFocus">
@@ -134,6 +140,7 @@
                            CompactPaneLength="0"
                            OpenPaneLength="200"
                            VerticalAlignment="Stretch"
+                       IsTabStop="False"
                            >
                 <SplitView.Pane>
                     <StackPanel Background="{StaticResource Graphite}" Opacity="0.8">
@@ -143,95 +150,46 @@
                         <TextBlock FontFamily="{StaticResource LatoRegularFontFamily}" Foreground="{StaticResource Grey}" Text="{Binding Email}" 
                                    HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"
                                    Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
                         <Button x:Uid="GoToUserDecksList2" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
                                 Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                >
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding GoToUsersDecksCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
+                                Command="{Binding GoToUsersDecksCommand}" IsTabStop="{Binding IsPaneOpen}"/>
+
                         <Button x:Uid="GoToDecksList" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
                                 Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                >
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding GoToDecksCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
+                                Command="{Binding GoToDecksCommand}" IsTabStop="{Binding IsPaneOpen}"/>
 
                         <Button x:Uid="FavouriteDecks" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
-                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding FavouriteDecksCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Command="{Binding FavouriteDecksCommand}" IsTabStop="{Binding IsPaneOpen}"/>
 
-                        <Button x:Uid="GoToAddDeck" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding GoToAddDeckCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
 
-                        <Button x:Uid="GoToStatistics" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding GoToStatisticsCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
-                        <Button x:Uid="TestRandomDeckButton" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left">
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding TestRandomDeckCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
+                        <Button x:Uid="GoToAddDeck" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Command="{Binding GoToAddDeckCommand}" IsTabStop="{Binding IsPaneOpen}"/>
+
+                        <Button x:Uid="GoToStatistics" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Command="{Binding GoToStatisticsCommand}" IsTabStop="{Binding IsPaneOpen}"/>
+
+                        <Button x:Uid="TestRandomDeckButton" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
+                                Command="{Binding TestRandomDeckCommand}" IsTabStop="{Binding IsPaneOpen}"/>
+
                         <Button x:Uid="Settings" Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"
                                 Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                >
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding SettingsCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
-                        <Button x:Uid="LogoutMenuButton" 
-                                    Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
-                                    Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding LogoutCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
-                        <Button x:Uid="LoginMenuButton" 
-                                    Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
-                                    Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource NegativeBooleanToVisibilityConverter}}">
-                            <i:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding LoginCommand}" />
-                                </core:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </Button>
-                        <Button x:Uid="AboutBtn" 
-                                    Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
-                                loc:FocusExtension.IsFocused="{Binding IsPaneOpen}" Command="{Binding GoToAboutCommand}" 
-                                    >
-                            <i:Interaction.Behaviors>
-                                <!--<core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding GoToAboutCommand}" />
-                                </core:EventTriggerBehavior>-->
+                                Command="{Binding SettingsCommand}" IsTabStop="{Binding IsPaneOpen}"/>
 
-                                <!--<behaviors:EnterKeyBehavior Command="{Binding Path=GoToAboutCommand, Mode=OneWay}" />-->
-                            </i:Interaction.Behaviors>
-                        </Button>
+                        <Button x:Uid="LogoutMenuButton" 
+                                Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Command="{Binding LogoutCommand}" IsTabStop="{Binding IsPaneOpen}"/>
+
+                        <Button x:Uid="LoginMenuButton" 
+                                Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
+                                Visibility="{Binding LogoutButtonVisibility, Converter={StaticResource NegativeBooleanToVisibilityConverter}}"
+                                Command="{Binding LoginCommand}" IsTabStop="{Binding IsPaneOpen}"/>
+
+                        <Button x:Uid="AboutBtn" 
+                                Foreground="{StaticResource Grey}" Background="Transparent" HorizontalAlignment="Left"  
+                                loc:FocusExtension.IsFocused="{Binding IsPaneOpen}" Command="{Binding GoToAboutCommand}"  IsTabStop="{Binding IsPaneOpen}"/>
                     </StackPanel>
                 </SplitView.Pane>
             </SplitView>
