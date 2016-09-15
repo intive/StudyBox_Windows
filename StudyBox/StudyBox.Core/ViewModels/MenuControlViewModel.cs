@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Input;
+using System.Diagnostics;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -35,6 +36,7 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _showSearchPanelCommand;
         private RelayCommand _doSearchCommand;
         private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
+        private RelayCommand<object> _gotFocusCommand;
         private RelayCommand _logoutCommand;
         private RelayCommand _loginCommand;
         private RelayCommand _testRandomDeckCommand;
@@ -53,8 +55,8 @@ namespace StudyBox.Core.ViewModels
 
         public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, IInternetConnectionService internetConnectionService, IGravatarService gravatarService) : base(navigationService)
         {
-            Messenger.Default.Register<MessageToMenuControl>(this, x=> HandleMenuControlMessage(x.SearchButton,x.SaveButton,x.TitleString));
-            
+            Messenger.Default.Register<MessageToMenuControl>(this, x => HandleMenuControlMessage(x.SearchButton, x.SaveButton, x.TitleString));
+
 
             _accountService = accountService;
             _internetConnectionService = internetConnectionService;
@@ -121,7 +123,7 @@ namespace StudyBox.Core.ViewModels
             }
             set
             {
-                if(_searchOpacity != value)
+                if (_searchOpacity != value)
                 {
                     _searchOpacity = value;
                     RaisePropertyChanged();
@@ -137,7 +139,7 @@ namespace StudyBox.Core.ViewModels
             }
             set
             {
-                if(_isSearchVisible != value)
+                if (_isSearchVisible != value)
                 {
                     _isSearchVisible = value;
                     RaisePropertyChanged();
@@ -153,7 +155,7 @@ namespace StudyBox.Core.ViewModels
             }
             set
             {
-                if(_searchVisibility != value)
+                if (_searchVisibility != value)
                 {
                     _searchVisibility = value;
                     RaisePropertyChanged();
@@ -273,7 +275,7 @@ namespace StudyBox.Core.ViewModels
             }
             set
             {
-                if(_gravatar != value)
+                if (_gravatar != value)
                 {
                     _gravatar = value;
                     RaisePropertyChanged();
@@ -289,7 +291,7 @@ namespace StudyBox.Core.ViewModels
             }
             set
             {
-                if(_email != value)
+                if (_email != value)
                 {
                     _email = value;
                     RaisePropertyChanged();
@@ -317,8 +319,45 @@ namespace StudyBox.Core.ViewModels
             get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyDown)); }
         }
 
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(GotFocus)); }
+        }
+
+        private void GotFocus(object obj)
+        {
+            FrameworkElement focus = FocusManager.GetFocusedElement() as FrameworkElement;
+            if (focus != null)
+            {
+                Debug.WriteLine("got focus: " + focus.Name + " (" +
+                    focus.GetType().ToString() + ")" + "(" + IsSearchVisible + ")");
+
+                if (focus.GetType() == typeof(TextBox))
+                {
+                    TextBox a = (TextBox)focus;
+                    Debug.WriteLine("IF TEXTBOX: " + a.Text);
+                }
+            }
+        }
+
         private void DetectKeyDown(KeyRoutedEventArgs e)
         {
+            if (IsPaneOpen)
+            {
+                switch (e.OriginalKey)
+                {
+                    case Windows.System.VirtualKey.Down:
+                    case Windows.System.VirtualKey.GamepadDPadDown:
+                        FocusManager.TryMoveFocus(FocusNavigationDirection.Down);
+                        break;
+
+                    case Windows.System.VirtualKey.Up:
+                    case Windows.System.VirtualKey.GamepadDPadUp:
+                        FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
+                        break;
+                }
+            }
+
             switch (e.OriginalKey)
             {
                 case Windows.System.VirtualKey.F:
@@ -328,6 +367,7 @@ namespace StudyBox.Core.ViewModels
                     //FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
                     break;
             }
+
         }
 
 
@@ -421,7 +461,7 @@ namespace StudyBox.Core.ViewModels
 
         private void HideSearchingContent()
         {
-            if(SearchOpacity == 1)
+            if (SearchOpacity == 1)
             {
                 SearchOpacity = 0;
                 IsSearchVisible = false;
@@ -431,7 +471,7 @@ namespace StudyBox.Core.ViewModels
             if (IsPaneOpen)
             {
                 IsPaneOpen = false;
-            }         
+            }
         }
 
         private void GoToUsersDecks()
@@ -505,7 +545,7 @@ namespace StudyBox.Core.ViewModels
         }
 
         private void GoToAddDeck()
-        {          
+        {
             if (_accountService.IsUserLoggedIn())
             {
                 Messenger.Default.Send<MessageToMessageBoxControl>(new MessageToMessageBoxControl(false));
@@ -619,7 +659,7 @@ namespace StudyBox.Core.ViewModels
             }
 
             Gravatar.ImageFailed += Gravatar_ImageFailed;
-            
+
         }
 
         private void Gravatar_ImageFailed(object sender, Windows.UI.Xaml.ExceptionRoutedEventArgs e)

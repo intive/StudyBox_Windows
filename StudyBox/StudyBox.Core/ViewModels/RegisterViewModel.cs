@@ -6,6 +6,7 @@ using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 using System;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -15,6 +16,7 @@ namespace StudyBox.Core.ViewModels
         private readonly IAccountService _accountService;
         private RelayCommand _registerAction;
         private RelayCommand _cancelAction;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
         private string _generalErrorMessage;
         private bool _isEmailNotValid;
         private bool _isPasswordNotValid;
@@ -53,6 +55,31 @@ namespace StudyBox.Core.ViewModels
             }
         }
 
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeyDown)); }
+        }
+
+        private void DetectKeyDown(KeyRoutedEventArgs e)
+        {
+            switch (e.OriginalKey)
+            {
+                case Windows.System.VirtualKey.Down:
+                case Windows.System.VirtualKey.GamepadDPadDown:
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Down);
+                    break;
+
+                case Windows.System.VirtualKey.Up:
+                case Windows.System.VirtualKey.GamepadDPadUp:
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Up);
+                    break;
+
+                case Windows.System.VirtualKey.Escape:
+                case Windows.System.VirtualKey.GamepadMenu:
+                    Cancel();
+                    break;
+            }
+        }
         public string GeneralErrorMessage
         {
             get { return _generalErrorMessage; }
