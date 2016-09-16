@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.Services
@@ -16,12 +17,18 @@ namespace StudyBox.Core.Services
     {
         public void GotFocus(object obj)
         {
+            
             FrameworkElement focus = FocusManager.GetFocusedElement() as FrameworkElement;
             if (focus != null)
             {
                 Debug.WriteLine("got focus: " + focus.Name + " (" + focus.GetType().ToString() + ")");
             }
+            if (focus.GetType() == typeof(GridViewItem))
+            {
+                FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+            }
         }
+
         public void DetectKeyDown(KeyRoutedEventArgs e)
         {
             switch (e.OriginalKey)
@@ -49,14 +56,12 @@ namespace StudyBox.Core.Services
 
                 case Windows.System.VirtualKey.Left:
                 case Windows.System.VirtualKey.GamepadDPadLeft:
-                    if (!FocusManager.TryMoveFocus(FocusNavigationDirection.Left))
-                        FocusManager.TryMoveFocus(FocusNavigationDirection.Previous);
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Left);
                     break;
 
                 case Windows.System.VirtualKey.Right:
                 case Windows.System.VirtualKey.GamepadDPadRight:
-                    if (!FocusManager.TryMoveFocus(FocusNavigationDirection.Right))
-                        FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Right);
                     break;
             }
         }

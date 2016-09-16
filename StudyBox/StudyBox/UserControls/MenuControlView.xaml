@@ -20,7 +20,7 @@
         <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <i:Interaction.Behaviors>
+    <!--<i:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="KeyDown">
             <core:InvokeCommandAction Command="{Binding DetectKeyDownCommand}" />
         </core:EventTriggerBehavior>
@@ -28,7 +28,7 @@
         <core:EventTriggerBehavior EventName="GotFocus">
             <core:InvokeCommandAction Command="{Binding GotFocusCommand}" />
         </core:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
+    </i:Interaction.Behaviors>-->
 
     <Grid>
         <Grid>

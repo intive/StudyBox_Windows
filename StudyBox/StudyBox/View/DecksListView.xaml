@@ -9,19 +9,27 @@
     xmlns:converters="using:StudyBox.Converters"
     xmlns:Images="using:WinRTXamlToolkit.Controls"
     mc:Ignorable="d"
+    xmlns:behaviors="using:StudyBox.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    DataContext="{Binding Source={StaticResource Locator}, Path=DecksViewModel}"
-    >
+    DataContext="{Binding Source={StaticResource Locator}, Path=DecksViewModel}">
+    
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter"/>
     </Page.Resources>
+    
     <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="KeyDown">
+            <core:InvokeCommandAction Command="{Binding DetectKeyDownCommand}" />
+        </core:EventTriggerBehavior>
+
         <core:EventTriggerBehavior EventName="GotFocus">
             <core:InvokeCommandAction Command="{Binding GotFocusCommand}" />
         </core:EventTriggerBehavior>
+
     </i:Interaction.Behaviors>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="80"/>
@@ -40,79 +48,85 @@
         <userControls:MessageBoxControlView Grid.Row="1" Canvas.ZIndex="1" VerticalAlignment="Top"/>
 
         <StackPanel Grid.Row="1" Grid.Column="0" MaxWidth="500" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding IsDeckSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
-           <TextBlock Margin="10 20" x:Uid="ChooseLearningOrTest"
-                       TextWrapping="WrapWholeWords"
-                       FontSize="{Binding ElementName=BigFontManagment, Path=FontSize}"
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center" 
-                       TextAlignment="Center"
-                       FontFamily="{StaticResource LatoRegularFontFamily}" />
+            <TextBlock 
+                Margin="10 20" x:Uid="ChooseLearningOrTest"
+                TextWrapping="WrapWholeWords"
+                FontSize="{Binding ElementName=BigFontManagment, Path=FontSize}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                TextAlignment="Center"
+                FontFamily="{StaticResource LatoRegularFontFamily}" />
 
             <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}" Command="{Binding ChooseLearning}">
-                <TextBlock x:Uid="ChooseLearning"
-                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        FontFamily="{StaticResource LatoRegularFontFamily}" 
-                        Padding="0 10"
-                        Foreground="{StaticResource Grey}" />
+                <TextBlock 
+                    x:Uid="ChooseLearning"
+                    FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    FontFamily="{StaticResource LatoRegularFontFamily}" 
+                    Padding="0 10"
+                    Foreground="{StaticResource Grey}" />
             </Button>
 
             <Button  Margin="0 10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Raspberry}" Command="{Binding ChooseTest}">
-                <TextBlock x:Uid="ChooseTest"
-                        FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        FontFamily="{StaticResource LatoRegularFontFamily}" 
-                               Padding="0 10"
-                        Foreground="{StaticResource Grey}" />
+                <TextBlock 
+                    x:Uid="ChooseTest"
+                    FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    FontFamily="{StaticResource LatoRegularFontFamily}" 
+                    Padding="0 10"
+                    Foreground="{StaticResource Grey}" />
             </Button>
 
-            <Button HorizontalAlignment="Stretch"
-                                Background="Transparent" 
-                                Command="{Binding ChooseManageDeck}"
-                                BorderThickness="0"
-                                Visibility="{Binding IsMyDeck, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            >
-                <TextBlock TextWrapping="Wrap"
-                                       TextAlignment="Center"
-                                       x:Uid="ManageDeck"
-                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Graphite}"
-                                       Padding="0,0"
-                                       />
+            <Button 
+                HorizontalAlignment="Stretch"
+                Background="Transparent" 
+                Command="{Binding ChooseManageDeck}"
+                BorderThickness="0"
+                Visibility="{Binding IsMyDeck, Converter={StaticResource BooleanToVisibilityConverter}}" >
+
+                <TextBlock 
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    x:Uid="ManageDeck"
+                    FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                    FontFamily="{StaticResource LatoRegularFontFamily}"
+                    Foreground="{StaticResource Graphite}"
+                    Padding="0,0"/>
             </Button>
 
-            <Button HorizontalAlignment="Stretch"
-                                Background="Transparent" 
-                                Command="{Binding RemoveDeck}"
-                                BorderThickness="0"
-                                Visibility="{Binding IsMyDeck, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            >
-                <TextBlock TextWrapping="Wrap"
-                                       TextAlignment="Center"
-                                       x:Uid="RemoveDeck"
-                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Graphite}"
-                                       Padding="0,0"
-                                       />
+            <Button 
+                HorizontalAlignment="Stretch"
+                Background="Transparent" 
+                Command="{Binding RemoveDeck}"
+                BorderThickness="0"
+                Visibility="{Binding IsMyDeck, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                <TextBlock 
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    x:Uid="RemoveDeck"
+                    FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                    FontFamily="{StaticResource LatoRegularFontFamily}"
+                    Foreground="{StaticResource Graphite}"
+                    Padding="0,0"/>
             </Button>
 
-            <Button HorizontalAlignment="Stretch"
-                                Background="Transparent" 
-                                Command="{Binding Cancel}"
-                                BorderThickness="0"
-                            >
-                <TextBlock TextWrapping="Wrap"
-                                       TextAlignment="Center"
-                                       x:Uid="Cancel"
-                                       FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
-                                       FontFamily="{StaticResource LatoRegularFontFamily}"
-                                       Foreground="{StaticResource Graphite}"
-                                       Padding="0,0"
-                                       />
+            <Button 
+                HorizontalAlignment="Stretch"
+                Background="Transparent" 
+                Command="{Binding Cancel}"
+                BorderThickness="0" >
+
+                <TextBlock 
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    x:Uid="Cancel"
+                    FontSize="{Binding ElementName=StandardFontManagment, Path=FontSize}"
+                    FontFamily="{StaticResource LatoRegularFontFamily}"
+                    Foreground="{StaticResource Graphite}"
+                    Padding="0,0"/>
             </Button>
         </StackPanel>
 
@@ -120,109 +134,114 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5,5,5,5" >
                 <TextBlock x:Uid="SearchMessage" Visibility="{Binding SearchMessageVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWholeWords" Margin="0,30,0,0"/>
                 <TextBlock x:Uid="NoDecks" Visibility="{Binding IsNoDecks, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWholeWords" Margin="0,30,0,0"/>
-                <GridView x:Name="GridView" ItemsSource="{Binding DecksCollection}" 
-                          IsItemClickEnabled="False"
-                          Margin="0"
-                          >
+                <GridView 
+                    x:Name="GridView" 
+                    ItemsSource="{Binding DecksCollection}" 
+                    IsItemClickEnabled="True"
+                    Margin="0">
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel x:Name="FirstPanel" Orientation="Horizontal" Margin="0">
-                                <StackPanel x:Name="SecondPanel" Margin="0" Padding="0">
-                                    <Button x:Name="Tile"
-                                        CommandParameter="{Binding ID}"
-                                        Command="{Binding ElementName=GridView, Path=DataContext.TapTileCommand}"
-                                        Background="{StaticResource Graphite}"
-                                        Padding="0"
-                                        Width="{Binding ElementName=TileManagment, Path=Width}"
-                                        Height="{Binding ElementName=TileManagment, Path=Height}"
-                                        VerticalAlignment="Top"
-                                        Margin="0"
-                                        >
-                                        <Grid 
-                                            HorizontalAlignment="Stretch" 
-                                            VerticalAlignment="Stretch" 
-                                            Width="{Binding ElementName=TileManagment, Path=Width}" 
-                                            Height="{Binding ElementName=TileManagment, Path=Height}"
-                                            >
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                                <ColumnDefinition Width="5*"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
+                            <Button 
+                                BorderThickness="0"
+                                x:Name="Tile"
+                                CommandParameter="{Binding ID}"
+                                Command="{Binding ElementName=GridView, Path=DataContext.TapTileCommand}"
+                                Background="{StaticResource Graphite}"
+                                Padding="0"
+                                FocusVisualPrimaryThickness="10"
+                                FocusVisualPrimaryBrush="Coral"
+                                FocusVisualSecondaryBrush="AliceBlue"
+                                FocusVisualSecondaryThickness="4"
+                                Width="{Binding ElementName=TileManagment, Path=Width}"
+                                Height="{Binding ElementName=TileManagment, Path=Height}"
+                                VerticalAlignment="Top"
+                                Margin="0"
+                                IsTabStop="True">
 
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="1*"></RowDefinition>
-                                                <RowDefinition Height="5*"></RowDefinition>
-                                            </Grid.RowDefinitions>
+                                <Grid
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" 
+                                    Width="{Binding ElementName=TileManagment, Path=Width}" 
+                                    Height="{Binding ElementName=TileManagment, Path=Height}">
 
-                                            <StackPanel
-                                                Grid.Column="0" 
-                                                Grid.Row="0"
-                                                Visibility="{Binding ElementName=GridView, Path=DataContext.IsUser, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                >
-                                                <Images:ImageButton Visibility="{Binding ViewModel.IsFavourite, Converter={StaticResource NegativeBooleanToVisibilityConverter}}"
-                                                Command="{Binding ElementName=GridView, Path=DataContext.AddToFavouriteCommand}"
-                                                CommandParameter="{Binding ID}"
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
 
-                                                Stretch="Fill" 
-                                                Padding="5"
-                                                NormalStateImageSource="ms-appx:///Assets/emptystar.png"
-                                                HoverStateImageSource="ms-appx:///Assets/emptystar.png"
-                                                PressedStateImageSource="ms-appx:///Assets/emptystar.png"/>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="5*"></RowDefinition>
+                                    </Grid.RowDefinitions>
 
-                                                <Images:ImageButton Visibility="{Binding ViewModel.IsFavourite, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                Command="{Binding ElementName=GridView, Path=DataContext.RemoveFromFavouriteCommand}"
-                                                CommandParameter="{Binding ID}"
-                                                
-                                                Stretch="Fill" 
-                                                Padding="5"
-                                                NormalStateImageSource="ms-appx:///Assets/fullstar.png"
-                                                HoverStateImageSource="ms-appx:///Assets/fullstar.png"
-                                                PressedStateImageSource="ms-appx:///Assets/fullstar.png"/>
-                                            </StackPanel>
-                                            
+                                    <StackPanel
+                                        Grid.Column="0" 
+                                        Grid.Row="0"
+                                        Visibility="{Binding ElementName=GridView, Path=DataContext.IsUser, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                                            <StackPanel 
-                                                Grid.Row="0" 
-                                                Grid.RowSpan="2"
-                                                Grid.Column="0"
-                                                Grid.ColumnSpan="2" 
-                                                VerticalAlignment="Center" 
-                                                HorizontalAlignment="Center"
-                                                >
-                                                <TextBlock Text="{Binding Name}" 
-                                                           TextWrapping="Wrap"
-                                                       Foreground="{StaticResource Grey}" 
-                                                       FontFamily="{StaticResource LatoBlackFontFamily}"
-                                                       />
-                                                <TextBlock Text="{Binding CountOfFlashcards}" 
-                                                           TextWrapping="Wrap"
-                                                       Foreground="{StaticResource Grey}" 
-                                                       FontFamily="{StaticResource LatoBlackFontFamily}"
-                                                       HorizontalAlignment="Center"
-                                                       />
-                                            </StackPanel>
+                                        <Images:ImageButton 
+                                            Visibility="{Binding ViewModel.IsFavourite, Converter={StaticResource NegativeBooleanToVisibilityConverter}}"
+                                            Command="{Binding ElementName=GridView, Path=DataContext.AddToFavouriteCommand}"
+                                            CommandParameter="{Binding ID}"
+                                            IsTabStop="False"
+                                            Stretch="Fill" 
+                                            Padding="5"
+                                            NormalStateImageSource="ms-appx:///Assets/emptystar.png"
+                                            HoverStateImageSource="ms-appx:///Assets/emptystar.png"
+                                            PressedStateImageSource="ms-appx:///Assets/emptystar.png"/>
 
-                                        </Grid>
-                                    </Button>
-                                </StackPanel>
-                            </StackPanel>
+                                        <Images:ImageButton 
+                                            Visibility="{Binding ViewModel.IsFavourite, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveFromFavouriteCommand}"
+                                            CommandParameter="{Binding ID}"
+                                            IsTabStop="False"
+                                            Stretch="Fill" 
+                                            Padding="5"
+                                            NormalStateImageSource="ms-appx:///Assets/fullstar.png"
+                                            HoverStateImageSource="ms-appx:///Assets/fullstar.png"
+                                            PressedStateImageSource="ms-appx:///Assets/fullstar.png"/>
+                                    </StackPanel>
+
+                                    <StackPanel 
+                                        Grid.Row="0" 
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2" 
+                                        VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center">
+
+                                        <TextBlock 
+                                            Text="{Binding Name}" 
+                                            TextWrapping="Wrap"
+                                            Foreground="{StaticResource Grey}" 
+                                            FontFamily="{StaticResource LatoBlackFontFamily}"/>
+
+                                        <TextBlock 
+                                            Text="{Binding CountOfFlashcards}" 
+                                            TextWrapping="Wrap"
+                                            Foreground="{StaticResource Grey}" 
+                                            FontFamily="{StaticResource LatoBlackFontFamily}"
+                                            HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
             </StackPanel>
         </ScrollViewer>
 
-        <ProgressRing x:Name="InitializeProgressRing"
-                      Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
-                      Width="80"
-                      Height="80"
-                      Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      IsActive="{Binding IsDataLoading}"
-                      Foreground="{StaticResource DarkBlue}"
-                      FontWeight="Bold"
-                      />
+        <ProgressRing 
+            x:Name="InitializeProgressRing"
+            Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+            Width="80"
+            Height="80"
+            Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsActive="{Binding IsDataLoading}"
+            Foreground="{StaticResource DarkBlue}"
+            FontWeight="Bold" />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">

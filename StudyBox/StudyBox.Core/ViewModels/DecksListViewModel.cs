@@ -40,6 +40,7 @@ namespace StudyBox.Core.ViewModels
         private DecksType _decksType;
         private List<Deck> _favouriteDecks;
         private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
         #endregion
 
         #region Constructors
@@ -180,11 +181,15 @@ namespace StudyBox.Core.ViewModels
         #endregion
 
         #region Methods
-
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(_detectKeysService.DetectKeyDown)); }
+        }
         public RelayCommand<object> GotFocusCommand
         {
             get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(_detectKeysService.GotFocus)); }
         }
+
 
         private async void InitializeDecksCollection()
         {
