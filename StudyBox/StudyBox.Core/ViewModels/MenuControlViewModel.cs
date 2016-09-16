@@ -22,7 +22,6 @@ namespace StudyBox.Core.ViewModels
         private readonly IRestService _restservice;
         private readonly IInternetConnectionService _internetConnectionService;
         private readonly IGravatarService _gravatarService;
-        //private IDetectKeysService _detectKeysService;
         private readonly ResourceDictionary _resources = Application.Current.Resources;
         private bool _searchVisibility = true;
         private int _searchOpacity = 0;
@@ -55,16 +54,13 @@ namespace StudyBox.Core.ViewModels
         private BitmapImage _gravatar;
 
         public MenuControlViewModel(INavigationService navigationService, IAccountService accountService, IRestService restservice, 
-            IInternetConnectionService internetConnectionService, IGravatarService gravatarService, IDetectKeysService detectKeysService) : base(navigationService)
+            IInternetConnectionService internetConnectionService, IGravatarService gravatarService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             Messenger.Default.Register<MessageToMenuControl>(this, x => HandleMenuControlMessage(x.SearchButton, x.SaveButton, x.TitleString));
-
-
             _accountService = accountService;
             _internetConnectionService = internetConnectionService;
             _restservice = restservice;
             _gravatarService = gravatarService;
-            //_detectKeysService = detectKeysService;
             LogoutButtonVisibility = _accountService.IsUserLoggedIn();
             SearchVisibility = false;
             GetGravatar();

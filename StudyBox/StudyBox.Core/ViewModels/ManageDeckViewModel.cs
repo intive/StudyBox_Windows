@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -23,8 +24,9 @@ namespace StudyBox.Core.ViewModels
         private bool _isDataLoading = false;
         private string _selectedID = "";
         private Deck _deckInstance;
-
-        public ManageDeckViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService) : base(navigationService)
+        private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
+        public ManageDeckViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             Messenger.Default.Register<DataMessageToMenageDeck>(this, x => HandleDataMessage(x.DeckInstance));
             this._restService = restService;
@@ -35,7 +37,14 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Send<MessageToMenuControl>(new MessageToMenuControl(true, false));
         }
 
-
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
+        }
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
+        }
         public ObservableCollection<Flashcard> FlashcardsCollection
         {
             get

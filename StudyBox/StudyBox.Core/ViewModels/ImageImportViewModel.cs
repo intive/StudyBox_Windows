@@ -8,6 +8,7 @@ using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -33,19 +34,30 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _takePhotoCommand;
         private RelayCommand _cancel;
         private RelayCommand _submitForm;
+        private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
 
         private ICameraService _cameraService;
         private INavigationService _navigationService;
         private IRestService _restService;
         private IInternetConnectionService _internetConnectionService;
 
-        public ImageImportViewModel(ICameraService cameraService, INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService) : base(navigationService)
+        public ImageImportViewModel(ICameraService cameraService, INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             Messenger.Default.Register<DataMessageToCreateFlashcard>(this, x => HandleDataMessage(x.DeckInstance));
             _navigationService = navigationService;
             _cameraService = cameraService;
             _restService = restService;
             _internetConnectionService = internetConnectionService;
+        }
+
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
+        }
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
         }
 
         public string HeaderText

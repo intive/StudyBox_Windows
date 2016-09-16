@@ -32,8 +32,7 @@ namespace StudyBox.Core.ViewModels
         private IDetectKeysService _detectKeysService;
 
         public RegisterViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, 
-            IValidationService validationService, IRestService restService, IAccountService accountService,
-            IDetectKeysService detectKeysService) : base(navigationService)
+            IValidationService validationService, IRestService restService, IAccountService accountService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;

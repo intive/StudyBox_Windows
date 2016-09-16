@@ -6,6 +6,7 @@ using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
 using System.Collections.Generic;
 using StudyBox.Core.Interfaces;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -23,14 +24,22 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _worstTest;
         private RelayCommand _improveResults;
         private IStatisticsDataService _statisticsService;
-
-        public SummaryViewModel(INavigationService navigationService, IStatisticsDataService statisticsService) : base(navigationService)
+        private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
+        public SummaryViewModel(INavigationService navigationService, IStatisticsDataService statisticsService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             _statisticsService = statisticsService;
             Messenger.Default.Register<DataMessageToSummary>(this, x => { CalculateResult(x.ExamInstance); });
             Messenger.Default.Register<DataMessageToExam>(this, x => { _deckInstance = x.DeckInstance; _badAnswerFlashcards = x.BadAnswerFlashcards; });
         }
-
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
+        }
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
+        }
         public RelayCommand WorstTest
         {
             get

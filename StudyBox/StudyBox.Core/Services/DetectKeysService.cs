@@ -17,15 +17,14 @@ namespace StudyBox.Core.Services
     {
         public void GotFocus(object obj)
         {
-            
             FrameworkElement focus = FocusManager.GetFocusedElement() as FrameworkElement;
             if (focus != null)
             {
                 Debug.WriteLine("got focus: " + focus.Name + " (" + focus.GetType().ToString() + ")");
-            }
-            if (focus.GetType() == typeof(GridViewItem))
-            {
-                FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+                if (focus.GetType() == typeof(GridViewItem))
+                {
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+                }
             }
         }
 

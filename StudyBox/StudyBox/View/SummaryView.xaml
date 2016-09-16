@@ -8,10 +8,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="using:StudyBox.UserControls"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=SummaryViewModel}"
     >
+    <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="KeyDown">
+            <core:InvokeCommandAction Command="{Binding DetectKeyDownCommand}" />
+        </core:EventTriggerBehavior>
 
+        <core:EventTriggerBehavior EventName="GotFocus">
+            <core:InvokeCommandAction Command="{Binding GotFocusCommand}" />
+        </core:EventTriggerBehavior>
+
+    </i:Interaction.Behaviors>
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>

@@ -29,7 +29,6 @@ namespace StudyBox.Core.ViewModels
         private IStatisticsDataService _statisticsService;
         private IAccountService _accountService;
         private IFavouriteDecksService _favouriteService;
-        private IDetectKeysService _detectKeysService;
         private bool _isDataLoading = false;
         private bool _isSearchMessageVisible = false;
         private bool _isDeckSelected = false;
@@ -45,7 +44,7 @@ namespace StudyBox.Core.ViewModels
 
         #region Constructors
         public DecksListViewModel(INavigationService navigationService, IRestService restService, IInternetConnectionService internetConnectionService, 
-            IStatisticsDataService statisticsService, IAccountService accountService, IFavouriteDecksService favouriteService, IDetectKeysService detectKeysService) : base(navigationService)
+            IStatisticsDataService statisticsService, IAccountService accountService, IFavouriteDecksService favouriteService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             Messenger.Default.Register<ReloadMessageToDecksList>(this, x => HandleReloadMessage(x.Reload));
             Messenger.Default.Register<SearchMessageToDeckList>(this, x => HandleSearchMessage(x.SearchingContent));
@@ -53,7 +52,6 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Register<ConfirmMessageToRemove>(this, x => HandleConfirmMessage(x.IsConfirmed));
             this._restService = restService;
             this._internetConnectionService = internetConnectionService;
-            _detectKeysService = detectKeysService;
             _accountService = accountService;
             DecksCollection = new ObservableCollection<Deck>();
             _statisticsService = statisticsService;
@@ -183,11 +181,11 @@ namespace StudyBox.Core.ViewModels
         #region Methods
         public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
         {
-            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(_detectKeysService.DetectKeyDown)); }
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
         }
         public RelayCommand<object> GotFocusCommand
         {
-            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(_detectKeysService.GotFocus)); }
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
         }
 
 

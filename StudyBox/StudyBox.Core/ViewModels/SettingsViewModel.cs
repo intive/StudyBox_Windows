@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.Messaging;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Models;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -24,14 +25,22 @@ namespace StudyBox.Core.ViewModels
 
         private bool _isDataLoading = false;
         private readonly ResourceDictionary _resources = Application.Current.Resources;
-
-        public SettingsViewModel(INavigationService navigationService, ITokenService tokenService, IAccountService accountService, IInternetConnectionService internetConnectionService) : base(navigationService)
+        private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
+        public SettingsViewModel(INavigationService navigationService, ITokenService tokenService, IAccountService accountService, IInternetConnectionService internetConnectionService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             _tokenService = tokenService;
             _accountService = accountService;
             _internetConnectionService = internetConnectionService;
         }
-
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
+        }
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
+        }
         public bool IsDataLoading
         {
             get

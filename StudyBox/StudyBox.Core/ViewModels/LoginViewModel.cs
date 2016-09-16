@@ -32,7 +32,7 @@ namespace StudyBox.Core.ViewModels
         private bool _isGeneralError;
 
         public LoginViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IValidationService validationService, 
-            IAccountService accountService, IDetectKeysService detectKeysService) : base(navigationService)
+            IAccountService accountService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             _internetConnectionService = internetConnectionService;
             _validationService = validationService;

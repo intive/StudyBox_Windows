@@ -6,9 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="using:StudyBox.UserControls"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     DataContext="{Binding Source={StaticResource Locator}, Path=CreateDeckViewModel}"
     mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="KeyDown">
+            <core:InvokeCommandAction Command="{Binding DetectKeyDownCommand}" />
+        </core:EventTriggerBehavior>
 
+        <core:EventTriggerBehavior EventName="GotFocus">
+            <core:InvokeCommandAction Command="{Binding GotFocusCommand}" />
+        </core:EventTriggerBehavior>
+
+    </i:Interaction.Behaviors>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="80"/>

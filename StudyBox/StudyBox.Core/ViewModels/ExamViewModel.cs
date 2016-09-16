@@ -9,6 +9,7 @@ using StudyBox.Core.Services;
 using System;
 using Windows.UI.Popups;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -36,10 +37,13 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _countBadAnswer;
         private RelayCommand _leftArrowClicked;
         private RelayCommand _rightArrowClicked;
+
+        private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
         #endregion
 
         #region Constructor
-        public ExamViewModel(INavigationService navigationService, IRestService restService, IStatisticsDataService statisticsService, IInternetConnectionService internetConnectionService) : base(navigationService)
+        public ExamViewModel(INavigationService navigationService, IRestService restService, IStatisticsDataService statisticsService, IInternetConnectionService internetConnectionService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             _restService = restService;
             _internetConnectionService = internetConnectionService;
@@ -47,7 +51,14 @@ namespace StudyBox.Core.ViewModels
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance, x.BadAnswerFlashcards));
         }
         #endregion
-
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
+        }
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
+        }
         #region Commands
         public RelayCommand LeftArrowClicked
         {
