@@ -302,7 +302,9 @@ namespace StudyBox.Core.ViewModels
                     //else
                     //{
                         ShowQuestionInMainRectangle();
+                    var a = IsHintAvailable;
                         RaiseAllPropertiesChanged();
+
                     //}
                 }
 

@@ -10,6 +10,8 @@
     xmlns:converters="using:StudyBox.Converters"
     xmlns:userControls="using:StudyBox.UserControls"
     mc:Ignorable="d"
+    xmlns:loc="using:StudyBox"
+     xmlns:behaviors="using:StudyBox.Behaviors"
     DataContext="{Binding Source={StaticResource Locator}, Path=ExamsViewModel}"
     >
     <i:Interaction.Behaviors>
@@ -94,10 +96,13 @@
                     <PlaneProjection RotationY="90" />
                 </Border.Projection>
             </Border>
-            <Border x:Name="QuestionCard" 
+            <Button x:Name="QuestionCard" 
                     Grid.Column="1" 
-                    Grid.Row="1" 
+                    Grid.Row="1"
                     Background="{StaticResource DarkBlue}" 
+                    Style="{StaticResource ButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     BorderBrush="Transparent">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -110,6 +115,7 @@
                             VerticalAlignment="Center" 
                             Visibility="{Binding IsLeftArrowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
                             Grid.Column="0" 
+                            Command="{Binding LeftArrowClicked}"
                             Background="Transparent">
                         <Button.Content>
                             <Image 
@@ -117,11 +123,11 @@
                                 Source="ms-appx:///Assets/leftArrow.png" 
                                 Margin="0"/>
                         </Button.Content>
-                        <i:Interaction.Behaviors>
+                        <!--<i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Tapped">
                                 <core:InvokeCommandAction Command="{Binding LeftArrowClicked}" />
                             </core:EventTriggerBehavior>
-                        </i:Interaction.Behaviors>
+                        </i:Interaction.Behaviors>-->
                     </Button>
                     <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Column="1" Margin="0 10 0 10">
                         <TextBlock 
@@ -141,36 +147,35 @@
                         VerticalAlignment="Center" 
                         Visibility="{Binding IsRightArrowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
                         Grid.Column="2" 
-                        Background="Transparent">
+                        Background="Transparent"
+                        Command="{Binding RightArrowClicked}">
                         <Button.Content>
                             <Image 
                                 Margin="0,0,-3,0" 
                                 Stretch="UniformToFill"  
                                 Source="ms-appx:///Assets/rightArrow.png"/>
                         </Button.Content>
-                        <i:Interaction.Behaviors>
-                            <core:EventTriggerBehavior EventName="Tapped">
-                                <core:InvokeCommandAction Command="{Binding RightArrowClicked}" />
-                            </core:EventTriggerBehavior>
-                        </i:Interaction.Behaviors>
                     </Button>
                 </Grid>
-                <Border.Projection>
+                <Button.Projection>
                     <PlaneProjection/>
-                </Border.Projection>
+                </Button.Projection>
                 <i:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Tapped">
+                    <core:EventTriggerBehavior EventName="Click">
                         <core:InvokeCommandAction Command="{Binding ShowAnswer}" />
                     </core:EventTriggerBehavior>
                 </i:Interaction.Behaviors>
-            </Border>
+            </Button>
 
-            <Button Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="3" IsEnabled="{Binding IsHintAvailable}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}">
+            <Button Visibility="{Binding IsQuestionVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="3" IsEnabled="{Binding IsHintAvailable}" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource DarkBlue}"
+                    >
                 <i:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Tapped">
+                    <core:EventTriggerBehavior EventName="Click">
                         <core:InvokeCommandAction Command="{Binding ShowHintOrQuestion}" />
                     </core:EventTriggerBehavior>
                 </i:Interaction.Behaviors>
+                
                 <TextBlock Text="{Binding BottomRectangleText}"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
@@ -185,25 +190,15 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="CancelButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
+                <Button x:Name="CancelButton" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}" Command="{Binding CountBadAnswer}">
                     <Button.Content>
                         <Image Source="ms-appx:///Assets/cancel.png" Margin="0"/>
                     </Button.Content>
-                    <i:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Tapped">
-                            <core:InvokeCommandAction Command="{Binding CountBadAnswer}" />
-                        </core:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
                 </Button>
-                <Button x:Name="ApproveButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}">
+                <Button x:Name="ApproveButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Graphite}" Command="{Binding CountGoodAnswer}">
                     <Button.Content>
                         <Image Source="ms-appx:///Assets/approve.png" Margin="0"/>
                     </Button.Content>
-                    <i:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Tapped">
-                            <core:InvokeCommandAction Command="{Binding CountGoodAnswer}" />
-                        </core:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
                 </Button>
             </Grid>
 
