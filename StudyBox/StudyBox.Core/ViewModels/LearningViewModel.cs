@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -28,11 +29,21 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _skipFlashcard;
         private RelayCommand _repeatLearning;
         private RelayCommand _dontRepeatLearning;
-
-        public LearningViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
+        private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
+        public LearningViewModel(INavigationService navigationService, IRestService restService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             _restService = restService;
             Messenger.Default.Register<DataMessageToExam>(this, x => HandleDataMessage(x.DeckInstance));
+        }
+
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
+        }
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
         }
 
         public RelayCommand BadAnswer

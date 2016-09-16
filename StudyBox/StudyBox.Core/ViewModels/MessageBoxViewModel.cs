@@ -30,7 +30,7 @@ namespace StudyBox.Core.ViewModels
         private bool _isNoRemoveButton;
         private bool _isSettingsButton;
 
-        public MessageBoxViewModel(INavigationService navigationService, IAccountService accountService) : base(navigationService)
+        public MessageBoxViewModel(INavigationService navigationService, IAccountService accountService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             Messenger.Default.Register<MessageToMessageBoxControl>(this, x => HandleMessageBoxControlMessage(x.Visibility, x.LoginButton, x.RemoveButton, x.SettingsButton, x.NoRemoveButton, x.Message));
             ClearButtonsVisibility();

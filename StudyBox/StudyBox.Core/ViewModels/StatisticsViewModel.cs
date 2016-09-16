@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Views;
 using StudyBox.Core.Interfaces;
 using StudyBox.Core.Messages;
 using StudyBox.Core.Models;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -29,6 +30,8 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _sortByDeckNameCommand;
         private RelayCommand _showMoreCommand;
         private RelayCommand _showLessCommand;
+        private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
         private List<TestsHistory> _localHistoryList;
         private List<TestsHistory> _globalHistoryList;
         private bool _sortResultDescending;
@@ -36,7 +39,7 @@ namespace StudyBox.Core.ViewModels
         private bool _isMoreAvailable;
         private bool _isLessAvailable;
 
-        public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService, IStatisticsDataService statisticsSercice) : base(navigationService)
+        public StatisticsViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, IRestService restService, IStatisticsDataService statisticsSercice, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             SortResultDescending = false;
             Messenger.Default.Register<ReloadMessageToStatistics>(this,x=>HandleReloadMessage(x.Reload));
@@ -47,7 +50,14 @@ namespace StudyBox.Core.ViewModels
             GetStatistics();
             IsMoreAvailable = true;
         }
-
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
+        }
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
+        }
         public bool IsLessAvailable
         {
             get

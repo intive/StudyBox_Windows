@@ -9,10 +9,21 @@
     xmlns:userControls="using:StudyBox.UserControls"
     xmlns:controls="using:MyToolkit.Controls"
     xmlns:models="using:StudyBox.Core.Models"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator},Path=StatisticsViewModel}"
     >
+    <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="KeyDown">
+            <core:InvokeCommandAction Command="{Binding DetectKeyDownCommand}" />
+        </core:EventTriggerBehavior>
 
+        <core:EventTriggerBehavior EventName="GotFocus">
+            <core:InvokeCommandAction Command="{Binding GotFocusCommand}" />
+        </core:EventTriggerBehavior>
+
+    </i:Interaction.Behaviors>
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BoolToSortingArrowConventer x:Key="BoolToSortingArrowConventer"/>

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
 
 namespace StudyBox.Core.ViewModels
 {
@@ -23,6 +24,8 @@ namespace StudyBox.Core.ViewModels
         private RelayCommand _resetPasswordAction;
         private RelayCommand _changePasswordAction;
         private RelayCommand _cancelAction;
+        private RelayCommand<object> _gotFocusCommand;
+        private RelayCommand<KeyRoutedEventArgs> _detectKeyDownCommand;
 
         private bool _isDataLoading = false;
         private bool _isEmailVisible = true;
@@ -37,7 +40,8 @@ namespace StudyBox.Core.ViewModels
         private string _passwordErrorMessage;
         private bool _changePassword = false;
 
-        public ForgottenPasswordViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, ITokenService tockenService, IValidationService validationService, IRestService restService, IAccountService accountService) : base(navigationService)
+        public ForgottenPasswordViewModel(INavigationService navigationService, IInternetConnectionService internetConnectionService, ITokenService tockenService, 
+            IValidationService validationService, IRestService restService, IAccountService accountService, IDetectKeysService detectKeysService) : base(navigationService, detectKeysService)
         {
             Messenger.Default.Register<MessageToChangePassword>(this, x => HandleChangePasswordMessage(x.ChangePassword, x.ReturnToken, x.Email));
             _internetConnectionService = internetConnectionService;
@@ -47,7 +51,14 @@ namespace StudyBox.Core.ViewModels
             _tockenService = tockenService;
 
         }
-
+        public RelayCommand<KeyRoutedEventArgs> DetectKeyDownCommand
+        {
+            get { return _detectKeyDownCommand ?? (_detectKeyDownCommand = new RelayCommand<KeyRoutedEventArgs>(DetectKeysService.DetectKeyDown)); }
+        }
+        public RelayCommand<object> GotFocusCommand
+        {
+            get { return _gotFocusCommand ?? (_gotFocusCommand = new RelayCommand<object>(DetectKeysService.GotFocus)); }
+        }
         public RelayCommand ResetPasswordAction
         {
             get
