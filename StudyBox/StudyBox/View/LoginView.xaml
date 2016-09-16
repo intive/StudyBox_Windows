@@ -307,10 +307,6 @@
                         <Setter Target="Logo.Source" Value="ms-appx:///Assets/Square150x150Logo.scale-200.png"/>
                     </VisualState.Setters>
                 </VisualState>
-
-
-
-
             </VisualStateGroup>
 
             <VisualStateGroup>
@@ -320,18 +316,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="grid.Padding" Value="48, 27, 48, 27"/>
-                        <!--<Setter Target="splitView.DisplayMode" Value="CompactInline"/>
-                        <Setter Target="splitView.IsPaneOpen" Value="False"/>
-                        <Setter Target="NavPaneDivider.Visibility" Value="Collapsed"/>
-                        <Setter Target="splitView.CompactPaneLength" Value="96"/>
-                        <Setter Target="splitView.OpenPaneLength" Value="266"/>
-                        <Setter Target="NavMenuList.ItemContainerStyle" Value="{StaticResource NavMenuItemContainerXboxStyle}"/>
-                        <Setter Target="FeedbackButton.Style" Value="{StaticResource SplitViewPaneButtonXboxStyle}"/>
-                        <Setter Target="SettingsButton.Style" Value="{StaticResource SplitViewPaneButtonXboxStyle}"/>
-                        <Setter Target="TenFootModeToggle.Style" Value="{StaticResource SplitViewPaneButtonXboxStyle}"/>
-                        <Setter Target="TogglePaneButton.Style" Value="{StaticResource SplitViewTogglePaneButtonXboxStyle}"/>
-                        <Setter Target="TogglePaneButton.Margin" Value="48, 27, 0, 0"/>
-                        <Setter Target="TogglePaneButton.IsChecked" Value="false"/>-->
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

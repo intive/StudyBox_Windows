@@ -199,17 +199,7 @@
             <VisualStateGroup x:Name="Phone">
                 <VisualState x:Name="WidePhoneState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SearchBox.(Grid.Column)" Value="1"/>
-                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="4"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState x:Name="NarrowPhoneState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint5}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SearchBox.(Grid.Column)" Value="1"/>
@@ -219,7 +209,7 @@
 
                 <VisualState x:Name="WideTabletState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720"/>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint8Portrait}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SearchBox.(Grid.Column)" Value="3"/>
@@ -227,17 +217,36 @@
                     </VisualState.Setters>
                 </VisualState>
 
-                <VisualState x:Name="Desktop">
+            
+                <VisualState>
+                    <!-- VisualState to be triggered for 27" desktop + -->
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1024"/>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint27}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!-- check xbox -->
                         <Setter Target="SearchBox.(Grid.Column)" Value="3"/>
                         <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="2"/>
                     </VisualState.Setters>
                 </VisualState>
+                <VisualState>
+                    <!-- VisualState to be triggered for 23" desktop" -->
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint23}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!-- check xbox -->
+                        <Setter Target="SearchBox.(Grid.Column)" Value="3"/>
+                        <Setter Target="SearchBox.(Grid.ColumnSpan)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+         
 
             </VisualStateGroup>
+            
+            
+            
+
         </VisualStateManager.VisualStateGroups>
 
     </Grid>

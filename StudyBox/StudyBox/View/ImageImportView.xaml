@@ -144,42 +144,98 @@
                       Foreground="{StaticResource DarkBlue}"
                       FontWeight="Bold"/>
 
-        <VisualStateManager.VisualStateGroups>
+
+           <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Phone">
-                <VisualState x:Name="NarrowPhoneState">
+                <VisualState>
+                    <!-- VisualState to be triggered for 27" desktop + -->
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="0"/>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint27}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SmallFontManagment.FontSize" Value="14"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="30"/>
+                        <Setter Target="MessageFontManagment.FontSize" Value="22"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="22"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <!-- VisualState to be triggered for 23" desktop" -->
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint23}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StandardFontManagment.FontSize" Value="28"/>
+                        <Setter Target="MessageFontManagment.FontSize" Value="20"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="20"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <!-- VisualState for 13" laptop -->
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint13}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="MessageFontManagment.FontSize" Value="18"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="16"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <!-- VisualState for 8" tablet landscape -->
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint8Landscape}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
+                        <Setter Target="MessageFontManagment.FontSize" Value="18"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="18"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <!-- VisualState for 8" tablet portrait -->
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint8Portrait}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
                         <Setter Target="StandardFontManagment.FontSize" Value="18"/>
+                        <Setter Target="MessageFontManagment.FontSize" Value="14"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="14"/>
                         <Setter Target="LabelMarginManagment.Margin" Value="0,15,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
 
-                <VisualState x:Name="WideTabletState">
+
+                <VisualState>
+                    <!-- VisualState for 5" tablet portrait -->
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" MinWindowHeight="500"/>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint6}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SmallFontManagment.FontSize" Value="16"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
-                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="18"/>
+                        <Setter Target="MessageFontManagment.FontSize" Value="14"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="14"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,15,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
 
-                <VisualState x:Name="Desktop">
+                <VisualState>
+                    <!-- VisualState for 5" phone -->
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1024" MinWindowHeight="690"/>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SnapPoint5}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SmallFontManagment.FontSize" Value="18"/>
-                        <Setter Target="StandardFontManagment.FontSize" Value="25"/>
-                        <Setter Target="LabelMarginManagment.Margin" Value="0,20,0,0"/>
+                        <Setter Target="StandardFontManagment.FontSize" Value="16"/>
+                        <Setter Target="MessageFontManagment.FontSize" Value="14"/>
+                        <Setter Target="SmallFontManagment.FontSize" Value="11"/>
+                        <Setter Target="LabelMarginManagment.Margin" Value="0,15,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-
         </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
